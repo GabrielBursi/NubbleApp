@@ -6,6 +6,7 @@ const HomeScreen = () => {
 	return (
 		<S.Home>
 			<Text accessibilityRole="text">Home</Text>
+			<Text accessibilityRole="text">Husky</Text>
 		</S.Home>
 	)
 }
