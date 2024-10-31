@@ -1,0 +1,34 @@
+{{#if useProps}}
+import React, { PropsWithChildren } from 'react'
+import { Text } from 'react-native'
+import { {{pascalCase name}}TemplateProps } from './{{pascalCase name}}.types'
+import * as S from './{{pascalCase name}}.styles'
+
+export const {{pascalCase name}}Template = ({ children }: PropsWithChildren<Readonly<{{pascalCase name}}TemplateProps>>) => {
+	return (
+	<S.{{pascalCase name}}>
+		<Text accessibilityRole="text">{{pascalCase name}}</Text>
+		{children}
+	</S.{{pascalCase name}}>
+	)
+	}
+
+
+
+	{{else}}
+	import React, { PropsWithChildren } from 'react'
+	import { Text } from 'react-native'
+	import * as S from './{{pascalCase name}}.styles'
+
+export const {{pascalCase name}}Template = ({ children }: PropsWithChildren) => {
+	return (
+	<S.{{pascalCase name}}>
+		<Text accessibilityRole="text">{{pascalCase name}}</Text>
+		{children}
+	</S.{{pascalCase name}}>
+	)
+	}
+
+
+
+	{{/if}}

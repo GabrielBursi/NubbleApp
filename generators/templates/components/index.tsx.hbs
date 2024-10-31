@@ -1,0 +1,26 @@
+{{#if useProps}}
+import React from 'react'
+import { Text } from 'react-native'
+import { {{pascalCase name}}Props } from './{{pascalCase name}}.types'
+import * as S from './{{pascalCase name}}.styles'
+
+export const {{pascalCase name}} = ({ }: Readonly<{{pascalCase name}}Props>) => {
+    return (
+        <S.{{pascalCase name}}>
+            <Text accessibilityRole="text">{{pascalCase name}}</Text>
+        </S.{{pascalCase name}}>
+    )
+}
+{{else}}
+import React from 'react'
+import { Text } from 'react-native'
+import * as S from './{{pascalCase name}}.styles'
+
+export const {{pascalCase name}} = () => {
+    return (
+        <S.{{pascalCase name}}>
+            <Text accessibilityRole="text">{{pascalCase name}}</Text>
+        </S.{{pascalCase name}}>
+    )
+}
+{{/if}}

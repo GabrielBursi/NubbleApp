@@ -1,0 +1,11 @@
+import { screen } from '@testing-library/react-native'
+import { customRender } from '@/tests/utils'
+import {{pascalCase name}}Screen  from './{{pascalCase name}}'
+
+describe('<{{pascalCase name}}Screen/>', () => {
+    it('should render', () => {
+        customRender(<{{pascalCase name}}Screen/>)
+
+        expect(screen.getByRole('text', { name: /{{pascalCase name}}/i })).toBeOnTheScreen()
+    })
+})

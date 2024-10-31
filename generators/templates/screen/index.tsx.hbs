@@ -1,0 +1,32 @@
+{{#if useProps}}
+import React from 'react'
+import { Text } from 'react-native'
+import { {{pascalCase name}}ScreenProps } from './{{pascalCase name}}.types'
+import * as S from './{{pascalCase name}}.styles'
+
+const {{pascalCase name}}Screen = ({ }: Readonly<{{pascalCase name}}ScreenProps>) => {
+    return (
+        <S.{{pascalCase name}}>
+            <Text accessibilityRole="text">{{pascalCase name}}</Text>
+        </S.{{pascalCase name}}>
+    )
+}
+
+export default {{pascalCase name}}Screen
+
+{{else}}
+import React from 'react'
+import { Text } from 'react-native'
+import * as S from './{{pascalCase name}}.styles'
+
+const {{pascalCase name}}Screen = () => {
+    return (
+        <S.{{pascalCase name}}>
+            <Text accessibilityRole="text">{{pascalCase name}}</Text>
+        </S.{{pascalCase name}}>
+    )
+}
+
+export default {{pascalCase name}}Screen
+
+{{/if}}
