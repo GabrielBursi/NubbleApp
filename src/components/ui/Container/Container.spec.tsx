@@ -4,7 +4,7 @@ import { customRender } from '@/tests/utils'
 import { Container } from './Container'
 
 describe('<Container/>', () => {
-	it('should render', () => {
+	it('should render with style correctly', () => {
 		customRender(
 			<Container>
 				<Text>Container</Text>
