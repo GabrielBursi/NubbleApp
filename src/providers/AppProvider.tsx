@@ -3,10 +3,10 @@ import React, { PropsWithChildren } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { ThemeProvider } from 'styled-components/native'
+import { ThemeProvider } from '@shopify/restyle'
 
 import { MMKVStorage, initializeStorage } from '@/storage'
-import { theme } from '@/styles'
+import { appTheme } from '@/styles'
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
 	const queryClient = new QueryClient()
@@ -16,7 +16,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NavigationContainer>
-				<ThemeProvider theme={theme}>
+				<ThemeProvider theme={appTheme}>
 					<SafeAreaProvider>
 						<StatusBar
 							barStyle="dark-content"

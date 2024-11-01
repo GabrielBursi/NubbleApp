@@ -13,7 +13,6 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 		'prettier',
-		'plugin:styled-components-a11y/recommended',
 		'plugin:jsx-a11y/recommended',
 		'plugin:react-native/all',
 		'plugin:react-redux/recommended',
@@ -61,8 +60,6 @@ module.exports = {
 		'react-hooks',
 		'@typescript-eslint',
 		'prettier',
-		'styled-components-a11y',
-		"better-styled-components",
 		"jsx-a11y",
 		"react-native",
 		"react-redux",
@@ -90,7 +87,6 @@ module.exports = {
 		'testing-library/no-await-sync-queries': 'error',
 		'testing-library/no-debugging-utils': 'warn',
 		'testing-library/no-dom-import': 'off',
-		"better-styled-components/sort-declarations-alphabetically": 2
 	},
 	settings: {
 		react: {

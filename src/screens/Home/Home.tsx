@@ -1,13 +1,11 @@
 import React from 'react'
-import { Text } from 'react-native'
-import * as S from './Home.styles'
+import { Text, View } from 'react-native'
 
 const HomeScreen = () => {
 	return (
-		<S.Home>
+		<View>
 			<Text accessibilityRole="text">Home</Text>
-			<Text accessibilityRole="text">Husky</Text>
-		</S.Home>
+		</View>
 	)
 }
 

@@ -3,9 +3,9 @@ import React, { PropsWithChildren } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { ThemeProvider } from 'styled-components/native'
+import { ThemeProvider } from '@shopify/restyle'
 
-import { theme } from '@/styles'
+import { appTheme } from '@/styles'
 
 export const TestProvider = ({ children }: PropsWithChildren) => {
 	const queryClient = new QueryClient({
@@ -20,7 +20,7 @@ export const TestProvider = ({ children }: PropsWithChildren) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NavigationContainer>
-				<ThemeProvider theme={theme}>
+				<ThemeProvider theme={appTheme}>
 					<SafeAreaProvider
 						initialMetrics={{
 							frame: { x: 0, y: 0, width: 0, height: 0 },

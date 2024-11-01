@@ -21,11 +21,6 @@ export default function (plop) {
 			},
 			{
 				type: 'add',
-				path: '../src/templates/{{pascalCase name}}//{{pascalCase name}}.styles.ts',
-				templateFile: 'templates/template/styles.ts.hbs'
-			},
-			{
-				type: 'add',
 				path: '../src/templates/{{pascalCase name}}//{{pascalCase name}}.types.ts',
 				templateFile: 'templates/template/types.ts.hbs'
 			}
