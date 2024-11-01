@@ -2,7 +2,6 @@
 import React, { PropsWithChildren } from 'react'
 import { Text } from 'react-native'
 import { {{pascalCase name}}TemplateProps } from './{{pascalCase name}}.types'
-import * as S from './{{pascalCase name}}.styles'
 
 export const {{pascalCase name}}Template = ({ children }: PropsWithChildren<Readonly<{{pascalCase name}}TemplateProps>>) => {
 	return (
@@ -18,7 +17,6 @@ export const {{pascalCase name}}Template = ({ children }: PropsWithChildren<Read
 	{{else}}
 	import React, { PropsWithChildren } from 'react'
 	import { Text } from 'react-native'
-	import * as S from './{{pascalCase name}}.styles'
 
 export const {{pascalCase name}}Template = ({ children }: PropsWithChildren) => {
 	return (
