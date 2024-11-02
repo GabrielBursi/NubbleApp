@@ -2,6 +2,7 @@ import React from 'react'
 import type { Preview } from '@storybook/react'
 import { TestProvider } from '../src/providers'
 import { appTheme } from '../src/styles'
+import { Container } from '../src/components'
 
 const preview: Preview = {
 	parameters: {
@@ -22,7 +23,9 @@ const preview: Preview = {
 	decorators: [
 		(Story) => (
 			<TestProvider>
-				<Story />
+				<Container marginTop="s24">
+					<Story />
+				</Container>
 			</TestProvider>
 		),
 	],

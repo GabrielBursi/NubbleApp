@@ -105,4 +105,7 @@ export const appTheme = createTheme({
 	spacing: themeConfig.spacings,
 	borderRadii: themeConfig.border.radius,
 	zIndices: themeConfig.layers,
+	textVariants: {
+		defaults: {},
+	},
 })
