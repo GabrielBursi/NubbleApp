@@ -1,28 +1,9 @@
 import { useCallback, useMemo } from 'react'
 import { TextStyle } from 'react-native'
-import {
-	TextVariants,
-	ThemeFontFamily,
-	ThemeFontFamilyKeys,
-} from '@/types/theme'
+import { TextVariants } from '@/types/theme'
+import { themeConfig } from '@/styles'
 
 export const useFontFamily = () => {
-	const fontFamily: Record<ThemeFontFamilyKeys, ThemeFontFamily> = useMemo(
-		() => ({
-			black: 'Satoshi-Black',
-			blackItalic: 'Satoshi-BlackItalic',
-			bold: 'Satoshi-Bold',
-			boldItalic: 'Satoshi-BoldItalic',
-			italic: 'Satoshi-Italic',
-			light: 'Satoshi-Light',
-			lightItalic: 'Satoshi-LightItalic',
-			medium: 'Satoshi-Medium',
-			mediumItalic: 'Satoshi-MediumItalic',
-			regular: 'Satoshi-Regular',
-		}),
-		[]
-	)
-
 	const fontSizes: Record<TextVariants, TextStyle> = useMemo(
 		() => ({
 			headingLarge: { fontSize: 32, lineHeight: 38.4 },
@@ -51,28 +32,29 @@ export const useFontFamily = () => {
 				preset === 'headingMedium' ||
 				preset === 'headingSmall'
 			) {
-				return italic ? fontFamily.boldItalic : fontFamily.bold
+				return italic
+					? themeConfig.font.family.boldItalic
+					: themeConfig.font.family.bold
 			}
 			switch (true) {
 				case bold && italic:
-					return fontFamily.boldItalic
+					return themeConfig.font.family.boldItalic
 				case bold:
-					return fontFamily.bold
+					return themeConfig.font.family.bold
 				case semiBold && italic:
-					return fontFamily.mediumItalic
+					return themeConfig.font.family.mediumItalic
 				case italic:
-					return fontFamily.italic
+					return themeConfig.font.family.italic
 				case semiBold:
-					return fontFamily.medium
+					return themeConfig.font.family.medium
 				default:
-					return fontFamily.regular
+					return themeConfig.font.family.regular
 			}
 		},
-		[fontFamily]
+		[]
 	)
 
 	return {
-		fontFamily,
 		fontSizes,
 		getFontFamily,
 	} as const
