@@ -1,4 +1,5 @@
 export * from './Box/Box'
+export * from './Button/Button'
 export * from './Container/Container'
 export * from './Loading/Loading'
 export * from './Text/Text'
