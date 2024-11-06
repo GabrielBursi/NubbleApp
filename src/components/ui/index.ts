@@ -1,6 +1,7 @@
 export * from './Box/Box'
 export * from './Button/Button'
 export * from './Container/Container'
+export * from './Icon/Icon'
 export * from './Loading/Loading'
 export * from './Text/Text'
 export * from './TouchableOpacityBox/TouchableOpacityBox'

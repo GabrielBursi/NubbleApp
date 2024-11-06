@@ -1,3 +1,4 @@
+import { iconRegistry } from '@/components'
 import { appTheme, themeConfig } from '@/styles'
 
 export type AppTheme = typeof appTheme
@@ -15,3 +16,10 @@ export type TextVariants =
 	| 'paragraphSmall'
 	| 'paragraphCaption'
 	| 'paragraphCaptionSmall'
+export type IconType = typeof iconRegistry
+export type IconName = keyof IconType
+export type IconBase = {
+	size?: number
+	color?: string
+	fillColor?: string
+}
