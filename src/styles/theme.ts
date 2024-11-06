@@ -36,8 +36,8 @@ export const themeConfig = {
 			medium: RFValue(14, windowHeight) as 14,
 			large: RFValue(16, windowHeight) as 16,
 			xlarge: RFValue(18, windowHeight) as 18,
-			xxlarge: RFValue(20, windowHeight) as 20,
-			huge: RFValue(48, windowHeight) as 48,
+			xxlarge: RFValue(22, windowHeight) as 22,
+			huge: RFValue(32, windowHeight) as 32,
 		},
 	},
 	colors: {
