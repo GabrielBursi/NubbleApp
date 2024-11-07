@@ -12,8 +12,7 @@ export const Container = ({
 		<Box
 			testID="container"
 			flex={1}
-			paddingLeft="s16"
-			paddingRight="s16"
+			paddingHorizontal="s24"
 			width="100%"
 			{...boxProps}
 		>

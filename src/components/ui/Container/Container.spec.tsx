@@ -13,8 +13,7 @@ describe('<Container/>', () => {
 
 		expect(screen.getByRole('text', { name: /container/i })).toBeOnTheScreen()
 		expect(screen.getByTestId('container')).toHaveStyle({
-			paddingLeft: 32,
-			paddingRight: 32,
+			paddingHorizontal: 48,
 		})
 	})
 })
