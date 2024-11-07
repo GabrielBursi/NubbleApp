@@ -3,7 +3,7 @@ import React from 'react'
 import { Text } from 'react-native'
 import { {{pascalCase name}}ScreenProps } from './{{pascalCase name}}.types'
 
-const {{pascalCase name}}Screen = ({ }: Readonly<{{pascalCase name}}ScreenProps>) => {
+export const {{pascalCase name}}Screen = ({ }: Readonly<{{pascalCase name}}ScreenProps>) => {
     return (
         <S.{{pascalCase name}}>
             <Text accessibilityRole="text">{{pascalCase name}}</Text>
@@ -11,13 +11,12 @@ const {{pascalCase name}}Screen = ({ }: Readonly<{{pascalCase name}}ScreenProps>
     )
 }
 
-export default {{pascalCase name}}Screen
 
 {{else}}
 import React from 'react'
 import { Text } from 'react-native'
 
-const {{pascalCase name}}Screen = () => {
+export const {{pascalCase name}}Screen = () => {
     return (
         <S.{{pascalCase name}}>
             <Text accessibilityRole="text">{{pascalCase name}}</Text>
@@ -25,6 +24,5 @@ const {{pascalCase name}}Screen = () => {
     )
 }
 
-export default {{pascalCase name}}Screen
 
 {{/if}}
