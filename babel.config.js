@@ -14,7 +14,7 @@ module.exports = {
 					'@/storage': './src/storage',
 					'@/store': './src/store',
 					'@/styles': './src/styles',
-					'@/templates': './src/styles',
+					'@/templates': './src/templates',
 					'@/tests': './src/tests',
 					'@/types': './src/types',
 					'@/utils': './src/utils',
