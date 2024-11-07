@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import HomeScreen from './Home'
+import { HomeScreen } from '@/screens'
 
 const meta: Meta<typeof HomeScreen> = {
-	title: 'Screens/HomeScreen',
+	title: 'Screens/App/HomeScreen',
 	component: HomeScreen,
 	args: {},
 	argTypes: {},

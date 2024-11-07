@@ -2,7 +2,7 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import { RootDrawerParamList } from '@/types/routes'
-import HomeScreen from '@/screens/Home/Home'
+import { HomeScreen } from '@/screens'
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>()
 

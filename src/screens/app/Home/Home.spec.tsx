@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react-native'
 import { customRender } from '@/tests/utils'
-import HomeScreen from './Home'
+import { HomeScreen } from './Home'
 
 describe('<HomeScreen/>', () => {
 	it('should render', () => {
