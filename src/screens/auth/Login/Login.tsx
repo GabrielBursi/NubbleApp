@@ -5,7 +5,7 @@ import { ScreenTemplate } from '@/templates'
 
 export const LoginScreen = () => {
 	return (
-		<ScreenTemplate>
+		<ScreenTemplate scrollable>
 			<Text accessibilityRole="text">Login</Text>
 		</ScreenTemplate>
 	)

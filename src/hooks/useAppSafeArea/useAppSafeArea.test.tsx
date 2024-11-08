@@ -28,14 +28,14 @@ describe('useAppSafeArea', () => {
 		const { result } = renderHook(useAppSafeArea, { wrapper: TestProvider })
 
 		expect(result.current).toStrictEqual({
-			bottom: 0,
+			bottom: 40,
 			left: 0,
 			right: 0,
 			top: 40,
 		})
 	})
 
-	it('should metrics with top correctly', () => {
+	it('should return metrics correctly', () => {
 		const { result } = renderHook(useAppSafeArea, {
 			wrapper: wrapperWithInitialMetrics,
 		})

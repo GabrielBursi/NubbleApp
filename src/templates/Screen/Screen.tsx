@@ -1,20 +1,54 @@
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import React, { PropsWithChildren } from 'react'
-import { useAppSafeArea } from '@/hooks'
-import { Box, Container, GoBack } from '@/components'
-import { ScreenTemplateProps } from './Screen.types'
+
+import { useAppSafeArea, useAppTheme } from '@/hooks'
+import { Container, GoBack } from '@/components'
+
+import { ContainerScreenProps, ScreenTemplateProps } from './Screen.types'
+
+export function ScrollViewContainer({
+	children,
+	backgroundColor,
+}: Readonly<ContainerScreenProps>) {
+	return (
+		<ScrollView
+			keyboardShouldPersistTaps="handled"
+			// eslint-disable-next-line react-native/no-inline-styles
+			style={{ backgroundColor, flex: 1 }}
+		>
+			{children}
+		</ScrollView>
+	)
+}
+export function ViewContainer({
+	children,
+	backgroundColor,
+}: Readonly<ContainerScreenProps>) {
+	return <View style={{ backgroundColor }}>{children}</View>
+}
 
 export const ScreenTemplate = ({
 	children,
 	canGoBack = false,
+	scrollable = false,
 }: PropsWithChildren<ScreenTemplateProps>) => {
 	const { top } = useAppSafeArea()
+	const { colors } = useAppTheme()
+
+	const ContainerScreen = scrollable ? ScrollViewContainer : ViewContainer
 
 	return (
-		<Box style={{ paddingTop: top }} flex={1}>
-			<Container>
-				{canGoBack && <GoBack />}
-				{children}
-			</Container>
-		</Box>
+		<KeyboardAvoidingView
+			// eslint-disable-next-line react-native/no-inline-styles
+			style={{ flex: 1 }}
+			behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+		>
+			<ContainerScreen backgroundColor={colors.background}>
+				<Container flex={1} style={{ paddingTop: top }}>
+					{canGoBack && <GoBack />}
+					{children}
+				</Container>
+			</ContainerScreen>
+		</KeyboardAvoidingView>
 	)
 }

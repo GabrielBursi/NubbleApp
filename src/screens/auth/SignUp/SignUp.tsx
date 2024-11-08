@@ -5,7 +5,7 @@ import { ScreenTemplate } from '@/templates'
 
 export const SignUpScreen = () => {
 	return (
-		<ScreenTemplate canGoBack>
+		<ScreenTemplate canGoBack scrollable>
 			<Text accessibilityRole="text">SignUp</Text>
 		</ScreenTemplate>
 	)
