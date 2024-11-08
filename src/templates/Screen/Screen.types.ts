@@ -1,2 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
-export type ScreenTemplateProps = {}
+export type ScreenTemplateProps = {
+	canGoBack?: boolean
+}
