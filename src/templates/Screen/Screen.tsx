@@ -24,7 +24,8 @@ export function ViewContainer({
 	children,
 	backgroundColor,
 }: Readonly<ContainerScreenProps>) {
-	return <View style={{ backgroundColor }}>{children}</View>
+	// eslint-disable-next-line react-native/no-inline-styles
+	return <View style={{ backgroundColor, flex: 1 }}>{children}</View>
 }
 
 export const ScreenTemplate = ({
