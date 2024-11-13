@@ -9,5 +9,8 @@ describe('<SuccessScreen/>', () => {
 		expect(screen.getByRole('img')).toBeOnTheScreen()
 		expect(screen.getByRole('text', { name: /Título/i })).toBeOnTheScreen()
 		expect(screen.getByRole('text', { name: /Descrição/i })).toBeOnTheScreen()
+		expect(
+			screen.getByRole('button', { name: /Voltar ao início/i })
+		).toBeOnTheScreen()
 	})
 })
