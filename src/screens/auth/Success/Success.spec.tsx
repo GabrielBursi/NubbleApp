@@ -7,9 +7,10 @@ describe('<SuccessScreen/>', () => {
 	it('should render the screen correctly', () => {
 		customRender(
 			<SuccessScreen
-				navigation={mockUseNavigation}
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
 				route={{
-					key: 'jest',
+					key: 'SuccessScreen',
 					name: 'SuccessScreen',
 					params: {
 						description: 'Descrição',
@@ -34,9 +35,10 @@ describe('<SuccessScreen/>', () => {
 	it('should navigate to login the screen correctly', async () => {
 		customRender(
 			<SuccessScreen
-				navigation={mockUseNavigation}
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
 				route={{
-					key: 'jest',
+					key: 'SuccessScreen',
 					name: 'SuccessScreen',
 					params: {
 						description: 'Descrição',

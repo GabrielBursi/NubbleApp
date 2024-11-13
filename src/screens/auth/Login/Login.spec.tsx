@@ -5,7 +5,13 @@ import { mockUseNavigation } from '@/tests/mocks'
 
 describe('<LoginScreen/>', () => {
 	it('should render the screen correctly', () => {
-		customRender(<LoginScreen />)
+		customRender(
+			<LoginScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
 
 		expect(screen.getByText('Olá', { exact: true })).toBeOnTheScreen()
 		expect(
@@ -31,7 +37,13 @@ describe('<LoginScreen/>', () => {
 	})
 
 	it('should navigate to forgot password screen correctly', async () => {
-		customRender(<LoginScreen navigation={mockUseNavigation} />)
+		customRender(
+			<LoginScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
 
 		await userEvent.press(
 			screen.getByRole('text', { name: /Esqueci minha senha/i })
@@ -43,7 +55,13 @@ describe('<LoginScreen/>', () => {
 	})
 
 	it('should navigate to sign up screen correctly', async () => {
-		customRender(<LoginScreen navigation={mockUseNavigation} />)
+		customRender(
+			<LoginScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
 
 		await userEvent.press(
 			screen.getByRole('button', { name: /criar uma conta/i })
