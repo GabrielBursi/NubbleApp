@@ -1,5 +1,12 @@
+import { IconProps } from '@/components/ui/Icon/Icon.types'
+
 export type RootStackParamList = {
-	Home: undefined
-	Example: { userId: string }
-	OtherExample: { sort: 'latest' | 'top' } | undefined
+	LoginScreen: undefined
+	SignUpScreen: undefined
+	SuccessScreen: {
+		title: string
+		description: string
+		icon: Pick<IconProps, 'name' | 'color'>
+	}
+	ForgotPasswordScreen: undefined
 }

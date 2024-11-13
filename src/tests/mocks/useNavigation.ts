@@ -5,4 +5,5 @@ export const mockUseNavigation: HookMocked<
 	typeof useNavigation<NavigationProp<ReactNavigation.RootParamList>>
 > = {
 	goBack: jest.fn(),
+	navigate: jest.fn(),
 }
