@@ -6,7 +6,14 @@ const meta: Meta<typeof SuccessScreen> = {
 	title: 'Screens/Auth/SuccessScreen',
 	component: SuccessScreen,
 	args: {},
-	argTypes: {},
+	argTypes: {
+		navigation: {
+			type: 'symbol',
+		},
+		route: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 

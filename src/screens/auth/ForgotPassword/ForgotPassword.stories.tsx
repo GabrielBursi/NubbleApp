@@ -6,7 +6,14 @@ const meta: Meta<typeof ForgotPasswordScreen> = {
 	title: 'Screens/Auth/ForgotPasswordScreen',
 	component: ForgotPasswordScreen,
 	args: {},
-	argTypes: {},
+	argTypes: {
+		navigation: {
+			type: 'symbol',
+		},
+		route: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 

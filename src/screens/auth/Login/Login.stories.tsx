@@ -6,7 +6,14 @@ const meta: Meta<typeof LoginScreen> = {
 	title: 'Screens/Auth/LoginScreen',
 	component: LoginScreen,
 	args: {},
-	argTypes: {},
+	argTypes: {
+		navigation: {
+			type: 'symbol',
+		},
+		route: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 
