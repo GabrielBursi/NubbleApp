@@ -2,15 +2,15 @@ import React from 'react'
 
 import { Button, Text, TextInput } from '@/components'
 import { ScreenTemplate } from '@/templates'
-import { ForgotPasswordScreenProps } from '@/types/screens'
+import { useResetNavigation } from '@/hooks'
 
-export const ForgotPasswordScreen = ({
-	navigation,
-}: ForgotPasswordScreenProps) => {
+export const ForgotPasswordScreen = () => {
+	const { resetSuccess } = useResetNavigation()
+
 	const retrievePassword = () => {
 		//TODO: recuperar senha
 
-		navigation.navigate('SuccessScreen', {
+		resetSuccess({
 			title: `Enviamos as instruções para seu  ${'\n'}e-mail`,
 			description:
 				'Clique no link enviado no seu e-mail para recuperar sua senha',

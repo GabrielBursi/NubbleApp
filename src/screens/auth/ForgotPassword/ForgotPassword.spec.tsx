@@ -17,17 +17,12 @@ describe('<ForgotPasswordScreen/>', () => {
 	})
 
 	it('should navigate to success screen on retrieve password correctly', async () => {
-		customRender(<ForgotPasswordScreen navigation={mockUseNavigation} />)
+		customRender(<ForgotPasswordScreen />)
 
 		await userEvent.press(
 			screen.getByRole('button', { name: /Recuperar senha/i })
 		)
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('SuccessScreen', {
-			description:
-				'Clique no link enviado no seu e-mail para recuperar sua senha',
-			icon: { color: 'primary', name: 'messageRound' },
-			title: `Enviamos as instruções para seu  ${'\n'}e-mail`,
-		})
+		expect(mockUseNavigation.reset).toHaveBeenCalled()
 	})
 })

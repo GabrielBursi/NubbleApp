@@ -6,4 +6,5 @@ export const mockUseNavigation: HookMocked<
 > = {
 	goBack: jest.fn(),
 	navigate: jest.fn(),
+	reset: jest.fn(),
 }

@@ -7,6 +7,7 @@ describe('<SuccessScreen/>', () => {
 	it('should render the screen correctly', () => {
 		customRender(
 			<SuccessScreen
+				navigation={mockUseNavigation}
 				route={{
 					key: 'jest',
 					name: 'SuccessScreen',
@@ -53,6 +54,6 @@ describe('<SuccessScreen/>', () => {
 			screen.getByRole('button', { name: /Voltar ao início/i })
 		)
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('LoginScreen')
+		expect(mockUseNavigation.goBack).toHaveBeenCalled()
 	})
 })

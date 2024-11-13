@@ -14,11 +14,7 @@ export const SuccessScreen = ({ route, navigation }: SuccessScreenProps) => {
 			<Text preset="paragraphLarge" mt="s16">
 				{route.params.description}
 			</Text>
-			<Button
-				title="Voltar ao início"
-				onPress={() => navigation.navigate('LoginScreen')}
-				mt="s40"
-			/>
+			<Button title="Voltar ao início" onPress={navigation.goBack} mt="s40" />
 		</ScreenTemplate>
 	)
 }

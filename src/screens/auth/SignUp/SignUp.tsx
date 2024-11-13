@@ -2,12 +2,14 @@ import React from 'react'
 
 import { ScreenTemplate } from '@/templates'
 import { Button, PasswordInput, Text, TextInput } from '@/components'
-import { SignUpScreenProps } from '@/types/screens'
+import { useResetNavigation } from '@/hooks'
 
-export const SignUpScreen = ({ navigation }: SignUpScreenProps) => {
+export const SignUpScreen = () => {
+	const { resetSuccess } = useResetNavigation()
+
 	const createAccount = () => {
 		// TODO: sign up
-		navigation.navigate('SuccessScreen', {
+		resetSuccess({
 			title: 'Sua conta foi criada com sucesso!',
 			description: 'Agora é só fazer login na nossa plataforma',
 			icon: {

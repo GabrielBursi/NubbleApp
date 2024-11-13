@@ -37,19 +37,12 @@ describe('<SignUpScreen/>', () => {
 	})
 
 	it('should navigate to success screen correctly', async () => {
-		customRender(<SignUpScreen navigation={mockUseNavigation} />)
+		customRender(<SignUpScreen />)
 
 		await userEvent.press(
 			screen.getByRole('button', { name: /criar uma conta/i })
 		)
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('SuccessScreen', {
-			title: 'Sua conta foi criada com sucesso!',
-			description: 'Agora é só fazer login na nossa plataforma',
-			icon: {
-				name: 'checkRound',
-				color: 'success',
-			},
-		})
+		expect(mockUseNavigation.reset).toHaveBeenCalled()
 	})
 })
