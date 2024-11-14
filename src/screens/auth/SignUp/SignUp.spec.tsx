@@ -39,10 +39,78 @@ describe('<SignUpScreen/>', () => {
 	it('should navigate to success screen correctly', async () => {
 		customRender(<SignUpScreen />)
 
+		await userEvent.type(
+			screen.getByPlaceholderText('@', {
+				exact: true,
+			}),
+			'username'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu nome completo', {
+				exact: true,
+			}),
+			'nome'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite sua senha', {
+				exact: true,
+			}),
+			'12345678'
+		)
+
 		await userEvent.press(
 			screen.getByRole('button', { name: /criar uma conta/i })
 		)
 
 		expect(mockUseNavigation.reset).toHaveBeenCalled()
+	})
+
+	it('should validate the form correctly', async () => {
+		customRender(<SignUpScreen />)
+
+		expect(
+			screen.getByRole('button', { name: /criar uma conta/i })
+		).toBeDisabled()
+
+		await userEvent.type(
+			screen.getByPlaceholderText('@', {
+				exact: true,
+			}),
+			'username'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu nome completo', {
+				exact: true,
+			}),
+			'nome'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite sua senha', {
+				exact: true,
+			}),
+			'12345678'
+		)
+
+		expect(
+			screen.getByRole('button', { name: /criar uma conta/i })
+		).toBeEnabled()
 	})
 })

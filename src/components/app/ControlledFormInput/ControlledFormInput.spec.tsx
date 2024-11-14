@@ -26,4 +26,34 @@ describe('<ControlledFormInput/>', () => {
 
 		expect(screen.getByLabelText('Jest')).toBeOnTheScreen()
 	})
+
+	it('should render with rules correctly', () => {
+		const { result } = renderHook(() => useForm())
+		customRender(
+			<FormProvider {...result.current}>
+				<ControlledFormInput
+					rules={{ max: 10, min: 2 }}
+					label="Jest"
+					name="jest"
+					testID="rtl"
+				/>
+				<ControlledFormInput.Password
+					rules={{ max: 10, min: 2 }}
+					label="Jest"
+					name="jest"
+					testID="jest"
+				/>
+			</FormProvider>
+		)
+
+		expect(screen.getByTestId('rtl')).toHaveAccessibilityValue({
+			max: 10,
+			min: 2,
+		})
+
+		expect(screen.getByTestId('jest')).toHaveAccessibilityValue({
+			max: 10,
+			min: 2,
+		})
+	})
 })

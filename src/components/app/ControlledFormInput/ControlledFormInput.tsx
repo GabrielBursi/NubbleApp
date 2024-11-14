@@ -24,6 +24,12 @@ const ControlledTextInput = <TField extends FieldValues>({
 					value={field.value}
 					onChangeText={field.onChange}
 					errorMessage={fieldState.error?.message}
+					aria-valuemax={rules?.max ? Number(rules.max) : undefined}
+					aria-valuemin={rules?.min ? Number(rules.min) : undefined}
+					accessibilityValue={{
+						max: rules?.max ? Number(rules.max) : undefined,
+						min: rules?.min ? Number(rules.min) : undefined,
+					}}
 					{...textInputProps}
 				/>
 			)}
@@ -47,6 +53,12 @@ const ControlledPasswordInput = <TField extends FieldValues>({
 					value={field.value}
 					onChangeText={field.onChange}
 					errorMessage={fieldState.error?.message}
+					aria-valuemax={rules?.max ? Number(rules.max) : undefined}
+					aria-valuemin={rules?.min ? Number(rules.min) : undefined}
+					accessibilityValue={{
+						max: rules?.max ? Number(rules.max) : undefined,
+						min: rules?.min ? Number(rules.min) : undefined,
+					}}
 					{...passwordInputProps}
 				/>
 			)}

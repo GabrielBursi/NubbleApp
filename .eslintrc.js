@@ -22,7 +22,8 @@ module.exports = {
 		"plugin:jest/style",
 		"plugin:react-native/all",
 		"plugin:@tanstack/eslint-plugin-query/recommended",
-		"plugin:storybook/recommended"
+		"plugin:storybook/recommended",
+		"plugin:react-hook-form/recommended"
 	],
 	overrides: [
 		{
@@ -66,7 +67,8 @@ module.exports = {
 		"json-format",
 		"jest-formatting",
 		'jest',
-		'testing-library'
+		'testing-library',
+		"react-hook-form"
 	],
 	rules: {
 		'no-empty-function': 'off',
