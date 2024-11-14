@@ -2,6 +2,7 @@ import React from 'react'
 import { Controller, FieldValues } from 'react-hook-form'
 
 import { PasswordInput, TextInput } from '@/components'
+import { useControlledInput } from '@/hooks'
 
 import {
 	ControlledPasswordInputProps,
@@ -14,6 +15,8 @@ const ControlledTextInput = <TField extends FieldValues>({
 	rules,
 	...textInputProps
 }: Readonly<ControlledTextInputProps<TField>>) => {
+	const { maxValue, minValue } = useControlledInput(rules)
+
 	return (
 		<Controller
 			control={control}
@@ -24,11 +27,11 @@ const ControlledTextInput = <TField extends FieldValues>({
 					value={field.value}
 					onChangeText={field.onChange}
 					errorMessage={fieldState.error?.message}
-					aria-valuemax={rules?.max ? Number(rules.max) : undefined}
-					aria-valuemin={rules?.min ? Number(rules.min) : undefined}
+					aria-valuemax={maxValue}
+					aria-valuemin={minValue}
 					accessibilityValue={{
-						max: rules?.max ? Number(rules.max) : undefined,
-						min: rules?.min ? Number(rules.min) : undefined,
+						max: maxValue,
+						min: minValue,
 					}}
 					{...textInputProps}
 				/>
@@ -43,6 +46,8 @@ const ControlledPasswordInput = <TField extends FieldValues>({
 	rules,
 	...passwordInputProps
 }: Readonly<ControlledPasswordInputProps<TField>>) => {
+	const { maxValue, minValue } = useControlledInput(rules)
+
 	return (
 		<Controller
 			control={control}
@@ -53,11 +58,11 @@ const ControlledPasswordInput = <TField extends FieldValues>({
 					value={field.value}
 					onChangeText={field.onChange}
 					errorMessage={fieldState.error?.message}
-					aria-valuemax={rules?.max ? Number(rules.max) : undefined}
-					aria-valuemin={rules?.min ? Number(rules.min) : undefined}
+					aria-valuemax={maxValue}
+					aria-valuemin={minValue}
 					accessibilityValue={{
-						max: rules?.max ? Number(rules.max) : undefined,
-						min: rules?.min ? Number(rules.min) : undefined,
+						max: maxValue,
+						min: minValue,
 					}}
 					{...passwordInputProps}
 				/>

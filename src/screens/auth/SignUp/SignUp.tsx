@@ -51,7 +51,13 @@ export const SignUpScreen = () => {
 			<ControlledFormInput
 				control={control}
 				name="fullName"
-				rules={{ required: 'Nome obrigatório' }}
+				rules={{
+					required: 'Nome obrigatório',
+					minLength: {
+						value: 2,
+						message: 'Nome deve ter no mínimo 2 caracteres',
+					},
+				}}
 				autoCapitalize="words"
 				label="Nome Completo"
 				placeholder="Digite seu nome completo"
