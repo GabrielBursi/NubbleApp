@@ -103,6 +103,7 @@ const TextInputMemoized = ({
 						editable={!disabled}
 						placeholder="Digite aqui"
 						testID="internal-input"
+						autoCapitalize="none"
 						{...rnTextInputProps}
 					/>
 					{RightComponent && (
