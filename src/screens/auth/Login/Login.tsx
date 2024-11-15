@@ -1,10 +1,29 @@
 import React from 'react'
+import { useForm } from 'react-hook-form'
 
 import { ScreenTemplate } from '@/templates'
-import { Button, PasswordInput, Text, TextInput } from '@/components'
+import { Button, ControlledFormInput, Text } from '@/components'
 import { LoginScreenProps } from '@/types/screens'
+import { LoginFormValues } from '@/types/form'
 
 export const LoginScreen = ({ navigation }: LoginScreenProps) => {
+	const {
+		control,
+		formState: { isValid },
+		handleSubmit,
+	} = useForm<LoginFormValues>({
+		defaultValues: {
+			email: '',
+			password: '',
+		},
+		mode: 'onChange',
+	})
+
+	const submitLogin = (formValues: LoginFormValues) => {
+		console.log(formValues)
+		navigation.navigate('HomeScreen')
+	}
+
 	const navigateToSignUpScreen = () => {
 		navigation.navigate('SignUpScreen')
 	}
@@ -20,8 +39,32 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 			<Text preset="paragraphLarge" mb="s40">
 				Digite seu e-mail e senha para entrar
 			</Text>
-			<TextInput label="E-mail" placeholder="Digite seu e-mail" />
-			<PasswordInput label="Senha" placeholder="Digite sua senha" />
+			<ControlledFormInput
+				control={control}
+				name="email"
+				rules={{
+					required: 'E-mail obrigatório',
+					pattern: {
+						value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+						message: 'E-mail inválido',
+					},
+				}}
+				label="E-mail"
+				placeholder="Digite seu e-mail"
+			/>
+			<ControlledFormInput.Password
+				control={control}
+				name="password"
+				rules={{
+					required: 'Senha obrigatória',
+					minLength: {
+						value: 8,
+						message: 'Senha deve ter no mínimo 8 caracteres',
+					},
+				}}
+				label="Senha"
+				placeholder="Digite sua senha"
+			/>
 			<Text
 				onPress={navigateToForgotPasswordScreen}
 				color="primary"
@@ -30,7 +73,13 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 			>
 				Esqueci minha senha
 			</Text>
-			<Button marginTop="s48" title="Entrar" />
+			<Button
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises
+				onPress={handleSubmit(submitLogin)}
+				disabled={!isValid}
+				marginTop="s48"
+				title="Entrar"
+			/>
 			<Button
 				onPress={navigateToSignUpScreen}
 				preset="outline"

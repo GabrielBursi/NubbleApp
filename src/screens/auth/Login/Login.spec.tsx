@@ -36,6 +36,62 @@ describe('<LoginScreen/>', () => {
 		).toBeOnTheScreen()
 	})
 
+	it('should validate the form correctly', async () => {
+		customRender(
+			<LoginScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
+
+		expect(screen.getByRole('button', { name: /entrar/i })).toBeDisabled()
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite sua senha', {
+				exact: true,
+			}),
+			'12345678'
+		)
+
+		expect(screen.getByRole('button', { name: /entrar/i })).toBeEnabled()
+	})
+
+	it('should do login correctly', async () => {
+		customRender(
+			<LoginScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite sua senha', {
+				exact: true,
+			}),
+			'12345678'
+		)
+
+		await userEvent.press(screen.getByRole('button', { name: /entrar/i }))
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('HomeScreen')
+	})
+
 	it('should navigate to forgot password screen correctly', async () => {
 		customRender(
 			<LoginScreen

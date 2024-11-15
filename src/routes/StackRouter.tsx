@@ -7,6 +7,7 @@ import {
 	SuccessScreen,
 	SignUpScreen,
 	ForgotPasswordScreen,
+	HomeScreen,
 } from '@/screens'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -26,6 +27,7 @@ export const StackRouter = () => {
 				name="ForgotPasswordScreen"
 				component={ForgotPasswordScreen}
 			/>
+			<Stack.Screen name="HomeScreen" component={HomeScreen} />
 		</Stack.Navigator>
 	)
 }

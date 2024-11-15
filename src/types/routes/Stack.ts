@@ -9,4 +9,5 @@ export type RootStackParamList = {
 		icon: Pick<IconProps, 'name' | 'color'>
 	}
 	ForgotPasswordScreen: undefined
+	HomeScreen: undefined
 }
