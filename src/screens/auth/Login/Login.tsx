@@ -1,17 +1,19 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { ScreenTemplate } from '@/templates'
 import { Button, ControlledFormInput, Text } from '@/components'
 import { LoginScreenProps } from '@/types/screens'
-import { LoginFormValues } from '@/types/form'
+import { loginSchema, LoginSchema } from '@/types/form'
 
 export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 	const {
 		control,
 		formState: { isValid },
 		handleSubmit,
-	} = useForm<LoginFormValues>({
+	} = useForm<LoginSchema>({
+		resolver: zodResolver(loginSchema),
 		defaultValues: {
 			email: '',
 			password: '',
@@ -19,7 +21,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		mode: 'onChange',
 	})
 
-	const submitLogin = (formValues: LoginFormValues) => {
+	const submitLogin = (formValues: LoginSchema) => {
 		console.log(formValues)
 		navigation.navigate('HomeScreen')
 	}
@@ -42,26 +44,12 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 			<ControlledFormInput
 				control={control}
 				name="email"
-				rules={{
-					required: 'E-mail obrigatório',
-					pattern: {
-						value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-						message: 'E-mail inválido',
-					},
-				}}
 				label="E-mail"
 				placeholder="Digite seu e-mail"
 			/>
 			<ControlledFormInput.Password
 				control={control}
 				name="password"
-				rules={{
-					required: 'Senha obrigatória',
-					minLength: {
-						value: 8,
-						message: 'Senha deve ter no mínimo 8 caracteres',
-					},
-				}}
 				label="Senha"
 				placeholder="Digite sua senha"
 			/>

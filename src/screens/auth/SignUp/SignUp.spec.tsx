@@ -43,14 +43,14 @@ describe('<SignUpScreen/>', () => {
 			screen.getByPlaceholderText('@', {
 				exact: true,
 			}),
-			'username'
+			'user.name_123'
 		)
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Digite seu nome completo', {
 				exact: true,
 			}),
-			'nome'
+			'jest test'
 		)
 
 		await userEvent.type(
@@ -85,14 +85,14 @@ describe('<SignUpScreen/>', () => {
 			screen.getByPlaceholderText('@', {
 				exact: true,
 			}),
-			'username'
+			'user.name_123'
 		)
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Digite seu nome completo', {
 				exact: true,
 			}),
-			'nome'
+			'jest test'
 		)
 
 		await userEvent.type(
@@ -112,21 +112,5 @@ describe('<SignUpScreen/>', () => {
 		expect(
 			screen.getByRole('button', { name: /criar uma conta/i })
 		).toBeEnabled()
-	})
-
-	it('should render the fields with rules correctly', () => {
-		customRender(<SignUpScreen />)
-
-		expect(
-			screen.getByPlaceholderText('Digite seu nome completo', {
-				exact: true,
-			})
-		).toHaveAccessibilityValue({ min: 2 })
-
-		expect(
-			screen.getByPlaceholderText('Digite sua senha', {
-				exact: true,
-			})
-		).toHaveAccessibilityValue({ min: 8 })
 	})
 })

@@ -1,10 +1,11 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { ScreenTemplate } from '@/templates'
 import { Button, ControlledFormInput, Text } from '@/components'
 import { useResetNavigation } from '@/hooks'
-import { SignUpFormValues } from '@/types/form'
+import { signUpSchema, SignUpSchema } from '@/types/form'
 
 export const SignUpScreen = () => {
 	const { resetSuccess } = useResetNavigation()
@@ -13,7 +14,8 @@ export const SignUpScreen = () => {
 		control,
 		formState: { isValid },
 		handleSubmit,
-	} = useForm<SignUpFormValues>({
+	} = useForm<SignUpSchema>({
+		resolver: zodResolver(signUpSchema),
 		defaultValues: {
 			username: '',
 			fullName: '',
@@ -23,7 +25,7 @@ export const SignUpScreen = () => {
 		mode: 'onChange',
 	})
 
-	const createAccount = (formValues: SignUpFormValues) => {
+	const createAccount = (formValues: SignUpSchema) => {
 		console.log(formValues)
 		// TODO: sign up
 		resetSuccess({
@@ -44,20 +46,12 @@ export const SignUpScreen = () => {
 			<ControlledFormInput
 				control={control}
 				name="username"
-				rules={{ required: 'Username obrigatório' }}
 				label="Seu username"
 				placeholder="@"
 			/>
 			<ControlledFormInput
 				control={control}
 				name="fullName"
-				rules={{
-					required: 'Nome obrigatório',
-					minLength: {
-						value: 2,
-						message: 'Nome deve ter no mínimo 2 caracteres',
-					},
-				}}
 				autoCapitalize="words"
 				label="Nome Completo"
 				placeholder="Digite seu nome completo"
@@ -65,26 +59,12 @@ export const SignUpScreen = () => {
 			<ControlledFormInput
 				control={control}
 				name="email"
-				rules={{
-					required: 'E-mail obrigatório',
-					pattern: {
-						value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-						message: 'E-mail inválido',
-					},
-				}}
 				label="E-mail"
 				placeholder="Digite seu e-mail"
 			/>
 			<ControlledFormInput.Password
 				control={control}
 				name="password"
-				rules={{
-					required: 'Senha obrigatória',
-					minLength: {
-						value: 8,
-						message: 'Senha deve ter no mínimo 8 caracteres',
-					},
-				}}
 				label="Senha"
 				placeholder="Digite sua senha"
 				boxProps={{ mb: 's48' }}

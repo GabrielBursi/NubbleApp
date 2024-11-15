@@ -1,10 +1,11 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, ControlledFormInput, Text } from '@/components'
 import { ScreenTemplate } from '@/templates'
 import { useResetNavigation } from '@/hooks'
-import { ForgotPasswordFormValues } from '@/types/form'
+import { forgotPasswordSchema, ForgotPasswordSchema } from '@/types/form'
 
 export const ForgotPasswordScreen = () => {
 	const { resetSuccess } = useResetNavigation()
@@ -13,14 +14,15 @@ export const ForgotPasswordScreen = () => {
 		control,
 		formState: { isValid },
 		handleSubmit,
-	} = useForm<ForgotPasswordFormValues>({
+	} = useForm<ForgotPasswordSchema>({
+		resolver: zodResolver(forgotPasswordSchema),
 		defaultValues: {
 			email: '',
 		},
 		mode: 'onChange',
 	})
 
-	const retrievePassword = (formValues: ForgotPasswordFormValues) => {
+	const retrievePassword = (formValues: ForgotPasswordSchema) => {
 		console.log(formValues)
 		//TODO: recuperar senha
 
@@ -46,13 +48,6 @@ export const ForgotPasswordScreen = () => {
 			<ControlledFormInput
 				control={control}
 				name="email"
-				rules={{
-					required: 'E-mail obrigatório',
-					pattern: {
-						value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-						message: 'E-mail inválido',
-					},
-				}}
 				label="E-mail"
 				placeholder="Digite seu e-mail"
 			/>
