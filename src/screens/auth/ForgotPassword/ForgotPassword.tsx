@@ -1,13 +1,27 @@
 import React from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button, Text, TextInput } from '@/components'
+import { Button, ControlledFormInput, Text } from '@/components'
 import { ScreenTemplate } from '@/templates'
 import { useResetNavigation } from '@/hooks'
+import { ForgotPasswordFormValues } from '@/types/form'
 
 export const ForgotPasswordScreen = () => {
 	const { resetSuccess } = useResetNavigation()
 
-	const retrievePassword = () => {
+	const {
+		control,
+		formState: { isValid },
+		handleSubmit,
+	} = useForm<ForgotPasswordFormValues>({
+		defaultValues: {
+			email: '',
+		},
+		mode: 'onChange',
+	})
+
+	const retrievePassword = (formValues: ForgotPasswordFormValues) => {
+		console.log(formValues)
 		//TODO: recuperar senha
 
 		resetSuccess({
@@ -29,12 +43,25 @@ export const ForgotPasswordScreen = () => {
 			<Text preset="paragraphLarge" mb="s32">
 				Digite seu e-mail e enviaremos as instruções para redefinição de senha
 			</Text>
-			<TextInput
+			<ControlledFormInput
+				control={control}
+				name="email"
+				rules={{
+					required: 'E-mail obrigatório',
+					pattern: {
+						value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+						message: 'E-mail inválido',
+					},
+				}}
 				label="E-mail"
 				placeholder="Digite seu e-mail"
-				boxProps={{ mb: 's40' }}
 			/>
-			<Button onPress={retrievePassword} title="Recuperar senha" />
+			<Button
+				disabled={!isValid}
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises
+				onPress={handleSubmit(retrievePassword)}
+				title="Recuperar senha"
+			/>
 		</ScreenTemplate>
 	)
 }

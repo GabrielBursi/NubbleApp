@@ -19,10 +19,36 @@ describe('<ForgotPasswordScreen/>', () => {
 	it('should navigate to success screen on retrieve password correctly', async () => {
 		customRender(<ForgotPasswordScreen />)
 
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
 		await userEvent.press(
 			screen.getByRole('button', { name: /Recuperar senha/i })
 		)
 
 		expect(mockUseNavigation.reset).toHaveBeenCalled()
+	})
+
+	it('should validate the form correctly', async () => {
+		customRender(<ForgotPasswordScreen />)
+
+		expect(
+			screen.getByRole('button', { name: /Recuperar senha/i })
+		).toBeDisabled()
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
+		expect(
+			screen.getByRole('button', { name: /Recuperar senha/i })
+		).toBeEnabled()
 	})
 })
