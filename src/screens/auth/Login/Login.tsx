@@ -13,6 +13,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		formState: { isValid },
 		handleSubmit,
 	} = useForm<LoginSchema>({
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
 			email: '',

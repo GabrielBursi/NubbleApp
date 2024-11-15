@@ -15,6 +15,7 @@ export const ForgotPasswordScreen = () => {
 		formState: { isValid },
 		handleSubmit,
 	} = useForm<ForgotPasswordSchema>({
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		resolver: zodResolver(forgotPasswordSchema),
 		defaultValues: {
 			email: '',

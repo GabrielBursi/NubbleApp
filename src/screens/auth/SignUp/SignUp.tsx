@@ -15,6 +15,7 @@ export const SignUpScreen = () => {
 		formState: { isValid },
 		handleSubmit,
 	} = useForm<SignUpSchema>({
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		resolver: zodResolver(signUpSchema),
 		defaultValues: {
 			username: '',
