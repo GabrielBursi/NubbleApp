@@ -3,7 +3,6 @@ import React from 'react'
 import { Svg, Path, Circle } from 'react-native-svg'
 
 import { appTheme } from '@/styles'
-
 import { IconBase } from '@/types/theme'
 
 export function MessageRoundIcon({

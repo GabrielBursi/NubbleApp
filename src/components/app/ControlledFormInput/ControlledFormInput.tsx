@@ -1,13 +1,14 @@
 import React from 'react'
-import { Controller, FieldValues } from 'react-hook-form'
 
-import { PasswordInput, TextInput } from '@/components'
-import { useControlledInput } from '@/hooks'
+import { Controller, FieldValues } from 'react-hook-form'
 
 import {
 	ControlledPasswordInputProps,
 	ControlledTextInputProps,
 } from './ControlledFormInput.types'
+
+import { PasswordInput, TextInput } from '@/components'
+import { useControlledInput } from '@/hooks'
 
 const ControlledTextInput = <TField extends FieldValues>({
 	control,

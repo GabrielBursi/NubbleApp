@@ -1,10 +1,11 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
 import { Button, ControlledFormInput, Text } from '@/components'
-import { ScreenTemplate } from '@/templates'
 import { useResetNavigation } from '@/hooks'
+import { ScreenTemplate } from '@/templates'
 import { forgotPasswordSchema, ForgotPasswordSchema } from '@/types/form'
 
 export const ForgotPasswordScreen = () => {

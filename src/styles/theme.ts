@@ -1,8 +1,9 @@
 import { Dimensions } from 'react-native'
+
+import { createTheme } from '@shopify/restyle'
 import { lighten } from 'polished'
 import normalize from 'react-native-normalize'
 import { RFValue } from 'react-native-responsive-fontsize'
-import { createTheme } from '@shopify/restyle'
 
 const windowHeight = Dimensions.get('window').height
 

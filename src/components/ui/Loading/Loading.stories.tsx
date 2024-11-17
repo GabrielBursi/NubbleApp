@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Loading } from './Loading'
+
 import { appTheme } from '@/styles'
 
 const meta: Meta<typeof Loading> = {

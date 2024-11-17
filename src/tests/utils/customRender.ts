@@ -1,5 +1,7 @@
 import { ReactElement } from 'react'
+
 import { RenderOptions, render } from '@testing-library/react-native'
+
 import { TestProvider } from '@/providers'
 
 export const customRender = (

@@ -1,7 +1,8 @@
-import { renderHook } from '@testing-library/react-native'
 import { PropsWithChildren } from 'react'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+
 import { ThemeProvider } from '@shopify/restyle'
+import { renderHook } from '@testing-library/react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { useAppSafeArea } from './useAppSafeArea'
 

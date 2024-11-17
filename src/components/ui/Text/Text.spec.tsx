@@ -1,6 +1,8 @@
 import { screen } from '@testing-library/react-native'
-import { customRender } from '@/tests/utils'
+
 import { Text } from './Text'
+
+import { customRender } from '@/tests/utils'
 
 describe('<Text/>', () => {
 	it('should render the text correctly', () => {

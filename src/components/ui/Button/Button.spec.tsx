@@ -1,6 +1,8 @@
 import { screen, userEvent } from '@testing-library/react-native'
-import { customRender } from '@/tests/utils'
+
 import { Button } from './Button'
+
+import { customRender } from '@/tests/utils'
 
 describe('<Button/>', () => {
 	const mockOnPress = jest.fn()

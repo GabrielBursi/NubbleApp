@@ -1,10 +1,10 @@
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import React, { PropsWithChildren } from 'react'
-
-import { useAppSafeArea, useAppTheme } from '@/hooks'
-import { Container, GoBack } from '@/components'
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 
 import { ContainerScreenProps, ScreenTemplateProps } from './Screen.types'
+
+import { Container, GoBack } from '@/components'
+import { useAppSafeArea, useAppTheme } from '@/hooks'
 
 export function ScrollViewContainer({
 	children,

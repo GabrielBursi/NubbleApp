@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { ScreenTemplate } from '@/templates'
 import { Button, Icon, Text } from '@/components'
+import { ScreenTemplate } from '@/templates'
 import { SuccessScreenProps } from '@/types/screens'
 
 export const SuccessScreen = ({ route, navigation }: SuccessScreenProps) => {

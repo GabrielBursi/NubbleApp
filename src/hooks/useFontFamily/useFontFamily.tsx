@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react'
 import { TextStyle } from 'react-native'
-import { TextVariants } from '@/types/theme'
+
 import { useAppTheme } from '@/hooks'
+import { TextVariants } from '@/types/theme'
 
 export const useFontFamily = () => {
 	const { font } = useAppTheme()

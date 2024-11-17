@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 import { RootStackParamList } from '@/types/routes'

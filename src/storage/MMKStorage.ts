@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { MMKV } from 'react-native-mmkv'
+
 import { Storage } from '@/types/storage'
 
 export const storage = new MMKV()

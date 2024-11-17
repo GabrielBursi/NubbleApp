@@ -1,5 +1,6 @@
-import { IconName, ThemeColors } from '@/types/theme'
 import { PressableProps } from 'react-native'
+
+import { IconName, ThemeColors } from '@/types/theme'
 
 export type IconProps = {
 	name: IconName

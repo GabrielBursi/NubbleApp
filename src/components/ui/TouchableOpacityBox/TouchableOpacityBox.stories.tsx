@@ -1,7 +1,8 @@
+import { Text } from 'react-native'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { TouchableOpacityBox } from './TouchableOpacityBox'
-import { Text } from 'react-native'
 
 const meta: Meta<typeof TouchableOpacityBox> = {
 	title: 'UI/TouchableOpacityBox',

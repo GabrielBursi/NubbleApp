@@ -1,11 +1,12 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 
-import { ScreenTemplate } from '@/templates'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
 import { Button, ControlledFormInput, Text } from '@/components'
-import { LoginScreenProps } from '@/types/screens'
+import { ScreenTemplate } from '@/templates'
 import { loginSchema, LoginSchema } from '@/types/form'
+import { LoginScreenProps } from '@/types/screens'
 
 export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 	const {

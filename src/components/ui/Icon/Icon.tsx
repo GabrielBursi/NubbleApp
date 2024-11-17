@@ -34,6 +34,7 @@ import { SettingsIcon } from '../../../assets/icons/SettingsIcon'
 import { TrashIcon } from '../../../assets/icons/TrashIcon'
 
 import { IconProps } from './Icon.types'
+
 import { useAppTheme } from '@/hooks'
 
 export const iconRegistry = {

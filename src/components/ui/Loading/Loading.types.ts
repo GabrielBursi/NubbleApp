@@ -1,4 +1,5 @@
 import { ActivityIndicatorProps } from 'react-native'
+
 import { ThemeColors } from '@/types/theme'
 import { StrictOmit } from '@/types/utils'
 

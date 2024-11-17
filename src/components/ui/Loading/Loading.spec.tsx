@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react-native'
 
-import { customRender } from '@/tests/utils'
-import { appTheme } from '@/styles'
-
 import { Loading } from './Loading'
+
+import { appTheme } from '@/styles'
+import { customRender } from '@/tests/utils'
 
 describe('<Loading/>', () => {
 	it('should render with the color correctly', () => {

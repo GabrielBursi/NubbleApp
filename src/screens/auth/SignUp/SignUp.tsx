@@ -1,10 +1,11 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 
-import { ScreenTemplate } from '@/templates'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+
 import { Button, ControlledFormInput, Text } from '@/components'
 import { useResetNavigation } from '@/hooks'
+import { ScreenTemplate } from '@/templates'
 import { signUpSchema, SignUpSchema } from '@/types/form'
 
 export const SignUpScreen = () => {

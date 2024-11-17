@@ -1,10 +1,11 @@
 import React, { memo, PropsWithChildren } from 'react'
+
 import { createText } from '@shopify/restyle'
 
-import { AppTheme } from '@/types/theme'
-import { useFontFamily } from '@/hooks'
-
 import { TextProps } from './Text.types'
+
+import { useFontFamily } from '@/hooks'
+import { AppTheme } from '@/types/theme'
 
 export const SRText = createText<AppTheme>()
 

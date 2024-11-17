@@ -1,5 +1,6 @@
-import { HookMocked } from '@/types/tests'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+
+import { HookMocked } from '@/types/tests'
 
 export const mockUseNavigation: HookMocked<
 	typeof useNavigation<NavigationProp<ReactNavigation.RootParamList>>

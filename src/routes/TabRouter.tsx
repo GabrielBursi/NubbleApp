@@ -1,8 +1,9 @@
 import React from 'react'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import { RootTabParamList } from '@/types/routes'
 import { HomeScreen } from '@/screens'
+import { RootTabParamList } from '@/types/routes'
 
 const Tab = createBottomTabNavigator<RootTabParamList>()
 

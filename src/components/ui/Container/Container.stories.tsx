@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import { Button, Text } from 'react-native'
+
+import type { Meta, StoryObj } from '@storybook/react'
 
 import { Container } from './Container'
 

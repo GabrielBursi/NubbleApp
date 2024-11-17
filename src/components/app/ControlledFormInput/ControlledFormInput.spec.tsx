@@ -1,8 +1,9 @@
 import { renderHook, screen } from '@testing-library/react-native'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { customRender } from '@/tests/utils'
 import { ControlledFormInput } from './ControlledFormInput'
+
+import { customRender } from '@/tests/utils'
 
 describe('<ControlledFormInput/>', () => {
 	it('should render the text input correctly', () => {

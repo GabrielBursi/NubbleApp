@@ -1,9 +1,9 @@
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
 
-import { useAppTheme } from '@/hooks'
-
 import { LoadingProps } from './Loading.types'
+
+import { useAppTheme } from '@/hooks'
 
 export const Loading = ({ color, ...props }: Readonly<LoadingProps>) => {
 	const { colors } = useAppTheme()

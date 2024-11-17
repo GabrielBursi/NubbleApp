@@ -1,6 +1,8 @@
 import { screen, userEvent } from '@testing-library/react-native'
-import { customRender } from '@/tests/utils'
+
 import { PasswordInput } from './PasswordInput'
+
+import { customRender } from '@/tests/utils'
 
 describe('<PasswordInput/>', () => {
 	it('should render the input correctly', () => {

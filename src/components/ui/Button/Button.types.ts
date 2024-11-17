@@ -1,5 +1,6 @@
-import { ThemeColors } from '@/types/theme'
 import { TouchableOpacityBoxProps } from '../TouchableOpacityBox/TouchableOpacityBox.types'
+
+import { ThemeColors } from '@/types/theme'
 
 export type ButtonUI = {
 	container: TouchableOpacityBoxProps

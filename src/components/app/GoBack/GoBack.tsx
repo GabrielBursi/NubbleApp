@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+
 import { useNavigation } from '@react-navigation/native'
 
 import { TouchableOpacityBox, Icon, Text } from '@/components/ui'

@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react-native'
 
-import { mockUseNavigation } from '@/tests/mocks'
-
 import { useResetNavigation } from './useResetNavigation'
+
+import { mockUseNavigation } from '@/tests/mocks'
 
 describe('useResetNavigation', () => {
 	it('should reset stack navigator to login and success screen', async () => {
