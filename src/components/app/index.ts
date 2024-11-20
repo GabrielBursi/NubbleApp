@@ -1,3 +1,4 @@
+export * from './ActionIcon/ActionIcon'
 export * from './ControlledFormInput/ControlledFormInput'
 export * from './GoBack/GoBack'
 export * from './PostHeader/PostHeader'

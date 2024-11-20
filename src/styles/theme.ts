@@ -102,6 +102,7 @@ export const appTheme = createTheme({
 		errorLight: themeConfig.colors.redErrorLight,
 		success: themeConfig.colors.greenSuccess,
 		successLight: themeConfig.colors.greenSuccessLight,
+		iconMarked: themeConfig.colors.carrotSecondary,
 	},
 	spacing: themeConfig.spacings,
 	borderRadii: themeConfig.border.radius,
