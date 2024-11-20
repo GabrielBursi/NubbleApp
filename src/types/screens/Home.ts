@@ -1,3 +1,3 @@
-import { AppScreenProps } from './AppStackScreen'
+import { AppTabBottomScreenProp } from './AppTabBottomScreen'
 
-export type HomeScreenProps = AppScreenProps<'HomeScreen'>
+export type HomeScreenProps = AppTabBottomScreenProp<'HomeScreen'>

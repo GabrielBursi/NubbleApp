@@ -1,2 +1,5 @@
+export * from './Favorite/Favorite'
 export * from './Home/Home'
+export * from './MyProfile/MyProfile'
+export * from './NewPost/NewPost'
 export * from './Settings/Settings'

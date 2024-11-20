@@ -1,4 +1,6 @@
+import { RootAppTabBottomRouterParamList } from './AppTabBottom'
+
 export type RootAppStackRouterParamList = {
-	HomeScreen: undefined
+	AppTabNavigator: RootAppTabBottomRouterParamList
 	SettingsScreen: undefined
 }

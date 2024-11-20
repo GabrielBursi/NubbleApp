@@ -1,3 +1,3 @@
-import { AppScreenProps } from './AppStackScreen'
+import { AppStackScreenProps } from './AppStackScreen'
 
-export type SettingsScreenProps = AppScreenProps<'SettingsScreen'>
+export type SettingsScreenProps = AppStackScreenProps<'SettingsScreen'>

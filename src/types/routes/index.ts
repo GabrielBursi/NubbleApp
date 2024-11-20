@@ -1,4 +1,3 @@
 export * from './AppStack'
+export * from './AppTabBottom'
 export * from './AuthStack'
-export * from './Drawer'
-export * from './Tab'

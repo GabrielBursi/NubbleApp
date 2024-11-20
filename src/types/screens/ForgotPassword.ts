@@ -1,3 +1,4 @@
-import { AuthScreenProps } from './AuthStackScreen'
+import { AuthStackScreenProps } from './AuthStackScreen'
 
-export type ForgotPasswordScreenProps = AuthScreenProps<'ForgotPasswordScreen'>
+export type ForgotPasswordScreenProps =
+	AuthStackScreenProps<'ForgotPasswordScreen'>
