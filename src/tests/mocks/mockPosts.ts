@@ -1,12 +1,13 @@
 import { Post } from '@/domain'
-import { customFaker } from '@/tests/utils'
+
+import { customFaker } from '../utils/customFaker'
 
 export const mockPosts: Post[] = [
 	{
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
@@ -19,7 +20,7 @@ export const mockPosts: Post[] = [
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
@@ -32,7 +33,7 @@ export const mockPosts: Post[] = [
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
@@ -45,7 +46,7 @@ export const mockPosts: Post[] = [
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
@@ -58,7 +59,7 @@ export const mockPosts: Post[] = [
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
@@ -71,7 +72,7 @@ export const mockPosts: Post[] = [
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
@@ -84,7 +85,7 @@ export const mockPosts: Post[] = [
 		id: customFaker.string.uuid(),
 		text: customFaker.lorem.sentence(),
 		author: {
-			profileURL: customFaker.internet.url(),
+			profileURL: customFaker.image.url(),
 			name: customFaker.person.fullName(),
 			userName: customFaker.internet.username(),
 		},
