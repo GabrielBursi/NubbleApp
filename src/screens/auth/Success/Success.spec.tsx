@@ -1,9 +1,9 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { SuccessScreen } from './Success'
-
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+
+import { SuccessScreen } from './Success'
 
 describe('<SuccessScreen/>', () => {
 	it('should render the screen correctly', () => {

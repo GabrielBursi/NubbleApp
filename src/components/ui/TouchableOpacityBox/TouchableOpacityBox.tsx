@@ -9,9 +9,9 @@ import {
 	spacingShorthand,
 } from '@shopify/restyle'
 
-import { TouchableOpacityBoxProps } from './TouchableOpacityBox.types'
-
 import { AppTheme } from '@/types/theme'
+
+import { TouchableOpacityBoxProps } from './TouchableOpacityBox.types'
 
 export const TouchableOpacityBox = createRestyleComponent<
 	TouchableOpacityBoxProps,

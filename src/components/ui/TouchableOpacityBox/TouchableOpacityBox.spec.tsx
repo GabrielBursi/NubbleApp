@@ -2,10 +2,10 @@ import { Text } from 'react-native'
 
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { TouchableOpacityBox } from './TouchableOpacityBox'
-
 import { appTheme } from '@/styles'
 import { customRender } from '@/tests/utils'
+
+import { TouchableOpacityBox } from './TouchableOpacityBox'
 
 describe('<TouchableOpacityBox/>', () => {
 	const mockOnPress = jest.fn()

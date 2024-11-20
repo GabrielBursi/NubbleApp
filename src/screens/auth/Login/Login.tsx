@@ -25,7 +25,6 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 
 	const submitLogin = (formValues: LoginSchema) => {
 		console.log(formValues)
-		navigation.navigate('HomeScreen')
 	}
 
 	const navigateToSignUpScreen = () => {
@@ -64,7 +63,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 				Esqueci minha senha
 			</Text>
 			<Button
-				// eslint-disable-next-line @typescript-eslint/no-misused-promises
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 				onPress={handleSubmit(submitLogin)}
 				disabled={!isValid}
 				marginTop="s48"

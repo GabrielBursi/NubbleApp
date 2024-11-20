@@ -73,7 +73,7 @@ export const SignUpScreen = () => {
 			/>
 			<Button
 				disabled={!isValid}
-				// eslint-disable-next-line @typescript-eslint/no-misused-promises
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 				onPress={handleSubmit(createAccount)}
 				title="Criar uma conta"
 			/>

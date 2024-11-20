@@ -1,9 +1,11 @@
 import React from 'react'
+
 import Config from 'react-native-config'
 import 'react-native-gesture-handler'
 
-import { RouterApp } from './src/routes'
 import { AppProvider } from '@/providers'
+
+import { RouterApp } from './src/routes'
 
 function App(): React.JSX.Element {
 	return (

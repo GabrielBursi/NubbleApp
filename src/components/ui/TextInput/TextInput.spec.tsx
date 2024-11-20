@@ -1,11 +1,11 @@
 import { screen, userEvent, fireEvent } from '@testing-library/react-native'
 
+import { appTheme } from '@/styles'
+import { customRender } from '@/tests/utils'
+
 import { Icon } from '../Icon/Icon'
 
 import { TextInput } from './TextInput'
-
-import { appTheme } from '@/styles'
-import { customRender } from '@/tests/utils'
 
 describe('<TextInput/>', () => {
 	it('should render the input correctly', () => {

@@ -4,10 +4,10 @@ import { ThemeProvider } from '@shopify/restyle'
 import { renderHook } from '@testing-library/react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { useAppSafeArea } from './useAppSafeArea'
-
 import { TestProvider } from '@/providers'
 import { appTheme } from '@/styles'
+
+import { useAppSafeArea } from './useAppSafeArea'
 
 const wrapperWithInitialMetrics = ({ children }: PropsWithChildren) => {
 	return (

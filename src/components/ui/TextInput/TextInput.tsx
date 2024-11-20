@@ -8,10 +8,10 @@ import React, {
 } from 'react'
 import { Pressable, TextInput as RNTextInput, TextStyle } from 'react-native'
 
-import { TextInputProps } from './TextInput.types'
-
 import { Box, Text } from '@/components/ui'
 import { useAppTheme, useFontFamily } from '@/hooks'
+
+import { TextInputProps } from './TextInput.types'
 
 const TextInputMemoized = ({
 	label,

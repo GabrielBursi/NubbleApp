@@ -2,13 +2,14 @@ import { useCallback } from 'react'
 
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
-import { RootStackParamList } from '@/types/routes'
+import { RootAuthStackRouterParamList } from '@/types/routes'
 
 export const useResetNavigation = () => {
-	const { reset } = useNavigation<NavigationProp<RootStackParamList>>()
+	const { reset } =
+		useNavigation<NavigationProp<RootAuthStackRouterParamList>>()
 
 	const resetSuccess = useCallback(
-		(params: RootStackParamList['SuccessScreen']) => {
+		(params: RootAuthStackRouterParamList['SuccessScreen']) => {
 			reset({
 				index: 1,
 				routes: [

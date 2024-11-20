@@ -2,9 +2,9 @@ import { Text } from 'react-native'
 
 import { screen } from '@testing-library/react-native'
 
-import { Container } from './Container'
-
 import { customRender } from '@/tests/utils'
+
+import { Container } from './Container'
 
 describe('<Container/>', () => {
 	it('should render with style correctly', () => {

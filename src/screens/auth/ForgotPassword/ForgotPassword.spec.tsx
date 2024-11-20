@@ -1,9 +1,9 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { ForgotPasswordScreen } from './ForgotPassword'
-
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+
+import { ForgotPasswordScreen } from './ForgotPassword'
 
 describe('<ForgotPasswordScreen/>', () => {
 	it('should render the screen correctly', () => {

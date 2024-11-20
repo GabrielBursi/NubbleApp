@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 
-import { ButtonPreset, ButtonProps, ButtonState } from './Button.types'
-
 import { Loading, Text, TouchableOpacityBox } from '@/components/ui'
+
+import { ButtonPreset, ButtonProps, ButtonState } from './Button.types'
 
 const buttonPresets: Record<ButtonPreset, ButtonState> = {
 	primary: {

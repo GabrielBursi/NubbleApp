@@ -1,9 +1,9 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { LoginScreen } from './Login'
-
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+
+import { LoginScreen } from './Login'
 
 describe('<LoginScreen/>', () => {
 	it('should render the screen correctly', () => {
@@ -91,7 +91,7 @@ describe('<LoginScreen/>', () => {
 
 		await userEvent.press(screen.getByRole('button', { name: /entrar/i }))
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('HomeScreen')
+		expect(mockUseNavigation.navigate).not.toHaveBeenCalled()
 	})
 
 	it('should navigate to forgot password screen correctly', async () => {

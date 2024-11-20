@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react-native'
 
-import { Box } from './Box'
-
 import { appTheme } from '@/styles'
 import { customRender } from '@/tests/utils'
+
+import { Box } from './Box'
 
 describe('<Box/>', () => {
 	it('should render the box correctly', () => {

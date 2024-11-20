@@ -1,9 +1,9 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { SignUpScreen } from './SignUp'
-
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+
+import { SignUpScreen } from './SignUp'
 
 describe('<SignUpScreen/>', () => {
 	it('should render the screen correctly', () => {

@@ -1,6 +1,8 @@
 import React, { ComponentProps } from 'react'
 import { Pressable } from 'react-native'
 
+import { useAppTheme } from '@/hooks'
+
 import { ArrowLeftIcon } from '../../../assets/icons/ArrowLeftIcon'
 import { ArrowRightIcon } from '../../../assets/icons/ArrowRightIcon'
 import { BellIcon } from '../../../assets/icons/BellIcon'
@@ -34,8 +36,6 @@ import { SettingsIcon } from '../../../assets/icons/SettingsIcon'
 import { TrashIcon } from '../../../assets/icons/TrashIcon'
 
 import { IconProps } from './Icon.types'
-
-import { useAppTheme } from '@/hooks'
 
 export const iconRegistry = {
 	arrowLeft: ArrowLeftIcon,

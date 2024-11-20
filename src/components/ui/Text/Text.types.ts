@@ -1,8 +1,8 @@
 import { ComponentProps } from 'react'
 
-import { SRText } from './Text'
-
 import { TextVariants } from '@/types/theme'
+
+import { SRText } from './Text'
 
 type SRTextProps = ComponentProps<typeof SRText>
 export type TextProps = SRTextProps & {

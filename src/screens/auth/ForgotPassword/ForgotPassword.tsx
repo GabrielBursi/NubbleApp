@@ -55,7 +55,7 @@ export const ForgotPasswordScreen = () => {
 			/>
 			<Button
 				disabled={!isValid}
-				// eslint-disable-next-line @typescript-eslint/no-misused-promises
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 				onPress={handleSubmit(retrievePassword)}
 				title="Recuperar senha"
 			/>

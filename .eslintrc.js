@@ -24,6 +24,7 @@ module.exports = {
 		"plugin:@tanstack/eslint-plugin-query/recommended",
 		"plugin:storybook/recommended",
 		"plugin:react-hook-form/recommended",
+		"plugin:sonarjs/recommended-legacy"
 	],
 	overrides: [
 		{
@@ -61,9 +62,9 @@ module.exports = {
                 position: 'before',
               },
               {
-                pattern: '@+(routes|screens|components|hooks|theme|types|tests|utils|api|assets|providers|styles|templates)',
-                group: 'internal',
-                position: 'before',
+								"pattern": "@/**",
+								"group": "internal",
+								"position": "before"
               },
               {
                 pattern: './',
@@ -103,7 +104,8 @@ module.exports = {
 		'jest',
 		'testing-library',
 		"react-hook-form",
-		"import"
+		"import",
+		"sonarjs"
 	],
 	rules: {
 		'no-empty-function': 'off',
@@ -124,6 +126,8 @@ module.exports = {
 		'testing-library/no-await-sync-queries': 'error',
 		'testing-library/no-debugging-utils': 'warn',
 		'testing-library/no-dom-import': 'off',
+		"sonarjs/no-invalid-await": "off",
+		"sonarjs/todo-tag": "warn"
 	},
 	settings: {
 		react: {

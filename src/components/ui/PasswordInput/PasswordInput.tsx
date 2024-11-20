@@ -1,8 +1,8 @@
 import React, { memo, useState } from 'react'
 
-import { PasswordInputProps } from './PasswordInput.types'
-
 import { Icon, TextInput } from '@/components/ui'
+
+import { PasswordInputProps } from './PasswordInput.types'
 
 const PasswordInputMemoized = (props: Readonly<PasswordInputProps>) => {
 	const [isSecureTextEntry, setIsSecureTextEntry] = useState(true)

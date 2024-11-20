@@ -1,9 +1,9 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { GoBack } from './GoBack'
-
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+
+import { GoBack } from './GoBack'
 
 describe('<GoBack/>', () => {
 	it('should render the button correctly', () => {

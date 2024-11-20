@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from 'react'
 
-import { ContainerProps } from './Container.types'
-
 import { Box } from '@/components/ui'
+
+import { ContainerProps } from './Container.types'
 
 export const Container = ({
 	children,
