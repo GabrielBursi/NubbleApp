@@ -1,7 +1,11 @@
 import React from 'react'
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import {
+	BottomTabBarProps,
+	createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs'
 
+import { useAppTheme } from '@/hooks'
 import {
 	FavoriteScreen,
 	HomeScreen,
@@ -10,11 +14,27 @@ import {
 } from '@/screens'
 import { RootAppTabBottomRouterParamList } from '@/types/routes'
 
+import { AppTabBarCustom } from './AppTabBarCustom'
+
 const Tab = createBottomTabNavigator<RootAppTabBottomRouterParamList>()
 
 export const AppBottomTabRouter = () => {
+	const { spacing } = useAppTheme()
+
+	function renderTabBar(props: BottomTabBarProps) {
+		return <AppTabBarCustom {...props} />
+	}
+
 	return (
-		<Tab.Navigator>
+		<Tab.Navigator
+			tabBar={renderTabBar}
+			screenOptions={{
+				headerShown: false,
+				tabBarStyle: {
+					paddingTop: spacing.s20,
+				},
+			}}
+		>
 			<Tab.Screen name="HomeScreen" component={HomeScreen} />
 			<Tab.Screen name="NewPostScreen" component={NewPostScreen} />
 			<Tab.Screen name="FavoriteScreen" component={FavoriteScreen} />
