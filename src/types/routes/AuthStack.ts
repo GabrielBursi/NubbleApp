@@ -1,6 +1,6 @@
 import { IconProps } from '@/components/ui/Icon/Icon.types'
 
-export type RootStackParamList = {
+export type RootAuthStackRouterParamList = {
 	LoginScreen: undefined
 	SignUpScreen: undefined
 	SuccessScreen: {
@@ -9,5 +9,4 @@ export type RootStackParamList = {
 		icon: Pick<IconProps, 'name' | 'color'>
 	}
 	ForgotPasswordScreen: undefined
-	HomeScreen: undefined
 }

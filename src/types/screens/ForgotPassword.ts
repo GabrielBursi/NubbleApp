@@ -1,8 +1,3 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { AuthScreenProps } from './AuthStackScreen'
 
-import { RootStackParamList } from '@/types/routes'
-
-export type ForgotPasswordScreenProps = NativeStackScreenProps<
-	RootStackParamList,
-	'ForgotPasswordScreen'
->
+export type ForgotPasswordScreenProps = AuthScreenProps<'ForgotPasswordScreen'>
