@@ -32,8 +32,10 @@ export const ScreenTemplate = ({
 	children,
 	canGoBack = false,
 	scrollable = false,
+	style,
+	...boxProps
 }: PropsWithChildren<ScreenTemplateProps>) => {
-	const { top } = useAppSafeArea()
+	const { top, bottom } = useAppSafeArea()
 	const { colors } = useAppTheme()
 
 	const ContainerScreen = scrollable ? ScrollViewContainer : ViewContainer
@@ -45,7 +47,11 @@ export const ScreenTemplate = ({
 			behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 		>
 			<ContainerScreen backgroundColor={colors.background}>
-				<Container flex={1} style={{ paddingTop: top }}>
+				<Container
+					flex={1}
+					style={[{ paddingTop: top, paddingBottom: bottom }, style]}
+					{...boxProps}
+				>
 					{canGoBack && <GoBack />}
 					{children}
 				</Container>

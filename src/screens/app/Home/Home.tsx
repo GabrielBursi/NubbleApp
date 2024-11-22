@@ -1,31 +1,36 @@
 import React from 'react'
 
-import { Button } from '@/components'
-import { ScreenTemplate } from '@/templates'
-import { HomeScreenProps } from '@/types/screens'
+import { FlashList } from '@shopify/flash-list'
 
-export const HomeScreen = ({ navigation }: HomeScreenProps) => {
+import { Box, PostItem } from '@/components'
+import { ScreenTemplate } from '@/templates'
+import { mockPosts } from '@/tests/mocks/mockPosts'
+
+const ItemSeparatorComponent = () => <Box mb="s16" />
+
+export const HomeScreen = () => {
 	return (
-		<ScreenTemplate>
-			<Button
-				title="FavoriteScreen"
-				onPress={() => navigation.navigate('FavoriteScreen')}
-				mb="s14"
-			/>
-			<Button
-				title="MyProfileScreen"
-				onPress={() => navigation.navigate('MyProfileScreen')}
-				mb="s14"
-			/>
-			<Button
-				title="NewPostScreen"
-				onPress={() => navigation.navigate('NewPostScreen')}
-				mb="s14"
-			/>
-			<Button
-				title="SettingsScreen"
-				onPress={() => navigation.navigate('SettingsScreen')}
-				mb="s14"
+		<ScreenTemplate
+			// eslint-disable-next-line react-native/no-inline-styles
+			style={{
+				paddingTop: 0,
+				paddingBottom: 0,
+				paddingHorizontal: 0,
+			}}
+		>
+			<FlashList
+				showsVerticalScrollIndicator={false}
+				data={mockPosts}
+				keyExtractor={(post) => post.id}
+				renderItem={({ item: post }) => <PostItem {...post} />}
+				ItemSeparatorComponent={ItemSeparatorComponent}
+				disableAutoLayout
+				estimatedItemSize={300}
+				accessible
+				accessibilityLabel="feed"
+				aria-label="feed"
+				role="list"
+				accessibilityRole="list"
 			/>
 		</ScreenTemplate>
 	)
