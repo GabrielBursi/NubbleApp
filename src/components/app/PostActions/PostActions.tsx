@@ -22,7 +22,7 @@ export const PostActions = ({
 	}
 
 	return (
-		<Box flexDirection="row" gap="s24">
+		<Box flexDirection="row" mt="s16" gap="s24">
 			<ActionIcon
 				onPress={likePost}
 				count={reactionCount}
