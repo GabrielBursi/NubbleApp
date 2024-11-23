@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, Container, Icon } from '@/components'
+import { Box, Container, Icon, SimpleLogo } from '@/components'
 import { useAppSafeArea } from '@/hooks'
 
 export const FeedHeader = () => {
@@ -14,7 +14,7 @@ export const FeedHeader = () => {
 				paddingBottom="s24"
 				style={{ paddingTop: top }}
 			>
-				<Box backgroundColor="carrotSecondary" height={16} width={70} />
+				<SimpleLogo width={70} />
 				<Box flexDirection="row" gap="s24" justifyContent="space-between">
 					<Icon name="search" />
 					<Icon name="bell" />

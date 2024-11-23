@@ -8,6 +8,6 @@ describe('<FeedHeader/>', () => {
 	it('should render the header with icons correctly', () => {
 		customRender(<FeedHeader />)
 
-		expect(screen.getAllByRole('img')).toHaveLength(3)
+		expect(screen.getAllByRole('img')).toHaveLength(4)
 	})
 })
