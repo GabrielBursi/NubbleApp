@@ -2,7 +2,7 @@ import React from 'react'
 
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, PostItem } from '@/components'
+import { Box, FeedHeader, PostItem } from '@/components'
 import { ScreenTemplate } from '@/templates'
 import { mockPosts } from '@/tests/mocks/mockPosts'
 
@@ -24,6 +24,7 @@ export const HomeScreen = () => {
 				keyExtractor={(post) => post.id}
 				renderItem={({ item: post }) => <PostItem {...post} />}
 				ItemSeparatorComponent={ItemSeparatorComponent}
+				ListHeaderComponent={FeedHeader}
 				disableAutoLayout
 				estimatedItemSize={300}
 				accessible

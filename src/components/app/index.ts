@@ -1,5 +1,6 @@
 export * from './ActionIcon/ActionIcon'
 export * from './ControlledFormInput/ControlledFormInput'
+export * from './FeedHeader/FeedHeader'
 export * from './GoBack/GoBack'
 export * from './PostActions/PostActions'
 export * from './PostBottom/PostBottom'
