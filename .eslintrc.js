@@ -127,7 +127,8 @@ module.exports = {
 		'testing-library/no-debugging-utils': 'warn',
 		'testing-library/no-dom-import': 'off',
 		"sonarjs/no-invalid-await": "off",
-		"sonarjs/todo-tag": "warn"
+		"sonarjs/todo-tag": "warn",
+		"sonarjs/new-cap": "off"
 	},
 	settings: {
 		react: {
