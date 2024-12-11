@@ -1,3 +1,10 @@
+if (__DEV__) {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-var-requires
+	const Reactotron = require('./ReactotronConfig').default
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+	Reactotron.log('Reactotron Configured')
+}
+
 import React, { useEffect, useState } from 'react'
 
 import Config from 'react-native-config'
@@ -5,6 +12,7 @@ import 'react-native-gesture-handler'
 
 import { AppProvider } from '@/providers'
 
+import StorybookUIRoot from './.storybook'
 import { RouterApp } from './src/routes'
 
 const isMockEnabled = !!Number(Config.LOAD_MOCK)
@@ -52,11 +60,6 @@ function App() {
 	)
 }
 
-let AppEntryPoint = App
-
-if (Config.LOAD_STORYBOOK === 'true') {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-member-access
-	AppEntryPoint = require('./.storybook').default
-}
-
-export default AppEntryPoint
+//@ts-expect-error Reactotron config
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+export default console.tron.storybookSwitcher(StorybookUIRoot)(App)
