@@ -8,7 +8,7 @@ const meta: Meta<typeof FeedEmpty> = {
 	args: {
 		error: null,
 		loading: false,
-		refetch: () => console.log('Refetch SB!'),
+		refetch: async () => await Promise.resolve(() => console.log('Hi SB!')),
 	},
 	argTypes: {
 		error: {

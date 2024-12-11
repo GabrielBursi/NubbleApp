@@ -32,7 +32,12 @@ export const FeedEmptyMemoized = ({
 				<Text bold preset="paragraphMedium" mb="s16">
 					Não foi possível carregar o feed 😢
 				</Text>
-				<Button title="recarregar" preset="outline" onPress={refetch} />
+				<Button
+					title="recarregar"
+					preset="outline"
+					// eslint-disable-next-line sonarjs/no-misused-promises
+					onPress={refetch}
+				/>
 			</>
 		)
 	}
