@@ -2,7 +2,7 @@ import '@testing-library/react-native/extend-expect'
 import '@testing-library/jest-native/extend-expect'
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
 
-import { serverApiTest } from '@/tests/server'
+import { serverTest } from '@/tests/server'
 import { mockUseNavigation } from '@/tests/mocks'
 import { userEvent } from '@testing-library/react-native'
 
@@ -22,8 +22,8 @@ jest.mock('@react-navigation/native', () => ({
 }))
 
 beforeAll(() => {
-	serverApiTest.listen({ onUnhandledRequest: 'error' })
+	serverTest.listen({ onUnhandledRequest: 'error' })
 	userEvent.setup()
 })
-afterAll(() => serverApiTest.close())
-afterEach(() => serverApiTest.resetHandlers())
+afterAll(() => serverTest.close())
+afterEach(() => serverTest.resetHandlers())

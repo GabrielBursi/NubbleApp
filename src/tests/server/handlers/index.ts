@@ -1,9 +1,5 @@
-import { http, HttpHandler, HttpResponse } from 'msw'
-import Config from 'react-native-config'
+import { HttpHandler } from 'msw'
 
-export const handlers: HttpHandler[] = [
-	http.get(`${Config.API_URL}`, ({ request }) => {
-		console.log('Handler', request.method, request.url)
-		return HttpResponse.json([], { status: 200 })
-	}),
-]
+import { postHandlers } from './post'
+
+export const handlers: HttpHandler[] = [...postHandlers]
