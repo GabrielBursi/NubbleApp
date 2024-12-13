@@ -8,18 +8,19 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { appTheme } from '@/styles'
 
-export const TestProvider = ({ children }: PropsWithChildren) => {
-	const queryClient = new QueryClient({
-		defaultOptions: {
-			queries: {
-				retry: false,
-				gcTime: Infinity,
-			},
+export const testQueryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: false,
+			gcTime: 0,
+			staleTime: 0,
 		},
-	})
+	},
+})
 
+export const TestProvider = ({ children }: PropsWithChildren) => {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<QueryClientProvider client={testQueryClient}>
 			<NavigationContainer>
 				<ThemeProvider theme={appTheme}>
 					<SafeAreaProvider

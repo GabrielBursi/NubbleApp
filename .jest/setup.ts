@@ -1,10 +1,12 @@
 import '@testing-library/react-native/extend-expect'
 import '@testing-library/jest-native/extend-expect'
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
+require('@shopify/flash-list/jestSetup')
 
 import { serverTest } from '@/tests/server'
 import { mockUseNavigation } from '@/tests/mocks'
 import { userEvent } from '@testing-library/react-native'
+import { testQueryClient } from '@/providers'
 
 jest.mock('react-native-reanimated', () => {
 	const Reanimated = require('react-native-reanimated/mock')
@@ -24,6 +26,10 @@ jest.mock('@react-navigation/native', () => ({
 beforeAll(() => {
 	serverTest.listen({ onUnhandledRequest: 'error' })
 	userEvent.setup()
+	testQueryClient.clear()
 })
-afterAll(() => serverTest.close())
+afterAll(() => {
+	testQueryClient.clear()
+	serverTest.close()
+})
 afterEach(() => serverTest.resetHandlers())
