@@ -1,9 +1,9 @@
-import { Post, PostAPI } from '@/domain'
+import { PostModel, PostAPIModel } from '@/domain/Post'
 
 /**
- * @description Adapta o PostAPI para o modelo de Post
+ * @description Adapta o PostAPIModel para o modelo de PostModel
  */
-export const ToPost = (postAPI: PostAPI): Post => {
+export const ToPost = (postAPI: PostAPIModel): PostModel => {
 	return {
 		id: postAPI.id.toString(),
 		text: postAPI.text,

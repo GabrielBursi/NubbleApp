@@ -1,3 +1,3 @@
-import { Post } from '@/domain'
+import { PostModel } from '@/domain/Post'
 
-export type PostHeaderProps = Pick<Post, 'author'>
+export type PostHeaderProps = Pick<PostModel, 'author'>

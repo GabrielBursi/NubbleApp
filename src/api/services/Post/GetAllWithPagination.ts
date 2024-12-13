@@ -1,8 +1,11 @@
 import { NubbleApi } from '@/api/config'
-import { PostAPI } from '@/domain'
+import { PostAPIModel } from '@/domain/Post'
 import { PageAPI } from '@/types/api'
 
-export const GetAllWithPagination = async (): Promise<PageAPI<PostAPI>> => {
-	const { data } = await NubbleApi<PageAPI<PostAPI>>(`/user/post`)
+//TODO: TRATAMENTO DE ERRO
+export const GetAllWithPagination = async (): Promise<
+	PageAPI<PostAPIModel>
+> => {
+	const { data } = await NubbleApi.get<PageAPI<PostAPIModel>>('/user/post')
 	return data
 }

@@ -1,8 +1,8 @@
 import { PostAdapters } from '@/api/adapters'
 import { PostServices } from '@/api/services'
-import { Post } from '@/domain'
+import { PostModel } from '@/domain/Post'
 
-export const getPosts = async (): Promise<Post[]> => {
+export const GetPosts = async (): Promise<PostModel[]> => {
 	const postPageAPI = await PostServices.GetAllWithPagination()
 	return postPageAPI.data.map(PostAdapters.ToPost)
 }

@@ -1,8 +1,8 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
-import { HookMocked } from '@/types/tests'
+import { ReturnHookMocked } from '@/types/tests'
 
-export const mockUseNavigation: HookMocked<
+export const mockUseNavigation: ReturnHookMocked<
 	typeof useNavigation<NavigationProp<ReactNavigation.RootParamList>>
 > = {
 	goBack: jest.fn(),

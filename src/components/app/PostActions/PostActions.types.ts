@@ -1,5 +1,5 @@
-import { Post } from '@/domain'
+import { PostModel } from '@/domain/Post'
 
 export type PostActionsProps = Partial<
-	Pick<Post, 'reactionCount' | 'commentCount' | 'favoriteCount'>
+	Pick<PostModel, 'reactionCount' | 'commentCount' | 'favoriteCount'>
 >

@@ -1,21 +1,7 @@
 import { User } from '@/types/api'
 import { StrictOmit } from '@/types/utils'
 
-export interface Post {
-	id: string
-	text: string
-	author: {
-		profileURL: string
-		name: string
-		userName: string
-	}
-	imageURL: string
-	reactionCount: number
-	commentCount: number
-	favoriteCount: number
-}
-
-export interface PostAPI {
+export interface PostAPIModel {
 	id: number
 	text: string
 	user_id: number

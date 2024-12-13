@@ -1,3 +1,3 @@
-import { Post } from '@/domain'
+import { PostModel } from '@/domain/Post'
 
-export type PostImageProps = Pick<Post, 'imageURL'>
+export type PostImageProps = Pick<PostModel, 'imageURL'>

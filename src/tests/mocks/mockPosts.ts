@@ -1,8 +1,8 @@
-import { Post, PostAPI } from '@/domain'
+import { PostModel, PostAPIModel } from '@/domain/Post'
 
 import { customFaker } from '../utils/customFaker'
 
-const generatePostAPI = (): PostAPI => ({
+export const generatePostAPI = (): PostAPIModel => ({
 	id: customFaker.number.int({ min: 1, max: 1000 }),
 	text: customFaker.lorem.paragraph(),
 	user_id: customFaker.number.int({ min: 1, max: 1000 }),
@@ -29,7 +29,7 @@ const generatePostAPI = (): PostAPI => ({
 	},
 })
 
-const generatePost = (): Post => ({
+export const generatePost = (): PostModel => ({
 	id: customFaker.string.uuid(),
 	text: customFaker.lorem.sentence(),
 	author: {
@@ -43,14 +43,14 @@ const generatePost = (): Post => ({
 	favoriteCount: customFaker.number.int({ min: 0, max: 300 }),
 })
 
-export const mockPosts: Post[] = [
+export const mockPosts: PostModel[] = [
 	generatePost(),
 	generatePost(),
 	generatePost(),
 	generatePost(),
 ]
 
-export const mockPostsAPI: PostAPI[] = [
+export const mockPostsAPI: PostAPIModel[] = [
 	generatePostAPI(),
 	generatePostAPI(),
 	generatePostAPI(),
