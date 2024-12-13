@@ -34,7 +34,8 @@
 		"format": "npm run prettier:write && npm run lint:fix",
 		"prepare": "husky",
 		"storybook-generate": "sb-rn-get-stories",
-		"gen:types": "npx swagger-typescript-api -n nubble-api.ts --no-client --modular --extract-request-params --debug --extract-request-body --extract-response-body --extract-response-error --union-enums --add-readonly  -p ./swagger.yml -o ./src/types/api && npm run format"
+		"gen:types": "npx swagger-typescript-api -n nubble-api.ts --no-client --modular --extract-request-params --debug --extract-request-body --extract-response-body --extract-response-error --union-enums --add-readonly  -p ./swagger.yml -o ./src/types/api && npm run format",
+		"postinstall": "patch-package"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.9.1",

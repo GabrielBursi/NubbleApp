@@ -1,0 +1,19 @@
+diff --git a/node_modules/@mswjs/interceptors/lib/browser/chunk-EILJI62P.js b/node_modules/@mswjs/interceptors/lib/browser/chunk-EILJI62P.js
+index de173b3..23ca345 100644
+--- a/node_modules/@mswjs/interceptors/lib/browser/chunk-EILJI62P.js
++++ b/node_modules/@mswjs/interceptors/lib/browser/chunk-EILJI62P.js
+@@ -449,7 +449,13 @@ var XMLHttpRequestController = class {
+         readNextResponseBodyChunk();
+       };
+       readNextResponseBodyChunk();
+-    } else {
++		} else if (response._bodyInit) {
++			this.logger.info('mocked response has _bodyInit, faking streaming...')
++			const bodyInit = response._bodyInit
++			const encoder = new TextEncoder()
++			this.responseBuffer = encoder.encode(bodyInit)
++			finalizeResponse()
++		} else {
+       finalizeResponse();
+     }
+   }
