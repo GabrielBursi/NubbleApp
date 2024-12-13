@@ -1,12 +1,7 @@
 import React from 'react'
 
-import { FlashList } from '@shopify/flash-list'
-
-import { Box, FeedHeader, PostItem } from '@/components'
+import { FeedList } from '@/components'
 import { ScreenTemplate } from '@/templates'
-import { mockPosts } from '@/tests/mocks/mockPosts'
-
-const ItemSeparatorComponent = () => <Box mb="s16" />
 
 export const HomeScreen = () => {
 	return (
@@ -18,21 +13,7 @@ export const HomeScreen = () => {
 				paddingHorizontal: 0,
 			}}
 		>
-			<FlashList
-				showsVerticalScrollIndicator={false}
-				data={mockPosts}
-				keyExtractor={(post) => post.id}
-				renderItem={({ item: post }) => <PostItem {...post} />}
-				ItemSeparatorComponent={ItemSeparatorComponent}
-				ListHeaderComponent={FeedHeader}
-				disableAutoLayout
-				estimatedItemSize={300}
-				accessible
-				accessibilityLabel="feed"
-				aria-label="feed"
-				role="list"
-				accessibilityRole="list"
-			/>
+			<FeedList />
 		</ScreenTemplate>
 	)
 }

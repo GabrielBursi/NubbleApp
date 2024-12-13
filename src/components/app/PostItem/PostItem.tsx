@@ -19,7 +19,7 @@ const PostItemMemoized = ({
 	text,
 }: Readonly<PostItemProps>) => {
 	return (
-		<Box paddingHorizontal="s24" marginBottom="s24">
+		<Box paddingHorizontal="s24" marginBottom="s24" role="listitem" accessible>
 			<PostHeader author={author} />
 			<PostImage imageURL={imageURL} />
 			<PostActions
