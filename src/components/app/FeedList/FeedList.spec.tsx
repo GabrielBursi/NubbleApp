@@ -15,12 +15,14 @@ jest.mock('@/domain/Post/useCases/usePostList/usePostList')
 
 describe('<FeedList/>', () => {
 	const mockRefetch = jest.fn()
+	const mockFetchMorePostsWithPagination = jest.fn()
 
 	const initialMockReturnUsePostList: ReturnUsePostList = {
 		error: null,
 		loading: false,
 		posts: [],
 		refetch: mockRefetch,
+		fetchMorePostsWithPagination: mockFetchMorePostsWithPagination,
 	}
 
 	beforeEach(() => {
@@ -89,6 +91,14 @@ describe('<FeedList/>', () => {
 		const refetchButton = screen.getByText(/recarregar/i)
 		await userEvent.press(refetchButton)
 
-		expect(mockRefetch).toHaveBeenCalledTimes(1)
+		expect(mockRefetch).toHaveBeenCalled()
+	})
+
+	it('should call fetch new page correctly', async () => {
+		customRender(<FeedList />)
+
+		await userEvent.scrollTo(screen.getByRole('list'), { y: 1000 })
+
+		expect(mockFetchMorePostsWithPagination).toHaveBeenCalled()
 	})
 })

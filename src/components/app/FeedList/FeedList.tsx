@@ -8,7 +8,8 @@ import { usePostList } from '@/domain/Post'
 const ItemSeparatorComponent = () => <Box mb="s16" />
 
 const FeedListMemoized = () => {
-	const { error, loading, posts, refetch } = usePostList()
+	const { error, loading, posts, refetch, fetchMorePostsWithPagination } =
+		usePostList()
 
 	return (
 		<FlashList
@@ -23,6 +24,8 @@ const FeedListMemoized = () => {
 			}
 			disableAutoLayout
 			estimatedItemSize={300}
+			onEndReached={fetchMorePostsWithPagination}
+			onEndReachedThreshold={0.1}
 			accessible
 			accessibilityLabel="feed"
 			aria-label="feed"

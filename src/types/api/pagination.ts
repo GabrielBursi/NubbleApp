@@ -18,3 +18,8 @@ export interface PageAPI<TData = unknown> {
 	meta: MetaDataPaginationAPI
 	data: TData[]
 }
+
+export interface PageQueryParams {
+	page?: number
+	per_page?: number
+}

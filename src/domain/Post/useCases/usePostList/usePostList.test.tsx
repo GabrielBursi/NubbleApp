@@ -9,11 +9,31 @@ import { usePostList } from './usePostList'
 describe('usePostList', () => {
 	const getAllWithPagination = jest.spyOn(PostServices, 'GetAllWithPagination')
 
-	it('should call post service correctly', async () => {
+	it('should call post service with initial pagination correctly', async () => {
 		renderHook(usePostList, { wrapper: TestProvider })
 		await act(async () => {
 			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalled()
+				expect(getAllWithPagination).toHaveBeenCalledWith({
+					page: 1,
+					per_page: 10,
+				})
+			})
+		})
+	})
+
+	it('should fetch a new page of posts correctly', async () => {
+		const { result } = renderHook(usePostList, { wrapper: TestProvider })
+
+		await act(() => {
+			result.current.fetchMorePostsWithPagination()
+		})
+
+		await act(async () => {
+			await waitFor(() => {
+				expect(getAllWithPagination).toHaveBeenCalledWith({
+					page: 2,
+					per_page: 10,
+				})
 			})
 		})
 	})
