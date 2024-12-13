@@ -19,6 +19,8 @@ const config: Config = {
 		'!src/screens/**/*.spec.tsx',
 		'src/templates/**/index.tsx',
 		'src/hooks/**/**.tsx',
+		'src/domain/**/useCases/**/*.tsx',
+		'!src/domain/**/useCases/**/*.test.tsx',
 	],
 	reporters: [
 		'default',

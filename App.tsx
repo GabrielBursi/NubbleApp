@@ -22,7 +22,7 @@ async function enableMocking() {
 		if (!isMockEnabled) return
 		await import('./msw.polyfills')
 		const { serverApp } = await import('./src/tests/server/config/serverApp')
-		serverApp.listen()
+		serverApp.listen({ onUnhandledRequest: 'warn' })
 	} catch (error) {
 		console.error('Error enabling mocking:', error)
 		throw error
@@ -49,7 +49,6 @@ function useMocking() {
 }
 
 function App() {
-	const isMockEnabled = Number(Config.LOAD_MOCK)
 	const mockReady = useMocking()
 	if (isMockEnabled && !mockReady) return null
 
