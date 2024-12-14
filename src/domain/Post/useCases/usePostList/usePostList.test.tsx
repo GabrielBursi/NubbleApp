@@ -24,6 +24,15 @@ describe('usePostList', () => {
 	it('should fetch a new page of posts correctly', async () => {
 		const { result } = renderHook(usePostList, { wrapper: TestProvider })
 
+		await act(async () => {
+			await waitFor(() => {
+				expect(getAllWithPagination).toHaveBeenCalledWith({
+					page: 1,
+					per_page: 5,
+				})
+			})
+		})
+
 		await act(() => {
 			result.current.fetchMorePostsWithPagination()
 		})
@@ -41,6 +50,15 @@ describe('usePostList', () => {
 	it('should refresh posts correctly', async () => {
 		const { result } = renderHook(usePostList, { wrapper: TestProvider })
 
+		await act(async () => {
+			await waitFor(() => {
+				expect(getAllWithPagination).toHaveBeenCalledWith({
+					page: 1,
+					per_page: 5,
+				})
+			})
+		})
+
 		await act(() => {
 			result.current.fetchMorePostsWithPagination()
 		})
@@ -51,7 +69,7 @@ describe('usePostList', () => {
 
 		await act(async () => {
 			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalledTimes(4)
+				expect(getAllWithPagination).toHaveBeenCalledTimes(3)
 			})
 		})
 	})

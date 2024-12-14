@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -7,9 +7,8 @@ import { PostApi, PostModel } from '@/domain/Post'
 export const usePostList = () => {
 	const [posts, setPosts] = useState<PostModel[]>([])
 	const [page, setPage] = useState(1)
-	const [refresh, setRefresh] = useState(false)
 
-	const { data, error, isFetching, refetch } = useQuery({
+	const { data, error, isFetching } = useQuery({
 		queryKey: [`posts`, page],
 		queryFn: () => PostApi.GetPosts(page),
 		staleTime: 0,
@@ -20,28 +19,25 @@ export const usePostList = () => {
 		placeholderData: (oldData) => oldData,
 	})
 
+	const postsFromApi = useMemo(() => data?.data ?? [], [data])
+	const metaFromApi = useMemo(() => data?.meta ?? null, [data])
+	const hasNextPage = useMemo(() => !!metaFromApi?.hasNextPage, [metaFromApi])
+
 	const fetchMorePostsWithPagination = useCallback(() => {
-		setPage((prevPage) => prevPage + 1)
-	}, [])
+		if (hasNextPage) setPage((prevPage) => prevPage + 1)
+	}, [hasNextPage])
 
 	const refreshPosts = useCallback(() => {
 		setPage(1)
-		setRefresh(true)
 	}, [])
 
 	useEffect(() => {
-		if (!isFetching && data) {
-			setPosts((prevPosts) => (page === 1 ? data : [...prevPosts, ...data]))
+		if (!isFetching && postsFromApi) {
+			setPosts((prevPosts) =>
+				page === 1 ? postsFromApi : [...prevPosts, ...postsFromApi]
+			)
 		}
-	}, [data, isFetching, page])
-
-	useEffect(() => {
-		if (page === 1 && refresh) {
-			setRefresh(false)
-			// eslint-disable-next-line @typescript-eslint/no-floating-promises
-			refetch()
-		}
-	}, [page, refetch, refresh])
+	}, [postsFromApi, isFetching, page])
 
 	return {
 		posts,

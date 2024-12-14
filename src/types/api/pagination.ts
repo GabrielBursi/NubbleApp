@@ -1,3 +1,5 @@
+import { Pagination } from '@/types/shared'
+
 export interface MetaDataPaginationAPI {
 	total: number
 	per_page: number
@@ -14,10 +16,8 @@ export interface MetaDataPaginationAPI {
  * @description Interface que define o formato de uma página de dados da API.
  * @template TData Tipo do dado da página.
  */
-export interface PageAPI<TData = unknown> {
-	meta: MetaDataPaginationAPI
-	data: TData[]
-}
+export interface PageAPI<TData = unknown>
+	extends Pagination<MetaDataPaginationAPI, TData> {}
 
 export interface PageQueryParams {
 	page?: number

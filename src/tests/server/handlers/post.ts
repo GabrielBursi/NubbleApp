@@ -2,7 +2,7 @@ import { http, HttpHandler, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
 import { PostAPIModel } from '@/domain/Post'
-import { mockMetaPagination } from '@/tests/mocks/mockMetaPagination'
+import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
 import { mockPostsAPI } from '@/tests/mocks/mockPosts'
 import { PageAPI } from '@/types/api'
 
@@ -13,7 +13,7 @@ export const postHandlers: HttpHandler[] = [
 		if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
 
 		return HttpResponse.json<PageAPI<PostAPIModel>>(
-			{ data: mockPostsAPI, meta: mockMetaPagination },
+			{ data: mockPostsAPI, meta: mockMetaPaginationApi },
 			{ status: 200 }
 		)
 	}),

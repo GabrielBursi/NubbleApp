@@ -23,9 +23,6 @@ jest.mock('@react-navigation/native', () => ({
 	useNavigation: () => mockUseNavigation,
 }))
 
-beforeEach(() => {
-	testQueryClient.clear()
-})
 beforeAll(() => {
 	serverTest.listen({ onUnhandledRequest: 'error' })
 	userEvent.setup()
