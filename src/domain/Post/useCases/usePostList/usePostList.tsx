@@ -7,33 +7,47 @@ import { PostApi, PostModel } from '@/domain/Post'
 export const usePostList = () => {
 	const [posts, setPosts] = useState<PostModel[]>([])
 	const [page, setPage] = useState(1)
+	const [refresh, setRefresh] = useState(false)
 
-	const { data, error, isError, isFetched, isFetching, refetch } = useQuery({
+	const { data, error, isFetching, refetch } = useQuery({
 		queryKey: [`posts`, page],
 		queryFn: () => PostApi.GetPosts(page),
-		staleTime: 10 * 60 * 1000,
+		staleTime: 0,
+		refetchOnMount: true,
+		refetchOnWindowFocus: true,
+		refetchInterval: 0,
 		gcTime: 3 * 60 * 1000,
+		placeholderData: (oldData) => oldData,
 	})
 
 	const fetchMorePostsWithPagination = useCallback(() => {
-		setPage((oldPage) => oldPage + 1)
+		setPage((prevPage) => prevPage + 1)
+	}, [])
+
+	const refreshPosts = useCallback(() => {
+		setPage(1)
+		setRefresh(true)
 	}, [])
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
-		if (page > 1) (async () => await refetch())()
-	}, [page, refetch])
+		if (!isFetching && data) {
+			setPosts((prevPosts) => (page === 1 ? data : [...prevPosts, ...data]))
+		}
+	}, [data, isFetching, page])
 
 	useEffect(() => {
-		if (!!data && isFetched && !isError)
-			setPosts((oldPosts) => [...oldPosts, ...data])
-	}, [data, isFetched, isFetching, isError, error])
+		if (page === 1 && refresh) {
+			setRefresh(false)
+			// eslint-disable-next-line @typescript-eslint/no-floating-promises
+			refetch()
+		}
+	}, [page, refetch, refresh])
 
 	return {
 		posts,
 		error,
 		loading: isFetching,
-		refetch,
 		fetchMorePostsWithPagination,
+		refreshPosts,
 	} as const
 }

@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { RefreshControl } from 'react-native'
 
 import { FlashList } from '@shopify/flash-list'
 
@@ -8,7 +9,7 @@ import { usePostList } from '@/domain/Post'
 const ItemSeparatorComponent = () => <Box mb="s16" />
 
 const FeedListMemoized = () => {
-	const { error, loading, posts, refetch, fetchMorePostsWithPagination } =
+	const { error, loading, posts, fetchMorePostsWithPagination, refreshPosts } =
 		usePostList()
 
 	return (
@@ -20,7 +21,11 @@ const FeedListMemoized = () => {
 			ItemSeparatorComponent={ItemSeparatorComponent}
 			ListHeaderComponent={FeedHeader}
 			ListEmptyComponent={
-				<FeedEmpty refetch={refetch} error={error} loading={loading} />
+				<FeedEmpty refetch={refreshPosts} error={error} loading={loading} />
+			}
+			refreshing={loading}
+			refreshControl={
+				<RefreshControl refreshing={loading} onRefresh={refreshPosts} />
 			}
 			disableAutoLayout
 			estimatedItemSize={300}

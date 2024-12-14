@@ -1,4 +1,9 @@
-import { act, screen, userEvent } from '@testing-library/react-native'
+import {
+	act,
+	fireEvent,
+	screen,
+	userEvent,
+} from '@testing-library/react-native'
 
 import { usePostList } from '@/domain/Post/useCases/usePostList/usePostList'
 import { mockPosts } from '@/tests/mocks'
@@ -14,15 +19,15 @@ type MockUsePostList = HookMocked<UsePostList>
 jest.mock('@/domain/Post/useCases/usePostList/usePostList')
 
 describe('<FeedList/>', () => {
-	const mockRefetch = jest.fn()
 	const mockFetchMorePostsWithPagination = jest.fn()
+	const mockRefreshPosts = jest.fn()
 
 	const initialMockReturnUsePostList: ReturnUsePostList = {
 		error: null,
 		loading: false,
 		posts: [],
-		refetch: mockRefetch,
 		fetchMorePostsWithPagination: mockFetchMorePostsWithPagination,
+		refreshPosts: mockRefreshPosts,
 	}
 
 	beforeEach(() => {
@@ -91,7 +96,7 @@ describe('<FeedList/>', () => {
 		const refetchButton = screen.getByText(/recarregar/i)
 		await userEvent.press(refetchButton)
 
-		expect(mockRefetch).toHaveBeenCalled()
+		expect(mockRefreshPosts).toHaveBeenCalled()
 	})
 
 	it('should call fetch new page correctly', async () => {
@@ -100,5 +105,18 @@ describe('<FeedList/>', () => {
 		await userEvent.scrollTo(screen.getByRole('list'), { y: 1000 })
 
 		expect(mockFetchMorePostsWithPagination).toHaveBeenCalled()
+	})
+
+	it('should call refresh post correctly', () => {
+		customRender(<FeedList />)
+
+		const list = screen.getByRole('list')
+
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		const refreshControl = list.props.refreshControl
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		fireEvent(refreshControl, 'onRefresh')
+
+		expect(mockRefreshPosts).toHaveBeenCalled()
 	})
 })

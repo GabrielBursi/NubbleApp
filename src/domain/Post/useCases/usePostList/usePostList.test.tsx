@@ -15,7 +15,7 @@ describe('usePostList', () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 1,
-					per_page: 10,
+					per_page: 5,
 				})
 			})
 		})
@@ -32,8 +32,26 @@ describe('usePostList', () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 2,
-					per_page: 10,
+					per_page: 5,
 				})
+			})
+		})
+	})
+
+	it('should refresh posts correctly', async () => {
+		const { result } = renderHook(usePostList, { wrapper: TestProvider })
+
+		await act(() => {
+			result.current.fetchMorePostsWithPagination()
+		})
+
+		await act(() => {
+			result.current.refreshPosts()
+		})
+
+		await act(async () => {
+			await waitFor(() => {
+				expect(getAllWithPagination).toHaveBeenCalledTimes(4)
 			})
 		})
 	})
