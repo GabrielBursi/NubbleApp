@@ -21,6 +21,7 @@ jest.mock('react-native-safe-area-context', () => mockSafeAreaContext)
 jest.mock('@react-navigation/native', () => ({
 	...jest.requireActual('@react-navigation/native'),
 	useNavigation: () => mockUseNavigation,
+	useScrollToTop: () => jest.fn(),
 }))
 
 beforeAll(() => {

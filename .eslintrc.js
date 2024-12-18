@@ -128,7 +128,9 @@ module.exports = {
 		'testing-library/no-dom-import': 'off',
 		"sonarjs/no-invalid-await": "off",
 		"sonarjs/todo-tag": "warn",
-		"sonarjs/new-cap": "off"
+		"sonarjs/new-cap": "off",
+		//TODO:  arrumar act deprecated https://github.com/callstack/react-native-testing-library/issues/1621
+		"sonarjs/deprecation": "warn"
 	},
 	settings: {
 		react: {
