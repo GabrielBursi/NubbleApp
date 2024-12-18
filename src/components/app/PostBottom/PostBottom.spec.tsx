@@ -1,6 +1,6 @@
-import { screen } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
-import { mockPosts } from '@/tests/mocks'
+import { mockPosts, mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 
 import { PostBottom } from './PostBottom'
@@ -11,7 +11,7 @@ describe('<PostBottom/>', () => {
 	const text = post.text
 
 	it('should render the post bottom correctly', () => {
-		customRender(<PostBottom text={text} userName={userName} />)
+		customRender(<PostBottom id={post.id} text={text} userName={userName} />)
 
 		expect(screen.getByRole('text', { name: text })).toBeOnTheScreen()
 		expect(screen.getByRole('text', { name: userName })).toBeOnTheScreen()
@@ -19,7 +19,12 @@ describe('<PostBottom/>', () => {
 
 	it('should render the post bottom with comments correctly', () => {
 		customRender(
-			<PostBottom text={text} userName={userName} commentCount={10} />
+			<PostBottom
+				id={post.id}
+				text={text}
+				userName={userName}
+				commentCount={10}
+			/>
 		)
 
 		expect(
@@ -29,11 +34,33 @@ describe('<PostBottom/>', () => {
 
 	it('should render the post bottom with just only one comment correctly', () => {
 		customRender(
-			<PostBottom text={text} userName={userName} commentCount={1} />
+			<PostBottom
+				id={post.id}
+				text={text}
+				userName={userName}
+				commentCount={1}
+			/>
 		)
 
 		expect(
 			screen.getByRole('text', { name: /ver comentário/i })
 		).toBeOnTheScreen()
+	})
+
+	it('should navigate to comments screen correctly', async () => {
+		customRender(
+			<PostBottom
+				id={post.id}
+				text={text}
+				userName={userName}
+				commentCount={1}
+			/>
+		)
+
+		await userEvent.press(screen.getByRole('text', { name: /ver comentário/i }))
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
+			'PostCommentScreen',
+			{ postId: post.id }
+		)
 	})
 })

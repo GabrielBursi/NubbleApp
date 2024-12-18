@@ -9,6 +9,7 @@ const meta: Meta<typeof PostBottom> = {
 		commentCount: 10,
 		text: 'Storybook',
 		userName: 'SB',
+		id: 'sb',
 	},
 	argTypes: {},
 }

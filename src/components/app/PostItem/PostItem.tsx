@@ -17,6 +17,7 @@ const PostItemMemoized = ({
 	imageURL,
 	reactionCount,
 	text,
+	id,
 }: Readonly<PostItemProps>) => {
 	return (
 		<Box paddingHorizontal="s24" marginBottom="s24" role="listitem" accessible>
@@ -31,6 +32,7 @@ const PostItemMemoized = ({
 				userName={author.userName}
 				text={text}
 				commentCount={commentCount}
+				id={id}
 			/>
 		</Box>
 	)

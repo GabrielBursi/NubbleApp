@@ -14,6 +14,7 @@ const meta: Meta<typeof PostItem> = {
 			profileURL: mockPosts[1].author.profileURL,
 		},
 		reactionCount: 10,
+		id: mockPosts[0].id,
 	},
 	argTypes: {
 		author: {
