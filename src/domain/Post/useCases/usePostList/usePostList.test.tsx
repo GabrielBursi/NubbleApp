@@ -1,83 +1,34 @@
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook } from '@testing-library/react-native'
 
-import { PostServices } from '@/api/services'
-import { TestProvider } from '@/providers'
-import { mockPostsAPI } from '@/tests/mocks'
+import { PostApi } from '@/domain/Post'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
+
+import { usePaginatedList } from '../../../../hooks/usePaginatedList/usePaginatedList'
 
 import { usePostList } from './usePostList'
 
+type UsePaginatedList = typeof usePaginatedList
+type ReturnUsePaginatedList = ReturnHookMocked<UsePaginatedList>
+type UsePaginatedListMocked = HookMocked<UsePaginatedList>
+
+jest.mock('../../../../hooks/usePaginatedList/usePaginatedList')
+
 describe('usePostList', () => {
-	const getAllWithPagination = jest.spyOn(PostServices, 'GetAllWithPagination')
+	const initialMock: ReturnUsePaginatedList = {
+		error: null,
+		fetchMoreDataWithPagination: jest.fn(),
+		listData: [],
+		loading: false,
+		refreshList: jest.fn(),
+	}
 
-	it('should call post service with initial pagination correctly', async () => {
-		renderHook(usePostList, { wrapper: TestProvider })
-		await act(async () => {
-			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalledWith({
-					page: 1,
-					per_page: 5,
-				})
-			})
-		})
+	beforeEach(() => {
+		;(usePaginatedList as UsePaginatedListMocked).mockReturnValue(initialMock)
 	})
 
-	it('should fetch a new page of posts correctly', async () => {
-		const { result } = renderHook(usePostList, { wrapper: TestProvider })
+	it('should call usePaginatedList with service get posts correctly', () => {
+		renderHook(usePostList)
 
-		await act(async () => {
-			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalledWith({
-					page: 1,
-					per_page: 5,
-				})
-			})
-		})
-
-		await act(() => {
-			result.current.fetchMorePostsWithPagination()
-		})
-
-		await act(async () => {
-			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalledWith({
-					page: 2,
-					per_page: 5,
-				})
-			})
-		})
-	})
-
-	it('should refresh posts correctly', async () => {
-		const { result } = renderHook(usePostList, { wrapper: TestProvider })
-
-		await act(async () => {
-			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalledWith({
-					page: 1,
-					per_page: 5,
-				})
-			})
-		})
-
-		await act(() => {
-			result.current.fetchMorePostsWithPagination()
-		})
-
-		await act(() => {
-			result.current.refreshPosts()
-		})
-
-		await act(async () => {
-			await waitFor(() => {
-				expect(getAllWithPagination).toHaveBeenCalledTimes(3)
-			})
-		})
-	})
-
-	it('should return the posts correctly', async () => {
-		const { result } = renderHook(usePostList, { wrapper: TestProvider })
-		await waitFor(() => {
-			expect(result.current.posts).toHaveLength(mockPostsAPI.length)
-		})
+		expect(usePaginatedList).toHaveBeenCalledWith(PostApi.GetPosts)
 	})
 })
