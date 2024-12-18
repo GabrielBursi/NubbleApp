@@ -1,9 +1,7 @@
 import React, { memo, useMemo } from 'react'
 
-import { NavigationProp, useNavigation } from '@react-navigation/native'
-
 import { Box, Text } from '@/components'
-import { RootAppStackRouterParamList } from '@/types/routes'
+import { useNavigationApp } from '@/hooks'
 
 import { PostBottomProps } from './PostBottom.types'
 
@@ -13,8 +11,7 @@ const PostBottomMemoized = ({
 	text,
 	id,
 }: Readonly<PostBottomProps>) => {
-	const navigation =
-		useNavigation<NavigationProp<RootAppStackRouterParamList>>()
+	const { navigationAppStack } = useNavigationApp()
 
 	const commentText = useMemo(() => {
 		if (commentCount === 0) {
@@ -27,7 +24,7 @@ const PostBottomMemoized = ({
 	}, [commentCount])
 
 	const navigateToPostCommentScreen = () => {
-		navigation.navigate('PostCommentScreen', {
+		navigationAppStack.navigate('PostCommentScreen', {
 			postId: id,
 		})
 	}
