@@ -9,8 +9,8 @@ const GoBackMemoized = () => {
 	return (
 		<TouchableOpacityBox
 			onPress={navigationAppStack.goBack}
-			mb="s24"
 			flexDirection="row"
+			width={80}
 		>
 			<Icon name="arrowLeft" color="primary" />
 			<Text preset="paragraphMedium" semiBold ml="s8">

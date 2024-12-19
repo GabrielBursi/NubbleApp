@@ -4,8 +4,6 @@ import { Box, GoBack, Text } from '@/components'
 
 import { ScreenHeaderProps } from './ScreenHeader.types'
 
-const ICON_SIZE = 20
-
 const ScreenHeaderMemoized = ({
 	canGoBack = false,
 	title,
@@ -19,7 +17,7 @@ const ScreenHeaderMemoized = ({
 		>
 			{canGoBack && <GoBack />}
 			{title && <Text preset="headingSmall">{title}</Text>}
-			{title && <Box width={ICON_SIZE} />}
+			{title && <Box width={80} />}
 		</Box>
 	)
 }
