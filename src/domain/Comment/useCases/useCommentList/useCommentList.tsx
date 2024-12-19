@@ -1,9 +1,10 @@
 import { useCallback } from 'react'
 
 import { CommentApi } from '@/domain/Comment'
+import { PostModel } from '@/domain/Post'
 import { usePaginatedList } from '@/hooks'
 
-export const useCommentList = (postId: number) => {
+export const useCommentList = (postId: PostModel['id']) => {
 	const getComments = useCallback(
 		(page: number) => CommentApi.GetComments(postId, page),
 		[postId]

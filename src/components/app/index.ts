@@ -1,5 +1,6 @@
 export * from './ActionIcon/ActionIcon'
 export * from './CommentItem/CommentItem'
+export * from './CommentList/CommentList'
 export * from './ControlledFormInput/ControlledFormInput'
 export * from './FeedEmpty/FeedEmpty'
 export * from './FeedHeader/FeedHeader'

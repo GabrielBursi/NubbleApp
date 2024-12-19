@@ -9,7 +9,13 @@ export const CommentItemMemoized = ({
 	message,
 }: Readonly<CommentItemProps>) => {
 	return (
-		<Box flexDirection="row" alignItems="center">
+		<Box
+			flexDirection="row"
+			alignItems="center"
+			role="listitem"
+			accessible
+			aria-label={message}
+		>
 			<ProfileAvatar
 				imageURL={author.profileURL}
 				aria-label={author.userName}

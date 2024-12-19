@@ -7,6 +7,6 @@ export const NubbleApi = axios.create({
 		'Content-Type': 'application/json',
 		//TODO: CRIAR INTERCEPTOR PARA TOKEN AUTH
 		Authorization:
-			'Bearer MQ.g8In0qWZm508P7er42bw0v0kUJhnhSHrgHO45f1p9XWfEsGf4MoRE6bPL2My',
+			'Bearer MQ.5-OlrETTlOoc-WpsyK0WmakAThJqlv6W5puXdjQLGa_L-P1ba1t9T8dlDCC5',
 	},
 })

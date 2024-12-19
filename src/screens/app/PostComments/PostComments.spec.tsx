@@ -20,8 +20,6 @@ describe('<PostCommentsScreen/>', () => {
 			/>
 		)
 
-		expect(
-			screen.getByRole('text', { name: /Tela de comentários/i })
-		).toBeOnTheScreen()
+		expect(screen.getByRole('list')).toBeOnTheScreen()
 	})
 })
