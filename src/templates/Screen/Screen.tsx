@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 
-import { Container, GoBack } from '@/components'
+import { Container, ScreenHeader } from '@/components'
 import { useAppSafeArea, useAppTheme } from '@/hooks'
 
 import { ContainerScreenProps, ScreenTemplateProps } from './Screen.types'
@@ -33,6 +33,7 @@ export const ScreenTemplate = ({
 	canGoBack = false,
 	scrollable = false,
 	style,
+	title,
 	...boxProps
 }: PropsWithChildren<ScreenTemplateProps>) => {
 	const { top, bottom } = useAppSafeArea()
@@ -52,7 +53,7 @@ export const ScreenTemplate = ({
 					style={[{ paddingTop: top, paddingBottom: bottom }, style]}
 					{...boxProps}
 				>
-					{canGoBack && <GoBack />}
+					<ScreenHeader canGoBack={canGoBack} title={title} />
 					{children}
 				</Container>
 			</ContainerScreen>
