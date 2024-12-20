@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react'
+import { Dimensions } from 'react-native'
 
 import { Box } from '@/components/ui'
 
@@ -8,12 +9,14 @@ export const Container = ({
 	children,
 	...boxProps
 }: Readonly<PropsWithChildren<ContainerProps>>) => {
+	const screenWidth = Dimensions.get('screen').width
+
 	return (
 		<Box
 			testID="container"
 			flex={1}
 			paddingHorizontal="s24"
-			width="100%"
+			width={screenWidth}
 			{...boxProps}
 		>
 			{children}

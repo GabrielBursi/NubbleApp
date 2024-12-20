@@ -10,9 +10,9 @@ const windowHeight = Dimensions.get('window').height
 export const themeConfig = {
 	border: {
 		radius: {
-			s8: normalize(8) as 8,
-			s12: normalize(12) as 12,
-			s16: normalize(16) as 16,
+			s8: normalize(8, 'width') as 8,
+			s12: normalize(12, 'width') as 12,
+			s16: normalize(16, 'width') as 16,
 		},
 	},
 	font: {
@@ -63,18 +63,18 @@ export const themeConfig = {
 		lightShadow: lighten(0.4, `#F2F2F2`),
 	},
 	spacings: {
-		s4: normalize(4) as 4,
-		s8: normalize(8) as 8,
-		s10: normalize(10) as 10,
-		s12: normalize(12) as 12,
-		s14: normalize(14) as 14,
-		s16: normalize(16) as 16,
-		s20: normalize(20) as 20,
-		s24: normalize(24) as 24,
-		s32: normalize(32) as 32,
-		s40: normalize(40) as 40,
-		s48: normalize(48) as 48,
-		s56: normalize(56) as 56,
+		s4: normalize(4, 'width') as 4,
+		s8: normalize(8, 'width') as 8,
+		s10: normalize(10, 'width') as 10,
+		s12: normalize(12, 'width') as 12,
+		s14: normalize(14, 'width') as 14,
+		s16: normalize(16, 'width') as 16,
+		s20: normalize(20, 'width') as 20,
+		s24: normalize(24, 'width') as 24,
+		s32: normalize(32, 'width') as 32,
+		s40: normalize(40, 'width') as 40,
+		s48: normalize(48, 'width') as 48,
+		s56: normalize(56, 'width') as 56,
 	},
 	opacity: {
 		low: 0.5,
