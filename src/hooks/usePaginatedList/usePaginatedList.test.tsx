@@ -11,7 +11,7 @@ describe('usePaginatedList', () => {
 	const getAllWithPagination = jest.spyOn(PostServices, 'GetAllWithPagination')
 
 	it('should call service with initial pagination correctly', async () => {
-		renderHook(() => usePaginatedList(PostApi.GetPosts), {
+		renderHook(() => usePaginatedList(PostApi.GetPosts, 'list'), {
 			wrapper: TestProvider,
 		})
 		await act(async () => {
@@ -25,9 +25,12 @@ describe('usePaginatedList', () => {
 	})
 
 	it('should fetch a new page of data list correctly', async () => {
-		const { result } = renderHook(() => usePaginatedList(PostApi.GetPosts), {
-			wrapper: TestProvider,
-		})
+		const { result } = renderHook(
+			() => usePaginatedList(PostApi.GetPosts, 'list'),
+			{
+				wrapper: TestProvider,
+			}
+		)
 
 		await act(async () => {
 			await waitFor(() => {
@@ -53,9 +56,12 @@ describe('usePaginatedList', () => {
 	})
 
 	it('should refresh list correctly', async () => {
-		const { result } = renderHook(() => usePaginatedList(PostApi.GetPosts), {
-			wrapper: TestProvider,
-		})
+		const { result } = renderHook(
+			() => usePaginatedList(PostApi.GetPosts, 'list'),
+			{
+				wrapper: TestProvider,
+			}
+		)
 
 		await act(async () => {
 			await waitFor(() => {
@@ -82,9 +88,12 @@ describe('usePaginatedList', () => {
 	})
 
 	it('should return the list correctly', async () => {
-		const { result } = renderHook(() => usePaginatedList(PostApi.GetPosts), {
-			wrapper: TestProvider,
-		})
+		const { result } = renderHook(
+			() => usePaginatedList(PostApi.GetPosts, 'list'),
+			{
+				wrapper: TestProvider,
+			}
+		)
 		await waitFor(() => {
 			expect(result.current.listData).toHaveLength(mockPostsAPI.length)
 		})

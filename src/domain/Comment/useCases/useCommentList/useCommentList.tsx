@@ -11,7 +11,7 @@ export const useCommentList = (postId: PostModel['id']) => {
 	)
 
 	const { fetchMoreDataWithPagination, listData, refreshList, ...restData } =
-		usePaginatedList(getComments)
+		usePaginatedList(getComments, 'comments')
 
 	return {
 		...restData,

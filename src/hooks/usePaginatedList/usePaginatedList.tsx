@@ -2,24 +2,28 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { UndefinedInitialDataOptions, useQuery } from '@tanstack/react-query'
 
+import { useQueryFocusAware } from '@/hooks'
 import { PageApp } from '@/types/shared'
 
 export const usePaginatedList = <TData extends object>(
 	getList: (page: number) => Promise<PageApp<TData>>,
+	queryKey: string,
 	optionsQuery?: UndefinedInitialDataOptions<PageApp<TData>>
 ) => {
 	const [listData, setListData] = useState<TData[]>([])
 	const [page, setPage] = useState(1)
 
+	const isFocused = useQueryFocusAware()
+
 	const { data, error, isFetching } = useQuery({
-		queryKey: [`posts`, page],
+		queryKey: [queryKey, page],
 		queryFn: () => getList(page),
 		staleTime: 0,
 		refetchOnMount: true,
 		refetchOnWindowFocus: true,
-		refetchInterval: 0,
 		gcTime: 3 * 60 * 1000,
 		placeholderData: (oldData) => oldData,
+		enabled: isFocused(),
 		...optionsQuery,
 	})
 

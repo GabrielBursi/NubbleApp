@@ -1,16 +1,18 @@
+import { uniqueId } from 'lodash'
+
 import { CommentModel, CommentAPIModel } from '@/domain/Comment'
 
 import { customFaker } from '../utils/customFaker'
 
 export const generateCommentAPI = (): CommentAPIModel => ({
-	id: customFaker.number.int({ min: 1, max: 1000 }),
-	user_id: customFaker.number.int({ min: 1, max: 1000 }),
+	id: Number(uniqueId()),
+	user_id: Number(uniqueId()),
 	created_at: customFaker.date.past().toISOString(),
 	updated_at: customFaker.date.recent().toISOString(),
-	post_id: customFaker.number.int({ max: 1000, min: 1 }),
+	post_id: Number(uniqueId()),
 	message: customFaker.lorem.text(),
 	user: {
-		id: customFaker.number.int({ max: 1000, min: 1 }),
+		id: Number(uniqueId()),
 		full_name: customFaker.person.fullName(),
 		first_name: customFaker.person.firstName(),
 		last_name: customFaker.person.lastName(),
@@ -27,12 +29,12 @@ export const generateCommentAPI = (): CommentAPIModel => ({
 })
 
 export const generateComment = (): CommentModel => ({
-	id: customFaker.number.int({ min: 1, max: 1000 }),
+	id: Number(uniqueId()),
 	author: {
 		profileURL: customFaker.image.url(),
 		name: customFaker.person.fullName(),
 		userName: customFaker.internet.username(),
-		id: customFaker.number.int({ min: 1, max: 1000 }),
+		id: Number(uniqueId()),
 	},
 	message: customFaker.lorem.text(),
 	createdAt: customFaker.date.past().toISOString(),

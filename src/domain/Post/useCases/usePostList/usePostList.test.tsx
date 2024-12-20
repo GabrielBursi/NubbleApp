@@ -29,6 +29,6 @@ describe('usePostList', () => {
 	it('should call usePaginatedList with service get posts correctly', () => {
 		renderHook(usePostList)
 
-		expect(usePaginatedList).toHaveBeenCalledWith(PostApi.GetPosts)
+		expect(usePaginatedList).toHaveBeenCalledWith(PostApi.GetPosts, 'posts')
 	})
 })

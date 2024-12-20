@@ -1,4 +1,4 @@
-import { act, screen, userEvent } from '@testing-library/react-native'
+import { act, screen } from '@testing-library/react-native'
 
 import { mockComments } from '@/tests/mocks'
 import { customFaker, customRender } from '@/tests/utils'
@@ -49,13 +49,5 @@ describe('<CommentList/>', () => {
 		await act(() => {
 			expect(screen.getAllByRole('listitem')).toHaveLength(2)
 		})
-	})
-
-	it('should call fetch new page correctly', async () => {
-		customRender(<CommentList id={mockId} />)
-
-		await userEvent.scrollTo(screen.getByRole('list'), { y: 1000 })
-
-		expect(mockFetchMoreCommentsWithPagination).toHaveBeenCalled()
 	})
 })

@@ -3,7 +3,7 @@ import { usePaginatedList } from '@/hooks'
 
 export const usePostList = () => {
 	const { fetchMoreDataWithPagination, listData, refreshList, ...restData } =
-		usePaginatedList(PostApi.GetPosts)
+		usePaginatedList(PostApi.GetPosts, 'posts')
 
 	return {
 		...restData,

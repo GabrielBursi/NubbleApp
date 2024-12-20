@@ -1,9 +1,11 @@
+import { uniqueId } from 'lodash'
+
 import { PostModel, PostAPIModel } from '@/domain/Post'
 
 import { customFaker } from '../utils/customFaker'
 
 export const generatePostAPI = (): PostAPIModel => ({
-	id: customFaker.number.int({ min: 1, max: 1000 }),
+	id: Number(uniqueId()),
 	text: customFaker.lorem.paragraph(),
 	user_id: customFaker.number.int({ min: 1, max: 1000 }),
 	image_url: customFaker.image.url(),
@@ -30,7 +32,7 @@ export const generatePostAPI = (): PostAPIModel => ({
 })
 
 export const generatePost = (): PostModel => ({
-	id: customFaker.string.uuid(),
+	id: customFaker.database.mongodbObjectId(),
 	text: customFaker.lorem.sentence(),
 	author: {
 		profileURL: customFaker.image.url(),

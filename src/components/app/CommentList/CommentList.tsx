@@ -10,21 +10,18 @@ import { CommentListProps } from './CommentList.types'
 const ItemSeparatorComponent = () => <Box mb="s16" />
 
 export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
-	const { comments, fetchMoreCommentsWithPagination, loading } =
-		useCommentList(postId)
+	const { comments, loading } = useCommentList(postId)
 
 	return (
 		<FlashList
 			showsVerticalScrollIndicator={false}
 			data={comments}
-			keyExtractor={(comment) => `${comment.id}`}
+			keyExtractor={(comment, index) => `${comment.id}-${index}`}
 			renderItem={({ item: comment }) => <CommentItem {...comment} />}
 			ItemSeparatorComponent={ItemSeparatorComponent}
 			refreshing={loading}
 			disableAutoLayout
 			estimatedItemSize={300}
-			onEndReached={fetchMoreCommentsWithPagination}
-			onEndReachedThreshold={0.1}
 			accessible
 			accessibilityLabel="feed"
 			aria-label="feed"

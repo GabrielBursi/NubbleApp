@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, CommentList } from '@/components'
+import { CommentList } from '@/components'
 import { ScreenTemplate } from '@/templates'
 import { PostCommentScreenProps } from '@/types/screens'
 
@@ -9,9 +9,7 @@ export const PostCommentsScreen = ({
 }: Readonly<PostCommentScreenProps>) => {
 	return (
 		<ScreenTemplate title="Comentários" canGoBack>
-			<Box>
-				<CommentList id={route.params.postId} />
-			</Box>
+			<CommentList id={route.params.postId} />
 		</ScreenTemplate>
 	)
 }

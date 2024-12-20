@@ -22,7 +22,7 @@ const FeedListMemoized = () => {
 			ref={flatListRef}
 			showsVerticalScrollIndicator={false}
 			data={posts}
-			keyExtractor={(post) => post.id}
+			keyExtractor={(post, index) => `${post.id}-${index}`}
 			renderItem={({ item: post }) => <PostItem {...post} />}
 			ItemSeparatorComponent={ItemSeparatorComponent}
 			ListHeaderComponent={FeedHeader}
