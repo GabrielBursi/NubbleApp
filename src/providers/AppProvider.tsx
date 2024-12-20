@@ -9,9 +9,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { MMKVStorage, initializeStorage } from '@/storage'
 import { appTheme } from '@/styles'
 
-export const AppProvider = ({ children }: PropsWithChildren) => {
-	const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
+export const AppProvider = ({ children }: PropsWithChildren) => {
 	initializeStorage(MMKVStorage)
 
 	return (

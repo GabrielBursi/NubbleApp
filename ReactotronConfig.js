@@ -1,10 +1,24 @@
 import Reactotron, { networking, openInEditor } from 'reactotron-react-native'
+import {
+	QueryClientManager,
+	reactotronReactQuery,
+} from 'reactotron-react-query';
 import { AsyncStorage } from '@react-native-async-storage/async-storage'
+import { queryClient } from '@/providers';
 
+const queryClientManager = new QueryClientManager({
+	queryClient,
+})
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 const reactotron = Reactotron.setAsyncStorageHandler(AsyncStorage)
-	.configure({ name: 'Nubble App' })
+	.use(reactotronReactQuery(queryClientManager))
+	.configure({
+			name: 'Nubble App',
+			onDisconnect: () => {
+				queryClientManager.unsubscribe();
+			},
+	})
 	.useReactNative({
 		devTools: true,
 		asyncStorage: true,
