@@ -12,7 +12,7 @@ export const CommentItemMemoized = ({
 	return (
 		<Box
 			flexDirection="row"
-			alignItems="center"
+			alignItems="flex-start"
 			role="listitem"
 			accessible
 			aria-label={message}
