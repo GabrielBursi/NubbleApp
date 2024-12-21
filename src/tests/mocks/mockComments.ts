@@ -1,6 +1,7 @@
 import { uniqueId } from 'lodash'
 
 import { CommentModel, CommentAPIModel } from '@/domain/Comment'
+import { dateUtils } from '@/utils'
 
 import { customFaker } from '../utils/customFaker'
 
@@ -38,6 +39,9 @@ export const generateComment = (): CommentModel => ({
 	},
 	message: customFaker.lorem.text(),
 	createdAt: customFaker.date.past().toISOString(),
+	createdAtRelative: dateUtils.formatRelative(
+		customFaker.date.past().toISOString()
+	),
 })
 
 export const mockComments: CommentModel[] = [

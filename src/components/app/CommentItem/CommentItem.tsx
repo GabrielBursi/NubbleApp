@@ -7,6 +7,7 @@ import { CommentItemProps } from './CommentItem.types'
 export const CommentItemMemoized = ({
 	author,
 	message,
+	createdAtRelative,
 }: Readonly<CommentItemProps>) => {
 	return (
 		<Box
@@ -20,10 +21,13 @@ export const CommentItemMemoized = ({
 				imageURL={author.profileURL}
 				aria-label={author.userName}
 			/>
-			<Box ml="s12">
-				<Text preset="paragraphSmall" bold>
-					{author.userName}
-				</Text>
+			<Box ml="s12" flex={1}>
+				<Box gap="s8" alignItems="center" flexDirection="row">
+					<Text preset="paragraphSmall" bold>
+						{author.userName}
+					</Text>
+					<Text preset="paragraphCaption">{createdAtRelative}</Text>
+				</Box>
 				<Text preset="paragraphSmall" color="gray1">
 					{message}
 				</Text>

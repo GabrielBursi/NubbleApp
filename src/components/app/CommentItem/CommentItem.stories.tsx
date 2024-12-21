@@ -1,23 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { customFaker } from '@/tests/utils'
+import { generateComment } from '@/tests/mocks/mockComments'
 
 import { CommentItem } from './CommentItem'
 
 const meta: Meta<typeof CommentItem> = {
 	title: 'Components/CommentItem',
 	component: CommentItem,
-	args: {
-		id: customFaker.number.int(),
-		message: customFaker.lorem.text(),
-		createdAt: customFaker.date.past().toUTCString(),
-		author: {
-			id: customFaker.number.int(),
-			name: customFaker.person.firstName(),
-			profileURL: customFaker.image.url(),
-			userName: customFaker.internet.username(),
-		},
-	},
+	args: generateComment(),
 	argTypes: {},
 }
 export default meta
