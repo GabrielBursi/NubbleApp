@@ -17,4 +17,13 @@ export const commentHandlers: HttpHandler[] = [
 			{ status: 200 }
 		)
 	}),
+	http.post(`${Config.API_URL}/user/post_comment`, ({ request }) => {
+		console.log('Handler', request.method, request.url)
+
+		if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+		return HttpResponse.json<CommentAPIModel>(mockCommentsAPI[0], {
+			status: 200,
+		})
+	}),
 ]

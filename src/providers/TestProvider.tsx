@@ -15,6 +15,10 @@ export const testQueryClient = new QueryClient({
 			gcTime: 0,
 			staleTime: 0,
 		},
+		mutations: {
+			gcTime: 0,
+			retry: false,
+		},
 	},
 })
 
