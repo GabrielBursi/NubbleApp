@@ -7,3 +7,5 @@ export type OptionalPros<
 	TObj extends object,
 	TKey extends keyof TObj,
 > = StrictOmit<TObj, TKey> & Partial<Pick<TObj, TKey>>
+
+export type NonUndefined<T> = T extends undefined ? never : T
