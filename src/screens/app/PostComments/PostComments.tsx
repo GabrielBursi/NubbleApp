@@ -8,7 +8,7 @@ export const PostCommentsScreen = ({
 	route,
 }: Readonly<PostCommentScreenProps>) => {
 	return (
-		<ScreenTemplate title="Comentários" canGoBack>
+		<ScreenTemplate flex={1} title="Comentários" canGoBack>
 			<CommentList id={route.params.postId} />
 		</ScreenTemplate>
 	)

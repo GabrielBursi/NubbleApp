@@ -37,6 +37,9 @@ describe('<CommentList/>', () => {
 	it('should render the list component', () => {
 		customRender(<CommentList id={mockId} />)
 		expect(screen.getByRole('list')).toBeOnTheScreen()
+		expect(
+			screen.getByPlaceholderText('Adicione um comentário', { exact: true })
+		).toBeOnTheScreen()
 	})
 
 	it('should render comments when data is available', async () => {
