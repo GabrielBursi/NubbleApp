@@ -2,15 +2,19 @@ import React from 'react'
 
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, CommentItem } from '@/components'
+import { Box, CommentItem, SeeMore } from '@/components'
 import { useCommentList } from '@/domain/Comment'
+import { useAppSafeArea } from '@/hooks'
 
 import { CommentListProps } from './CommentList.types'
 
 const ItemSeparatorComponent = () => <Box mb="s16" />
 
 export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
-	const { comments, loading } = useCommentList(postId)
+	const { comments, loading, meta, fetchMoreCommentsWithPagination } =
+		useCommentList(postId)
+
+	const { bottom } = useAppSafeArea()
 
 	return (
 		<FlashList
@@ -19,6 +23,12 @@ export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
 			keyExtractor={(comment, index) => `${comment.id}-${index}`}
 			renderItem={({ item: comment }) => <CommentItem {...comment} />}
 			ItemSeparatorComponent={ItemSeparatorComponent}
+			ListFooterComponent={
+				meta?.hasNextPage ? (
+					<SeeMore onClickSeeMore={fetchMoreCommentsWithPagination} />
+				) : null
+			}
+			contentContainerStyle={{ paddingBottom: bottom }}
 			refreshing={loading}
 			disableAutoLayout
 			estimatedItemSize={300}

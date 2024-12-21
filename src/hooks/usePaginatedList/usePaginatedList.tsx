@@ -29,11 +29,10 @@ export const usePaginatedList = <TData extends object>(
 
 	const dataFromApi = useMemo(() => data?.data ?? [], [data])
 	const metaFromApi = useMemo(() => data?.meta ?? null, [data])
-	const hasNextPage = useMemo(() => !!metaFromApi?.hasNextPage, [metaFromApi])
 
 	const fetchMoreDataWithPagination = useCallback(() => {
-		if (hasNextPage) setPage((prevPage) => prevPage + 1)
-	}, [hasNextPage])
+		if (metaFromApi?.hasNextPage) setPage((prevPage) => prevPage + 1)
+	}, [metaFromApi?.hasNextPage])
 
 	const refreshList = useCallback(() => {
 		setPage(1)
@@ -53,5 +52,6 @@ export const usePaginatedList = <TData extends object>(
 		loading: isFetching,
 		fetchMoreDataWithPagination,
 		refreshList,
+		meta: metaFromApi,
 	} as const
 }
