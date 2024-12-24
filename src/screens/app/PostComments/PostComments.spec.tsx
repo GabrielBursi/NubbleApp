@@ -14,7 +14,7 @@ describe('<PostCommentsScreen/>', () => {
 				route={{
 					key: 'PostCommentScreen',
 					name: 'PostCommentScreen',
-					params: { postId: 'PostCommentScreen' },
+					params: { postId: 'PostCommentScreen', postAuthorId: '1' },
 					path: 'PostCommentScreen',
 				}}
 			/>

@@ -38,6 +38,7 @@ export const generatePost = (): PostModel => ({
 		profileURL: customFaker.image.url(),
 		name: customFaker.person.fullName(),
 		userName: customFaker.internet.username(),
+		id: customFaker.database.mongodbObjectId(),
 	},
 	imageURL: customFaker.image.url(),
 	reactionCount: customFaker.number.int({ min: 0, max: 1000 }),

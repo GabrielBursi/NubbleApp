@@ -5,5 +5,6 @@ export type RootAppStackRouterParamList = {
 	SettingsScreen: undefined
 	PostCommentScreen: {
 		postId: string
+		postAuthorId: string
 	}
 }

@@ -10,6 +10,7 @@ const PostBottomMemoized = ({
 	commentCount = 0,
 	text,
 	id,
+	authorId,
 }: Readonly<PostBottomProps>) => {
 	const { navigationAppStack } = useNavigationApp()
 
@@ -26,6 +27,7 @@ const PostBottomMemoized = ({
 	const navigateToPostCommentScreen = () => {
 		navigationAppStack.navigate('PostCommentScreen', {
 			postId: id,
+			postAuthorId: authorId,
 		})
 	}
 

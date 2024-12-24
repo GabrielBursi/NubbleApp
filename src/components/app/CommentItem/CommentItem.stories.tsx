@@ -7,8 +7,12 @@ import { CommentItem } from './CommentItem'
 const meta: Meta<typeof CommentItem> = {
 	title: 'Components/CommentItem',
 	component: CommentItem,
-	args: generateComment(),
-	argTypes: {},
+	args: { comment: generateComment(), postAuthorId: '1', userId: 1 },
+	argTypes: {
+		comment: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 

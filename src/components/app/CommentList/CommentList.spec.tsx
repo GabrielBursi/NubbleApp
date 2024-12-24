@@ -35,7 +35,7 @@ describe('<CommentList/>', () => {
 	})
 
 	it('should render the list component', () => {
-		customRender(<CommentList id={mockId} />)
+		customRender(<CommentList id={mockId} authorId={mockId} />)
 		expect(screen.getByRole('list')).toBeOnTheScreen()
 		expect(
 			screen.getByPlaceholderText('Adicione um comentário', { exact: true })
@@ -48,7 +48,7 @@ describe('<CommentList/>', () => {
 			comments: [mockComments[0], mockComments[1]],
 		})
 
-		customRender(<CommentList id={mockId} />)
+		customRender(<CommentList id={mockId} authorId={mockId} />)
 
 		await act(() => {
 			expect(screen.getAllByRole('listitem')).toHaveLength(2)
@@ -61,7 +61,7 @@ describe('<CommentList/>', () => {
 			meta: { ...initialMockReturnUseCommentList.meta, hasNextPage: true },
 		})
 
-		customRender(<CommentList id={mockId} />)
+		customRender(<CommentList id={mockId} authorId={mockId} />)
 
 		await userEvent.press(screen.getByRole('text', { name: /ver mais/i }))
 

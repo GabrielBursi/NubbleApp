@@ -5,6 +5,7 @@ export interface PostModel {
 		profileURL: string
 		name: string
 		userName: string
+		id: string
 	}
 	imageURL: string
 	reactionCount: number

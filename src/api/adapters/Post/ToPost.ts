@@ -11,6 +11,7 @@ export const ToPost = (postAPI: PostAPIModel): PostModel => {
 			profileURL: postAPI.user.profile_url,
 			name: postAPI.user.full_name,
 			userName: postAPI.user.username,
+			id: postAPI.user.id,
 		},
 		imageURL: postAPI.image_url,
 		reactionCount: parseInt(postAPI.meta.like_count, 10),

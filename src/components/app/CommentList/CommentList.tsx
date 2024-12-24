@@ -10,7 +10,10 @@ import { CommentListProps } from './CommentList.types'
 
 const ItemSeparatorComponent = () => <Box mb="s16" />
 
-export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
+export const CommentList = ({
+	id: postId,
+	authorId,
+}: Readonly<CommentListProps>) => {
 	const { comments, loading, meta, fetchMoreCommentsWithPagination } =
 		useCommentList(postId)
 
@@ -22,7 +25,9 @@ export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
 				showsVerticalScrollIndicator={false}
 				data={comments}
 				keyExtractor={(comment, index) => `${comment.id}-${index}`}
-				renderItem={({ item: comment }) => <CommentItem {...comment} />}
+				renderItem={({ item: comment }) => (
+					<CommentItem comment={comment} postAuthorId={authorId} userId={1} />
+				)}
 				ItemSeparatorComponent={ItemSeparatorComponent}
 				ListFooterComponent={
 					meta?.hasNextPage ? (

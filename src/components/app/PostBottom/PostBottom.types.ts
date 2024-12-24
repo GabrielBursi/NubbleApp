@@ -6,4 +6,6 @@ export type PostBottomProps = OptionalPros<
 	Pick<PostModel, 'text' | 'commentCount' | 'id'>,
 	'commentCount'
 > &
-	Pick<Author, 'userName'>
+	Pick<Author, 'userName'> & {
+		authorId: Author['id']
+	}

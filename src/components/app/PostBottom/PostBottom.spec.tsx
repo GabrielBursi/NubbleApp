@@ -11,7 +11,9 @@ describe('<PostBottom/>', () => {
 	const text = post.text
 
 	it('should render the post bottom correctly', () => {
-		customRender(<PostBottom id={post.id} text={text} userName={userName} />)
+		customRender(
+			<PostBottom id={post.id} authorId="1" text={text} userName={userName} />
+		)
 
 		expect(screen.getByRole('text', { name: text })).toBeOnTheScreen()
 		expect(screen.getByRole('text', { name: userName })).toBeOnTheScreen()
@@ -21,6 +23,7 @@ describe('<PostBottom/>', () => {
 		customRender(
 			<PostBottom
 				id={post.id}
+				authorId="1"
 				text={text}
 				userName={userName}
 				commentCount={10}
@@ -36,6 +39,7 @@ describe('<PostBottom/>', () => {
 		customRender(
 			<PostBottom
 				id={post.id}
+				authorId="1"
 				text={text}
 				userName={userName}
 				commentCount={1}
@@ -51,6 +55,7 @@ describe('<PostBottom/>', () => {
 		customRender(
 			<PostBottom
 				id={post.id}
+				authorId="1"
 				text={text}
 				userName={userName}
 				commentCount={1}
@@ -60,7 +65,7 @@ describe('<PostBottom/>', () => {
 		await userEvent.press(screen.getByRole('text', { name: /ver comentário/i }))
 		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
 			'PostCommentScreen',
-			{ postId: post.id }
+			{ postId: post.id, postAuthorId: '1' }
 		)
 	})
 })

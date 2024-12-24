@@ -33,6 +33,7 @@ const PostItemMemoized = ({
 				text={text}
 				commentCount={commentCount}
 				id={id}
+				authorId={author.id}
 			/>
 		</Box>
 	)
