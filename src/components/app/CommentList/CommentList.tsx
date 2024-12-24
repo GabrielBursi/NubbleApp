@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, CommentItem, SeeMore, TextInputMessage } from '@/components'
+import { Box, CommentItem, SeeMore, TextInputAddComment } from '@/components'
 import { useCommentList } from '@/domain/Comment'
 import { useAppSafeArea } from '@/hooks'
 
@@ -15,11 +15,6 @@ export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
 		useCommentList(postId)
 
 	const { bottom } = useAppSafeArea()
-
-	const [comment, setComment] = useState('')
-
-	//TODO: implementar on press send
-	const onPressSend = useCallback(() => {}, [])
 
 	return (
 		<Box flex={1} justifyContent="space-between">
@@ -44,12 +39,7 @@ export const CommentList = ({ id: postId }: Readonly<CommentListProps>) => {
 				role="list"
 				accessibilityRole="list"
 			/>
-			<TextInputMessage
-				value={comment}
-				onChangeText={setComment}
-				placeholder="Adicione um comentário"
-				onPressSend={onPressSend}
-			/>
+			<TextInputAddComment postId={postId} />
 		</Box>
 	)
 }

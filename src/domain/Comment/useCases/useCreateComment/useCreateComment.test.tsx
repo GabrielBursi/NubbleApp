@@ -12,10 +12,10 @@ describe('useCreateComment', () => {
 		const { result } = renderHook(useCreateComment, { wrapper: TestProvider })
 
 		await act(() => {
-			result.current.createComment({ message: 'jest', postId: 1 })
+			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 		await waitFor(() => {
-			expect(spySendComment).toHaveBeenCalledWith(1, 'jest')
+			expect(spySendComment).toHaveBeenCalledWith('1', 'jest')
 		})
 	})
 
@@ -23,7 +23,7 @@ describe('useCreateComment', () => {
 		const { result } = renderHook(useCreateComment, { wrapper: TestProvider })
 
 		await act(() => {
-			result.current.createComment({ message: 'jest', postId: 1 })
+			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 		await waitFor(() => {
 			expect(result.current.createdComment).toBeTruthy()

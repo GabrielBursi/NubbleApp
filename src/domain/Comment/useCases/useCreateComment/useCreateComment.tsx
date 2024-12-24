@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { CommentApi } from '@/domain/Comment'
+import { PostModel } from '@/domain/Post'
 
 //TODO: arrumar query key, assim vai limpar todas as requisições de comentários, o correto é limpar apenas o postId
 export const useCreateComment = () => {
@@ -15,8 +16,13 @@ export const useCreateComment = () => {
 				queryKey: ['comments'],
 			})
 		},
-		mutationFn: ({ message, postId }: { postId: number; message: string }) =>
-			CommentApi.SendComment(postId, message),
+		mutationFn: ({
+			message,
+			postId,
+		}: {
+			postId: PostModel['id']
+			message: string
+		}) => CommentApi.SendComment(postId, message),
 	})
 
 	return {
