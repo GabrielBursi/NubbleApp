@@ -1,3 +1,6 @@
+import { useCallback } from 'react'
+import { Alert } from 'react-native'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
@@ -18,6 +21,19 @@ export const useDeleteComment = () => {
 			CommentApi.DeleteComment(commentId),
 	})
 
+	const confirmDelete = useCallback((onConfirm: () => void) => {
+		Alert.alert('Deseja excluir o comentário?', 'pressione confirmar', [
+			{ text: 'Confirmar', onPress: onConfirm },
+			{ text: 'Cancelar', style: 'cancel' },
+		])
+	}, [])
+
+	const isAllowedToDelete = useCallback(
+		(comment: CommentModel, userId: number, postAuthorId: number) =>
+			postAuthorId === userId || comment.author.id === userId,
+		[]
+	)
+
 	return {
 		message: data ?? null,
 		error,
@@ -25,5 +41,7 @@ export const useDeleteComment = () => {
 		isSuccess,
 		deleteComment: mutate,
 		resetDeleteComment: reset,
+		confirmDelete,
+		isAllowedToDelete,
 	} as const
 }
