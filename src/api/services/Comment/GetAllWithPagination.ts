@@ -1,4 +1,4 @@
-import { NubbleApi } from '@/api/config'
+import { END_POINTS_API, NubbleApi } from '@/api/config'
 import { CommentAPIModel } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
 import { PageAPI, PageQueryParams } from '@/types/api'
@@ -9,7 +9,7 @@ export const GetAllWithPagination = async (
 	params?: PageQueryParams
 ): Promise<PageAPI<CommentAPIModel>> => {
 	const { data } = await NubbleApi.get<PageAPI<CommentAPIModel>>(
-		'/user/post_comment',
+		END_POINTS_API.COMMENT,
 		{
 			params: {
 				post_id,

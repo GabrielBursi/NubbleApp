@@ -1,4 +1,4 @@
-import { NubbleApi } from '@/api/config'
+import { END_POINTS_API, NubbleApi } from '@/api/config'
 import { PostAPIModel } from '@/domain/Post'
 import { PageAPI, PageQueryParams } from '@/types/api'
 
@@ -6,8 +6,11 @@ import { PageAPI, PageQueryParams } from '@/types/api'
 export const GetAllWithPagination = async (
 	params?: PageQueryParams
 ): Promise<PageAPI<PostAPIModel>> => {
-	const { data } = await NubbleApi.get<PageAPI<PostAPIModel>>('/user/post', {
-		params,
-	})
+	const { data } = await NubbleApi.get<PageAPI<PostAPIModel>>(
+		END_POINTS_API.POST,
+		{
+			params,
+		}
+	)
 	return data
 }
