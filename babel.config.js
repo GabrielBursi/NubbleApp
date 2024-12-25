@@ -24,6 +24,8 @@ module.exports = {
 					'@/types': './src/types',
 					'@/utils': './src/utils',
 					'@/domain': './src/domain',
+					'@/services': './src/services',
+					'@/context': './src/context',
 				},
 			},
 		],

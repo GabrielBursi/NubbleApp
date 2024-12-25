@@ -6,6 +6,8 @@ import { ThemeProvider } from '@shopify/restyle'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
+//? Only use ToastProvider if it is using Context implementation. Zustand implementation doesn't need a provider
+// import { ContextProvider } from '@/context'
 import { appTheme } from '@/styles'
 
 export const testQueryClient = new QueryClient({
@@ -38,6 +40,7 @@ export const TestProvider = ({ children }: PropsWithChildren) => {
 							backgroundColor="transparent"
 							translucent
 						/>
+						{/* <ContextProvider>{children}</ContextProvider> */}
 						{children}
 					</SafeAreaProvider>
 				</ThemeProvider>

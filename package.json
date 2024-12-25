@@ -64,7 +64,8 @@
 		"react-native-responsive-fontsize": "^0.5.1",
 		"react-native-safe-area-context": "^4.8.2",
 		"react-native-screens": "^3.28.0",
-		"zod": "^3.23.8"
+		"zod": "^3.23.8",
+		"zustand": "^5.0.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.23.7",
