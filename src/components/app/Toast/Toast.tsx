@@ -1,27 +1,23 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from 'react'
-import { Dimensions } from 'react-native'
+import React, { useEffect } from 'react'
 
-import { Box, Icon, Text } from '@/components'
+import { ToastContent } from '@/components'
+import { useToast, useToastService } from '@/services/toast'
 
 export const Toast = () => {
-	return (
-		<Box
-			top={100}
-			position="absolute"
-			backgroundColor="background"
-			alignSelf="center"
-			alignItems="center"
-			padding="s16"
-			borderRadius="s16"
-			flexDirection="row"
-			opacity={0.95}
-			maxWidth={Dimensions.get('screen').width * 0.9}
-		>
-			<Icon color="success" name="checkRound" />
-			<Text style={{ flexShrink: 1 }} ml="s16" preset="paragraphMedium" bold>
-				Toast Component
-			</Text>
-		</Box>
-	)
+	const toast = useToast()
+	const { hideToast } = useToastService()
+
+	useEffect(() => {
+		if (toast) {
+			setTimeout(() => {
+				hideToast()
+			}, toast.duration ?? 2000)
+		}
+	}, [hideToast, toast])
+
+	if (!toast) {
+		return null
+	}
+
+	return <ToastContent {...toast} />
 }
