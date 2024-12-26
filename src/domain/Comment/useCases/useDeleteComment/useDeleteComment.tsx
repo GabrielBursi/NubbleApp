@@ -4,14 +4,21 @@ import { Alert } from 'react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
+import { useToastService } from '@/services/toast'
 
 export const useDeleteComment = () => {
 	const queryClient = useQueryClient()
+
+	const { showToast } = useToastService()
 
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['delete-comment'],
 		gcTime: 3 * 60 * 1000,
 		onSuccess: async () => {
+			showToast({
+				message: 'Comentário excluído.',
+				position: 'bottom',
+			})
 			await queryClient.invalidateQueries({
 				exact: false,
 				queryKey: ['comments'],

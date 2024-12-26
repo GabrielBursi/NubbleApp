@@ -2,15 +2,22 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { CommentApi } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
+import { useToastService } from '@/services/toast'
 
 //TODO: arrumar query key, assim vai limpar todas as requisições de comentários, o correto é limpar apenas o postId
 export const useCreateComment = () => {
 	const queryClient = useQueryClient()
 
+	const { showToast } = useToastService()
+
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['post-comment'],
 		gcTime: 3 * 60 * 1000,
 		onSuccess: async () => {
+			showToast({
+				message: 'Comentário criado.',
+				position: 'bottom',
+			})
 			await queryClient.invalidateQueries({
 				exact: false,
 				queryKey: ['comments'],

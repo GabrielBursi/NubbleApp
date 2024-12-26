@@ -4,15 +4,36 @@ import { act, renderHook, waitFor } from '@testing-library/react-native'
 
 import { CommentApi } from '@/domain/Comment'
 import { TestProvider } from '@/providers'
+import { useToastService } from '@/services/toast/useToast'
 import { generateComment } from '@/tests/mocks'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useDeleteComment } from './useDeleteComment'
+
+type UseToastService = typeof useToastService
+type ReturnUseToastService = ReturnHookMocked<UseToastService>
+type MockUseToastService = HookMocked<UseToastService>
+
+jest.mock('@/services/toast/useToast')
 
 describe('useDeleteComment', () => {
 	const spyDeleteComment = jest.spyOn(CommentApi, 'DeleteComment')
 	const spyAlert = jest.spyOn(Alert, 'alert')
 	const mockConfirmDelete = jest.fn()
 	const mockComment = generateComment()
+	const mockHideToast = jest.fn()
+	const mockShowToast = jest.fn()
+
+	const mockInicialUseToastService: ReturnUseToastService = {
+		hideToast: mockHideToast,
+		showToast: mockShowToast,
+	}
+
+	beforeEach(() => {
+		;(useToastService as MockUseToastService).mockReturnValue(
+			mockInicialUseToastService
+		)
+	})
 
 	it('should delete a comment correctly', async () => {
 		const { result } = renderHook(useDeleteComment, { wrapper: TestProvider })
@@ -22,6 +43,10 @@ describe('useDeleteComment', () => {
 		})
 		await waitFor(() => {
 			expect(spyDeleteComment).toHaveBeenCalledWith(1)
+			expect(mockShowToast).toHaveBeenCalledWith({
+				message: 'Comentário excluído.',
+				position: 'bottom',
+			})
 		})
 	})
 
