@@ -3,7 +3,7 @@ import { parseISO, differenceInSeconds, format } from 'date-fns'
 function formatRelative(dateISO: string): string {
 	const date = parseISO(dateISO)
 	const now = new Date()
-	const diffInSeconds = differenceInSeconds(now, date)
+	const diffInSeconds = Math.abs(differenceInSeconds(now, date))
 	if (diffInSeconds < 60) {
 		return `${diffInSeconds} s`
 	}
