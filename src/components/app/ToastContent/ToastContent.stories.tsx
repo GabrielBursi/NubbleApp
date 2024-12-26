@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { generateToast } from '@/tests/mocks'
+import { generateToast } from '@/tests/mocks/mockToast'
 
 import { ToastContent } from './ToastContent'
 
