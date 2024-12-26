@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 import Config from 'react-native-config'
 import 'react-native-gesture-handler'
 
+import { Toast } from '@/components'
 import { AppProvider } from '@/providers'
 
 import StorybookUIRoot from './.storybook'
@@ -55,6 +56,7 @@ function App() {
 	return (
 		<AppProvider>
 			<RouterApp />
+			<Toast />
 		</AppProvider>
 	)
 }
