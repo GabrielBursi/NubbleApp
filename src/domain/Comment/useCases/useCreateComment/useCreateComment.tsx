@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CommentApi } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
 import { useToastService } from '@/services/toast'
+import { AppQueryKeys } from '@/types/api'
 
 //TODO: arrumar query key, assim vai limpar todas as requisições de comentários, o correto é limpar apenas o postId
 export const useCreateComment = () => {
@@ -20,7 +21,7 @@ export const useCreateComment = () => {
 			})
 			await queryClient.invalidateQueries({
 				exact: false,
-				queryKey: ['comments'],
+				queryKey: [AppQueryKeys.COMMENTS],
 			})
 		},
 		mutationFn: ({

@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
 import { useToastService } from '@/services/toast'
+import { AppQueryKeys } from '@/types/api'
 
 export const useDeleteComment = () => {
 	const queryClient = useQueryClient()
@@ -21,7 +22,7 @@ export const useDeleteComment = () => {
 			})
 			await queryClient.invalidateQueries({
 				exact: false,
-				queryKey: ['comments'],
+				queryKey: [AppQueryKeys.COMMENTS],
 			})
 		},
 		mutationFn: (commentId: CommentModel['id']) =>
