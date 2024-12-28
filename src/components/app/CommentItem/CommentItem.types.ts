@@ -5,4 +5,5 @@ export type CommentItemProps = {
 	comment: CommentModel
 	userId: number
 	postAuthorId: PostModel['author']['id']
+	postId: PostModel['id']
 }

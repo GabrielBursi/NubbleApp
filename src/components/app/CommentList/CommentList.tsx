@@ -26,7 +26,12 @@ export const CommentList = ({
 				data={comments}
 				keyExtractor={(comment, index) => `${comment.id}-${index}`}
 				renderItem={({ item: comment }) => (
-					<CommentItem comment={comment} postAuthorId={authorId} userId={1} />
+					<CommentItem
+						comment={comment}
+						postAuthorId={authorId}
+						userId={1}
+						postId={postId}
+					/>
 				)}
 				ItemSeparatorComponent={ItemSeparatorComponent}
 				ListFooterComponent={

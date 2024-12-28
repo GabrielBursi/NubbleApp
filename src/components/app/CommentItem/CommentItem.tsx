@@ -10,10 +10,12 @@ export const CommentItemMemoized = ({
 	comment,
 	postAuthorId,
 	userId,
+	postId,
 }: Readonly<CommentItemProps>) => {
 	const { author, createdAtRelative, id, message } = comment
 
-	const { confirmDelete, isAllowedToDelete, deleteComment } = useDeleteComment()
+	const { confirmDelete, isAllowedToDelete, deleteComment } =
+		useDeleteComment(postId)
 
 	const isAllowedToDeleteComment = useMemo(
 		() => isAllowedToDelete(comment, userId, Number(postAuthorId)),

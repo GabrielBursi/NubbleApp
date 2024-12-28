@@ -16,7 +16,7 @@ export const TextInputAddComment = ({
 		resetCreateComment,
 		createdComment,
 		isSuccess,
-	} = useCreateComment()
+	} = useCreateComment(postId)
 
 	const onPressSend = useCallback(() => {
 		createComment({ postId, message: comment })

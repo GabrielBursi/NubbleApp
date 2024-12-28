@@ -1,7 +1,7 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
 import { useDeleteComment } from '@/domain/Comment/useCases/useDeleteComment/useDeleteComment'
-import { generateComment } from '@/tests/mocks'
+import { generateComment, generatePost } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -19,6 +19,7 @@ describe('<CommentItem/>', () => {
 		comment: generateComment(),
 		postAuthorId: '1',
 		userId: 1,
+		postId: generatePost().id,
 	}
 
 	const mockConfirmDelete = jest.fn()

@@ -4,10 +4,11 @@ import { Alert } from 'react-native'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
+import { PostModel } from '@/domain/Post'
 import { useToastService } from '@/services/toast'
 import { AppQueryKeys } from '@/types/api'
 
-export const useDeleteComment = () => {
+export const useDeleteComment = (postId: PostModel['id']) => {
 	const queryClient = useQueryClient()
 
 	const { showToast } = useToastService()
@@ -21,8 +22,8 @@ export const useDeleteComment = () => {
 				position: 'bottom',
 			})
 			await queryClient.invalidateQueries({
-				exact: false,
-				queryKey: [AppQueryKeys.COMMENTS],
+				exact: true,
+				queryKey: [AppQueryKeys.COMMENTS, postId],
 			})
 		},
 		mutationFn: (commentId: CommentModel['id']) =>

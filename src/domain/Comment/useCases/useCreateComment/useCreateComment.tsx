@@ -5,8 +5,7 @@ import { PostModel } from '@/domain/Post'
 import { useToastService } from '@/services/toast'
 import { AppQueryKeys } from '@/types/api'
 
-//TODO: arrumar query key, assim vai limpar todas as requisições de comentários, o correto é limpar apenas o postId
-export const useCreateComment = () => {
+export const useCreateComment = (postId: PostModel['id']) => {
 	const queryClient = useQueryClient()
 
 	const { showToast } = useToastService()
@@ -20,8 +19,8 @@ export const useCreateComment = () => {
 				position: 'bottom',
 			})
 			await queryClient.invalidateQueries({
-				exact: false,
-				queryKey: [AppQueryKeys.COMMENTS],
+				exact: true,
+				queryKey: [AppQueryKeys.COMMENTS, postId],
 			})
 		},
 		mutationFn: ({
