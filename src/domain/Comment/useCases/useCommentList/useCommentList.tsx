@@ -11,13 +11,15 @@ export const useCommentList = (postId: PostModel['id']) => {
 		[postId]
 	)
 
-	const { fetchMoreDataWithPagination, listData, refreshList, ...restData } =
-		usePaginatedList(getComments, AppQueryKeys.COMMENTS)
+	const { fetchNextPage, list, refreshList, ...restData } = usePaginatedList(
+		getComments,
+		{ queryKey: [AppQueryKeys.COMMENTS, postId] }
+	)
 
 	return {
 		...restData,
-		fetchMoreCommentsWithPagination: fetchMoreDataWithPagination,
-		comments: listData,
+		fetchMoreComments: fetchNextPage,
+		comments: list,
 		refreshComments: refreshList,
 	} as const
 }

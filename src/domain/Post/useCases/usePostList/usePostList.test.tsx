@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-native'
 
 import { PostApi } from '@/domain/Post'
+import { AppQueryKeys } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { usePaginatedList } from '../../../../hooks/usePaginatedList/usePaginatedList'
@@ -16,9 +17,9 @@ jest.mock('../../../../hooks/usePaginatedList/usePaginatedList')
 describe('usePostList', () => {
 	const initialMock: ReturnUsePaginatedList = {
 		error: null,
-		fetchMoreDataWithPagination: jest.fn(),
-		listData: [],
-		loading: false,
+		fetchNextPage: jest.fn(),
+		list: [],
+		isLoading: false,
 		refreshList: jest.fn(),
 	}
 
@@ -29,6 +30,8 @@ describe('usePostList', () => {
 	it('should call usePaginatedList with service get posts correctly', () => {
 		renderHook(usePostList)
 
-		expect(usePaginatedList).toHaveBeenCalledWith(PostApi.GetPosts, 'posts')
+		expect(usePaginatedList).toHaveBeenCalledWith(PostApi.GetPosts, {
+			queryKey: [AppQueryKeys.POSTS],
+		})
 	})
 })

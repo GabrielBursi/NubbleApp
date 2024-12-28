@@ -10,7 +10,7 @@ import { PostModel, usePostList } from '@/domain/Post'
 const ItemSeparatorComponent = () => <Box mb="s16" />
 
 const FeedListMemoized = () => {
-	const { error, loading, posts, fetchMorePostsWithPagination, refreshPosts } =
+	const { error, isLoading, posts, fetchMorePosts, refreshPosts } =
 		usePostList()
 	const flatListRef = React.useRef<FlashList<PostModel>>(null)
 	//TODO: atualizar react navigation https://github.com/react-navigation/react-navigation/commit/a1f947a44f16a8d846c31d76efb0485780bd8de3
@@ -27,15 +27,17 @@ const FeedListMemoized = () => {
 			ItemSeparatorComponent={ItemSeparatorComponent}
 			ListHeaderComponent={FeedHeader}
 			ListEmptyComponent={
-				<FeedEmpty refetch={refreshPosts} error={error} loading={loading} />
+				<FeedEmpty refetch={refreshPosts} error={error} loading={isLoading} />
 			}
-			refreshing={loading}
+			refreshing={isLoading}
 			refreshControl={
-				<RefreshControl refreshing={loading} onRefresh={refreshPosts} />
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+				<RefreshControl refreshing={isLoading} onRefresh={refreshPosts} />
 			}
 			disableAutoLayout
 			estimatedItemSize={300}
-			onEndReached={fetchMorePostsWithPagination}
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+			onEndReached={fetchMorePosts}
 			onEndReachedThreshold={0.1}
 			accessible
 			accessibilityLabel="feed"

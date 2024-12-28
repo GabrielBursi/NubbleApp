@@ -24,9 +24,9 @@ describe('<FeedList/>', () => {
 
 	const initialMockReturnUsePostList: ReturnUsePostList = {
 		error: null,
-		loading: false,
+		isLoading: false,
 		posts: [],
-		fetchMorePostsWithPagination: mockFetchMorePostsWithPagination,
+		fetchMorePosts: mockFetchMorePostsWithPagination,
 		refreshPosts: mockRefreshPosts,
 	}
 
@@ -64,7 +64,7 @@ describe('<FeedList/>', () => {
 	it('should render loading indicator when loading is true', () => {
 		;(usePostList as MockUsePostList).mockReturnValue({
 			...initialMockReturnUsePostList,
-			loading: true,
+			isLoading: true,
 		})
 
 		customRender(<FeedList />)
@@ -75,7 +75,7 @@ describe('<FeedList/>', () => {
 	it('should display error message when there is an error', () => {
 		;(usePostList as MockUsePostList).mockReturnValue({
 			...initialMockReturnUsePostList,
-			error: { message: 'Error' },
+			error: 'Error',
 		})
 
 		customRender(<FeedList />)
@@ -88,7 +88,7 @@ describe('<FeedList/>', () => {
 	it('should call refetch when FeedEmpty refetch button is pressed', async () => {
 		;(usePostList as MockUsePostList).mockReturnValue({
 			...initialMockReturnUsePostList,
-			error: { message: 'Error' },
+			error: 'Error',
 		})
 
 		customRender(<FeedList />)

@@ -14,7 +14,7 @@ export const CommentList = ({
 	id: postId,
 	authorId,
 }: Readonly<CommentListProps>) => {
-	const { comments, loading, meta, fetchMoreCommentsWithPagination } =
+	const { comments, isLoading, hasNextPage, fetchMoreComments } =
 		useCommentList(postId)
 
 	const { bottom } = useAppSafeArea()
@@ -30,12 +30,11 @@ export const CommentList = ({
 				)}
 				ItemSeparatorComponent={ItemSeparatorComponent}
 				ListFooterComponent={
-					meta?.hasNextPage ? (
-						<SeeMore onClickSeeMore={fetchMoreCommentsWithPagination} />
-					) : null
+					// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+					hasNextPage ? <SeeMore onClickSeeMore={fetchMoreComments} /> : null
 				}
 				contentContainerStyle={{ paddingBottom: bottom }}
-				refreshing={loading}
+				refreshing={isLoading}
 				disableAutoLayout
 				estimatedItemSize={300}
 				accessible

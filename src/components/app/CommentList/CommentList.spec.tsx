@@ -1,6 +1,6 @@
 import { act, screen, userEvent } from '@testing-library/react-native'
 
-import { mockComments, mockMetaPaginationApi } from '@/tests/mocks'
+import { mockComments } from '@/tests/mocks'
 import { customFaker, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -21,11 +21,11 @@ describe('<CommentList/>', () => {
 
 	const initialMockReturnUseCommentList: ReturnUseCommentList = {
 		error: null,
-		loading: false,
+		isLoading: false,
 		comments: [],
-		fetchMoreCommentsWithPagination: mockFetchMoreCommentsWithPagination,
+		fetchMoreComments: mockFetchMoreCommentsWithPagination,
 		refreshComments: mockRefreshComments,
-		meta: { ...mockMetaPaginationApi, hasNextPage: false },
+		hasNextPage: false,
 	}
 
 	beforeEach(() => {
@@ -58,7 +58,7 @@ describe('<CommentList/>', () => {
 	it('should show more comments correctly', async () => {
 		;(useCommentList as MockUseCommentList).mockReturnValue({
 			...initialMockReturnUseCommentList,
-			meta: { ...initialMockReturnUseCommentList.meta, hasNextPage: true },
+			hasNextPage: true,
 		})
 
 		customRender(<CommentList id={mockId} authorId={mockId} />)

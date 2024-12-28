@@ -1,3 +1,5 @@
+jest.setTimeout(10000)
+
 import '@testing-library/react-native/extend-expect'
 import '@testing-library/jest-native/extend-expect'
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
@@ -28,12 +30,11 @@ beforeAll(() => {
 	serverTest.listen({ onUnhandledRequest: 'error' })
 	userEvent.setup()
 })
+beforeEach(() => {
+	testQueryClient.clear()
+})
 afterEach(() => {
 	serverTest.resetHandlers()
-	testQueryClient.setDefaultOptions({
-		queries: { gcTime: 0, staleTime: 0 },
-		mutations: { gcTime: 0, mutationKey: [] },
-	})
 })
 afterAll(() => {
 	serverTest.close()

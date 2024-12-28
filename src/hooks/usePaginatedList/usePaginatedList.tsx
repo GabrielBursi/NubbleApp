@@ -1,57 +1,82 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { UndefinedInitialDataOptions, useQuery } from '@tanstack/react-query'
+import {
+	InfiniteData,
+	QueryKey,
+	UndefinedInitialDataInfiniteOptions,
+	useInfiniteQuery,
+} from '@tanstack/react-query'
 
 import { useQueryFocusAware } from '@/hooks'
-import { PageApp } from '@/types/shared'
+import { MetaDataPaginationApp, PageApp } from '@/types/shared'
+import { StrictOmit } from '@/types/utils'
+
+interface UsePaginatedList<TData extends object>
+	extends Pick<MetaDataPaginationApp, 'hasNextPage'> {
+	list: TData[]
+	isError: boolean
+	error: string | null
+	isLoading: boolean
+	fetchNextPage: () => Promise<InfiniteData<PageApp<TData>> | null>
+	refreshList: () => Promise<InfiniteData<PageApp<TData>> | null>
+}
 
 export const usePaginatedList = <TData extends object>(
 	getList: (page: number) => Promise<PageApp<TData>>,
-	queryKey: string,
-	optionsQuery?: UndefinedInitialDataOptions<PageApp<TData>>
-) => {
+	optionsQuery: StrictOmit<
+		UndefinedInitialDataInfiniteOptions<
+			PageApp<TData>,
+			Error,
+			InfiniteData<PageApp<TData>, number>,
+			QueryKey,
+			number
+		>,
+		'queryFn' | 'getNextPageParam' | 'initialPageParam'
+	>
+): UsePaginatedList<TData> => {
 	const [listData, setListData] = useState<TData[]>([])
-	const [page, setPage] = useState(1)
 
 	const isFocused = useQueryFocusAware()
 
-	const { data, error, isFetching } = useQuery({
-		queryKey: [queryKey, page],
-		queryFn: () => getList(page),
-		staleTime: 0,
+	const {
+		data,
+		error,
+		isError,
+		isFetched,
+		isFetching,
+		hasNextPage,
+		fetchNextPage,
+		refetch,
+	} = useInfiniteQuery({
+		initialPageParam: 1,
+		queryFn: ({ pageParam }) => getList(pageParam),
+		getNextPageParam: ({ meta }) =>
+			meta.hasNextPage ? meta.currentPage + 1 : null,
+		enabled: isFocused(),
+		staleTime: 5 * 60 * 1000,
 		refetchOnMount: true,
 		refetchOnWindowFocus: true,
 		gcTime: 3 * 60 * 1000,
 		placeholderData: (oldData) => oldData,
-		enabled: isFocused(),
 		...optionsQuery,
 	})
 
-	const dataFromApi = useMemo(() => data?.data ?? [], [data])
-	const metaFromApi = useMemo(() => data?.meta ?? null, [data])
-
-	const fetchMoreDataWithPagination = useCallback(() => {
-		if (metaFromApi?.hasNextPage) setPage((prevPage) => prevPage + 1)
-	}, [metaFromApi?.hasNextPage])
-
-	const refreshList = useCallback(() => {
-		setPage(1)
-	}, [])
-
 	useEffect(() => {
-		if (!isFetching && dataFromApi) {
-			setListData((prevList) =>
-				page === 1 ? dataFromApi : [...prevList, ...dataFromApi]
-			)
+		if (data && isFetched && !isError) {
+			const newList = data.pages.reduce<TData[]>((prev, curr) => {
+				return [...prev, ...curr.data]
+			}, [])
+			setListData(newList)
 		}
-	}, [dataFromApi, isFetching, page])
+	}, [data, isError, isFetched])
 
 	return {
-		listData,
-		error,
-		loading: isFetching,
-		fetchMoreDataWithPagination,
-		refreshList,
-		meta: metaFromApi,
+		list: listData,
+		error: error ? error.message : null,
+		isError,
+		isLoading: isFetching,
+		refreshList: async () => (await refetch()).data ?? null,
+		fetchNextPage: async () => (await fetchNextPage()).data ?? null,
+		hasNextPage,
 	} as const
 }
