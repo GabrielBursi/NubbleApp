@@ -1,15 +1,16 @@
 import { useCallback } from 'react'
 import { Alert } from 'react-native'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
+import { useInvalidateQueryComments } from '@/hooks'
 import { useToastService } from '@/services/toast'
-import { AppQueryKeys } from '@/types/api'
 
 export const useDeleteComment = (postId: PostModel['id']) => {
-	const queryClient = useQueryClient()
+	const { invalidateCommentCountPost, invalidateQueryComments } =
+		useInvalidateQueryComments()
 
 	const { showToast } = useToastService()
 
@@ -21,10 +22,8 @@ export const useDeleteComment = (postId: PostModel['id']) => {
 				message: 'Comentário excluído.',
 				position: 'bottom',
 			})
-			await queryClient.invalidateQueries({
-				exact: true,
-				queryKey: [AppQueryKeys.COMMENTS, postId],
-			})
+			await invalidateQueryComments(postId)
+			invalidateCommentCountPost(postId, 'decrement')
 		},
 		mutationFn: (commentId: CommentModel['id']) =>
 			CommentApi.DeleteComment(commentId),

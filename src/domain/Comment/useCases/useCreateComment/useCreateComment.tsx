@@ -1,14 +1,14 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 import { CommentApi } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
+import { useInvalidateQueryComments } from '@/hooks'
 import { useToastService } from '@/services/toast'
-import { AppQueryKeys } from '@/types/api'
 
 export const useCreateComment = (postId: PostModel['id']) => {
-	const queryClient = useQueryClient()
-
 	const { showToast } = useToastService()
+	const { invalidateCommentCountPost, invalidateQueryComments } =
+		useInvalidateQueryComments()
 
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['post-comment'],
@@ -18,10 +18,8 @@ export const useCreateComment = (postId: PostModel['id']) => {
 				message: 'Comentário criado.',
 				position: 'bottom',
 			})
-			await queryClient.invalidateQueries({
-				exact: true,
-				queryKey: [AppQueryKeys.COMMENTS, postId],
-			})
+			await invalidateQueryComments(postId)
+			invalidateCommentCountPost(postId, 'increment')
 		},
 		mutationFn: ({
 			message,
