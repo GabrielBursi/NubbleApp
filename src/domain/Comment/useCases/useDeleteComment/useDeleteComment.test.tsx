@@ -5,22 +5,16 @@ import { act, renderHook, waitFor } from '@testing-library/react-native'
 import { CommentApi } from '@/domain/Comment'
 import { useInvalidateQueryComments } from '@/hooks/useInvalidateQueryComments/useInvalidateQueryComments'
 import { TestProvider } from '@/providers'
-import { useToastService } from '@/services/toast/useToast'
 import { generateComment } from '@/tests/mocks'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useDeleteComment } from './useDeleteComment'
-
-type UseToastService = typeof useToastService
-type ReturnUseToastService = ReturnHookMocked<UseToastService>
-type MockUseToastService = HookMocked<UseToastService>
 
 type UseInvalidateQueryComments = typeof useInvalidateQueryComments
 type ReturnUseInvalidateQueryComments =
 	ReturnHookMocked<UseInvalidateQueryComments>
 type MockUseInvalidateQueryComments = HookMocked<UseInvalidateQueryComments>
 
-jest.mock('@/services/toast/useToast')
 jest.mock('@/hooks/useInvalidateQueryComments/useInvalidateQueryComments')
 
 describe('useDeleteComment', () => {
@@ -28,15 +22,9 @@ describe('useDeleteComment', () => {
 	const spyAlert = jest.spyOn(Alert, 'alert')
 	const mockConfirmDelete = jest.fn()
 	const mockComment = generateComment()
-	const mockHideToast = jest.fn()
-	const mockShowToast = jest.fn()
 	const mockInvalidateCommentCountPost = jest.fn()
 	const mockInvalidateQueryComments = jest.fn()
-
-	const mockUseToastService: ReturnUseToastService = {
-		hideToast: mockHideToast,
-		showToast: mockShowToast,
-	}
+	const mockOnSuccess = jest.fn()
 
 	const mockUseInvalidateQueryComments: ReturnUseInvalidateQueryComments = {
 		invalidateCommentCountPost: mockInvalidateCommentCountPost,
@@ -44,16 +32,13 @@ describe('useDeleteComment', () => {
 	}
 
 	beforeEach(() => {
-		;(useToastService as MockUseToastService).mockReturnValue(
-			mockUseToastService
-		)
 		;(
 			useInvalidateQueryComments as MockUseInvalidateQueryComments
 		).mockReturnValue(mockUseInvalidateQueryComments)
 	})
 
 	it('should delete a comment correctly', async () => {
-		const { result } = renderHook(() => useDeleteComment('1'), {
+		const { result } = renderHook(() => useDeleteComment('1', mockOnSuccess), {
 			wrapper: TestProvider,
 		})
 
@@ -62,10 +47,7 @@ describe('useDeleteComment', () => {
 		})
 		await waitFor(() => {
 			expect(spyDeleteComment).toHaveBeenCalledWith(1)
-			expect(mockShowToast).toHaveBeenCalledWith({
-				message: 'Comentário excluído.',
-				position: 'bottom',
-			})
+			expect(mockOnSuccess).toHaveBeenCalled()
 			expect(mockInvalidateQueryComments).toHaveBeenCalledWith('1')
 			expect(mockInvalidateCommentCountPost).toHaveBeenCalledWith(
 				'1',

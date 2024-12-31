@@ -3,6 +3,7 @@ import { Pressable } from 'react-native'
 
 import { Box, ProfileAvatar, Text } from '@/components'
 import { useDeleteComment } from '@/domain/Comment'
+import { useToastService } from '@/services/toast'
 
 import { CommentItemProps } from './CommentItem.types'
 
@@ -14,8 +15,15 @@ export const CommentItemMemoized = ({
 }: Readonly<CommentItemProps>) => {
 	const { author, createdAtRelative, id, message } = comment
 
-	const { confirmDelete, isAllowedToDelete, deleteComment } =
-		useDeleteComment(postId)
+	const { showToast } = useToastService()
+	const { confirmDelete, isAllowedToDelete, deleteComment } = useDeleteComment(
+		postId,
+		() =>
+			showToast({
+				message: 'Comentário excluído.',
+				position: 'bottom',
+			})
+	)
 
 	const isAllowedToDeleteComment = useMemo(
 		() => isAllowedToDelete(comment, userId, Number(postAuthorId)),

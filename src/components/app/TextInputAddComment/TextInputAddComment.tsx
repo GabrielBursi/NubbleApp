@@ -3,6 +3,7 @@ import { Keyboard } from 'react-native'
 
 import { TextInputMessage } from '@/components'
 import { useCreateComment } from '@/domain/Comment'
+import { useToastService } from '@/services/toast'
 
 import { TextInputAddCommentProps } from './TextInputAddComment.types'
 
@@ -10,13 +11,19 @@ export const TextInputAddComment = ({
 	postId,
 }: Readonly<TextInputAddCommentProps>) => {
 	const [comment, setComment] = useState('')
+	const { showToast } = useToastService()
 	const {
 		createComment,
 		loading,
 		resetCreateComment,
 		createdComment,
 		isSuccess,
-	} = useCreateComment(postId)
+	} = useCreateComment(postId, () => {
+		showToast({
+			message: 'Comentário criado.',
+			position: 'bottom',
+		})
+	})
 
 	const onPressSend = useCallback(() => {
 		createComment({ postId, message: comment })

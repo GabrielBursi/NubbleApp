@@ -3,10 +3,11 @@ import { useMutation } from '@tanstack/react-query'
 import { CommentApi } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
 import { useInvalidateQueryComments } from '@/hooks'
-import { useToastService } from '@/services/toast'
 
-export const useCreateComment = (postId: PostModel['id']) => {
-	const { showToast } = useToastService()
+export const useCreateComment = (
+	postId: PostModel['id'],
+	onSuccess?: () => void
+) => {
 	const { invalidateCommentCountPost, invalidateQueryComments } =
 		useInvalidateQueryComments()
 
@@ -14,12 +15,9 @@ export const useCreateComment = (postId: PostModel['id']) => {
 		mutationKey: ['post-comment'],
 		gcTime: 3 * 60 * 1000,
 		onSuccess: async () => {
-			showToast({
-				message: 'Comentário criado.',
-				position: 'bottom',
-			})
 			await invalidateQueryComments(postId)
 			invalidateCommentCountPost(postId, 'increment')
+			onSuccess?.()
 		},
 		mutationFn: ({
 			message,

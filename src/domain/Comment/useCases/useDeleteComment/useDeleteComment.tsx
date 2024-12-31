@@ -6,24 +6,21 @@ import { useMutation } from '@tanstack/react-query'
 import { CommentApi, CommentModel } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
 import { useInvalidateQueryComments } from '@/hooks'
-import { useToastService } from '@/services/toast'
 
-export const useDeleteComment = (postId: PostModel['id']) => {
+export const useDeleteComment = (
+	postId: PostModel['id'],
+	onSuccess?: () => void
+) => {
 	const { invalidateCommentCountPost, invalidateQueryComments } =
 		useInvalidateQueryComments()
-
-	const { showToast } = useToastService()
 
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['delete-comment'],
 		gcTime: 3 * 60 * 1000,
 		onSuccess: async () => {
-			showToast({
-				message: 'Comentário excluído.',
-				position: 'bottom',
-			})
 			await invalidateQueryComments(postId)
 			invalidateCommentCountPost(postId, 'decrement')
+			onSuccess?.()
 		},
 		mutationFn: (commentId: CommentModel['id']) =>
 			CommentApi.DeleteComment(commentId),

@@ -1,6 +1,7 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
 import { useDeleteComment } from '@/domain/Comment/useCases/useDeleteComment/useDeleteComment'
+import { useToastService } from '@/services/toast/useToast'
 import { generateComment, generatePost } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
@@ -12,7 +13,12 @@ type UseDeleteComment = typeof useDeleteComment
 type ReturnUseDeleteComment = ReturnHookMocked<UseDeleteComment>
 type MockUseDeleteComment = HookMocked<UseDeleteComment>
 
+type UseToastService = typeof useToastService
+type ReturnUseToastService = ReturnHookMocked<UseToastService>
+type MockUseToastService = HookMocked<UseToastService>
+
 jest.mock('@/domain/Comment/useCases/useDeleteComment/useDeleteComment')
+jest.mock('@/services/toast/useToast')
 
 describe('<CommentItem/>', () => {
 	const mockProps: CommentItemProps = {
@@ -25,11 +31,18 @@ describe('<CommentItem/>', () => {
 	const mockConfirmDelete = jest.fn()
 	const mockDeleteComment = jest.fn()
 	const mockIsAllowedToDelete = jest.fn()
+	const mockHideToast = jest.fn()
+	const mockShowToast = jest.fn()
 
 	const initialMockReturnUseCommentList: ReturnUseDeleteComment = {
 		confirmDelete: mockConfirmDelete,
 		deleteComment: mockDeleteComment,
 		isAllowedToDelete: mockIsAllowedToDelete,
+	}
+
+	const mockUseToastService: ReturnUseToastService = {
+		hideToast: mockHideToast,
+		showToast: mockShowToast,
 	}
 
 	beforeEach(() => {
@@ -38,6 +51,19 @@ describe('<CommentItem/>', () => {
 		mockConfirmDelete.mockImplementation((callback) => callback())
 		;(useDeleteComment as MockUseDeleteComment).mockReturnValue(
 			initialMockReturnUseCommentList
+		)
+		;(useDeleteComment as MockUseDeleteComment).mockImplementation(
+			(postId: string, callback: () => void) => {
+				return {
+					...initialMockReturnUseCommentList,
+					deleteComment: mockDeleteComment.mockImplementation(() => {
+						callback()
+					}),
+				}
+			}
+		)
+		;(useToastService as MockUseToastService).mockReturnValue(
+			mockUseToastService
 		)
 	})
 
@@ -74,6 +100,10 @@ describe('<CommentItem/>', () => {
 		await userEvent.longPress(screen.getByTestId('container-comment'))
 		expect(mockConfirmDelete).toHaveBeenCalledTimes(1)
 		expect(mockConfirmDelete).toHaveBeenCalledWith(expect.any(Function))
+		expect(mockShowToast).toHaveBeenCalledWith({
+			message: 'Comentário excluído.',
+			position: 'bottom',
+		})
 
 		expect(mockDeleteComment).toHaveBeenCalledTimes(1)
 		expect(mockDeleteComment).toHaveBeenCalledWith(mockProps.comment.id)
