@@ -1,3 +1,5 @@
+export * from './Auth'
 export * from './Comment'
 export * from './Pagination'
 export * from './Post'
+export * from './User'
