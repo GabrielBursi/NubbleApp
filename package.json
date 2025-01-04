@@ -23,6 +23,7 @@
 		"generate:h": "plop --plopfile ./generators/hook.mjs && npm run format",
 		"generate:t": "plop --plopfile ./generators/template.mjs && npm run format",
 		"generate:e2e": "plop --plopfile ./generators/e2e.mjs && npm run format",
+		"generate:d": "plop --plopfile ./generators/domain.mjs && npm run format",
 		"adb:rdt": "adb reverse tcp:8097 tcp:8097",
 		"adb:reactotron": "adb reverse tcp:9090 tcp:9090",
 		"prerdt": "npm run adb:rdt",
