@@ -1,11 +1,15 @@
 import { Alert } from 'react-native'
 
 import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { http, HttpResponse } from 'msw'
+import Config from 'react-native-config'
 
 import { CommentApi } from '@/domain/Comment'
 import { useInvalidateQueryComments } from '@/hooks/useInvalidateQueryComments/useInvalidateQueryComments'
 import { TestProvider } from '@/providers'
 import { generateComment } from '@/tests/mocks'
+import { serverTest } from '@/tests/server'
+import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useDeleteComment } from './useDeleteComment'
@@ -25,6 +29,7 @@ describe('useDeleteComment', () => {
 	const mockInvalidateCommentCountPost = jest.fn()
 	const mockInvalidateQueryComments = jest.fn()
 	const mockOnSuccess = jest.fn()
+	const mockOnError = jest.fn()
 
 	const mockUseInvalidateQueryComments: ReturnUseInvalidateQueryComments = {
 		invalidateCommentCountPost: mockInvalidateCommentCountPost,
@@ -38,9 +43,12 @@ describe('useDeleteComment', () => {
 	})
 
 	it('should delete a comment correctly', async () => {
-		const { result } = renderHook(() => useDeleteComment('1', mockOnSuccess), {
-			wrapper: TestProvider,
-		})
+		const { result } = renderHook(
+			() => useDeleteComment('1', { onSuccess: mockOnSuccess }),
+			{
+				wrapper: TestProvider,
+			}
+		)
 
 		await act(() => {
 			result.current.deleteComment(1)
@@ -77,7 +85,7 @@ describe('useDeleteComment', () => {
 		expect(spyAlert).toHaveBeenCalled()
 	})
 
-	it("should allow to delete when is post's user correctly", () => {
+	it("should allow to delete when is delete's user correctly", () => {
 		const { result } = renderHook(useDeleteComment, { wrapper: TestProvider })
 
 		expect(
@@ -95,5 +103,75 @@ describe('useDeleteComment', () => {
 		expect(
 			result.current.isAllowedToDelete(mockComment, mockComment.author.id, -55)
 		).toBe(true)
+	})
+
+	it('should return the message null when it"s error correctly', async () => {
+		const { result } = renderHook(useDeleteComment, { wrapper: TestProvider })
+
+		serverTest.use(
+			...[
+				http.delete(`${Config.API_URL}${END_POINTS_API.COMMENT}/:id`, () =>
+					HttpResponse.error()
+				),
+			]
+		)
+
+		await act(() => {
+			result.current.deleteComment(1)
+		})
+
+		await waitFor(() => {
+			expect(result.current.message).toBeNull()
+		})
+	})
+
+	it('should call onError with default error message correctly', async () => {
+		const { result } = renderHook(
+			() => useDeleteComment('1', { onError: mockOnError }),
+			{ wrapper: TestProvider }
+		)
+
+		serverTest.use(
+			...[
+				http.delete(`${Config.API_URL}${END_POINTS_API.COMMENT}/:id`, () =>
+					HttpResponse.error()
+				),
+			]
+		)
+
+		await act(() => {
+			result.current.deleteComment(1)
+		})
+
+		await waitFor(() => {
+			expect(mockOnError).toHaveBeenCalledWith('Ocorreu um erro.')
+		})
+	})
+
+	it('should call onError with custom error message correctly', async () => {
+		const { result } = renderHook(
+			() =>
+				useDeleteComment('1', {
+					onError: mockOnError,
+					errorMessage: 'custom message',
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		serverTest.use(
+			...[
+				http.delete(`${Config.API_URL}${END_POINTS_API.COMMENT}/:id`, () =>
+					HttpResponse.error()
+				),
+			]
+		)
+
+		await act(() => {
+			result.current.deleteComment(1)
+		})
+
+		await waitFor(() => {
+			expect(mockOnError).toHaveBeenCalledWith('custom message')
+		})
 	})
 })

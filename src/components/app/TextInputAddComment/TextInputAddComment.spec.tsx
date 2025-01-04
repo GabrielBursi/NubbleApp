@@ -44,11 +44,11 @@ describe('<TextInputAddComment/>', () => {
 	beforeEach(() => {
 		;(useCreateComment as MockUseCreateComment).mockReturnValue(initMock)
 		;(useCreateComment as MockUseCreateComment).mockImplementation(
-			(postId: string, callback: () => void) => {
+			(postId: string, { onSuccess }: { onSuccess: () => void }) => {
 				return {
 					...initMock,
 					createComment: mockCreateComment.mockImplementation(() => {
-						callback()
+						onSuccess()
 					}),
 				}
 			}

@@ -6,10 +6,11 @@ import { useMutation } from '@tanstack/react-query'
 import { CommentApi, CommentModel } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
 import { useInvalidateQueryComments } from '@/hooks'
+import { MutationOptions } from '@/types/shared'
 
 export const useDeleteComment = (
 	postId: PostModel['id'],
-	onSuccess?: () => void
+	options?: MutationOptions<string>
 ) => {
 	const { invalidateCommentCountPost, invalidateQueryComments } =
 		useInvalidateQueryComments()
@@ -17,13 +18,18 @@ export const useDeleteComment = (
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['delete-comment'],
 		gcTime: 3 * 60 * 1000,
-		onSuccess: async () => {
-			await invalidateQueryComments(postId)
-			invalidateCommentCountPost(postId, 'decrement')
-			onSuccess?.()
-		},
 		mutationFn: (commentId: CommentModel['id']) =>
 			CommentApi.DeleteComment(commentId),
+		onSuccess: async (message) => {
+			await invalidateQueryComments(postId)
+			invalidateCommentCountPost(postId, 'decrement')
+			if (options?.onSuccess) options.onSuccess(message)
+		},
+		onError: () => {
+			if (options?.onError) {
+				options?.onError(options.errorMessage ?? 'Ocorreu um erro.')
+			}
+		},
 	})
 
 	const confirmDelete = useCallback((onConfirm: () => void) => {

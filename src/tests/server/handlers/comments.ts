@@ -5,8 +5,7 @@ import { CommentAPIModel } from '@/domain/Comment'
 import { mockCommentsAPI } from '@/tests/mocks/mockComments'
 import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
 import { customFaker } from '@/tests/utils/customFaker'
-import { END_POINTS_API } from '@/types/api'
-import { PageAPI } from '@/types/api'
+import { END_POINTS_API, PageAPI } from '@/types/api'
 
 export const commentHandlers: HttpHandler[] = [
 	http.get(`${Config.API_URL}${END_POINTS_API.COMMENT}`, ({ request }) => {

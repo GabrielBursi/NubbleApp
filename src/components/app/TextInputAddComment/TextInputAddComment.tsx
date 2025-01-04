@@ -18,11 +18,13 @@ export const TextInputAddComment = ({
 		resetCreateComment,
 		createdComment,
 		isSuccess,
-	} = useCreateComment(postId, () => {
-		showToast({
-			message: 'Comentário criado.',
-			position: 'bottom',
-		})
+	} = useCreateComment(postId, {
+		onSuccess: () => {
+			showToast({
+				message: 'Comentário criado.',
+				position: 'bottom',
+			})
+		},
 	})
 
 	const onPressSend = useCallback(() => {

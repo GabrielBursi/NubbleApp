@@ -53,11 +53,11 @@ describe('<CommentItem/>', () => {
 			initialMockReturnUseCommentList
 		)
 		;(useDeleteComment as MockUseDeleteComment).mockImplementation(
-			(postId: string, callback: () => void) => {
+			(postId: string, { onSuccess }: { onSuccess: () => void }) => {
 				return {
 					...initialMockReturnUseCommentList,
 					deleteComment: mockDeleteComment.mockImplementation(() => {
-						callback()
+						onSuccess()
 					}),
 				}
 			}

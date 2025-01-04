@@ -18,11 +18,13 @@ export const CommentItemMemoized = ({
 	const { showToast } = useToastService()
 	const { confirmDelete, isAllowedToDelete, deleteComment } = useDeleteComment(
 		postId,
-		() =>
-			showToast({
-				message: 'Comentário excluído.',
-				position: 'bottom',
-			})
+		{
+			onSuccess: () =>
+				showToast({
+					message: 'Comentário excluído.',
+					position: 'bottom',
+				}),
+		}
 	)
 
 	const isAllowedToDeleteComment = useMemo(

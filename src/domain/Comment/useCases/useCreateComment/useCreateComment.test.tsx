@@ -1,8 +1,12 @@
 import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { http, HttpResponse } from 'msw'
+import Config from 'react-native-config'
 
 import { CommentApi } from '@/domain/Comment'
 import { useInvalidateQueryComments } from '@/hooks/useInvalidateQueryComments/useInvalidateQueryComments'
 import { TestProvider } from '@/providers'
+import { serverTest } from '@/tests/server'
+import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useCreateComment } from './useCreateComment'
@@ -19,6 +23,7 @@ describe('useCreateComment', () => {
 	const mockInvalidateCommentCountPost = jest.fn()
 	const mockInvalidateQueryComments = jest.fn()
 	const mockOnSuccess = jest.fn()
+	const mockOnError = jest.fn()
 
 	const mockUseInvalidateQueryComments: ReturnUseInvalidateQueryComments = {
 		invalidateCommentCountPost: mockInvalidateCommentCountPost,
@@ -32,9 +37,12 @@ describe('useCreateComment', () => {
 	})
 
 	it('should create a comment correctly', async () => {
-		const { result } = renderHook(() => useCreateComment('1', mockOnSuccess), {
-			wrapper: TestProvider,
-		})
+		const { result } = renderHook(
+			() => useCreateComment('1', { onSuccess: mockOnSuccess }),
+			{
+				wrapper: TestProvider,
+			}
+		)
 
 		await act(() => {
 			result.current.createComment({ message: 'jest', postId: '1' })
@@ -50,7 +58,7 @@ describe('useCreateComment', () => {
 		})
 	})
 
-	it('should return the comment create correctly', async () => {
+	it('should return the comment created correctly', async () => {
 		const { result } = renderHook(useCreateComment, { wrapper: TestProvider })
 
 		await act(() => {
@@ -58,6 +66,76 @@ describe('useCreateComment', () => {
 		})
 		await waitFor(() => {
 			expect(result.current.createdComment).toBeTruthy()
+		})
+	})
+
+	it('should return the comment null when it"s error correctly', async () => {
+		const { result } = renderHook(useCreateComment, { wrapper: TestProvider })
+
+		serverTest.use(
+			...[
+				http.post(`${Config.API_URL}${END_POINTS_API.COMMENT}`, () =>
+					HttpResponse.error()
+				),
+			]
+		)
+
+		await act(() => {
+			result.current.createComment({ message: 'jest', postId: '1' })
+		})
+
+		await waitFor(() => {
+			expect(result.current.createdComment).toBeNull()
+		})
+	})
+
+	it('should call onError with default error message correctly', async () => {
+		const { result } = renderHook(
+			() => useCreateComment('1', { onError: mockOnError }),
+			{ wrapper: TestProvider }
+		)
+
+		serverTest.use(
+			...[
+				http.post(`${Config.API_URL}${END_POINTS_API.COMMENT}`, () =>
+					HttpResponse.error()
+				),
+			]
+		)
+
+		await act(() => {
+			result.current.createComment({ message: 'jest', postId: '1' })
+		})
+
+		await waitFor(() => {
+			expect(mockOnError).toHaveBeenCalledWith('Ocorreu um erro.')
+		})
+	})
+
+	it('should call onError with custom error message correctly', async () => {
+		const { result } = renderHook(
+			() =>
+				useCreateComment('1', {
+					onError: mockOnError,
+					errorMessage: 'custom message',
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		serverTest.use(
+			...[
+				http.post(`${Config.API_URL}${END_POINTS_API.COMMENT}`, () =>
+					HttpResponse.error()
+				),
+			]
+		)
+
+		await act(() => {
+			result.current.createComment({ message: 'jest', postId: '1' })
+		})
+
+		await waitFor(() => {
+			expect(mockOnError).toHaveBeenCalledWith('custom message')
 		})
 	})
 })
