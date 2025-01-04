@@ -1,10 +1,10 @@
 import { http, HttpHandler, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
-import { END_POINTS_API } from '@/api/config'
 import { PostAPIModel } from '@/domain/Post'
 import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
 import { mockPostsAPI } from '@/tests/mocks/mockPosts'
+import { END_POINTS_API } from '@/types/api'
 import { PageAPI } from '@/types/api'
 
 export const postHandlers: HttpHandler[] = [

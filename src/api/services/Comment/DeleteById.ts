@@ -1,5 +1,6 @@
-import { END_POINTS_API, NubbleApi } from '@/api/config'
+import { NubbleApi } from '@/api/config'
 import { CommentAPIModel } from '@/domain/Comment'
+import { END_POINTS_API } from '@/types/api'
 
 //TODO: TRATAMENTO DE ERRO
 export const DeleteById = async (

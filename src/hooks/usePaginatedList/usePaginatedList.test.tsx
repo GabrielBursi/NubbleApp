@@ -2,12 +2,12 @@ import { act, renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
-import { END_POINTS_API } from '@/api/config'
 import { PostServices } from '@/api/services'
 import { PostApi, PostAPIModel } from '@/domain/Post'
 import { TestProvider } from '@/providers'
 import { mockMetaPaginationApi, mockPostsAPI } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
+import { END_POINTS_API } from '@/types/api'
 import { PageAPI } from '@/types/api'
 
 import { usePaginatedList } from './usePaginatedList'

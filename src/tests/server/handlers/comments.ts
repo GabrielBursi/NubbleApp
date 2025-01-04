@@ -1,11 +1,11 @@
 import { http, HttpHandler, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
-import { END_POINTS_API } from '@/api/config'
 import { CommentAPIModel } from '@/domain/Comment'
 import { mockCommentsAPI } from '@/tests/mocks/mockComments'
 import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
 import { customFaker } from '@/tests/utils/customFaker'
+import { END_POINTS_API } from '@/types/api'
 import { PageAPI } from '@/types/api'
 
 export const commentHandlers: HttpHandler[] = [
