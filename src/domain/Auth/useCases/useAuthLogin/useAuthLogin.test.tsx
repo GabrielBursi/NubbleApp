@@ -5,14 +5,35 @@ import Config from 'react-native-config'
 
 import { AuthServices } from '@/api/services'
 import { TestProvider } from '@/providers'
+import { mockAuthApi } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
 import { END_POINTS_API } from '@/types/api'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
+
+import { useAuthToken } from '../useAuthToken/useAuthToken'
 
 import { useAuthLogin } from './useAuthLogin'
+
+type UseAuthToken = typeof useAuthToken
+type ReturnUseAuthToken = ReturnHookMocked<UseAuthToken>
+type MockUseAuthToken = HookMocked<UseAuthToken>
+
+jest.mock('../useAuthToken/useAuthToken')
 
 describe('useAuthLogin', () => {
 	const spyLogin = jest.spyOn(AuthServices, 'SignIn')
 	const mockOnError = jest.fn()
+	const mockUpdateToken = jest.fn()
+	const mockRemoveToken = jest.fn()
+
+	const mockUseAuthToken: ReturnUseAuthToken = {
+		updateToken: mockUpdateToken,
+		removeToken: mockRemoveToken,
+	}
+
+	beforeEach(() => {
+		;(useAuthToken as MockUseAuthToken).mockReturnValue(mockUseAuthToken)
+	})
 
 	it('should login correctly', async () => {
 		const { result } = renderHook(useAuthLogin, { wrapper: TestProvider })
@@ -29,6 +50,20 @@ describe('useAuthLogin', () => {
 				password: 'jest',
 			})
 			expect(result.current.authCredentials).not.toBeNull()
+		})
+	})
+
+	it('should update auth token correctly', async () => {
+		const { result } = renderHook(useAuthLogin, { wrapper: TestProvider })
+
+		expect(result.current.authCredentials).toBeNull()
+
+		await act(() => {
+			result.current.login({ email: 'jest@email.com', password: 'jest' })
+		})
+
+		await waitFor(() => {
+			expect(mockUpdateToken).toHaveBeenCalledWith(mockAuthApi.auth.token)
 		})
 	})
 
