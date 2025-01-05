@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { Button, ControlledFormInput, Text } from '@/components'
+import { useAuthLogin } from '@/domain/Auth'
+import { useToastService } from '@/services/toast'
 import { ScreenTemplate } from '@/templates'
 import { loginSchema, LoginSchema } from '@/types/form'
 import { LoginScreenProps } from '@/types/screens'
@@ -22,9 +24,13 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		},
 		mode: 'onChange',
 	})
+	const { showToast } = useToastService()
+	const { isLoading, login } = useAuthLogin({
+		onError: (message) => showToast({ message, type: 'error' }),
+	})
 
 	const submitLogin = (formValues: LoginSchema) => {
-		console.log(formValues)
+		login(formValues)
 	}
 
 	const navigateToSignUpScreen = () => {
@@ -70,6 +76,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 				title="Entrar"
 			/>
 			<Button
+				loading={isLoading}
 				onPress={navigateToSignUpScreen}
 				preset="outline"
 				marginTop="s12"

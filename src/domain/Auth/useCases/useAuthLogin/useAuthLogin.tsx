@@ -2,9 +2,10 @@ import { useMutation } from '@tanstack/react-query'
 
 import { AuthApi, AuthCredentialsModel, PayloadLogin } from '@/domain/Auth'
 import { MutationOptions } from '@/types/shared'
-//TODO:  add options nos hooks
+import { StrictOmit } from '@/types/utils'
+
 export const useAuthLogin = (
-	options?: MutationOptions<AuthCredentialsModel>
+	options?: StrictOmit<MutationOptions<AuthCredentialsModel>, 'errorMessage'>
 ) => {
 	const mutation = useMutation({
 		mutationFn: (body: PayloadLogin) => AuthApi.Login(body),
