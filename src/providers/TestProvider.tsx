@@ -6,7 +6,7 @@ import { ThemeProvider } from '@shopify/restyle'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-//? Only use ToastProvider if it is using Context implementation. Zustand implementation doesn't need a provider
+//? Only use ContextProvider if it is using Context implementation. Zustand implementation doesn't need a provider
 // import { ContextProvider } from '@/context'
 import { appTheme } from '@/styles'
 
