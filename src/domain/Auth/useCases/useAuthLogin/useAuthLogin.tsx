@@ -6,6 +6,7 @@ import {
 	PayloadLogin,
 	useAuthToken,
 } from '@/domain/Auth'
+import { useAuthCredentialsService } from '@/services/auth'
 import { MutationOptions } from '@/types/shared'
 import { StrictOmit } from '@/types/utils'
 
@@ -16,12 +17,14 @@ export const useAuthLogin = (
 	>
 ) => {
 	const { updateToken } = useAuthToken()
+	const { saveCredentials } = useAuthCredentialsService()
 
 	const mutation = useMutation({
 		mutationFn: (body: PayloadLogin) => AuthApi.Login(body),
 		retry: false,
 		onSuccess: (data) => {
 			updateToken(data.token)
+			saveCredentials(data)
 		},
 		onError: (error) => {
 			if (options?.onError) {

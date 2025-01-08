@@ -3,14 +3,15 @@ import { act, renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
+import { AuthAdapters } from '@/api/adapters'
 import { AuthServices } from '@/api/services'
+import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
 import { TestProvider } from '@/providers'
+import { useAuthCredentialsService } from '@/services/auth/useAuthCredentials'
 import { mockAuthApi } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
 import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
-
-import { useAuthToken } from '../useAuthToken/useAuthToken'
 
 import { useAuthLogin } from './useAuthLogin'
 
@@ -18,21 +19,35 @@ type UseAuthToken = typeof useAuthToken
 type ReturnUseAuthToken = ReturnHookMocked<UseAuthToken>
 type MockUseAuthToken = HookMocked<UseAuthToken>
 
-jest.mock('../useAuthToken/useAuthToken')
+type UseAuthCredentialsService = typeof useAuthCredentialsService
+type ReturnUseAuthCredentialsService =
+	ReturnHookMocked<UseAuthCredentialsService>
+type MockUseAuthCredentialsService = HookMocked<UseAuthCredentialsService>
+
+jest.mock('@/services/auth/useAuthCredentials')
+jest.mock('@/domain/Auth/useCases/useAuthToken/useAuthToken')
 
 describe('useAuthLogin', () => {
 	const spyLogin = jest.spyOn(AuthServices, 'SignIn')
 	const mockOnError = jest.fn()
 	const mockUpdateToken = jest.fn()
 	const mockRemoveToken = jest.fn()
+	const mockSaveCredentials = jest.fn()
 
 	const mockUseAuthToken: ReturnUseAuthToken = {
 		updateToken: mockUpdateToken,
 		removeToken: mockRemoveToken,
 	}
 
+	const mockUseAuthCredentialsService: ReturnUseAuthCredentialsService = {
+		saveCredentials: mockSaveCredentials,
+	}
+
 	beforeEach(() => {
 		;(useAuthToken as MockUseAuthToken).mockReturnValue(mockUseAuthToken)
+		;(
+			useAuthCredentialsService as MockUseAuthCredentialsService
+		).mockReturnValue(mockUseAuthCredentialsService)
 	})
 
 	it('should login correctly', async () => {
@@ -64,6 +79,22 @@ describe('useAuthLogin', () => {
 
 		await waitFor(() => {
 			expect(mockUpdateToken).toHaveBeenCalledWith(mockAuthApi.auth.token)
+		})
+	})
+
+	it('should save auth credentials correctly', async () => {
+		const { result } = renderHook(useAuthLogin, { wrapper: TestProvider })
+
+		expect(result.current.authCredentials).toBeNull()
+
+		await act(() => {
+			result.current.login({ email: 'jest@email.com', password: 'jest' })
+		})
+
+		await waitFor(() => {
+			expect(mockSaveCredentials).toHaveBeenCalledWith(
+				AuthAdapters.ToAuthCredentials(mockAuthApi)
+			)
 		})
 	})
 
