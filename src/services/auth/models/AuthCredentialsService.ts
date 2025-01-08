@@ -8,12 +8,3 @@ export interface AuthCredentialsService {
 	/**  @default false */
 	isLoading: boolean
 }
-
-export interface AuthCredentialsServiceWithoutPromise
-	extends Omit<
-		AuthCredentialsService,
-		'saveCredentials' | 'removeCredentials'
-	> {
-	saveCredentials: (ac: AuthCredentialsModel) => void
-	removeCredentials: () => void
-}

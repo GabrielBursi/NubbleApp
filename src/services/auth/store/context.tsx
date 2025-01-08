@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 import {
 	createContext,
 	PropsWithChildren,
@@ -9,25 +10,29 @@ import {
 
 import { StrictOmit } from '@/types/utils'
 
-import { AuthCredentialsServiceWithoutPromise } from '../models'
+import { AuthCredentialsService } from '../models'
 
-const AuthCredentialsContext =
-	createContext<AuthCredentialsServiceWithoutPromise | null>(null)
+const AuthCredentialsContext = createContext<AuthCredentialsService | null>(
+	null
+)
 
 export const AuthCredentialsProvider = ({
 	children,
 }: Readonly<PropsWithChildren>) => {
 	const [authCredentials, setAuthCredentials] =
-		useState<AuthCredentialsServiceWithoutPromise['authCredentials']>(null)
+		useState<AuthCredentialsService['authCredentials']>(null)
 
-	const removeCredentials = useCallback(() => setAuthCredentials(null), [])
+	const removeCredentials = useCallback(
+		async () => setAuthCredentials(null),
+		[]
+	)
 	const saveCredentials = useCallback(
-		(ac: AuthCredentialsServiceWithoutPromise['authCredentials']) =>
+		async (ac: AuthCredentialsService['authCredentials']) =>
 			setAuthCredentials(ac),
 		[]
 	)
 
-	const context: AuthCredentialsServiceWithoutPromise = useMemo(
+	const context: AuthCredentialsService = useMemo(
 		() => ({
 			authCredentials,
 			isLoading: false,
@@ -45,7 +50,7 @@ export const AuthCredentialsProvider = ({
 }
 
 export const useAuthCredentialsContext =
-	(): AuthCredentialsServiceWithoutPromise['authCredentials'] => {
+	(): AuthCredentialsService['authCredentials'] => {
 		const context = useContext(AuthCredentialsContext)
 		if (!context)
 			throw new Error(
@@ -55,7 +60,7 @@ export const useAuthCredentialsContext =
 	}
 
 export const useAuthCredentialsServiceContext = (): StrictOmit<
-	AuthCredentialsServiceWithoutPromise,
+	AuthCredentialsService,
 	'authCredentials'
 > => {
 	const context = useContext(AuthCredentialsContext)

@@ -1,25 +1,24 @@
+/* eslint-disable @typescript-eslint/require-await */
 import { create } from 'zustand'
 
 import { StrictOmit } from '@/types/utils'
 
-import { AuthCredentialsServiceWithoutPromise } from '../models'
+import { AuthCredentialsService } from '../models'
 
-const useAuthCredentialsStore = create<AuthCredentialsServiceWithoutPromise>(
-	(set) => ({
-		authCredentials: null,
-		isLoading: false,
-		saveCredentials: (ac) => set({ authCredentials: ac }),
-		removeCredentials: () => set({ authCredentials: null }),
-	})
-)
+const useAuthCredentialsStore = create<AuthCredentialsService>((set) => ({
+	authCredentials: null,
+	isLoading: false,
+	saveCredentials: async (ac) => set({ authCredentials: ac }),
+	removeCredentials: async () => set({ authCredentials: null }),
+}))
 
 export const useAuthCredentialsZustand =
-	(): AuthCredentialsServiceWithoutPromise['authCredentials'] => {
+	(): AuthCredentialsService['authCredentials'] => {
 		return useAuthCredentialsStore((state) => state.authCredentials)
 	}
 
 export const useAuthCredentialsServiceZustand = (): StrictOmit<
-	AuthCredentialsServiceWithoutPromise,
+	AuthCredentialsService,
 	'authCredentials'
 > => {
 	const isLoading = useAuthCredentialsStore((state) => state.isLoading)

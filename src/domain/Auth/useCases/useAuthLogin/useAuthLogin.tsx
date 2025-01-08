@@ -22,9 +22,9 @@ export const useAuthLogin = (
 	const mutation = useMutation({
 		mutationFn: (body: PayloadLogin) => AuthApi.Login(body),
 		retry: false,
-		onSuccess: (data) => {
+		onSuccess: async (data) => {
 			updateToken(data.token)
-			saveCredentials(data)
+			await saveCredentials(data)
 		},
 		onError: (error) => {
 			if (options?.onError) {

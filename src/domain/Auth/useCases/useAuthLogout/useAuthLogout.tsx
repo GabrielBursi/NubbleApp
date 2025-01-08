@@ -10,9 +10,9 @@ export const useAuthLogout = () => {
 	const mutation = useMutation({
 		mutationFn: AuthApi.Logout,
 		retry: false,
-		onSuccess: () => {
+		onSuccess: async () => {
 			removeToken()
-			removeCredentials()
+			await removeCredentials()
 		},
 	})
 

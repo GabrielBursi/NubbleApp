@@ -1,15 +1,14 @@
 import { StrictOmit } from '@/types/utils'
 
-import { AuthCredentialsServiceWithoutPromise } from './models'
+import { AuthCredentialsService } from './models'
 import {
 	useAuthCredentialsZustand,
 	useAuthCredentialsServiceZustand,
 } from './store'
 
 export const useAuthCredentials =
-	(): AuthCredentialsServiceWithoutPromise['authCredentials'] =>
-		useAuthCredentialsZustand()
+	(): AuthCredentialsService['authCredentials'] => useAuthCredentialsZustand()
 export const useAuthCredentialsService = (): StrictOmit<
-	AuthCredentialsServiceWithoutPromise,
+	AuthCredentialsService,
 	'authCredentials'
 > => useAuthCredentialsServiceZustand()
