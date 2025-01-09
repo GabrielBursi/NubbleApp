@@ -1,4 +1,4 @@
-import Reactotron, { networking, openInEditor } from 'reactotron-react-native'
+import Reactotron, { networking, openInEditor, asyncStorage } from 'reactotron-react-native'
 import {
 	QueryClientManager,
 	reactotronReactQuery,
@@ -28,6 +28,7 @@ const reactotron = Reactotron.setAsyncStorageHandler(AsyncStorage)
 		logger: true,
 	})
 	.use(networking())
+	.use(asyncStorage())
 	.use(openInEditor())
 	.connect()
 
