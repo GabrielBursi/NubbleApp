@@ -7,8 +7,4 @@ export interface UserModel {
 	profileUrl: string
 	isOnline: boolean
 	fullName: string
-	meta: {
-		followingCount: string
-		followersCount: string
-	}
 }
