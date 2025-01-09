@@ -1,4 +1,6 @@
-import { asyncStorage } from './config'
 import { Storage } from './models'
 
-export const storage: Storage = asyncStorage
+export let storage: Storage
+export function initializeStorage(storageImpl: Storage) {
+	storage = storageImpl
+}

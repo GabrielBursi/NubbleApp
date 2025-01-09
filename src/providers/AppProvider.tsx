@@ -9,9 +9,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 //? Only use ContextProvider if it is using Context implementation. Zustand implementation doesn't need a provider
 import { ContextProvider } from '@/context'
+import { initializeStorage, MMKVStorage } from '@/services/storage'
 import { appTheme } from '@/styles'
 
 export const queryClient = new QueryClient()
+
+initializeStorage(MMKVStorage)
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
 	return (
