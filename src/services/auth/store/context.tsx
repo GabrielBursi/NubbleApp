@@ -9,8 +9,10 @@ import {
 	useState,
 } from 'react'
 
-import { useAuthToken } from '@/domain/Auth'
-import { StorageKeys, useStorage } from '@/services/storage'
+//? import assim para teste não se perder
+import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
+import { StorageKeys } from '@/services/storage/models/Keys'
+import { useStorage } from '@/services/storage/useStorage'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
