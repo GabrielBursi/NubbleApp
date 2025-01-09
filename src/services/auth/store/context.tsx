@@ -4,10 +4,13 @@ import {
 	PropsWithChildren,
 	useCallback,
 	useContext,
+	useEffect,
 	useMemo,
 	useState,
 } from 'react'
 
+import { useAuthToken } from '@/domain/Auth'
+import { StorageKeys, useStorage } from '@/services/storage'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
@@ -16,30 +19,59 @@ const AuthCredentialsContext = createContext<AuthCredentialsService | null>(
 	null
 )
 
+type AuthCredentials = AuthCredentialsService['authCredentials']
+
+//TODO: PADRONIZAR  HOOK
 export const AuthCredentialsProvider = ({
 	children,
 }: Readonly<PropsWithChildren>) => {
-	const [authCredentials, setAuthCredentials] =
-		useState<AuthCredentialsService['authCredentials']>(null)
+	const { updateToken, removeToken } = useAuthToken()
+	const {
+		get: fetchAuthStorage,
+		remove: removeAuthStorage,
+		set: saveAuthStorage,
+	} = useStorage<AuthCredentials>(StorageKeys.AUTH)
 
-	const removeCredentials = useCallback(
-		async () => setAuthCredentials(null),
-		[]
-	)
+	const [authCredentials, setAuthCredentials] = useState<AuthCredentials>(null)
+	const [isLoading, setIsLoading] = useState(true)
+
+	const removeCredentials = useCallback(async () => {
+		setAuthCredentials(null)
+		removeToken()
+		setIsLoading(true)
+		await removeAuthStorage()
+		setIsLoading(false)
+	}, [removeAuthStorage, removeToken])
+
 	const saveCredentials = useCallback(
-		async (ac: AuthCredentialsService['authCredentials']) =>
-			setAuthCredentials(ac),
-		[]
+		async (ac: NonNullable<AuthCredentials>) => {
+			setAuthCredentials(ac)
+			updateToken(ac.token)
+			setIsLoading(true)
+			await saveAuthStorage(ac)
+			setIsLoading(false)
+		},
+		[saveAuthStorage, updateToken]
 	)
+
+	useEffect(() => {
+		fetchAuthStorage()
+			.then(async (auth) => {
+				if (auth) await saveCredentials(auth)
+			})
+			.catch((error) => console.log(error))
+			.finally(() => setIsLoading(false))
+	}, [fetchAuthStorage, saveCredentials])
 
 	const context: AuthCredentialsService = useMemo(
 		() => ({
 			authCredentials,
-			isLoading: false,
+			isLoading,
 			removeCredentials,
 			saveCredentials,
+			setIsLoading,
 		}),
-		[authCredentials, removeCredentials, saveCredentials]
+		[authCredentials, removeCredentials, saveCredentials, isLoading]
 	)
 
 	return (
@@ -49,15 +81,14 @@ export const AuthCredentialsProvider = ({
 	)
 }
 
-export const useAuthCredentialsContext =
-	(): AuthCredentialsService['authCredentials'] => {
-		const context = useContext(AuthCredentialsContext)
-		if (!context)
-			throw new Error(
-				'useAuthCredentialsContext  must be used inside a provider!'
-			)
-		return context.authCredentials
-	}
+export const useAuthCredentialsContext = (): AuthCredentials => {
+	const context = useContext(AuthCredentialsContext)
+	if (!context)
+		throw new Error(
+			'useAuthCredentialsContext  must be used inside a provider!'
+		)
+	return context.authCredentials
+}
 
 export const useAuthCredentialsServiceContext = (): StrictOmit<
 	AuthCredentialsService,
@@ -68,7 +99,13 @@ export const useAuthCredentialsServiceContext = (): StrictOmit<
 		throw new Error(
 			'useAuthCredentialsServiceContext  must be used inside a provider!'
 		)
-	const { removeCredentials, saveCredentials, isLoading } = context
+	const { removeCredentials, saveCredentials, isLoading, setIsLoading } =
+		context
 
-	return { removeCredentials, saveCredentials, isLoading } as const
+	return {
+		removeCredentials,
+		saveCredentials,
+		isLoading,
+		setIsLoading,
+	} as const
 }

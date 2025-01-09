@@ -7,4 +7,5 @@ export interface AuthCredentialsService {
 	removeCredentials: () => Promise<void>
 	/**  @default false */
 	isLoading: boolean
+	setIsLoading: (isLoading: boolean) => void
 }

@@ -1,11 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import {
-	AuthApi,
-	AuthCredentialsModel,
-	PayloadLogin,
-	useAuthToken,
-} from '@/domain/Auth'
+import { AuthApi, AuthCredentialsModel, PayloadLogin } from '@/domain/Auth'
 import { useAuthCredentialsService } from '@/services/auth'
 import { MutationOptions } from '@/types/shared'
 import { StrictOmit } from '@/types/utils'
@@ -16,16 +11,12 @@ export const useAuthLogin = (
 		'errorMessage' | 'onSuccess'
 	>
 ) => {
-	const { updateToken } = useAuthToken()
 	const { saveCredentials } = useAuthCredentialsService()
 
 	const mutation = useMutation({
 		mutationFn: (body: PayloadLogin) => AuthApi.Login(body),
 		retry: false,
-		onSuccess: async (data) => {
-			updateToken(data.token)
-			await saveCredentials(data)
-		},
+		onSuccess: (data) => saveCredentials(data),
 		onError: (error) => {
 			if (options?.onError) {
 				options.onError(error.message)
