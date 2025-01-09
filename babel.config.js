@@ -16,7 +16,6 @@ module.exports = {
 					'@/providers': './src/providers',
 					'@/routes': './src/routes',
 					'@/screens': './src/screens',
-					'@/storage': './src/storage',
 					'@/store': './src/store',
 					'@/styles': './src/styles',
 					'@/templates': './src/templates',
