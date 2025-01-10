@@ -1,9 +1,9 @@
 import { AuthAdapters } from '@/api/adapters'
 import { AuthServices } from '@/api/services'
-import { AuthCredentialsModel, PayloadLogin } from '@/domain/Auth'
+import { AuthCredentialsModel, SignInDataModel } from '@/domain/Auth'
 
 export const Login = async (
-	body: PayloadLogin
+	body: SignInDataModel
 ): Promise<AuthCredentialsModel> => {
 	try {
 		const authCredentialsAPI = await AuthServices.SignIn(body)
