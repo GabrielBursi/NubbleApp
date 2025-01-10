@@ -1,6 +1,7 @@
 export * from './useAppSafeArea/useAppSafeArea'
 export * from './useAppTheme/useAppTheme'
 export * from './useControlledInput/useControlledInput'
+export * from './useDebounce/useDebounce'
 export * from './useFontFamily/useFontFamily'
 export * from './useInvalidateQueryComments/useInvalidateQueryComments'
 export * from './useNavigationApp/useNavigationApp'
