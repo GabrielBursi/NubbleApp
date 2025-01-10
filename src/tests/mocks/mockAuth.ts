@@ -1,6 +1,7 @@
 import {
 	AuthCredentialsAPIModel,
 	AuthCredentialsModel,
+	FieldIsAvailableAPIModel,
 	SignInDataModel,
 	SignUpDataAPIModel,
 	SignUpDataModel,
@@ -45,8 +46,14 @@ export const generateSignUpDataApi = (): SignUpDataAPIModel => ({
 	lastName: customFaker.person.lastName(),
 })
 
+export const generateFieldIsAvailableApi = (): FieldIsAvailableAPIModel => ({
+	isAvailable: customFaker.datatype.boolean(),
+	message: customFaker.lorem.word(),
+})
+
 export const mockAuth = generateAuth()
 export const mockAuthApi = generateAuthApi()
 export const mockSignInData = generateAuthApi()
 export const mockSignUpData = generateSignUpData()
 export const mockSignUpDataApi = generateSignUpDataApi()
+export const mockFieldIsAvailableApi = generateFieldIsAvailableApi()

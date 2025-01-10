@@ -1,9 +1,16 @@
 import { http, HttpHandler, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
-import { AuthCredentialsAPIModel } from '@/domain/Auth'
+import {
+	AuthCredentialsAPIModel,
+	FieldIsAvailableAPIModel,
+} from '@/domain/Auth'
 import { UserAPIModel } from '@/domain/User'
-import { mockAuthApi, mockUserApi } from '@/tests/mocks'
+import {
+	mockAuthApi,
+	mockFieldIsAvailableApi,
+	mockUserApi,
+} from '@/tests/mocks'
 import { END_POINTS_API } from '@/types/api'
 
 export const authHandlers: HttpHandler[] = [
@@ -30,4 +37,30 @@ export const authHandlers: HttpHandler[] = [
 
 		return HttpResponse.json<UserAPIModel>(mockUserApi, { status: 201 })
 	}),
+	http.get(
+		`${Config.API_URL}${END_POINTS_API.AUTH_VALIDATE_EMAIL}`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<FieldIsAvailableAPIModel>(
+				mockFieldIsAvailableApi,
+				{ status: 200 }
+			)
+		}
+	),
+	http.get(
+		`${Config.API_URL}${END_POINTS_API.AUTH_VALIDATE_USERNAME}`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<FieldIsAvailableAPIModel>(
+				mockFieldIsAvailableApi,
+				{ status: 200 }
+			)
+		}
+	),
 ]
