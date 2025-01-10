@@ -1,4 +1,10 @@
-import { AuthCredentialsAPIModel, AuthCredentialsModel } from '@/domain/Auth'
+import {
+	AuthCredentialsAPIModel,
+	AuthCredentialsModel,
+	SignInDataModel,
+	SignUpDataAPIModel,
+	SignUpDataModel,
+} from '@/domain/Auth'
 
 import { customFaker } from '../utils/customFaker'
 
@@ -16,5 +22,31 @@ export const generateAuth = (): AuthCredentialsModel => ({
 	user: generateUser(),
 })
 
+export const generateSignInData = (): SignInDataModel => ({
+	password: customFaker.internet.password(),
+	email: customFaker.internet.email(),
+	username: customFaker.internet.username(),
+})
+
+export const generateSignUpData = (): SignUpDataModel => ({
+	password: customFaker.internet.password(),
+	email: customFaker.internet.email(),
+	username: customFaker.internet.username(),
+	firstName: customFaker.person.firstName(),
+	lastName: customFaker.person.lastName(),
+})
+
+// eslint-disable-next-line sonarjs/no-identical-functions
+export const generateSignUpDataApi = (): SignUpDataAPIModel => ({
+	password: customFaker.internet.password(),
+	email: customFaker.internet.email(),
+	username: customFaker.internet.username(),
+	firstName: customFaker.person.firstName(),
+	lastName: customFaker.person.lastName(),
+})
+
 export const mockAuth = generateAuth()
 export const mockAuthApi = generateAuthApi()
+export const mockSignInData = generateAuthApi()
+export const mockSignUpData = generateSignUpData()
+export const mockSignUpDataApi = generateSignUpDataApi()

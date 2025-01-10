@@ -3,4 +3,5 @@ export enum END_POINTS_API {
 	POST = '/user/post',
 	AUTH_SIGNOUT = '/profile/logout',
 	AUTH_SIGNIN = '/login',
+	AUTH_SIGNUP = '/register',
 }

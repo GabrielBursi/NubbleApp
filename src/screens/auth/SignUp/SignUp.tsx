@@ -27,7 +27,7 @@ export const SignUpScreen = () => {
 		mode: 'onChange',
 	})
 
-	const createAccount = (formValues: SignUpSchema) => {
+	const SignUp = (formValues: SignUpSchema) => {
 		console.log(formValues)
 		// TODO: sign up
 		resetSuccess({
@@ -74,7 +74,7 @@ export const SignUpScreen = () => {
 			<Button
 				disabled={!isValid}
 				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
-				onPress={handleSubmit(createAccount)}
+				onPress={handleSubmit(SignUp)}
 				title="Criar uma conta"
 			/>
 		</ScreenTemplate>
