@@ -57,4 +57,20 @@ describe('<ControlledFormInput/>', () => {
 			min: 2,
 		})
 	})
+
+	it('should render with error message correctly', () => {
+		const { result } = renderHook(() => useForm())
+		customRender(
+			<FormProvider {...result.current}>
+				<ControlledFormInput
+					label="Jest"
+					name="jest"
+					testID="rtl"
+					errorMessage="jest error"
+				/>
+			</FormProvider>
+		)
+
+		expect(screen.getByText('jest error', { exact: true })).toBeOnTheScreen()
+	})
 })

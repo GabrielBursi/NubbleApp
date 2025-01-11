@@ -45,6 +45,7 @@ const ControlledPasswordInput = <TField extends FieldValues>({
 	control,
 	name,
 	rules,
+	errorMessage,
 	...passwordInputProps
 }: Readonly<ControlledPasswordInputProps<TField>>) => {
 	const { maxValue, minValue } = useControlledInput(rules)
@@ -58,7 +59,7 @@ const ControlledPasswordInput = <TField extends FieldValues>({
 				<PasswordInput
 					value={field.value}
 					onChangeText={field.onChange}
-					errorMessage={fieldState.error?.message}
+					errorMessage={fieldState.error?.message ?? errorMessage}
 					aria-valuemax={maxValue}
 					aria-valuemin={minValue}
 					accessibilityValue={{
