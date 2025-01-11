@@ -1,12 +1,18 @@
 /* eslint-disable sonarjs/no-hardcoded-credentials */
-import { screen, userEvent } from '@testing-library/react-native'
+import { screen, userEvent, waitFor } from '@testing-library/react-native'
+import { http, HttpResponse } from 'msw'
+import Config from 'react-native-config'
 
+import { FieldIsAvailableAPIModel } from '@/domain/Auth'
 import { useAuthSignUp } from '@/domain/Auth/useCases/useAuthSignUp/useAuthSignUp'
 import { useResetNavigation } from '@/hooks/useResetNavigation/useResetNavigation'
+import { serverTest } from '@/tests/server'
 import { customRender } from '@/tests/utils'
+import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { SignUpScreen } from './SignUp'
+
 type UseResetNavigation = typeof useResetNavigation
 type ReturnUseResetNavigation = ReturnHookMocked<UseResetNavigation>
 type MockUseResetNavigation = HookMocked<UseResetNavigation>
@@ -125,6 +131,12 @@ describe('<SignUpScreen/>', () => {
 			'12345678'
 		)
 
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', { name: /criar uma conta/i })
+			).toBeEnabled()
+		})
+
 		await userEvent.press(
 			screen.getByRole('button', { name: /criar uma conta/i })
 		)
@@ -188,8 +200,76 @@ describe('<SignUpScreen/>', () => {
 			'12345678'
 		)
 
-		expect(
-			screen.getByRole('button', { name: /criar uma conta/i })
-		).toBeEnabled()
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', { name: /criar uma conta/i })
+			).toBeEnabled()
+		})
+	})
+
+	it('should show message errors to username and email correctly', async () => {
+		serverTest.use(
+			...[
+				http.get(`${Config.API_URL}${END_POINTS_API.AUTH_VALIDATE_EMAIL}`, () =>
+					HttpResponse.json<FieldIsAvailableAPIModel>(
+						{ isAvailable: false, message: 'false' },
+						{
+							status: 200,
+						}
+					)
+				),
+				http.get(
+					`${Config.API_URL}${END_POINTS_API.AUTH_VALIDATE_USERNAME}`,
+					() =>
+						HttpResponse.json<FieldIsAvailableAPIModel>(
+							{ isAvailable: false, message: 'false' },
+							{ status: 200 }
+						)
+				),
+			]
+		)
+
+		customRender(<SignUpScreen />)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('@', {
+				exact: true,
+			}),
+			'user.name_123'
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite seu e-mail', {
+				exact: true,
+			}),
+			'jest@email.com'
+		)
+
+		await waitFor(
+			() => {
+				expect(
+					screen.getByText('usuário indisponível', { exact: true })
+				).toBeOnTheScreen()
+			},
+			{ timeout: 10000 }
+		)
+
+		await waitFor(
+			() => {
+				expect(
+					screen.getByText('email indisponível', { exact: true })
+				).toBeOnTheScreen()
+			},
+			{ timeout: 10000 }
+		)
+
+		await waitFor(
+			() => {
+				expect(
+					screen.getByRole('button', { name: /criar uma conta/i })
+				).toBeDisabled()
+			},
+			{ timeout: 10000 }
+		)
 	})
 })

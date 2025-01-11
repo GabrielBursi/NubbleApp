@@ -1,12 +1,14 @@
 import React from 'react'
+import { ActivityIndicator } from 'react-native'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { Button, ControlledFormInput, Text } from '@/components'
-import { useAuthSignUp } from '@/domain/Auth'
+import { useAuthSignUp, useAuthValueIsAvailable } from '@/domain/Auth'
 import { useResetNavigation } from '@/hooks'
 import { ScreenTemplate } from '@/templates'
+import { AppQueryKeys } from '@/types/api'
 import { signUpSchema, SignUpSchema } from '@/types/form'
 
 export const SignUpScreen = () => {
@@ -16,6 +18,8 @@ export const SignUpScreen = () => {
 		control,
 		formState: { isValid },
 		handleSubmit,
+		getFieldState,
+		watch,
 	} = useForm<SignUpSchema>({
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		resolver: zodResolver(signUpSchema),
@@ -28,6 +32,24 @@ export const SignUpScreen = () => {
 		},
 		mode: 'onChange',
 	})
+
+	const userNameValue = watch('username')
+	const userNameState = getFieldState('username')
+	const emailValue = watch('email')
+	const emailState = getFieldState('email')
+
+	const { isUnvailable: userNameIsUnvailable, isFetching: userNameIsFetching } =
+		useAuthValueIsAvailable({
+			queryKey: AppQueryKeys.USERNAME_AVAILABLE,
+			value: userNameValue,
+			enabled: !userNameState.invalid,
+		})
+	const { isUnvailable: emailIsUnvailable, isFetching: emailIsFetching } =
+		useAuthValueIsAvailable({
+			queryKey: AppQueryKeys.EMAIL_AVAILABLE,
+			value: emailValue,
+			enabled: !emailState.invalid,
+		})
 
 	const { signUp, isLoading } = useAuthSignUp({
 		onSuccess: () => {
@@ -54,6 +76,10 @@ export const SignUpScreen = () => {
 				name="username"
 				label="Seu username"
 				placeholder="@"
+				errorMessage={userNameIsUnvailable ? 'usuário indisponível' : undefined}
+				RightComponent={
+					userNameIsFetching ? <ActivityIndicator size="small" /> : undefined
+				}
 			/>
 			<ControlledFormInput
 				control={control}
@@ -76,6 +102,10 @@ export const SignUpScreen = () => {
 				name="email"
 				label="E-mail"
 				placeholder="Digite seu e-mail"
+				errorMessage={emailIsUnvailable ? 'email indisponível' : undefined}
+				RightComponent={
+					emailIsFetching ? <ActivityIndicator size="small" /> : undefined
+				}
 			/>
 			<ControlledFormInput.Password
 				control={control}
@@ -86,7 +116,7 @@ export const SignUpScreen = () => {
 			/>
 			<Button
 				loading={isLoading}
-				disabled={!isValid}
+				disabled={!isValid || userNameIsUnvailable || emailIsUnvailable}
 				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 				onPress={handleSubmit(handleSignUp)}
 				title="Criar uma conta"
