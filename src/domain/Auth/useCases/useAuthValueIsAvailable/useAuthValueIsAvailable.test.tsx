@@ -1,10 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react-native'
+import { http, HttpResponse } from 'msw'
+import Config from 'react-native-config'
 
 import { AuthServices } from '@/api/services'
+import { FieldIsAvailableAPIModel } from '@/domain/Auth'
 import { useDebounce } from '@/hooks/useDebounce/useDebounce'
 import { TestProvider } from '@/providers'
 import { mockFieldIsAvailableApi } from '@/tests/mocks'
-import { AppQueryKeys } from '@/types/api'
+import { serverTest } from '@/tests/server'
+import { AppQueryKeys, END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useAuthValueIsAvailable } from './useAuthValueIsAvailable'
@@ -35,7 +39,11 @@ describe('useAuthValueIsAvailable', () => {
 		})
 
 		renderHook(
-			() => useAuthValueIsAvailable('  ', AppQueryKeys.EMAIL_AVAILABLE),
+			() =>
+				useAuthValueIsAvailable({
+					queryKey: AppQueryKeys.EMAIL_AVAILABLE,
+					value: '  ',
+				}),
 			{ wrapper: TestProvider }
 		)
 
@@ -52,7 +60,11 @@ describe('useAuthValueIsAvailable', () => {
 		})
 
 		renderHook(
-			() => useAuthValueIsAvailable('  ', AppQueryKeys.USERNAME_AVAILABLE),
+			() =>
+				useAuthValueIsAvailable({
+					queryKey: AppQueryKeys.USERNAME_AVAILABLE,
+					value: '  ',
+				}),
 			{ wrapper: TestProvider }
 		)
 
@@ -64,7 +76,11 @@ describe('useAuthValueIsAvailable', () => {
 
 	it('should return email available correctly', async () => {
 		const { result } = renderHook(
-			() => useAuthValueIsAvailable('jest', AppQueryKeys.EMAIL_AVAILABLE),
+			() =>
+				useAuthValueIsAvailable({
+					queryKey: AppQueryKeys.EMAIL_AVAILABLE,
+					value: 'jest',
+				}),
 			{ wrapper: TestProvider }
 		)
 
@@ -79,7 +95,11 @@ describe('useAuthValueIsAvailable', () => {
 
 	it('should return username available correctly', async () => {
 		const { result } = renderHook(
-			() => useAuthValueIsAvailable('jest', AppQueryKeys.USERNAME_AVAILABLE),
+			() =>
+				useAuthValueIsAvailable({
+					queryKey: AppQueryKeys.USERNAME_AVAILABLE,
+					value: 'jest',
+				}),
 			{ wrapper: TestProvider }
 		)
 
@@ -89,6 +109,60 @@ describe('useAuthValueIsAvailable', () => {
 			expect(result.current.isAvailable).toBe(
 				mockFieldIsAvailableApi.isAvailable
 			)
+		})
+	})
+
+	it('should disable the query correctly', async () => {
+		renderHook(
+			() =>
+				useAuthValueIsAvailable({
+					queryKey: AppQueryKeys.USERNAME_AVAILABLE,
+					value: 'jest',
+					enabled: false,
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		await waitFor(() => {
+			expect(spyVerifyEmail).not.toHaveBeenCalled()
+			expect(spyVerifyUsername).not.toHaveBeenCalled()
+		})
+	})
+
+	it('should return isUnvailable correctly', async () => {
+		serverTest.use(
+			...[
+				http.get(`${Config.API_URL}${END_POINTS_API.AUTH_VALIDATE_EMAIL}`, () =>
+					HttpResponse.json<FieldIsAvailableAPIModel>(
+						{ isAvailable: false, message: 'false' },
+						{
+							status: 200,
+						}
+					)
+				),
+				http.get(
+					`${Config.API_URL}${END_POINTS_API.AUTH_VALIDATE_USERNAME}`,
+					() =>
+						HttpResponse.json<FieldIsAvailableAPIModel>(
+							{ isAvailable: false, message: 'false' },
+							{ status: 200 }
+						)
+				),
+			]
+		)
+
+		const { result } = renderHook(
+			() =>
+				useAuthValueIsAvailable({
+					queryKey: AppQueryKeys.USERNAME_AVAILABLE,
+					value: 'jest',
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		await waitFor(() => {
+			expect(result.current.isUnvailable).toBe(true)
+			expect(result.current.isAvailable).toBe(false)
 		})
 	})
 })
