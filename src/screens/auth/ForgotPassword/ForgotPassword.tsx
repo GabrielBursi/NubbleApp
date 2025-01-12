@@ -4,7 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { Button, ControlledFormInput, Text } from '@/components'
+import { useAuthRequestNewPassword } from '@/domain/Auth'
 import { useResetNavigation } from '@/hooks'
+import { useToastService } from '@/services/toast'
 import { ScreenTemplate } from '@/templates'
 import { forgotPasswordSchema, ForgotPasswordSchema } from '@/types/form'
 
@@ -24,19 +26,23 @@ export const ForgotPasswordScreen = () => {
 		mode: 'onChange',
 	})
 
-	const retrievePassword = (formValues: ForgotPasswordSchema) => {
-		console.log(formValues)
-		//TODO: recuperar senha
+	const { showToast } = useToastService()
+	const { requestNewPassword, isLoading } = useAuthRequestNewPassword({
+		onSuccess: () =>
+			resetSuccess({
+				title: `Enviamos as instruções para seu  ${'\n'}e-mail`,
+				description:
+					'Clique no link enviado no seu e-mail para recuperar sua senha',
+				icon: {
+					name: 'messageRound',
+					color: 'primary',
+				},
+			}),
+		onError: (message) => showToast({ message, type: 'error' }),
+	})
 
-		resetSuccess({
-			title: `Enviamos as instruções para seu  ${'\n'}e-mail`,
-			description:
-				'Clique no link enviado no seu e-mail para recuperar sua senha',
-			icon: {
-				name: 'messageRound',
-				color: 'primary',
-			},
-		})
+	const retrievePassword = (formValues: ForgotPasswordSchema) => {
+		requestNewPassword(formValues.email)
 	}
 
 	return (
@@ -54,6 +60,7 @@ export const ForgotPasswordScreen = () => {
 				placeholder="Digite seu e-mail"
 			/>
 			<Button
+				loading={isLoading}
 				disabled={!isValid}
 				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 				onPress={handleSubmit(retrievePassword)}

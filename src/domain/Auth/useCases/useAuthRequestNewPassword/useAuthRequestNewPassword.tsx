@@ -17,6 +17,6 @@ export const useAuthRequestNewPassword = (
 
 	return {
 		requestNewPassword: mutate,
-		isPending,
+		isLoading: isPending,
 	} as const
 }
