@@ -1,5 +1,6 @@
-export * from './useAuthSignUp/useAuthSignUp'
 export * from './useAuthLogin/useAuthLogin'
 export * from './useAuthLogout/useAuthLogout'
+export * from './useAuthRequestNewPassword/useAuthRequestNewPassword'
+export * from './useAuthSignUp/useAuthSignUp'
 export * from './useAuthToken/useAuthToken'
 export * from './useAuthValueIsAvailable/useAuthValueIsAvailable'

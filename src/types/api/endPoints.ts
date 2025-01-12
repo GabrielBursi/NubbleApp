@@ -6,4 +6,5 @@ export enum END_POINTS_API {
 	AUTH_SIGNUP = '/register',
 	AUTH_VALIDATE_EMAIL = '/validate-email',
 	AUTH_VALIDATE_USERNAME = '/validate-username',
+	AUTH_FORGOT_PASSWORD = '/forgot-password',
 }
