@@ -6,4 +6,6 @@ export const ToAuthCredentials = (
 ): AuthCredentialsModel => ({
 	token: authCredentialsAPI.auth.token,
 	user: UserAdapters.ToUser(authCredentialsAPI.user),
+	tokenExpiresAt: authCredentialsAPI.auth.expires_at,
+	refreshToken: authCredentialsAPI.auth.refreshToken,
 })

@@ -15,12 +15,16 @@ export const generateAuthApi = (): AuthCredentialsAPIModel => ({
 	auth: {
 		token: customFaker.internet.jwt(),
 		type: 'Bearer',
+		expires_at: customFaker.date.future().toISOString(),
+		refreshToken: customFaker.internet.jwt(),
 	},
 	user: generateUserApi(),
 })
 export const generateAuth = (): AuthCredentialsModel => ({
 	token: customFaker.internet.jwt(),
 	user: generateUser(),
+	refreshToken: customFaker.internet.jwt(),
+	tokenExpiresAt: customFaker.date.future().toISOString(),
 })
 
 export const generateSignInData = (): SignInDataModel => ({
