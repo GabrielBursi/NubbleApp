@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 
 import { create } from 'zustand'
 
-import { useAuthToken } from '@/domain/Auth'
+import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
 import { StorageKeys, useStorage } from '@/services/storage'
 import { StrictOmit } from '@/types/utils'
 
@@ -28,12 +28,14 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 	AuthCredentialsService,
 	'authCredentials'
 > => {
-	const { removeToken, updateToken } = useAuthToken()
+	const { removeToken, updateToken, registerInterceptor } = useAuthToken()
 	const {
 		get: fetchAuthStorage,
 		remove: removeAuthStorage,
 		set: saveAuthStorage,
 	} = useStorage<AuthCredentials>(StorageKeys.AUTH)
+
+	const authCredentials = useAuthCredentialsZustand()
 
 	const isLoading = useAuthCredentialsStore((state) => state.isLoading)
 	const setIsLoading = useAuthCredentialsStore((state) => state.setIsLoading)
@@ -69,6 +71,16 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 			.catch((error) => console.log(error))
 			.finally(() => setIsLoading(false))
 	}, [fetchAuthStorage, saveCredentials, setIsLoading])
+
+	useEffect(() => {
+		const removeInterceptor = registerInterceptor({
+			authCredentials,
+			removeCredentials,
+			saveCredentials,
+		})
+
+		return removeInterceptor
+	}, [authCredentials, registerInterceptor, removeCredentials, saveCredentials])
 
 	return {
 		saveCredentials,

@@ -78,4 +78,16 @@ export const authHandlers: HttpHandler[] = [
 			)
 		}
 	),
+	http.post(
+		`${Config.API_URL}${END_POINTS_API.AUTH_REFRESH_TOKEN}`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<AuthCredentialsAPIModel>(mockAuthApi, {
+				status: 200,
+			})
+		}
+	),
 ]

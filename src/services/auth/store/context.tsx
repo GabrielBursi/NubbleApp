@@ -27,7 +27,7 @@ type AuthCredentials = AuthCredentialsService['authCredentials']
 export const AuthCredentialsProvider = ({
 	children,
 }: Readonly<PropsWithChildren>) => {
-	const { updateToken, removeToken } = useAuthToken()
+	const { updateToken, removeToken, registerInterceptor } = useAuthToken()
 	const {
 		get: fetchAuthStorage,
 		remove: removeAuthStorage,
@@ -64,6 +64,16 @@ export const AuthCredentialsProvider = ({
 			.catch((error) => console.log(error))
 			.finally(() => setIsLoading(false))
 	}, [fetchAuthStorage, saveCredentials])
+
+	useEffect(() => {
+		const removeInterceptor = registerInterceptor({
+			authCredentials,
+			removeCredentials,
+			saveCredentials,
+		})
+
+		return removeInterceptor
+	}, [authCredentials, registerInterceptor, removeCredentials, saveCredentials])
 
 	const context: AuthCredentialsService = useMemo(
 		() => ({

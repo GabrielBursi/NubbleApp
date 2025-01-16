@@ -5,6 +5,5 @@ export const NubbleApi = axios.create({
 	baseURL: Config.API_URL,
 	headers: {
 		'Content-Type': 'application/json',
-		//TODO: CRIAR INTERCEPTOR PARA TOKEN AUTH
 	},
 })
