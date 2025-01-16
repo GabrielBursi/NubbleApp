@@ -72,11 +72,12 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 				onPress={handleSubmit(submitLogin)}
 				disabled={!isValid}
+				loading={isLoading}
 				marginTop="s48"
 				title="Entrar"
 			/>
 			<Button
-				loading={isLoading}
+				disabled={isLoading}
 				onPress={navigateToSignUpScreen}
 				preset="outline"
 				marginTop="s12"
