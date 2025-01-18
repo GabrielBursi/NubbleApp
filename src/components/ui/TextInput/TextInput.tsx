@@ -6,7 +6,12 @@ import React, {
 	useRef,
 	useState,
 } from 'react'
-import { Pressable, TextInput as RNTextInput, TextStyle } from 'react-native'
+import {
+	ActivityIndicator,
+	Pressable,
+	TextInput as RNTextInput,
+	TextStyle,
+} from 'react-native'
 
 import { Box, Text } from '@/components/ui'
 import { useAppTheme, useFontFamily } from '@/hooks'
@@ -19,6 +24,7 @@ const TextInputMemoized = ({
 	RightComponent,
 	boxProps,
 	disabled = false,
+	loading = false,
 	...rnTextInputProps
 }: Readonly<TextInputProps>) => {
 	const { colors, font } = useAppTheme()
@@ -108,7 +114,12 @@ const TextInputMemoized = ({
 						onFocus={() => setIsFocused(true)}
 						accessible
 					/>
-					{RightComponent && (
+					{loading && (
+						<Box justifyContent="center" ml="s16">
+							<ActivityIndicator testID="spin-indicator" size="small" />
+						</Box>
+					)}
+					{RightComponent && !loading && (
 						<Box justifyContent="center" ml="s16">
 							{RightComponent}
 						</Box>

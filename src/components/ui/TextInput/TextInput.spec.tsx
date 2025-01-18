@@ -21,6 +21,17 @@ describe('<TextInput/>', () => {
 		)
 
 		expect(screen.getByRole('img')).toBeOnTheScreen()
+		expect(screen.getByTestId('bell')).toBeOnTheScreen()
+	})
+
+	it('should render the input loading correctly', () => {
+		customRender(
+			<TextInput label="jest" RightComponent={<Icon name="bell" />} loading />
+		)
+
+		expect(screen.queryByRole('img')).not.toBeOnTheScreen()
+		expect(screen.queryByTestId('bell')).not.toBeOnTheScreen()
+		expect(screen.getByTestId('spin-indicator')).toBeOnTheScreen()
 	})
 
 	it('should render the focused input correctly', () => {

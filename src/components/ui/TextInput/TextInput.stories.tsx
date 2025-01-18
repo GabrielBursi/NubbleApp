@@ -8,6 +8,7 @@ const meta: Meta<typeof TextInput> = {
 	args: {
 		label: 'Storybook',
 		disabled: false,
+		loading: false,
 	},
 	argTypes: {},
 	render: (args) => (
@@ -40,5 +41,11 @@ export const WithIcon: Story = {
 export const Disabled: Story = {
 	args: {
 		disabled: true,
+	},
+}
+
+export const Loading: Story = {
+	args: {
+		loading: true,
 	},
 }

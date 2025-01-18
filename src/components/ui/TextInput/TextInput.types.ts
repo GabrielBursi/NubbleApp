@@ -19,4 +19,5 @@ export type TextInputProps = StrictOmit<
 	RightComponent?: React.ReactElement
 	boxProps?: ComponentProps<typeof Box>
 	disabled?: boolean
+	loading?: boolean
 }
