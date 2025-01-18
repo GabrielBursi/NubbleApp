@@ -6,11 +6,8 @@ import {
 	FieldIsAvailableAPIModel,
 } from '@/domain/Auth'
 import { UserAPIModel } from '@/domain/User'
-import {
-	mockAuthApi,
-	mockFieldIsAvailableApi,
-	mockUserApi,
-} from '@/tests/mocks'
+import { mockAuthApi, mockFieldIsAvailableApi } from '@/tests/mocks/mockAuth'
+import { mockUserApi } from '@/tests/mocks/mockUser'
 import { END_POINTS_API } from '@/types/api'
 
 export const authHandlers: HttpHandler[] = [

@@ -16,7 +16,7 @@ describe('useAuthToken', () => {
 		},
 	})
 
-	const mockToken = customFaker.internet.jwt()
+	const mockToken = customFaker.internet.ipv6()
 
 	beforeEach(() => {
 		api.defaults.headers.common.Authorization = null

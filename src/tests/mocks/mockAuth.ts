@@ -13,17 +13,17 @@ import { generateUser, generateUserApi } from './mockUser'
 
 export const generateAuthApi = (): AuthCredentialsAPIModel => ({
 	auth: {
-		token: customFaker.internet.jwt(),
+		token: customFaker.internet.ipv6(),
 		type: 'Bearer',
 		expires_at: customFaker.date.future().toISOString(),
-		refreshToken: customFaker.internet.jwt(),
+		refreshToken: customFaker.internet.ipv6(),
 	},
 	user: generateUserApi(),
 })
 export const generateAuth = (): AuthCredentialsModel => ({
-	token: customFaker.internet.jwt(),
+	token: customFaker.internet.ipv6(),
 	user: generateUser(),
-	refreshToken: customFaker.internet.jwt(),
+	refreshToken: customFaker.internet.ipv6(),
 	tokenExpiresAt: customFaker.date.future().toISOString(),
 })
 
