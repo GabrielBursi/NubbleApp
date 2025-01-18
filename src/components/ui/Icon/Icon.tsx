@@ -1,5 +1,5 @@
 import React, { ComponentProps } from 'react'
-import { Pressable } from 'react-native'
+import { Pressable, View } from 'react-native'
 
 import { useAppTheme } from '@/hooks'
 
@@ -95,5 +95,9 @@ export const Icon = ({
 		)
 	}
 
-	return <SVGIcon {...iconProps} />
+	return (
+		<View testID={name}>
+			<SVGIcon {...iconProps} />
+		</View>
+	)
 }

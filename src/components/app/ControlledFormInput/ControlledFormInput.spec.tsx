@@ -28,6 +28,17 @@ describe('<ControlledFormInput/>', () => {
 		expect(screen.getByLabelText('Jest')).toBeOnTheScreen()
 	})
 
+	it('should render the email input correctly', () => {
+		const { result } = renderHook(() => useForm())
+		customRender(
+			<FormProvider {...result.current}>
+				<ControlledFormInput.Email label="Jest" name="jest" />
+			</FormProvider>
+		)
+
+		expect(screen.getByLabelText('Jest')).toBeOnTheScreen()
+	})
+
 	it('should render with rules correctly', () => {
 		const { result } = renderHook(() => useForm())
 		customRender(

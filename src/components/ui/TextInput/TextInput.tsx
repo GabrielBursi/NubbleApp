@@ -83,6 +83,7 @@ const TextInputMemoized = ({
 	return (
 		<Box mb="s20" {...boxProps}>
 			<Pressable
+				accessible
 				accessibilityLabel={label}
 				accessibilityState={{
 					selected: isFocused,
@@ -96,15 +97,16 @@ const TextInputMemoized = ({
 				<Box {...$textInputContainer} testID="container-internal-input">
 					<RNTextInput
 						ref={inputRef}
+						placeholder="Digite aqui"
+						autoCapitalize="none"
+						testID="internal-input"
+						{...rnTextInputProps}
 						placeholderTextColor={colors.gray2}
 						style={$textInputStyle}
+						editable={!disabled}
 						onBlur={() => setIsFocused(false)}
 						onFocus={() => setIsFocused(true)}
-						editable={!disabled}
-						placeholder="Digite aqui"
-						testID="internal-input"
-						autoCapitalize="none"
-						{...rnTextInputProps}
+						accessible
 					/>
 					{RightComponent && (
 						<Box justifyContent="center" ml="s16">

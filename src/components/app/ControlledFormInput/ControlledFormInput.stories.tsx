@@ -43,9 +43,17 @@ export const Text: Story = {
 }
 
 export const Password: Story = {
-	name: 'Text Input',
+	name: 'Password Input',
 	args: {
 		label: 'Password',
 	},
 	render: (args) => <ControlledFormInput.Password {...args} />,
+}
+
+export const Email: Story = {
+	name: 'Email Input',
+	args: {
+		label: 'Email',
+	},
+	render: (args) => <ControlledFormInput.Email {...args} />,
 }
