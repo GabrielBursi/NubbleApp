@@ -43,23 +43,5 @@ afterEach(() => {
 afterAll(() => {
 	serverTest.close()
 	testQueryClient.clear()
-	testQueryClient.cancelQueries()
-	testQueryClient.removeQueries()
-	testQueryClient.resetQueries()
-	testQueryClient.setDefaultOptions({
-		queries: {
-			gcTime: 0,
-			staleTime: 0,
-			enabled: false,
-			networkMode: 'offlineFirst',
-			retry: false,
-		},
-		mutations: {
-			gcTime: 0,
-			mutationKey: [],
-			networkMode: 'offlineFirst',
-			retry: false,
-		},
-	})
 	testQueryClient.unmount()
 })

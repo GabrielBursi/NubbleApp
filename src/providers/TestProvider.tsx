@@ -16,11 +16,11 @@ export const testQueryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			retry: false,
-			gcTime: 0,
-			staleTime: 0,
+			gcTime: Infinity,
+			staleTime: Infinity,
 		},
 		mutations: {
-			gcTime: 0,
+			gcTime: Infinity,
 			retry: false,
 		},
 	},

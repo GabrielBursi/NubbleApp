@@ -1,12 +1,15 @@
 import React from 'react'
 
-import { Text } from '@/components'
+import { Button } from '@/components'
+import { useAuthLogout } from '@/domain/Auth'
 import { ScreenTemplate } from '@/templates'
 
 export const MyProfileScreen = () => {
+	const { logout } = useAuthLogout()
+
 	return (
 		<ScreenTemplate>
-			<Text accessibilityRole="text">MyProfile</Text>
+			<Button title="Sair" onPress={() => logout()} />
 		</ScreenTemplate>
 	)
 }
