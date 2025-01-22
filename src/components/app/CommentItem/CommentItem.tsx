@@ -10,7 +10,7 @@ import { CommentItemProps } from './CommentItem.types'
 export const CommentItemMemoized = ({
 	comment,
 	postAuthorId,
-	userId,
+	userId = 0,
 	postId,
 }: Readonly<CommentItemProps>) => {
 	const { author, createdAtRelative, id, message } = comment

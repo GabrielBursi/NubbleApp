@@ -24,7 +24,6 @@ describe('<CommentItem/>', () => {
 	const mockProps: CommentItemProps = {
 		comment: generateComment(),
 		postAuthorId: '1',
-		userId: 1,
 		postId: generatePost().id,
 	}
 
@@ -85,12 +84,12 @@ describe('<CommentItem/>', () => {
 	})
 
 	it('should verify is is allowed to delete correctly', () => {
-		customRender(<CommentItem {...mockProps} />)
+		customRender(<CommentItem {...mockProps} userId={1} />)
 
 		expect(mockIsAllowedToDelete).toHaveBeenCalledWith(
 			mockProps.comment,
 			Number(mockProps.postAuthorId),
-			mockProps.userId
+			1
 		)
 	})
 

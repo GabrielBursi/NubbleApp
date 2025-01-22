@@ -5,6 +5,7 @@ import { FlashList } from '@shopify/flash-list'
 import { Box, CommentItem, SeeMore, TextInputAddComment } from '@/components'
 import { useCommentList } from '@/domain/Comment'
 import { useAppSafeArea } from '@/hooks'
+import { useAuthCredentials } from '@/services/auth'
 
 import { CommentListProps } from './CommentList.types'
 
@@ -19,6 +20,8 @@ export const CommentList = ({
 
 	const { bottom } = useAppSafeArea()
 
+	const authCre = useAuthCredentials()
+
 	return (
 		<Box flex={1} justifyContent="space-between">
 			<FlashList
@@ -29,7 +32,7 @@ export const CommentList = ({
 					<CommentItem
 						comment={comment}
 						postAuthorId={authorId}
-						userId={1}
+						userId={authCre?.user.id}
 						postId={postId}
 					/>
 				)}
