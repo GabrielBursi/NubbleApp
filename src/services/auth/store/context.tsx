@@ -99,7 +99,12 @@ export const useAuthCredentialsContext = (): AuthCredentials => {
 		throw new Error(
 			'useAuthCredentialsContext  must be used inside a provider!'
 		)
-	return context.authCredentials
+	const authCredentials: AuthCredentials = useMemo(
+		() => context.authCredentials,
+		[context.authCredentials]
+	)
+
+	return authCredentials
 }
 
 export const useAuthCredentialsServiceContext = (): StrictOmit<
@@ -114,10 +119,18 @@ export const useAuthCredentialsServiceContext = (): StrictOmit<
 	const { removeCredentials, saveCredentials, isLoading, setIsLoading } =
 		context
 
-	return {
-		removeCredentials,
-		saveCredentials,
-		isLoading,
-		setIsLoading,
-	} as const
+	const authCredServices: StrictOmit<
+		AuthCredentialsService,
+		'authCredentials'
+	> = useMemo(
+		() => ({
+			removeCredentials,
+			saveCredentials,
+			isLoading,
+			setIsLoading,
+		}),
+		[isLoading, removeCredentials, saveCredentials, setIsLoading]
+	)
+
+	return authCredServices
 }
