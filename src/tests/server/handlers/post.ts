@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import { http, HttpHandler, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -6,6 +7,8 @@ import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
 import { mockPostsAPI } from '@/tests/mocks/mockPosts'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
+const mockPostsClone = cloneDeep(mockPostsAPI)
+
 export const postHandlers: HttpHandler[] = [
 	http.get(`${Config.API_URL}${END_POINTS_API.POST}`, ({ request }) => {
 		console.log('Handler', request.method, request.url)
@@ -13,7 +16,7 @@ export const postHandlers: HttpHandler[] = [
 		if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
 
 		return HttpResponse.json<PageAPI<PostAPIModel>>(
-			{ data: mockPostsAPI, meta: mockMetaPaginationApi },
+			{ data: mockPostsClone, meta: mockMetaPaginationApi },
 			{ status: 200 }
 		)
 	}),
