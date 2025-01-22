@@ -6,14 +6,14 @@ import { PasswordInput } from './PasswordInput'
 
 describe('<PasswordInput/>', () => {
 	it('should render the input correctly', () => {
-		customRender(<PasswordInput label="jest" />)
+		customRender(<PasswordInput />)
 
-		expect(screen.getByLabelText('jest', { exact: true })).toBeOnTheScreen()
+		expect(screen.getByLabelText('Senha', { exact: true })).toBeOnTheScreen()
 		expect(screen.getByRole('img')).toBeOnTheScreen()
 	})
 
 	it('should toogle the icon on change visibility correctly', async () => {
-		customRender(<PasswordInput label="jest" />)
+		customRender(<PasswordInput />)
 
 		expect(screen.getByTestId('eyeOn', { exact: true })).toBeOnTheScreen()
 		await userEvent.press(screen.getByTestId('eyeOn', { exact: true }))
