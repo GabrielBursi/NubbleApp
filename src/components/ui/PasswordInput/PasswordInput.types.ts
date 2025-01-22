@@ -1,9 +1,12 @@
 import { ComponentProps } from 'react'
 
 import { TextInput } from '@/components/ui'
-import { StrictOmit } from '@/types/utils'
+import { OptionalPros, StrictOmit } from '@/types/utils'
+
+type TextInputProps = ComponentProps<typeof TextInput>
 
 export type PasswordInputProps = StrictOmit<
-	ComponentProps<typeof TextInput>,
-	'RightComponent' | 'secureTextEntry'
->
+	TextInputProps,
+	'RightComponent' | 'secureTextEntry' | 'label'
+> &
+	OptionalPros<TextInputProps, 'label'>
