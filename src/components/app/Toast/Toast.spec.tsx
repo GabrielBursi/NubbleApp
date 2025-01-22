@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react-native'
+import { screen } from '@testing-library/react-native'
 
 import { useToast, useToastService } from '@/services/toast/useToast'
 import { customRender } from '@/tests/utils'
@@ -57,7 +57,7 @@ describe('<Toast/>', () => {
 		expect(screen.getByRole('img')).toBeOnTheScreen()
 	})
 
-	it('should hide the toast correctly', async () => {
+	it('should hide the toast correctly', () => {
 		;(useToast as MockUseToast).mockReturnValue({
 			type: 'success',
 			message: 'jest',
@@ -70,9 +70,7 @@ describe('<Toast/>', () => {
 
 		customRender(<Toast />)
 
-		await act(async () => {
-			await new Promise((res) => setTimeout(res, 3000))
-		})
+		jest.runAllTimers()
 
 		expect(mockHideToast).toHaveBeenCalled()
 	})

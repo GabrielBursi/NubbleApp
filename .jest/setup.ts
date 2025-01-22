@@ -35,10 +35,12 @@ beforeAll(() => {
 	userEvent.setup()
 })
 beforeEach(() => {
+	jest.useFakeTimers()
 	testQueryClient.clear()
 })
 afterEach(() => {
 	serverTest.resetHandlers()
+	jest.useRealTimers()
 })
 afterAll(() => {
 	serverTest.close()
