@@ -7,8 +7,7 @@ import { PostApi, PostAPIModel } from '@/domain/Post'
 import { TestProvider } from '@/providers'
 import { mockMetaPaginationApi, mockPostsAPI } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
-import { END_POINTS_API } from '@/types/api'
-import { PageAPI } from '@/types/api'
+import { END_POINTS_API, PageAPI } from '@/types/api'
 
 import { usePaginatedList } from './usePaginatedList'
 

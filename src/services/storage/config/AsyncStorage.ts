@@ -17,4 +17,5 @@ export const asyncStorage: Storage = {
 	removeItem: async (key) => {
 		await AsyncStorage.removeItem(key)
 	},
+	clear: async () => await AsyncStorage.clear(),
 }

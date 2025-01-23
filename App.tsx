@@ -12,11 +12,13 @@ import 'react-native-gesture-handler'
 
 import { Toast } from '@/components'
 import { AppProvider } from '@/providers'
+import { storage } from '@/services/storage'
 
 import StorybookUIRoot from './.storybook'
 import { RouterApp } from './src/routes'
 
 const isMockEnabled = !!Number(Config.LOAD_MOCK)
+const isToClearStorage = !!Number(Config.CLEAR_STORAGE_ON_LOAD)
 
 async function enableMocking() {
 	try {
@@ -51,6 +53,14 @@ function useMocking() {
 
 function App() {
 	const mockReady = useMocking()
+	useEffect(() => {
+		if (isToClearStorage && __DEV__)
+			storage
+				.clear()
+				.then(() => console.log('Storage Clear!'))
+				.catch((err) => console.log(err))
+	}, [])
+
 	if (isMockEnabled && !mockReady) return null
 
 	return (

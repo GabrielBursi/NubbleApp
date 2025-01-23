@@ -15,4 +15,5 @@ export const MMKVStorage: Storage = {
 	},
 	setItem: async (key, value) => MMKVInstance.set(key, JSON.stringify(value)),
 	removeItem: async (key) => MMKVInstance.delete(key),
+	clear: async () => MMKVInstance.clearAll(),
 }

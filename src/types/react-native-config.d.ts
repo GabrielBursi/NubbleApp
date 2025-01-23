@@ -30,6 +30,15 @@ declare module 'react-native-config' {
 		 * @default '0'
 		 */
 		USE_CONTEXT_SERVICE?: '0' | '1'
+
+		/**
+		 * Controls if storage will be clear on initial load.
+		 * - `'0'`: Not clear storage.
+		 * - `'1'`: Clear storage on load.
+		 *
+		 * @default '0'
+		 */
+		CLEAR_STORAGE_ON_LOAD?: '0' | '1'
 	}
 
 	/**
