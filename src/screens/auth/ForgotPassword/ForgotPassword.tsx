@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -41,9 +41,12 @@ export const ForgotPasswordScreen = () => {
 		onError: (message) => showToast({ message, type: 'error' }),
 	})
 
-	const retrievePassword = (formValues: ForgotPasswordSchema) => {
-		requestNewPassword(formValues.email)
-	}
+	const retrievePassword = useCallback(
+		(formValues: ForgotPasswordSchema) => {
+			requestNewPassword(formValues.email)
+		},
+		[requestNewPassword]
+	)
 
 	return (
 		<ScreenTemplate canGoBack>
@@ -53,11 +56,12 @@ export const ForgotPasswordScreen = () => {
 			<Text preset="paragraphLarge" mb="s32">
 				Digite seu e-mail e enviaremos as instruções para redefinição de senha
 			</Text>
-			<ControlledFormInput
+			<ControlledFormInput.Email
 				control={control}
 				name="email"
-				label="E-mail"
-				placeholder="Digite seu e-mail"
+				returnKeyType="done"
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+				onSubmitEditing={handleSubmit(retrievePassword)}
 			/>
 			<Button
 				loading={isLoading}

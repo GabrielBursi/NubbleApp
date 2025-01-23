@@ -1,4 +1,9 @@
-import { screen, userEvent, waitFor } from '@testing-library/react-native'
+import {
+	fireEvent,
+	screen,
+	userEvent,
+	waitFor,
+} from '@testing-library/react-native'
 
 import { useAuthRequestNewPassword } from '@/domain/Auth/useCases/useAuthRequestNewPassword/useAuthRequestNewPassword'
 import { useResetNavigation } from '@/hooks/useResetNavigation/useResetNavigation'
@@ -154,5 +159,27 @@ describe('<ForgotPasswordScreen/>', () => {
 		expect(
 			screen.getByRole('button', { name: /Recuperar senha/i })
 		).toBeEnabled()
+	})
+
+	it('should validate on submit editing email correctly', async () => {
+		customRender(<ForgotPasswordScreen />)
+
+		const fieldEmail = screen.getByPlaceholderText('Digite seu e-mail', {
+			exact: true,
+		})
+
+		fireEvent(fieldEmail, 'submitEditing')
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('E-mail inválido', { exact: true })
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', { name: /recuperar senha/i })
+			).toBeDisabled()
+		})
 	})
 })

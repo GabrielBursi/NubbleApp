@@ -1,5 +1,10 @@
 /* eslint-disable sonarjs/no-hardcoded-credentials */
-import { screen, userEvent, waitFor } from '@testing-library/react-native'
+import {
+	fireEvent,
+	screen,
+	userEvent,
+	waitFor,
+} from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -271,5 +276,103 @@ describe('<SignUpScreen/>', () => {
 			},
 			{ timeout: 10000 }
 		)
+	})
+
+	it('should focus on fields correctly', async () => {
+		customRender(<SignUpScreen />)
+
+		const fieldUserName = screen.getByLabelText('Seu username', {
+			exact: true,
+		})
+
+		const fieldName = screen.getByLabelText('Nome', {
+			exact: true,
+		})
+
+		const fieldLastName = screen.getByLabelText('Sobrenome', {
+			exact: true,
+		})
+
+		const fieldEmail = screen.getByLabelText('E-mail', {
+			exact: true,
+		})
+
+		fireEvent(fieldUserName, 'submitEditing')
+
+		await userEvent.press(screen.getByText('Nome', { exact: true }))
+		expect(
+			screen.getByLabelText('Nome', { exact: true })
+		).toHaveAccessibilityState({
+			selected: true,
+		})
+
+		fireEvent(fieldName, 'submitEditing')
+
+		await userEvent.press(screen.getByText('Sobrenome', { exact: true }))
+		expect(
+			screen.getByLabelText('Sobrenome', { exact: true })
+		).toHaveAccessibilityState({
+			selected: true,
+		})
+
+		fireEvent(fieldLastName, 'submitEditing')
+
+		await userEvent.press(screen.getByText('E-mail', { exact: true }))
+		expect(
+			screen.getByLabelText('E-mail', { exact: true })
+		).toHaveAccessibilityState({
+			selected: true,
+		})
+
+		fireEvent(fieldEmail, 'submitEditing')
+
+		await userEvent.press(screen.getByText('Senha', { exact: true }))
+		expect(
+			screen.getByLabelText('Senha', { exact: true })
+		).toHaveAccessibilityState({
+			selected: true,
+		})
+	})
+
+	it('should validate on submit editing password correctly', async () => {
+		customRender(<SignUpScreen />)
+
+		const fieldPassword = screen.getByPlaceholderText('Digite sua senha', {
+			exact: true,
+		})
+
+		fireEvent(fieldPassword, 'submitEditing')
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('Nome muito curto', { exact: true })
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('Sobrenome muito curto', { exact: true })
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('E-mail inválido', { exact: true })
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('Senha deve ter no mínimo  8 caracteres', {
+					exact: true,
+				})
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', { name: /criar uma conta/i })
+			).toBeDisabled()
+		})
 	})
 })

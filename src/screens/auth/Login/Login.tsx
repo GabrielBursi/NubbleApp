@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
+import { TextInput as RNTextInput } from 'react-native'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { SubmitErrorHandler, useForm } from 'react-hook-form'
 
 import { Button, ControlledFormInput, Text } from '@/components'
 import { useAuthLogin } from '@/domain/Auth'
@@ -29,9 +30,15 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		onError: (message) => showToast({ message, type: 'error' }),
 	})
 
-	const submitLogin = (formValues: LoginSchema) => {
-		login(formValues)
-	}
+	const passwordRef = useRef<RNTextInput>(null)
+	const emailRef = useRef<RNTextInput>(null)
+
+	const submitLogin = useCallback(
+		(formValues: LoginSchema) => {
+			login(formValues)
+		},
+		[login]
+	)
 
 	const navigateToSignUpScreen = () => {
 		navigation.navigate('SignUpScreen')
@@ -39,6 +46,23 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 	const navigateToForgotPasswordScreen = () => {
 		navigation.navigate('ForgotPasswordScreen')
 	}
+
+	const handleSubmitErrors: SubmitErrorHandler<LoginSchema> = useCallback(
+		(fieldErrors) => {
+			const fields = [
+				{ ref: emailRef, error: fieldErrors.email },
+				{ ref: passwordRef, error: fieldErrors.password },
+			]
+
+			const firstErrorField = fields.find((field) => !!field.error)
+			firstErrorField?.ref.current?.focus()
+		},
+		[]
+	)
+
+	const handleSubmitEditingEmailInput = useCallback(() => {
+		passwordRef.current?.focus()
+	}, [])
 
 	return (
 		<ScreenTemplate scrollable>
@@ -48,17 +72,20 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 			<Text preset="paragraphLarge" mb="s40">
 				Digite seu e-mail e senha para entrar
 			</Text>
-			<ControlledFormInput
+			<ControlledFormInput.Email
 				control={control}
 				name="email"
-				label="E-mail"
-				placeholder="Digite seu e-mail"
+				returnKeyType="next"
+				onSubmitEditing={handleSubmitEditingEmailInput}
+				ref={emailRef}
 			/>
 			<ControlledFormInput.Password
 				control={control}
 				name="password"
-				label="Senha"
-				placeholder="Digite sua senha"
+				returnKeyType="done"
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+				onSubmitEditing={handleSubmit(submitLogin, handleSubmitErrors)}
+				ref={passwordRef}
 			/>
 			<Text
 				onPress={navigateToForgotPasswordScreen}
@@ -70,7 +97,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 			</Text>
 			<Button
 				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
-				onPress={handleSubmit(submitLogin)}
+				onPress={handleSubmit(submitLogin, handleSubmitErrors)}
 				disabled={!isValid}
 				loading={isLoading}
 				marginTop="s48"

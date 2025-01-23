@@ -1,5 +1,10 @@
 /* eslint-disable sonarjs/no-hardcoded-credentials */
-import { screen, userEvent } from '@testing-library/react-native'
+import {
+	fireEvent,
+	screen,
+	userEvent,
+	waitFor,
+} from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -213,5 +218,60 @@ describe('<LoginScreen/>', () => {
 		)
 
 		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('SignUpScreen')
+	})
+
+	it('should focus on password field correctly', async () => {
+		customRender(
+			<LoginScreen // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
+
+		const fieldEmail = screen.getByLabelText('E-mail', {
+			exact: true,
+		})
+
+		fireEvent(fieldEmail, 'submitEditing')
+
+		await userEvent.press(screen.getByText('Senha', { exact: true }))
+		expect(
+			screen.getByLabelText('Senha', { exact: true })
+		).toHaveAccessibilityState({
+			selected: true,
+		})
+	})
+
+	it('should validate on submit editing password correctly', async () => {
+		customRender(
+			<LoginScreen // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{ key: 'LoginScreen', name: 'LoginScreen' }}
+			/>
+		)
+
+		const fieldPassword = screen.getByPlaceholderText('Digite sua senha', {
+			exact: true,
+		})
+
+		fireEvent(fieldPassword, 'submitEditing')
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('E-mail inválido', { exact: true })
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(
+				screen.getByText('Senha obrigatória', {
+					exact: true,
+				})
+			).toBeOnTheScreen()
+		})
+
+		await waitFor(() => {
+			expect(screen.getByRole('button', { name: /entrar/i })).toBeDisabled()
+		})
 	})
 })
