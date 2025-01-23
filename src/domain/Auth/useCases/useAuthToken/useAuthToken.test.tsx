@@ -3,7 +3,7 @@ import axios from 'axios'
 import Config from 'react-native-config'
 
 import { NubbleApi } from '@/api/config'
-import { customFaker } from '@/tests/utils'
+import { mockAuthJWT } from '@/tests/mocks'
 import { END_POINTS_API } from '@/types/api'
 
 import { useAuthToken } from './useAuthToken'
@@ -15,8 +15,6 @@ describe('useAuthToken', () => {
 			'Content-Type': 'application/json',
 		},
 	})
-
-	const mockToken = customFaker.internet.ipv6()
 
 	beforeEach(() => {
 		api.defaults.headers.common.Authorization = null
@@ -33,16 +31,16 @@ describe('useAuthToken', () => {
 	it('should update header token correctly', () => {
 		const { result } = renderHook(() => useAuthToken(api))
 
-		result.current.updateToken(mockToken)
+		result.current.updateToken(mockAuthJWT)
 		expect(api.defaults.headers.common.Authorization).toBe(
-			`Bearer ${mockToken}`
+			`Bearer ${mockAuthJWT}`
 		)
 	})
 
 	it('should remove header token correctly', () => {
 		const { result } = renderHook(() => useAuthToken(api))
 
-		result.current.updateToken(mockToken)
+		result.current.updateToken(mockAuthJWT)
 		result.current.removeToken()
 		expect(api.defaults.headers.common.Authorization).toBeNull()
 	})
