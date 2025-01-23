@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
 import Animated, {
@@ -11,7 +11,7 @@ import { Icon, Text, TouchableOpacityBox } from '@/components'
 
 import { ActionIconProps } from './ActionIcon.types'
 
-export const ActionIcon = ({
+const ActionIconMemoized = ({
 	icon,
 	marked = false,
 	onPress,
@@ -55,3 +55,5 @@ export const ActionIcon = ({
 		</TouchableOpacityBox>
 	)
 }
+
+export const ActionIcon = memo(ActionIconMemoized)

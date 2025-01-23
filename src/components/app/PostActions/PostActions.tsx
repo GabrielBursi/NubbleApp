@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { ActionIcon, Box } from '@/components'
 
@@ -9,17 +9,17 @@ export const PostActions = ({
 	favoriteCount = 0,
 	reactionCount = 0,
 }: Readonly<PostActionsProps>) => {
-	const likePost = () => {
+	const likePost = useCallback(() => {
 		//TODO: Implement like post
-	}
+	}, [])
 
-	const navigateToComments = () => {
+	const navigateToComments = useCallback(() => {
 		//TODO: Implement navigate to comments
-	}
+	}, [])
 
-	const favoritePost = () => {
+	const favoritePost = useCallback(() => {
 		// TODO: Implement favorite post
-	}
+	}, [])
 
 	return (
 		<Box flexDirection="row" mt="s16" gap="s24">

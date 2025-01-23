@@ -35,7 +35,8 @@ const FeedListMemoized = () => {
 				<RefreshControl refreshing={isLoading} onRefresh={refreshPosts} />
 			}
 			disableAutoLayout
-			estimatedItemSize={300}
+			// size PostItem device: Pixel 8 Pro API 34
+			estimatedItemSize={448 * 714}
 			// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 			onEndReached={fetchMorePosts}
 			onEndReachedThreshold={0.1}
