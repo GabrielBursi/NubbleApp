@@ -1,8 +1,8 @@
 import { PostModel } from '@/domain/Post'
-import { OptionalPros } from '@/types/utils'
+import { OptionalProps } from '@/types/utils'
 
 type Author = PostModel['author']
-export type PostBottomProps = OptionalPros<
+export type PostBottomProps = OptionalProps<
 	Pick<PostModel, 'text' | 'commentCount' | 'id'>,
 	'commentCount'
 > &

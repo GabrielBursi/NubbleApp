@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react'
 
-import { OptionalPros, StrictOmit } from '@/types/utils'
+import { OptionalProps, StrictOmit } from '@/types/utils'
 
 import { TextInput } from '../TextInput/TextInput'
 
@@ -15,4 +15,4 @@ export type EmailInputProps = StrictOmit<
 	| 'autoCorrect'
 	| 'label'
 > &
-	OptionalPros<TextInputProps, 'label'>
+	OptionalProps<TextInputProps, 'label'>
