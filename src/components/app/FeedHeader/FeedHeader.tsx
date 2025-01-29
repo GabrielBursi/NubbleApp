@@ -1,10 +1,15 @@
 import React from 'react'
 
 import { Box, Container, Icon, SimpleLogo } from '@/components'
-import { useAppSafeArea } from '@/hooks'
+import { useAppSafeArea, useNavigationApp } from '@/hooks'
 
 export const FeedHeader = () => {
 	const { top } = useAppSafeArea()
+	const { navigationAppStack } = useNavigationApp()
+
+	const handlePressIconSearch = () => {
+		navigationAppStack.navigate('SearchScreen')
+	}
 
 	return (
 		<Container>
@@ -16,7 +21,7 @@ export const FeedHeader = () => {
 			>
 				<SimpleLogo width={70} />
 				<Box flexDirection="row" gap="s24" justifyContent="space-between">
-					<Icon name="search" />
+					<Icon name="search" onPress={handlePressIconSearch} />
 					<Icon name="bell" />
 					<Icon name="comment" />
 				</Box>
