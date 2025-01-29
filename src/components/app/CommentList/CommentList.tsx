@@ -38,8 +38,14 @@ export const CommentList = ({
 				)}
 				ItemSeparatorComponent={ItemSeparatorComponent}
 				ListFooterComponent={
-					// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
-					hasNextPage ? <SeeMore onClickSeeMore={fetchMoreComments} /> : null
+					hasNextPage ? (
+						<SeeMore
+							textAlign="center"
+							mt="s10"
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+							handleExpanded={fetchMoreComments}
+						/>
+					) : null
 				}
 				contentContainerStyle={{ paddingBottom: bottom }}
 				refreshing={isLoading}

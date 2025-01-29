@@ -5,11 +5,17 @@ import { Text } from '@/components'
 
 import { SeeMoreProps } from './SeeMore.types'
 
-const SeeMoreMemoized = ({ onClickSeeMore }: Readonly<SeeMoreProps>) => {
+const SeeMoreMemoized = ({
+	handleExpanded,
+	expanded = false,
+	textSeeLess = 'Ver menos',
+	textSeeMore = 'Ver mais',
+	...propsText
+}: Readonly<SeeMoreProps>) => {
 	return (
-		<Pressable onPress={onClickSeeMore}>
-			<Text bold color="primary" textAlign="center">
-				Ver mais
+		<Pressable onPress={handleExpanded} hitSlop={10} android_disableSound>
+			<Text {...propsText} bold color="primary">
+				{expanded ? textSeeLess : textSeeMore}
 			</Text>
 		</Pressable>
 	)

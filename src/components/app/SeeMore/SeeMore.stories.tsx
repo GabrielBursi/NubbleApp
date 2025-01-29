@@ -8,10 +8,13 @@ const meta: Meta<typeof SeeMore> = {
 	title: 'Components/SeeMore',
 	component: SeeMore,
 	args: {
-		onClickSeeMore: () => Alert.alert('Ver mais!'),
+		handleExpanded: () => Alert.alert('handleExpanded'),
+		textSeeLess: 'Ver menos',
+		textSeeMore: 'Ver mais',
+		expanded: false,
 	},
 	argTypes: {
-		onClickSeeMore: {
+		handleExpanded: {
 			type: 'symbol',
 		},
 	},
@@ -22,4 +25,10 @@ type Story = StoryObj<typeof SeeMore>
 
 export const Basic: Story = {
 	args: {},
+}
+
+export const Expanded: Story = {
+	args: {
+		expanded: true,
+	},
 }

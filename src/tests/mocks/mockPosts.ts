@@ -6,7 +6,7 @@ import { customFaker } from '../utils/customFaker'
 
 export const generatePostAPI = (): PostAPIModel => ({
 	id: Number(uniqueId()),
-	text: customFaker.lorem.paragraph(),
+	text: customFaker.lorem.paragraph({ min: 3, max: 10 }),
 	user_id: customFaker.number.int({ min: 1, max: 1000 }),
 	image_url: customFaker.image.url(),
 	is_fixed: customFaker.datatype.boolean(),

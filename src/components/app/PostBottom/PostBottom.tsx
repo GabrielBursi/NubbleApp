@@ -36,13 +36,13 @@ const PostBottomMemoized = ({
 			<Text preset="paragraphMedium" bold>
 				{userName}
 			</Text>
-			<Text preset="paragraphMedium" color="gray1">
+			<Text.Expanded preset="paragraphMedium" color="gray1">
 				{text}
-			</Text>
+			</Text.Expanded>
 			{commentText && (
 				<Text
 					onPress={navigateToPostCommentScreen}
-					mt="s8"
+					mt="s12"
 					preset="paragraphSmall"
 					bold
 					color="primary"

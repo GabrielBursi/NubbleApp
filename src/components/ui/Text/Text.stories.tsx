@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Box, Text } from '@/components/ui'
+import { customFaker } from '@/tests/utils/customFaker'
 
 const meta: Meta<typeof Text> = {
 	title: 'UI/Text',
@@ -10,9 +11,10 @@ const meta: Meta<typeof Text> = {
 }
 export default meta
 
-type Story = StoryObj<typeof Text>
+type StoryText = StoryObj<typeof Text>
+type StoryTextExpanded = StoryObj<typeof Text.Expanded>
 
-export const Heading: Story = {
+export const Heading: StoryText = {
 	render: () => (
 		<Box gap="s10">
 			<Text preset="headingLarge">Heading Large</Text>
@@ -22,7 +24,7 @@ export const Heading: Story = {
 	),
 }
 
-export const Paragraph: Story = {
+export const Paragraph: StoryText = {
 	render: () => (
 		<Box gap="s24">
 			<Box gap="s4">
@@ -55,5 +57,26 @@ export const Paragraph: Story = {
 				</Text>
 			</Box>
 		</Box>
+	),
+}
+
+export const Expanded: StoryTextExpanded = {
+	args: {
+		numberOfLines: 4,
+	},
+	argTypes: {
+		numberOfLines: {
+			control: {
+				type: 'number',
+				max: 10,
+				min: 2,
+			},
+		},
+	},
+	// eslint-disable-next-line react-native/no-raw-text
+	render: (args) => (
+		<Text.Expanded {...args}>
+			{customFaker.lorem.paragraph({ min: 10, max: 20 })}
+		</Text.Expanded>
 	),
 }
