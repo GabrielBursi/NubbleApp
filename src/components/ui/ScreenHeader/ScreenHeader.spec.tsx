@@ -3,6 +3,8 @@ import { screen, userEvent } from '@testing-library/react-native'
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 
+import { TextInput } from '..'
+
 import { ScreenHeader } from './ScreenHeader'
 
 describe('<ScreenHeader/>', () => {
@@ -23,5 +25,11 @@ describe('<ScreenHeader/>', () => {
 		customRender(<ScreenHeader title="jest" />)
 
 		expect(screen.getByRole('text', { name: /jest/i })).toBeOnTheScreen()
+	})
+
+	it('should render with custom component correctly', () => {
+		customRender(<ScreenHeader HeaderComponent={<TextInput label="jest" />} />)
+
+		expect(screen.getByLabelText('jest', { exact: true })).toBeOnTheScreen()
 	})
 })

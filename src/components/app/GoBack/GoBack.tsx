@@ -3,19 +3,24 @@ import React, { memo } from 'react'
 import { TouchableOpacityBox, Icon, Text } from '@/components/ui'
 import { useNavigationApp } from '@/hooks'
 
-const GoBackMemoized = () => {
+import { GoBackProps } from './GoBack.types'
+
+const GoBackMemoized = ({ showLabel = true }: GoBackProps) => {
 	const { navigationAppStack } = useNavigationApp()
 
 	return (
 		<TouchableOpacityBox
 			onPress={navigationAppStack.goBack}
 			flexDirection="row"
-			width={80}
+			alignItems="center"
+			mr="s10"
 		>
-			<Icon name="arrowLeft" color="primary" />
-			<Text preset="paragraphMedium" semiBold ml="s8">
-				Voltar
-			</Text>
+			<Icon name="arrowLeft" color="primary" size={20} />
+			{showLabel && (
+				<Text preset="paragraphMedium" semiBold ml="s8">
+					Voltar
+				</Text>
+			)}
 		</TouchableOpacityBox>
 	)
 }

@@ -13,6 +13,13 @@ describe('<GoBack/>', () => {
 		expect(screen.getByRole('img')).toBeOnTheScreen()
 	})
 
+	it('should render the button without label correctly', () => {
+		customRender(<GoBack showLabel={false} />)
+
+		expect(screen.queryByText('Voltar', { exact: true })).not.toBeOnTheScreen()
+		expect(screen.getByRole('img')).toBeOnTheScreen()
+	})
+
 	it('should go back navigation when press button correctly', async () => {
 		customRender(<GoBack />)
 

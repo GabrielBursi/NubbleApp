@@ -34,6 +34,7 @@ export const ScreenTemplate = ({
 	scrollable = false,
 	style,
 	title,
+	HeaderComponent,
 	...boxProps
 }: PropsWithChildren<ScreenTemplateProps>) => {
 	const { top, bottom } = useAppSafeArea()
@@ -53,7 +54,11 @@ export const ScreenTemplate = ({
 					style={[{ paddingTop: top, paddingBottom: bottom }, style]}
 					{...boxProps}
 				>
-					<ScreenHeader canGoBack={canGoBack} title={title} />
+					<ScreenHeader
+						HeaderComponent={HeaderComponent}
+						canGoBack={canGoBack}
+						title={title}
+					/>
 					{children}
 				</Container>
 			</ContainerScreen>

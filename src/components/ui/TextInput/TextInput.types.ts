@@ -14,9 +14,10 @@ export type TextInputProps = StrictOmit<
 	| 'style'
 	| 'placeholderTextColor'
 > & {
-	label: string
+	label?: string
 	errorMessage?: string
 	RightComponent?: React.ReactElement
+	LeftComponent?: React.ReactElement
 	boxProps?: ComponentProps<typeof Box>
 	disabled?: boolean
 	loading?: boolean

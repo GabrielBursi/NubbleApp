@@ -25,6 +25,7 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 		{
 			label,
 			errorMessage,
+			LeftComponent,
 			RightComponent,
 			boxProps,
 			disabled = false,
@@ -95,7 +96,7 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 		)
 
 		return (
-			<Box mb="s20" {...boxProps}>
+			<Box mb="s20" flexGrow={1} flexShrink={1} {...boxProps}>
 				<Pressable
 					accessible
 					accessibilityLabel={label}
@@ -105,10 +106,17 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 					}}
 					onPress={() => setIsFocused(true)}
 				>
-					<Text preset="paragraphMedium" marginBottom="s4">
-						{label}
-					</Text>
+					{label && (
+						<Text preset="paragraphMedium" marginBottom="s4">
+							{label}
+						</Text>
+					)}
 					<Box {...$textInputContainer} testID="container-internal-input">
+						{LeftComponent && (
+							<Box justifyContent="center" mr="s16">
+								{LeftComponent}
+							</Box>
+						)}
 						<RNTextInput
 							ref={inputRefInterna}
 							placeholder="Digite aqui"

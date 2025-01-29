@@ -15,9 +15,18 @@ describe('<TextInput/>', () => {
 		expect(screen.getByText('jest', { exact: true })).toBeOnTheScreen()
 	})
 
-	it('should render the input with icon correctly', () => {
+	it('should render the input with right icon correctly', () => {
 		customRender(
 			<TextInput label="jest" RightComponent={<Icon name="bell" />} />
+		)
+
+		expect(screen.getByRole('img')).toBeOnTheScreen()
+		expect(screen.getByTestId('bell')).toBeOnTheScreen()
+	})
+
+	it('should render the input with left icon correctly', () => {
+		customRender(
+			<TextInput label="jest" LeftComponent={<Icon name="bell" />} />
 		)
 
 		expect(screen.getByRole('img')).toBeOnTheScreen()

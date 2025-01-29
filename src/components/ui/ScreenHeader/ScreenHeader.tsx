@@ -1,13 +1,20 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 
-import { Box, GoBack, Text } from '@/components'
+import { Box, GoBack } from '@/components'
+import { Text } from '@/components/ui/Text/Text'
 
 import { ScreenHeaderProps } from './ScreenHeader.types'
 
 const ScreenHeaderMemoized = ({
 	canGoBack = false,
 	title,
+	HeaderComponent,
 }: Readonly<ScreenHeaderProps>) => {
+	const showBackLabel = useMemo(
+		() => !title && !HeaderComponent,
+		[title, HeaderComponent]
+	)
+
 	return (
 		<Box
 			flexDirection="row"
@@ -15,9 +22,10 @@ const ScreenHeaderMemoized = ({
 			alignItems="center"
 			justifyContent="space-between"
 		>
-			{canGoBack && <GoBack />}
+			{canGoBack && <GoBack showLabel={showBackLabel} />}
+			{HeaderComponent}
 			{title && <Text preset="headingSmall">{title}</Text>}
-			{title && <Box width={80} />}
+			{title && <Box width={20} />}
 		</Box>
 	)
 }

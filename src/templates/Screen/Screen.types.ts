@@ -6,6 +6,7 @@ export type ScreenTemplateProps = {
 	canGoBack?: boolean
 	scrollable?: boolean
 	title?: string
+	HeaderComponent?: React.ReactNode
 } & ComponentProps<typeof Box>
 
 export type ContainerScreenProps = {

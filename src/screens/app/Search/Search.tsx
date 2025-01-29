@@ -1,11 +1,19 @@
 import React from 'react'
 
-import { Text } from '@/components'
+import { Icon, Text, TextInput } from '@/components'
 import { ScreenTemplate } from '@/templates'
 
 export const SearchScreen = () => {
 	return (
-		<ScreenTemplate canGoBack>
+		<ScreenTemplate
+			canGoBack
+			HeaderComponent={
+				<TextInput
+					boxProps={{ style: { marginBottom: 0 } }}
+					LeftComponent={<Icon color="gray3" name="search" />}
+				/>
+			}
+		>
 			<Text>SearchScreen</Text>
 		</ScreenTemplate>
 	)

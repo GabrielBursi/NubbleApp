@@ -5,7 +5,9 @@ import { GoBack } from './GoBack'
 const meta: Meta<typeof GoBack> = {
 	title: 'Components/GoBack',
 	component: GoBack,
-	args: {},
+	args: {
+		showLabel: true,
+	},
 	argTypes: {},
 }
 export default meta
