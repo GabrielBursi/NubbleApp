@@ -89,14 +89,30 @@ export const Icon = ({
 
 	if (onPress) {
 		return (
-			<Pressable testID={name} hitSlop={10} onPress={onPress}>
+			<Pressable
+				role="img"
+				accessible
+				accessibilityLabel={name}
+				aria-label={name}
+				accessibilityRole="image"
+				testID={name}
+				hitSlop={10}
+				onPress={onPress}
+			>
 				<SVGIcon {...iconProps} />
 			</Pressable>
 		)
 	}
 
 	return (
-		<View testID={name}>
+		<View
+			role="img"
+			accessible
+			accessibilityLabel={name}
+			aria-label={name}
+			accessibilityRole="image"
+			testID={name}
+		>
 			<SVGIcon {...iconProps} />
 		</View>
 	)

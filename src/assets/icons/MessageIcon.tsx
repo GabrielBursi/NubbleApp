@@ -9,15 +9,7 @@ export function MessageIcon({
 	color = 'black',
 }: Readonly<IconBase>) {
 	return (
-		<Svg
-			accessibilityRole="image"
-			role="img"
-			accessible
-			width={size}
-			height={size}
-			viewBox="0 0 20 20"
-			fill="none"
-		>
+		<Svg width={size} height={size} viewBox="0 0 20 20" fill="none">
 			<Path
 				fillRule="evenodd"
 				clipRule="evenodd"
