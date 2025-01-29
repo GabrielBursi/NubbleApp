@@ -8,12 +8,9 @@ export const GetComments = async (
 	postId: PostModel['id'],
 	page: number
 ): Promise<PageApp<CommentModel>> => {
-	const { data, meta } = await CommentServices.GetAllWithPagination(postId, {
+	const comments = await CommentServices.GetAllWithPagination(postId, {
 		page,
 		per_page: 10,
 	})
-	return {
-		data: data.map(CommentAdapters.ToComment),
-		meta: PaginationAdapters.ToMetaPagination(meta),
-	}
+	return PaginationAdapters.ToPageModel(comments, CommentAdapters.ToComment)
 }
