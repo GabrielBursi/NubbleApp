@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { ActivityIndicator } from 'react-native'
 
 import { Box } from '@/components/ui/Box/Box'
@@ -6,11 +6,12 @@ import { Icon } from '@/components/ui/Icon/Icon'
 
 import { RightIconTextInputProps } from './RightIconTextInput.types'
 
-export const RightIconTextInput = ({
+const RightIconTextInputMemoized = ({
 	allowClear = true,
 	isFocused = false,
 	loading = false,
 	rightIcon,
+	onClear,
 }: Readonly<RightIconTextInputProps>) => {
 	if (loading)
 		return (
@@ -23,7 +24,7 @@ export const RightIconTextInput = ({
 		return (
 			<Box justifyContent="center" ml="s16">
 				{/* TODO: criar ícone para clear */}
-				<Icon name="trash" size={20} color="gray3" />
+				<Icon name="trash" size={20} color="gray3" onPress={onClear} />
 			</Box>
 		)
 
@@ -36,3 +37,5 @@ export const RightIconTextInput = ({
 
 	return null
 }
+
+export const RightIconTextInput = memo(RightIconTextInputMemoized)

@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
 import { customRender } from '@/tests/utils'
 
@@ -7,6 +7,8 @@ import { Icon } from '../Icon/Icon'
 import { RightIconTextInput } from './RightIconTextInput'
 
 describe('<RightIconTextInput/>', () => {
+	const mockOnClear = jest.fn()
+
 	it('should render loading indicator correctly', () => {
 		customRender(<RightIconTextInput loading />)
 
@@ -22,6 +24,15 @@ describe('<RightIconTextInput/>', () => {
 			screen.queryByTestId('spin-indicator', { exact: true })
 		).not.toBeOnTheScreen()
 		expect(screen.getByRole('img', { name: 'trash' })).toBeOnTheScreen()
+	})
+
+	it('should call onClear correctly', async () => {
+		customRender(
+			<RightIconTextInput allowClear isFocused onClear={mockOnClear} />
+		)
+
+		await userEvent.press(screen.getByRole('img', { name: 'trash' }))
+		expect(mockOnClear).toHaveBeenCalled()
 	})
 
 	it('should render right icon correctly', () => {

@@ -12,9 +12,13 @@ const meta: Meta<typeof RightIconTextInput> = {
 		isFocused: false,
 		loading: false,
 		rightIcon: <Icon name="bookmark" color="gray3" />,
+		onClear: () => console.log('Clear!'),
 	},
 	argTypes: {
 		rightIcon: {
+			type: 'symbol',
+		},
+		onClear: {
 			type: 'symbol',
 		},
 	},

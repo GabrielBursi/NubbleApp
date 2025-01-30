@@ -2,6 +2,7 @@ import React, {
 	ComponentProps,
 	forwardRef,
 	memo,
+	useCallback,
 	useEffect,
 	useImperativeHandle,
 	useMemo,
@@ -38,6 +39,13 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 		const [isFocused, setIsFocused] = useState(false)
 
 		useImperativeHandle(externalRef, () => internalRef.current!, [])
+
+		const handleClearInput = useCallback(() => {
+			internalRef.current?.clear()
+			internalRef.current?.focus()
+			const onChangeTextProp = rnTextInputProps.onChangeText
+			onChangeTextProp?.('')
+		}, [rnTextInputProps.onChangeText])
 
 		useEffect(() => {
 			if (isFocused) {
@@ -133,6 +141,7 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 							isFocused={isFocused}
 							loading={loading}
 							rightIcon={RightComponent}
+							onClear={handleClearInput}
 						/>
 					</Box>
 					{errorMessage && (

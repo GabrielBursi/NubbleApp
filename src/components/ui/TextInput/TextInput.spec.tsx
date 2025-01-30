@@ -8,6 +8,8 @@ import { Icon } from '../Icon/Icon'
 import { TextInput } from './TextInput'
 
 describe('<TextInput/>', () => {
+	const mockOnChangeText = jest.fn()
+
 	it('should render the input correctly', () => {
 		customRender(<TextInput label="jest" />)
 
@@ -107,5 +109,35 @@ describe('<TextInput/>', () => {
 			borderColor: appTheme.colors['error'],
 		})
 		expect(screen.getByText('jest error', { exact: true })).toBeOnTheScreen()
+	})
+
+	it('should clear the input correctly', async () => {
+		customRender(
+			<TextInput
+				label="Allow Clear"
+				onChangeText={mockOnChangeText}
+				allowClear
+			/>
+		)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Digite aqui'),
+			'allow clear'
+		)
+
+		expect(mockOnChangeText).toHaveBeenCalledWith('allow clear')
+
+		await userEvent.press(screen.getByText('Allow Clear', { exact: true }))
+		await userEvent.press(screen.getByRole('img', { name: 'trash' }))
+
+		expect(mockOnChangeText).toHaveBeenCalledWith('')
+		expect(screen.getByTestId('container-internal-input')).toHaveStyle({
+			borderColor: appTheme.colors['primary'],
+		})
+		expect(
+			screen.getByLabelText('Allow Clear', { exact: true })
+		).toHaveAccessibilityState({
+			selected: true,
+		})
 	})
 })

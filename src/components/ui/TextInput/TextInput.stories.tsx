@@ -9,6 +9,7 @@ const meta: Meta<typeof TextInput> = {
 		label: 'Storybook',
 		disabled: false,
 		loading: false,
+		allowClear: true,
 	},
 	argTypes: {},
 	render: (args) => (
