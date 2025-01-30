@@ -9,7 +9,7 @@ export const useUserSearch = (search: string) => {
 		refreshList: refreshUsers,
 		...restData
 	} = usePaginatedList(() => UserApi.GetAllWithSearch(search), {
-		queryKey: [AppQueryKeys.USERS],
+		queryKey: [AppQueryKeys.USERS, search],
 		staleTime: 3 * 10 * 1000,
 		gcTime: 1 * 10 * 1000,
 		enabled: !!search.trim().length,

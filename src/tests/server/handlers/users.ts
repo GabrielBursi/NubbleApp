@@ -2,7 +2,8 @@ import { http, HttpHandler, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
 import { UserAPIModel } from '@/domain/User'
-import { mockMetaPaginationApi, mockUsersApi } from '@/tests/mocks'
+import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
+import { mockUsersApi } from '@/tests/mocks/mockUser'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
 export const usersHandlers: HttpHandler[] = [
