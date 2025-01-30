@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Icon, Text, TextInput } from '@/components'
+import { Icon, ProfileUsernameList, TextInput } from '@/components'
 import { useUserSearch } from '@/domain/User'
 import { useDebounce } from '@/hooks'
 import { ScreenTemplate } from '@/templates'
@@ -25,9 +25,7 @@ export const SearchScreen = () => {
 				/>
 			}
 		>
-			{users.map((user, index) => (
-				<Text key={`${user.id}-${index}`}>{user.username}</Text>
-			))}
+			<ProfileUsernameList users={users} />
 		</ScreenTemplate>
 	)
 }

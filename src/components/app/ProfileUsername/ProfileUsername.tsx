@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { Box, ProfileAvatar, Text } from '@/components'
 
 import { ProfileUsernameProps } from './ProfileUsername.types'
 
-export const ProfileUsername = ({
+const ProfileUsernameMemoized = ({
 	profileUrl,
 	username,
 }: Readonly<ProfileUsernameProps>) => {
@@ -21,3 +21,5 @@ export const ProfileUsername = ({
 		</Box>
 	)
 }
+
+export const ProfileUsername = memo(ProfileUsernameMemoized)
