@@ -16,7 +16,7 @@ export const useUserSearch = (search: string) => {
 	})
 
 	return {
-		users,
+		users: search.trim().length ? users : [],
 		refreshUsers,
 		...restData,
 	} as const

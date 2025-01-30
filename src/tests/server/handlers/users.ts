@@ -12,6 +12,20 @@ export const usersHandlers: HttpHandler[] = [
 
 		if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
 
+		const url = new URL(request.url)
+		const searchParam = url.searchParams.get('search')
+
+		if (searchParam)
+			return HttpResponse.json<PageAPI<UserAPIModel>>(
+				{
+					data: mockUsersApi.filter((user) =>
+						user.username.toLowerCase().includes(searchParam.toLowerCase())
+					),
+					meta: mockMetaPaginationApi,
+				},
+				{ status: 200 }
+			)
+
 		return HttpResponse.json<PageAPI<UserAPIModel>>(
 			{ data: mockUsersApi, meta: mockMetaPaginationApi },
 			{ status: 200 }
