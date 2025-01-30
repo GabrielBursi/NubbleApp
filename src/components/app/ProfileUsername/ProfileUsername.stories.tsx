@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { mockUser } from '@/tests/mocks'
+import { mockUser } from '@/tests/mocks/mockUser'
 
 import { ProfileUsername } from './ProfileUsername'
 
