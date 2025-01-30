@@ -25,5 +25,7 @@ export const generateUser = (): UserModel => ({
 	fullName: `${customFaker.person.firstName()} ${customFaker.person.lastName()}`,
 })
 
+export const mockUsersApi = Array(15).map(() => generateUserApi())
+export const mockUsers = Array(15).map(() => generateUser())
 export const mockUser = generateUser()
 export const mockUserApi = generateUserApi()

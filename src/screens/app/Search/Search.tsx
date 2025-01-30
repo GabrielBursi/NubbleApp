@@ -9,6 +9,7 @@ export const SearchScreen = () => {
 			canGoBack
 			HeaderComponent={
 				<TextInput
+					placeholder="Procure usuários aqui"
 					boxProps={{ style: { marginBottom: 0 } }}
 					LeftComponent={<Icon color="gray3" name="search" />}
 				/>
