@@ -8,14 +8,11 @@ import React, {
 	useRef,
 	useState,
 } from 'react'
-import {
-	ActivityIndicator,
-	Pressable,
-	TextInput as RNTextInput,
-	TextStyle,
-} from 'react-native'
+import { Pressable, TextInput as RNTextInput, TextStyle } from 'react-native'
 
-import { Box, Text } from '@/components/ui'
+import { Box } from '@/components/ui/Box/Box'
+import { RightIconTextInput } from '@/components/ui/RightIconTextInput/RightIconTextInput'
+import { Text } from '@/components/ui/Text/Text'
 import { useAppTheme, useFontFamily } from '@/hooks'
 
 import { TextInputProps } from './TextInput.types'
@@ -30,24 +27,25 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 			boxProps,
 			disabled = false,
 			loading = false,
+			allowClear = true,
 			...rnTextInputProps
 		},
-		refExterna
+		externalRef
 	) => {
 		const { colors, font } = useAppTheme()
 		const { fontSizes } = useFontFamily()
-		const inputRefInterna = useRef<RNTextInput>(null)
+		const internalRef = useRef<RNTextInput>(null)
 		const [isFocused, setIsFocused] = useState(false)
 
-		useImperativeHandle(refExterna, () => inputRefInterna.current!, [])
+		useImperativeHandle(externalRef, () => internalRef.current!, [])
 
 		useEffect(() => {
 			if (isFocused) {
-				inputRefInterna.current?.focus()
+				internalRef.current?.focus()
 			} else {
-				inputRefInterna.current?.blur()
+				internalRef.current?.blur()
 			}
-		}, [isFocused, inputRefInterna])
+		}, [isFocused, internalRef])
 
 		const $textInputContainer: ComponentProps<typeof Box> = useMemo(() => {
 			let styleContainer: ComponentProps<typeof Box> = {
@@ -118,7 +116,7 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 							</Box>
 						)}
 						<RNTextInput
-							ref={inputRefInterna}
+							ref={internalRef}
 							placeholder="Digite aqui"
 							autoCapitalize="none"
 							testID="internal-input"
@@ -130,16 +128,12 @@ const TextInputMemoized = forwardRef<RNTextInput, Readonly<TextInputProps>>(
 							onFocus={() => setIsFocused(true)}
 							accessible
 						/>
-						{loading && (
-							<Box justifyContent="center" ml="s16">
-								<ActivityIndicator testID="spin-indicator" size="small" />
-							</Box>
-						)}
-						{RightComponent && !loading && (
-							<Box justifyContent="center" ml="s16">
-								{RightComponent}
-							</Box>
-						)}
+						<RightIconTextInput
+							allowClear={allowClear}
+							isFocused={isFocused}
+							loading={loading}
+							rightIcon={RightComponent}
+						/>
 					</Box>
 					{errorMessage && (
 						<Text color="error" preset="paragraphSmall" bold>

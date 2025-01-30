@@ -19,6 +19,10 @@ export type TextInputProps = StrictOmit<
 	RightComponent?: React.ReactElement
 	LeftComponent?: React.ReactElement
 	boxProps?: ComponentProps<typeof Box>
+	/** @default false */
 	disabled?: boolean
+	/** @default false */
 	loading?: boolean
+	/** @default true */
+	allowClear?: boolean
 }
