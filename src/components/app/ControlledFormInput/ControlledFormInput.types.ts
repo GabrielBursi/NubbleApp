@@ -1,14 +1,21 @@
 import { FieldValues, UseControllerProps } from 'react-hook-form'
 
-import { EmailInputProps } from '@/components/ui/EmailInput/EmailInput.types'
-import { PasswordInputProps } from '@/components/ui/PasswordInput/PasswordInput.types'
-import { TextInputProps } from '@/components/ui/TextInput/TextInput.types'
+import {
+	TextInputProps,
+	EmailInputProps,
+	PasswordInputProps,
+} from '@/components/ui/TextInput/TextInput.types'
+
+type ControlledInputProps<
+	TProps extends object,
+	TField extends FieldValues,
+> = TProps & UseControllerProps<TField>
 
 export type ControlledTextInputProps<TField extends FieldValues> =
-	TextInputProps & UseControllerProps<TField>
+	ControlledInputProps<TextInputProps, TField>
 
 export type ControlledPasswordInputProps<TField extends FieldValues> =
-	PasswordInputProps & UseControllerProps<TField>
+	ControlledInputProps<PasswordInputProps, TField>
 
 export type ControlledEmailInputProps<TField extends FieldValues> =
-	EmailInputProps & UseControllerProps<TField>
+	ControlledInputProps<EmailInputProps, TField>

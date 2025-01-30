@@ -1,8 +1,11 @@
 import { ComponentProps } from 'react'
-import { TextInputProps as RNTextInputProps } from 'react-native'
+import {
+	PressableProps,
+	TextInputProps as RNTextInputProps,
+} from 'react-native'
 
 import { Box } from '@/components/ui'
-import { StrictOmit } from '@/types/utils'
+import { NonUndefined, OptionalProps, StrictOmit } from '@/types/utils'
 
 export type TextInputProps = StrictOmit<
 	RNTextInputProps,
@@ -26,3 +29,26 @@ export type TextInputProps = StrictOmit<
 	/** @default true */
 	allowClear?: boolean
 }
+
+export type EmailInputProps = StrictOmit<
+	TextInputProps,
+	| 'secureTextEntry'
+	| 'keyboardType'
+	| 'autoCapitalize'
+	| 'autoComplete'
+	| 'autoCorrect'
+	| 'label'
+> &
+	OptionalProps<TextInputProps, 'label'>
+
+export type PasswordInputProps = StrictOmit<
+	TextInputProps,
+	'RightComponent' | 'secureTextEntry' | 'label'
+> &
+	OptionalProps<TextInputProps, 'label'>
+
+export type SendInputProps = {
+	onPressSend: NonUndefined<PressableProps['onPress']>
+} & RNTextInputProps
+
+export type SearchInputProps = StrictOmit<TextInputProps, 'LeftComponent'>

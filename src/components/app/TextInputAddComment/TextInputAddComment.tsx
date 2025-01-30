@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Keyboard } from 'react-native'
 
-import { TextInputMessage } from '@/components'
+import { TextInput } from '@/components'
 import { useCreateComment } from '@/domain/Comment'
 import { useToastService } from '@/services/toast'
 
@@ -38,7 +38,7 @@ export const TextInputAddComment = ({
 	}, [createdComment, isSuccess, resetCreateComment])
 
 	return (
-		<TextInputMessage
+		<TextInput.Send
 			placeholder="Adicione um comentário"
 			onPressSend={onPressSend}
 			value={comment}

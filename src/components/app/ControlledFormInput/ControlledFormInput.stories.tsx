@@ -35,14 +35,18 @@ const meta: Meta<typeof ControlledFormInput> = {
 }
 export default meta
 
-type Story = StoryObj<typeof ControlledFormInput>
+type ControlledFormInputStory = StoryObj<typeof ControlledFormInput>
+type ControlledFormEmailInputStory = StoryObj<typeof ControlledFormInput.Email>
+type ControlledFormPasswordInputStory = StoryObj<
+	typeof ControlledFormInput.Password
+>
 
-export const Text: Story = {
+export const Text: ControlledFormInputStory = {
 	name: 'Text Input',
 	args: {},
 }
 
-export const Password: Story = {
+export const Password: ControlledFormPasswordInputStory = {
 	name: 'Password Input',
 	args: {
 		label: 'Password',
@@ -50,7 +54,7 @@ export const Password: Story = {
 	render: (args) => <ControlledFormInput.Password {...args} />,
 }
 
-export const Email: Story = {
+export const Email: ControlledFormEmailInputStory = {
 	name: 'Email Input',
 	args: {
 		label: 'Email',

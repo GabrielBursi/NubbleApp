@@ -1,3 +1,6 @@
+import { createRef } from 'react'
+import { TextInput as RNTextInput } from 'react-native'
+
 import { renderHook, screen } from '@testing-library/react-native'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -6,11 +9,13 @@ import { customRender } from '@/tests/utils'
 import { ControlledFormInput } from './ControlledFormInput'
 
 describe('<ControlledFormInput/>', () => {
+	const inputRef = createRef<RNTextInput>()
+
 	it('should render the text input correctly', () => {
 		const { result } = renderHook(() => useForm())
 		customRender(
 			<FormProvider {...result.current}>
-				<ControlledFormInput label="Jest" name="jest" />
+				<ControlledFormInput ref={inputRef} label="Jest" name="jest" />
 			</FormProvider>
 		)
 
@@ -21,7 +26,7 @@ describe('<ControlledFormInput/>', () => {
 		const { result } = renderHook(() => useForm())
 		customRender(
 			<FormProvider {...result.current}>
-				<ControlledFormInput.Password label="Jest" name="jest" />
+				<ControlledFormInput.Password ref={inputRef} label="Jest" name="jest" />
 			</FormProvider>
 		)
 
@@ -32,7 +37,7 @@ describe('<ControlledFormInput/>', () => {
 		const { result } = renderHook(() => useForm())
 		customRender(
 			<FormProvider {...result.current}>
-				<ControlledFormInput.Email label="Jest" name="jest" />
+				<ControlledFormInput.Email ref={inputRef} label="Jest" name="jest" />
 			</FormProvider>
 		)
 
@@ -48,8 +53,10 @@ describe('<ControlledFormInput/>', () => {
 					label="Jest"
 					name="jest"
 					testID="rtl"
+					ref={inputRef}
 				/>
 				<ControlledFormInput.Password
+					ref={inputRef}
 					rules={{ max: 10, min: 2 }}
 					label="Jest"
 					name="jest"
@@ -74,6 +81,7 @@ describe('<ControlledFormInput/>', () => {
 		customRender(
 			<FormProvider {...result.current}>
 				<ControlledFormInput
+					ref={inputRef}
 					label="Jest"
 					name="jest"
 					testID="rtl"

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Icon, ProfileUsernameList, TextInput } from '@/components'
+import { ProfileUsernameList, TextInput } from '@/components'
 import { useUserSearch } from '@/domain/User'
 import { useDebounce } from '@/hooks'
 import { ScreenTemplate } from '@/templates'
@@ -15,12 +15,10 @@ export const SearchScreen = () => {
 		<ScreenTemplate
 			canGoBack
 			HeaderComponent={
-				<TextInput
+				<TextInput.Search
 					value={search}
 					onChangeText={setSearch}
 					placeholder="Procure usuários aqui"
-					boxProps={{ style: { marginBottom: 0 } }}
-					LeftComponent={<Icon color="gray3" name="search" />}
 					loading={isLoading || isDebouncing}
 				/>
 			}
