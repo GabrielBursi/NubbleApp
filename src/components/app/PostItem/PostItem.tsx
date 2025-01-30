@@ -4,8 +4,8 @@ import {
 	Box,
 	PostActions,
 	PostBottom,
-	PostHeader,
 	PostImage,
+	ProfileUsername,
 } from '@/components'
 
 import { PostItemProps } from './PostItem.types'
@@ -21,7 +21,10 @@ const PostItemMemoized = ({
 }: Readonly<PostItemProps>) => {
 	return (
 		<Box paddingHorizontal="s24" marginBottom="s24" role="listitem" accessible>
-			<PostHeader author={author} />
+			<ProfileUsername
+				profileUrl={author.profileURL}
+				username={author.userName}
+			/>
 			<PostImage imageURL={imageURL} />
 			<PostActions
 				commentCount={commentCount}
