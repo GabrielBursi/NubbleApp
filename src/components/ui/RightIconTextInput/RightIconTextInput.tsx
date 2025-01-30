@@ -22,9 +22,14 @@ const RightIconTextInputMemoized = ({
 
 	if (allowClear && isFocused)
 		return (
-			<Box justifyContent="center" ml="s16">
-				{/* TODO: criar ícone para clear */}
-				<Icon name="trash" size={20} color="gray3" onPress={onClear} />
+			<Box
+				justifyContent="center"
+				ml="s16"
+				accessible
+				accessibilityLabel="clear"
+				accessibilityHint="limpar campo"
+			>
+				<Icon name="close" size={10} color="gray3" onPress={onClear} />
 			</Box>
 		)
 

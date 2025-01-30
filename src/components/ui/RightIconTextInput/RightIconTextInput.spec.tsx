@@ -23,7 +23,7 @@ describe('<RightIconTextInput/>', () => {
 		expect(
 			screen.queryByTestId('spin-indicator', { exact: true })
 		).not.toBeOnTheScreen()
-		expect(screen.getByRole('img', { name: 'trash' })).toBeOnTheScreen()
+		expect(screen.getByRole('img', { name: 'close' })).toBeOnTheScreen()
 	})
 
 	it('should call onClear correctly', async () => {
@@ -31,7 +31,7 @@ describe('<RightIconTextInput/>', () => {
 			<RightIconTextInput allowClear isFocused onClear={mockOnClear} />
 		)
 
-		await userEvent.press(screen.getByRole('img', { name: 'trash' }))
+		await userEvent.press(screen.getByRole('img', { name: 'close' }))
 		expect(mockOnClear).toHaveBeenCalled()
 	})
 
@@ -41,7 +41,7 @@ describe('<RightIconTextInput/>', () => {
 		expect(
 			screen.queryByTestId('spin-indicator', { exact: true })
 		).not.toBeOnTheScreen()
-		expect(screen.queryByRole('img', { name: 'trash' })).not.toBeOnTheScreen()
+		expect(screen.queryByRole('img', { name: 'close' })).not.toBeOnTheScreen()
 		expect(screen.getByRole('img', { name: 'arrowLeft' })).toBeOnTheScreen()
 	})
 

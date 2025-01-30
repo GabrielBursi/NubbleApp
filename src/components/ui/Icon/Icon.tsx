@@ -16,6 +16,7 @@ import { ChatOnIcon } from '../../../assets/icons/ChatOnIcon'
 import { CheckIcon } from '../../../assets/icons/CheckIcon'
 import { CheckRoundIcon } from '../../../assets/icons/CheckRoundIcon'
 import { ChevronRightIcon } from '../../../assets/icons/ChevronRightIcon'
+import { CloseIcon } from '../../../assets/icons/CloseIcon'
 import { CommentIcon } from '../../../assets/icons/CommentIcon'
 import { ErrorRoundIcon } from '../../../assets/icons/ErrorRoundIcon'
 import { EyeOffIcon } from '../../../assets/icons/EyeOffIcon'
@@ -48,6 +49,7 @@ export const iconRegistry = {
 	cameraClick: CameraClick,
 	chat: ChatIcon,
 	chatOn: ChatOnIcon,
+	close: CloseIcon,
 	check: CheckIcon,
 	checkRound: CheckRoundIcon,
 	errorRound: ErrorRoundIcon,
@@ -69,7 +71,7 @@ export const iconRegistry = {
 	search: SearchIcon,
 	settings: SettingsIcon,
 	trash: TrashIcon,
-}
+} as const
 
 export const Icon = ({
 	name,
