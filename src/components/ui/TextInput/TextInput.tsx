@@ -152,6 +152,7 @@ const TextInputInternalMemoized = forwardRef<
 							loading={loading}
 							rightIcon={RightComponent}
 							onClear={handleClearInput}
+							value={rnTextInputProps.value}
 						/>
 					</Box>
 					{errorMessage && (
@@ -203,6 +204,7 @@ const PasswordInputInternalMemoized = forwardRef<
 			label={label}
 			placeholder="Digite sua senha"
 			{...props}
+			allowClear={false}
 			ref={ref}
 			RightComponent={
 				<Icon

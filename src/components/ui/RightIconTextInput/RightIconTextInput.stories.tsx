@@ -13,6 +13,7 @@ const meta: Meta<typeof RightIconTextInput> = {
 		loading: false,
 		rightIcon: <Icon name="bookmark" color="gray3" />,
 		onClear: () => console.log('Clear!'),
+		value: 'sb',
 	},
 	argTypes: {
 		rightIcon: {

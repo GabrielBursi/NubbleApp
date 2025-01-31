@@ -139,15 +139,9 @@ describe('TextInput Compound', () => {
 					label="Allow Clear"
 					onChangeText={mockOnChangeText}
 					allowClear
+					value="allow clear"
 				/>
 			)
-
-			await userEvent.type(
-				screen.getByPlaceholderText('Digite aqui'),
-				'allow clear'
-			)
-
-			expect(mockOnChangeText).toHaveBeenCalledWith('allow clear')
 
 			await userEvent.press(screen.getByText('Allow Clear', { exact: true }))
 			await userEvent.press(screen.getByRole('img', { name: 'close' }))

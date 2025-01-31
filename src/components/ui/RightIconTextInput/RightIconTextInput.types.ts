@@ -3,7 +3,7 @@ import { TextInputProps } from '../TextInput/TextInput.types'
 
 export type RightIconTextInputProps = Pick<
 	TextInputProps,
-	'loading' | 'allowClear'
+	'loading' | 'allowClear' | 'value'
 > & {
 	rightIcon?: React.ReactElement
 	/** @default false */
