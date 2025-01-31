@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
-import { PressableBox, ProfileAvatar, Text } from '@/components'
+import { Box, PressableBox, ProfileAvatar, Text } from '@/components'
 import { useNavigationApp } from '@/hooks'
 
 import { ProfileUsernameProps } from './ProfileUsername.types'
@@ -11,6 +11,8 @@ const ProfileUsernameMemoized = ({
 	username,
 	id,
 	onPress,
+	avatarProps,
+	RightComponent,
 	...pressableBoxProps
 }: Readonly<ProfileUsernameProps>) => {
 	const { navigationAppStack } = useNavigationApp()
@@ -27,16 +29,20 @@ const ProfileUsernameMemoized = ({
 			mb="s16"
 			role="button"
 			accessibilityRole="button"
+			justifyContent="space-between"
 			accessible
 			accessibilityLabel={username}
 			accessibilityHint={`ir para o perfil de usuário ${username}`}
 			onPress={handleOnPress}
 			{...pressableBoxProps}
 		>
-			<ProfileAvatar imageURL={profileUrl} />
-			<Text ml="s12" semiBold preset="paragraphMedium">
-				{username}
-			</Text>
+			<Box flexDirection="row" alignItems="center">
+				<ProfileAvatar {...avatarProps} imageURL={profileUrl} />
+				<Text ml="s12" semiBold preset="paragraphMedium">
+					{username}
+				</Text>
+			</Box>
+			{RightComponent}
 		</PressableBox>
 	)
 }

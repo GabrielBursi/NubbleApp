@@ -20,6 +20,9 @@ const meta: Meta<typeof ProfileUsername> = {
 		onPress: {
 			type: 'symbol',
 		},
+		RightComponent: {
+			type: 'symbol',
+		},
 	},
 }
 export default meta

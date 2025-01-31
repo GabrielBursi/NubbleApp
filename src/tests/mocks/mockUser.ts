@@ -1,11 +1,13 @@
+import { uniqueId } from 'lodash'
+
 import { UserAPIModel, UserModel } from '@/domain/User'
 
 import { customFaker } from '../utils/customFaker'
 
-export const mockUserId = customFaker.number.int({ min: 1, max: 1000 })
+export const mockUserId = Number(uniqueId())
 
 export const generateUserApi = (): UserAPIModel => ({
-	id: mockUserId,
+	id: Number(uniqueId()),
 	first_name: customFaker.person.firstName(),
 	last_name: customFaker.person.lastName(),
 	username: customFaker.internet.username(),
@@ -15,7 +17,7 @@ export const generateUserApi = (): UserAPIModel => ({
 	full_name: `${customFaker.person.firstName()} ${customFaker.person.lastName()}`,
 })
 export const generateUser = (): UserModel => ({
-	id: mockUserId,
+	id: Number(uniqueId()),
 	firstName: customFaker.person.firstName(),
 	lastName: customFaker.person.lastName(),
 	username: customFaker.internet.username(),

@@ -3,8 +3,9 @@ import React, { memo } from 'react'
 import { useScrollToTop } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, ProfileUsername } from '@/components'
+import { Box, Icon, ProfileUsername } from '@/components'
 import { UserModel } from '@/domain/User'
+import { useSearchHistoryService } from '@/services/searchHistory'
 
 import { ProfileUsernameListProps } from './ProfileUsernameList.types'
 
@@ -20,6 +21,8 @@ const ProfileUsernameListMemoized = ({
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
 	useScrollToTop(flatListRef as any)
 
+	const { removeUser } = useSearchHistoryService()
+
 	return (
 		<FlashList
 			ref={flatListRef}
@@ -27,7 +30,18 @@ const ProfileUsernameListMemoized = ({
 			data={users}
 			keyExtractor={(user, index) => `${user.id}-${index}`}
 			renderItem={({ item: user }) => (
-				<ProfileUsername {...user} onPress={() => onPressProfileItem?.(user)} />
+				<ProfileUsername
+					{...user}
+					avatarProps={{ size: 48 }}
+					onPress={() => onPressProfileItem?.(user)}
+					RightComponent={
+						<Icon
+							color="redError"
+							name="trash"
+							onPress={() => removeUser(user.id)}
+						/>
+					}
+				/>
 			)}
 			ItemSeparatorComponent={ItemSeparatorComponent}
 			ListHeaderComponent={ListHeaderComponent}
