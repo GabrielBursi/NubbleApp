@@ -2,7 +2,12 @@ import React from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { PostCommentsScreen, SettingsScreen, SearchScreen } from '@/screens'
+import {
+	PostCommentsScreen,
+	SettingsScreen,
+	SearchScreen,
+	ProfileScreen,
+} from '@/screens'
 import { RootAppStackRouterParamList } from '@/types/routes'
 
 import { AppBottomTabRouter } from '../tab/AppTabBottom'
@@ -21,6 +26,7 @@ export const AppStackRouter = () => {
 			<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
 			<Stack.Screen name="PostCommentScreen" component={PostCommentsScreen} />
 			<Stack.Screen name="SearchScreen" component={SearchScreen} />
+			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 		</Stack.Navigator>
 	)
 }

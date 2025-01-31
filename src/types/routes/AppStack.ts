@@ -8,4 +8,7 @@ export type RootAppStackRouterParamList = {
 		postId: string
 		postAuthorId: string
 	}
+	ProfileScreen: {
+		userId: number
+	}
 }
