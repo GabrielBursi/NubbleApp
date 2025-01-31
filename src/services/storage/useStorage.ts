@@ -4,24 +4,30 @@ import { StorageKeys } from './models'
 import { storage } from './storage'
 
 export const useStorage = <TValue = unknown>(key: StorageKeys) => {
-	const get = useCallback(
+	const getItem = useCallback(
 		async (): Promise<TValue | null> => await storage.getItem<TValue>(key),
 		[key]
 	)
 
-	const set = useCallback(
+	const setItem = useCallback(
 		async (value: TValue): Promise<void> => await storage.setItem(key, value),
 		[key]
 	)
 
-	const remove = useCallback(
+	const removeItem = useCallback(
 		async (): Promise<void> => await storage.removeItem(key),
 		[key]
 	)
 
+	const clear = useCallback(
+		async (): Promise<void> => await storage.clear(),
+		[]
+	)
+
 	return {
-		get,
-		set,
-		remove,
+		getItem,
+		setItem,
+		removeItem,
+		clear,
 	}
 }

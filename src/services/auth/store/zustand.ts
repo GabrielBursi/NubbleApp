@@ -4,10 +4,11 @@ import { useCallback, useEffect } from 'react'
 import { create } from 'zustand'
 
 import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
-import { StorageKeys, useStorage } from '@/services/storage'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
+
+import { useAuthCredentialsStorage } from './useAuthCredentialsStorage'
 
 type AuthCredentials = AuthCredentialsService['authCredentials']
 
@@ -29,11 +30,7 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 	'authCredentials'
 > => {
 	const { removeToken, updateToken, registerInterceptor } = useAuthToken()
-	const {
-		get: fetchAuthStorage,
-		remove: removeAuthStorage,
-		set: saveAuthStorage,
-	} = useStorage<AuthCredentials>(StorageKeys.AUTH)
+	const { getAuth, removeAuth, setAuth } = useAuthCredentialsStorage()
 
 	const authCredentials = useAuthCredentialsZustand()
 
@@ -50,27 +47,27 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 		async (ac: NonNullable<AuthCredentials>) => {
 			updateToken(ac.token)
 			setIsLoading(true)
-			await Promise.all([saveCredentialsStore(ac), saveAuthStorage(ac)])
+			await Promise.all([saveCredentialsStore(ac), setAuth(ac)])
 			setIsLoading(false)
 		},
-		[saveAuthStorage, saveCredentialsStore, setIsLoading, updateToken]
+		[setAuth, saveCredentialsStore, setIsLoading, updateToken]
 	)
 
 	const removeCredentials = useCallback(async () => {
 		removeToken()
 		setIsLoading(true)
-		await Promise.all([removeCredentialsStore(), removeAuthStorage()])
+		await Promise.all([removeCredentialsStore(), removeAuth()])
 		setIsLoading(false)
-	}, [removeAuthStorage, removeCredentialsStore, removeToken, setIsLoading])
+	}, [removeAuth, removeCredentialsStore, removeToken, setIsLoading])
 
 	useEffect(() => {
-		fetchAuthStorage()
+		getAuth()
 			.then(async (auth) => {
 				if (auth) await saveCredentials(auth)
 			})
 			.catch((error) => console.log(error))
 			.finally(() => setIsLoading(false))
-	}, [fetchAuthStorage, saveCredentials, setIsLoading])
+	}, [getAuth, saveCredentials, setIsLoading])
 
 	useEffect(() => {
 		const removeInterceptor = registerInterceptor({

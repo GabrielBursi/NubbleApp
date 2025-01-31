@@ -48,11 +48,7 @@ describe('<CommentList/>', () => {
 			comments: [mockComments[0], mockComments[1]],
 		})
 
-		const { debug } = customRender(
-			<CommentList id={mockId} authorId={mockId} />
-		)
-
-		debug()
+		customRender(<CommentList id={mockId} authorId={mockId} />)
 
 		await act(() => {
 			expect(screen.getAllByRole('listitem')).toHaveLength(1)

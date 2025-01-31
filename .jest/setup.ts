@@ -6,9 +6,12 @@ import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
 require('@shopify/flash-list/jestSetup')
 
 import { serverTest } from '@/tests/server'
-import { mockUseNavigation } from '@/tests/mocks'
+import { mockAuth, mockStorage, mockUseNavigation } from '@/tests/mocks'
 import { userEvent } from '@testing-library/react-native'
 import { testQueryClient } from '@/providers'
+import { initializeStorage } from '@/services/storage'
+import { useAuthCredentialsStorage } from '@/services/auth/store/useAuthCredentialsStorage'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 jest.mock('react-native-reanimated', () => {
 	const Reanimated = require('react-native-reanimated/mock')
@@ -30,9 +33,27 @@ jest.mock('@react-navigation/native', () => ({
 	useScrollToTop: () => jest.fn(),
 }))
 
+jest.mock('@/services/auth/store/useAuthCredentialsStorage')
+
+type UseAuthCredentialsStorage = typeof useAuthCredentialsStorage
+type MockUseAuthCredentialsStorage = HookMocked<UseAuthCredentialsStorage>
+type ReturnUseAuthCredentialsStorage = ReturnHookMocked<UseAuthCredentialsStorage>
+
 beforeAll(() => {
 	serverTest.listen({ onUnhandledRequest: 'error' })
 	userEvent.setup()
+	initializeStorage(mockStorage)
+
+	const mockGetAuth = jest.fn().mockResolvedValue(mockAuth)
+	const mockRemoveAuth = jest.fn().mockResolvedValue(undefined)
+	const mockSetAuth = jest.fn().mockResolvedValue(undefined)
+
+	const mockReturnUseAuthCredentialsStorage: ReturnUseAuthCredentialsStorage = {
+	getAuth: mockGetAuth,
+	removeAuth: mockRemoveAuth,
+	setAuth: mockSetAuth,
+	}
+	;(useAuthCredentialsStorage as MockUseAuthCredentialsStorage).mockReturnValue(mockReturnUseAuthCredentialsStorage)
 })
 beforeEach(() => {
 	jest.useFakeTimers()
