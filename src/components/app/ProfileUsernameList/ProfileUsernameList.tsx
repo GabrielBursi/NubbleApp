@@ -12,6 +12,7 @@ const ItemSeparatorComponent = () => <Box mb="s16" />
 
 const ProfileUsernameListMemoized = ({
 	users = [],
+	ListHeaderComponent,
 }: Readonly<ProfileUsernameListProps>) => {
 	const flatListRef = React.useRef<FlashList<UserModel>>(null)
 	//TODO: atualizar react navigation https://github.com/react-navigation/react-navigation/commit/a1f947a44f16a8d846c31d76efb0485780bd8de3
@@ -26,6 +27,7 @@ const ProfileUsernameListMemoized = ({
 			keyExtractor={(user, index) => `${user.id}-${index}`}
 			renderItem={({ item: user }) => <ProfileUsername {...user} />}
 			ItemSeparatorComponent={ItemSeparatorComponent}
+			ListHeaderComponent={ListHeaderComponent}
 			disableAutoLayout
 			// size ProfileUsername device: Medium Phone API 34
 			estimatedItemSize={364 * 64}
