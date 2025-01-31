@@ -10,6 +10,13 @@ describe('useDebounce', () => {
 		expect(result.current.isDebouncing).toBe(false)
 	})
 
+	it('should return with a empty string correctly', () => {
+		const { result } = renderHook(() => useDebounce('  '))
+
+		expect(result.current.debouncedValue).toBe('')
+		expect(result.current.isDebouncing).toBe(false)
+	})
+
 	it('should update the debounced value after the delay', async () => {
 		jest.useFakeTimers()
 

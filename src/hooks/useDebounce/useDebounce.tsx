@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 /**
  * @template TValue
  * @param {TValue} value
@@ -11,13 +11,24 @@ import { useEffect, useState } from 'react'
 export const useDebounce = <TValue = unknown,>(value: TValue, delay = 500) => {
 	const [debouncedValue, setDebouncedValue] = useState<TValue>(value)
 
+	const valorStringVazia = useMemo(
+		() => typeof value === 'string' && !value.trim().length,
+		[value]
+	)
+
 	useEffect(() => {
+		if (valorStringVazia && typeof value === 'string')
+			setDebouncedValue(value.trim() as TValue)
+
 		const timer = setTimeout(() => setDebouncedValue(value), delay)
 
 		return () => {
 			clearTimeout(timer)
 		}
-	}, [value, delay])
+	}, [value, delay, valorStringVazia])
 
-	return { debouncedValue, isDebouncing: value !== debouncedValue }
+	return {
+		debouncedValue,
+		isDebouncing: value !== debouncedValue && !valorStringVazia,
+	} as const
 }
