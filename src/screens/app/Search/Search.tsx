@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import { ProfileUsernameList, Text, TextInput } from '@/components'
 import { useUserSearch } from '@/domain/User'
 import { useDebounce } from '@/hooks'
-import { useSearchHistory } from '@/services/searchHistory'
+import {
+	useSearchHistory,
+	useSearchHistoryService,
+} from '@/services/searchHistory'
 import { ScreenTemplate } from '@/templates'
 
 export const SearchScreen = () => {
@@ -12,6 +15,7 @@ export const SearchScreen = () => {
 
 	const { users: usersSearch, isLoading } = useUserSearch(debouncedSearch)
 	const usersHistory = useSearchHistory()
+	const { addUser } = useSearchHistoryService()
 
 	return (
 		<ScreenTemplate
@@ -26,12 +30,14 @@ export const SearchScreen = () => {
 			}
 		>
 			{search.length ? (
-				<ProfileUsernameList users={usersSearch} />
+				<ProfileUsernameList onPressProfileItem={addUser} users={usersSearch} />
 			) : (
 				<ProfileUsernameList
 					users={usersHistory}
 					ListHeaderComponent={
-						<Text preset="headingMedium">Buscas recentes</Text>
+						<Text preset="headingMedium" mb="s16">
+							Buscas recentes
+						</Text>
 					}
 				/>
 			)}

@@ -1,23 +1,39 @@
 import { screen, userEvent, waitFor } from '@testing-library/react-native'
 
+import { UserAdapters } from '@/api/adapters'
 import { UserServices } from '@/api/services'
-import { useSearchHistory } from '@/services/searchHistory/useSearchHistory'
+import {
+	useSearchHistory,
+	useSearchHistoryService,
+} from '@/services/searchHistory/useSearchHistory'
 import { mockUsers, mockUsersApi } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
-import { HookMocked } from '@/types/tests'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { SearchScreen } from './Search'
 
 type UseSearchHistory = typeof useSearchHistory
 type MockUseSearchHistory = HookMocked<UseSearchHistory>
 
+type UseSearchHistoryService = typeof useSearchHistoryService
+type MockUseSearchHistoryService = HookMocked<UseSearchHistoryService>
+type ReturnUseSearchHistoryService = ReturnHookMocked<UseSearchHistoryService>
+
 jest.mock('@/services/searchHistory/useSearchHistory')
 
 describe('<SearchScreen/>', () => {
 	const spyGetUsers = jest.spyOn(UserServices, 'GetAllWithPagination')
+	const mockAddUser = jest.fn()
+
+	const mockUseSearchHistoryService: ReturnUseSearchHistoryService = {
+		addUser: mockAddUser,
+	}
 
 	beforeEach(() => {
 		;(useSearchHistory as MockUseSearchHistory).mockReturnValue([])
+		;(useSearchHistoryService as MockUseSearchHistoryService).mockReturnValue(
+			mockUseSearchHistoryService
+		)
 	})
 
 	it('should render the search screen correctly', () => {
@@ -65,5 +81,24 @@ describe('<SearchScreen/>', () => {
 				screen.queryByText('Buscas recentes', { exact: true })
 			).not.toBeOnTheScreen()
 		})
+	})
+
+	it('should add user to history correctly', async () => {
+		customRender(<SearchScreen />)
+
+		await userEvent.type(
+			screen.getByPlaceholderText('Procure usuários aqui', { exact: true }),
+			mockUsersApi[0].username
+		)
+
+		await waitFor(() => {
+			expect(screen.getByText(mockUsersApi[0].username)).toBeOnTheScreen()
+		})
+
+		await userEvent.press(screen.getByText(mockUsersApi[0].username))
+
+		expect(mockAddUser).toHaveBeenCalledWith(
+			UserAdapters.ToUser(mockUsersApi[0])
+		)
 	})
 })

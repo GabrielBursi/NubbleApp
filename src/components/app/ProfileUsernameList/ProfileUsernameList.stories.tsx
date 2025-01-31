@@ -1,3 +1,5 @@
+import { Alert } from 'react-native'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { mockUsers } from '@/tests/mocks/mockUser'
@@ -9,9 +11,13 @@ const meta: Meta<typeof ProfileUsernameList> = {
 	component: ProfileUsernameList,
 	args: {
 		users: mockUsers,
+		onPressProfileItem: (user) => Alert.alert(user.fullName),
 	},
 	argTypes: {
 		users: {
+			type: 'symbol',
+		},
+		onPressProfileItem: {
 			type: 'symbol',
 		},
 	},
