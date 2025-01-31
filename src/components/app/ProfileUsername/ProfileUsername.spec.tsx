@@ -1,19 +1,33 @@
-import { screen } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
-import { mockUser } from '@/tests/mocks'
+import { mockUseNavigation, mockUser } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 
 import { ProfileUsername } from './ProfileUsername'
 
 describe('<ProfileUsername/>', () => {
-	it('should render', () => {
+	const mockOnPress = jest.fn()
+
+	it('should render the component correctly', () => {
 		customRender(<ProfileUsername {...mockUser} />)
 
 		expect(
-			screen.getByRole('img', { name: mockUser.username })
+			screen.getByRole('img', { name: mockUser.profileUrl })
 		).toBeOnTheScreen()
 		expect(
 			screen.getByRole('text', { name: mockUser.username })
 		).toBeOnTheScreen()
+	})
+
+	it('should navigate to profile screen correctly', async () => {
+		customRender(<ProfileUsername {...mockUser} onPress={mockOnPress} />)
+
+		await userEvent.press(
+			screen.getByRole('button', { name: mockUser.username })
+		)
+		expect(mockOnPress).toHaveBeenCalled()
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('ProfileScreen', {
+			userId: mockUser.id,
+		})
 	})
 })

@@ -26,7 +26,7 @@ describe('<PostItem/>', () => {
 		expect(screen.getByText(`${post.text}`, { exact: true })).toBeOnTheScreen()
 		expect(screen.getByRole('img', { name: post.imageURL })).toBeOnTheScreen()
 		expect(
-			screen.getByRole('img', { name: post.author.userName })
+			screen.getByRole('img', { name: post.author.profileURL })
 		).toBeOnTheScreen()
 	})
 })

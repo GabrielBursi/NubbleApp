@@ -24,6 +24,7 @@ const PostItemMemoized = ({
 			<ProfileUsername
 				profileUrl={author.profileURL}
 				username={author.userName}
+				id={Number(author.id)}
 			/>
 			<PostImage imageURL={imageURL} />
 			<PostActions
