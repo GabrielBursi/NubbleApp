@@ -1,18 +1,5 @@
 import { TouchableOpacityProps as RNTouchableOpacityProps } from 'react-native'
 
-import {
-	BackgroundColorProps,
-	BorderProps,
-	LayoutProps,
-	SpacingProps,
-	SpacingShorthandProps,
-} from '@shopify/restyle'
+import { RestyleTypes } from '@/types/shared'
 
-import { AppTheme } from '@/types/theme'
-
-export type TouchableOpacityBoxProps = BackgroundColorProps<AppTheme> &
-	SpacingProps<AppTheme> &
-	LayoutProps<AppTheme> &
-	BorderProps<AppTheme> &
-	SpacingShorthandProps<AppTheme> &
-	RNTouchableOpacityProps
+export type TouchableOpacityBoxProps = RNTouchableOpacityProps & RestyleTypes
