@@ -12,6 +12,7 @@ const RightIconTextInputMemoized = ({
 	loading = false,
 	rightIcon,
 	onClear,
+	value = '',
 }: Readonly<RightIconTextInputProps>) => {
 	if (loading)
 		return (
@@ -20,7 +21,7 @@ const RightIconTextInputMemoized = ({
 			</Box>
 		)
 
-	if (allowClear && isFocused)
+	if (allowClear && isFocused && !!value.trim().length)
 		return (
 			<Box
 				justifyContent="center"
@@ -29,7 +30,7 @@ const RightIconTextInputMemoized = ({
 				accessibilityLabel="clear"
 				accessibilityHint="limpar campo"
 			>
-				<Icon name="close" size={10} color="gray3" onPress={onClear} />
+				<Icon name="close" color="gray3" onPress={onClear} />
 			</Box>
 		)
 
