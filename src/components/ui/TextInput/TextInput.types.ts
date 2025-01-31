@@ -43,7 +43,7 @@ export type EmailInputProps = StrictOmit<
 
 export type PasswordInputProps = StrictOmit<
 	TextInputProps,
-	'RightComponent' | 'secureTextEntry' | 'label'
+	'RightComponent' | 'secureTextEntry' | 'label' | 'allowClear'
 > &
 	OptionalProps<TextInputProps, 'label'>
 

@@ -18,7 +18,7 @@ describe('<RightIconTextInput/>', () => {
 	})
 
 	it('should render clear icon correctly', () => {
-		customRender(<RightIconTextInput allowClear isFocused />)
+		customRender(<RightIconTextInput allowClear isFocused value="jest" />)
 
 		expect(
 			screen.queryByTestId('spin-indicator', { exact: true })
@@ -28,7 +28,12 @@ describe('<RightIconTextInput/>', () => {
 
 	it('should call onClear correctly', async () => {
 		customRender(
-			<RightIconTextInput allowClear isFocused onClear={mockOnClear} />
+			<RightIconTextInput
+				allowClear
+				isFocused
+				onClear={mockOnClear}
+				value="jest"
+			/>
 		)
 
 		await userEvent.press(screen.getByRole('img', { name: 'close' }))
