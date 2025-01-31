@@ -37,7 +37,8 @@ jest.mock('@/services/auth/store/useAuthCredentialsStorage')
 
 type UseAuthCredentialsStorage = typeof useAuthCredentialsStorage
 type MockUseAuthCredentialsStorage = HookMocked<UseAuthCredentialsStorage>
-type ReturnUseAuthCredentialsStorage = ReturnHookMocked<UseAuthCredentialsStorage>
+type ReturnUseAuthCredentialsStorage =
+	ReturnHookMocked<UseAuthCredentialsStorage>
 
 beforeAll(() => {
 	serverTest.listen({ onUnhandledRequest: 'error' })
@@ -49,11 +50,13 @@ beforeAll(() => {
 	const mockSetAuth = jest.fn().mockResolvedValue(undefined)
 
 	const mockReturnUseAuthCredentialsStorage: ReturnUseAuthCredentialsStorage = {
-	getAuth: mockGetAuth,
-	removeAuth: mockRemoveAuth,
-	setAuth: mockSetAuth,
+		getAuth: mockGetAuth,
+		removeAuth: mockRemoveAuth,
+		setAuth: mockSetAuth,
 	}
-	;(useAuthCredentialsStorage as MockUseAuthCredentialsStorage).mockReturnValue(mockReturnUseAuthCredentialsStorage)
+	;(useAuthCredentialsStorage as MockUseAuthCredentialsStorage).mockReturnValue(
+		mockReturnUseAuthCredentialsStorage
+	)
 })
 beforeEach(() => {
 	jest.useFakeTimers()
