@@ -24,9 +24,11 @@ jest.mock('@/services/searchHistory/useSearchHistory')
 describe('<SearchScreen/>', () => {
 	const spyGetUsers = jest.spyOn(UserServices, 'GetAllWithPagination')
 	const mockAddUser = jest.fn()
+	const mockRemoveUser = jest.fn()
 
 	const mockUseSearchHistoryService: ReturnUseSearchHistoryService = {
 		addUser: mockAddUser,
+		removeUser: mockRemoveUser,
 	}
 
 	beforeEach(() => {
@@ -100,5 +102,15 @@ describe('<SearchScreen/>', () => {
 		expect(mockAddUser).toHaveBeenCalledWith(
 			UserAdapters.ToUser(mockUsersApi[0])
 		)
+	})
+
+	it('should remove user from history correctly', async () => {
+		;(useSearchHistory as MockUseSearchHistory).mockReturnValue([mockUsers[0]])
+
+		customRender(<SearchScreen />)
+
+		await userEvent.press(screen.getByRole('img', { name: 'trash' }))
+
+		expect(mockRemoveUser).toHaveBeenCalledWith(mockUsers[0].id)
 	})
 })

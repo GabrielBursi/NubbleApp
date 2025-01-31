@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
-import { ProfileUsernameList, Text, TextInput } from '@/components'
-import { useUserSearch } from '@/domain/User'
+import { ProfileUsernameList, TextInput } from '@/components'
+import { UserModel, useUserSearch } from '@/domain/User'
 import { useDebounce } from '@/hooks'
 import {
 	useSearchHistory,
@@ -15,7 +15,14 @@ export const SearchScreen = () => {
 
 	const { users: usersSearch, isLoading } = useUserSearch(debouncedSearch)
 	const usersHistory = useSearchHistory()
-	const { addUser } = useSearchHistoryService()
+	const { addUser, removeUser } = useSearchHistoryService()
+
+	const handleRemoveUser = useCallback(
+		(user: UserModel) => {
+			removeUser(user.id)
+		},
+		[removeUser]
+	)
 
 	return (
 		<ScreenTemplate
@@ -34,11 +41,8 @@ export const SearchScreen = () => {
 			) : (
 				<ProfileUsernameList
 					users={usersHistory}
-					ListHeaderComponent={
-						<Text preset="headingMedium" mb="s16">
-							Buscas recentes
-						</Text>
-					}
+					headerTitle="Buscas recentes"
+					onRemoveProfileItem={handleRemoveUser}
 				/>
 			)}
 		</ScreenTemplate>

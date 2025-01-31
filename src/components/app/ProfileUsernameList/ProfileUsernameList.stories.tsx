@@ -12,12 +12,16 @@ const meta: Meta<typeof ProfileUsernameList> = {
 	args: {
 		users: mockUsers,
 		onPressProfileItem: (user) => Alert.alert(user.fullName),
+		onRemoveProfileItem: (user) => Alert.alert(user.fullName),
 	},
 	argTypes: {
 		users: {
 			type: 'symbol',
 		},
 		onPressProfileItem: {
+			type: 'symbol',
+		},
+		onRemoveProfileItem: {
 			type: 'symbol',
 		},
 	},
@@ -28,4 +32,10 @@ type Story = StoryObj<typeof ProfileUsernameList>
 
 export const Basic: Story = {
 	args: {},
+}
+
+export const WithHeader: Story = {
+	args: {
+		headerTitle: 'Storybook',
+	},
 }
