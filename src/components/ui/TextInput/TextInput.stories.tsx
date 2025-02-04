@@ -28,6 +28,7 @@ type EmailInputStory = StoryObj<typeof TextInput.Email>
 type PasswordInputStory = StoryObj<typeof TextInput.Password>
 type SendInputStory = StoryObj<typeof TextInput.Send>
 type SearchInputStory = StoryObj<typeof TextInput.Search>
+type TextAreaInputStory = StoryObj<typeof TextInput.TextArea>
 
 export const Basic: TextInputStory = {
 	args: {},
@@ -87,4 +88,10 @@ export const Search: SearchInputStory = {
 	args: {},
 	argTypes: {},
 	render: (args) => <TextInput.Search {...args} />,
+}
+
+export const TextArea: TextAreaInputStory = {
+	args: {},
+	argTypes: {},
+	render: (args) => <TextInput.TextArea {...args} />,
 }

@@ -14,7 +14,6 @@ export type TextInputProps = StrictOmit<
 	| 'accessible'
 	| 'onFocus'
 	| 'onBlur'
-	| 'style'
 	| 'placeholderTextColor'
 > & {
 	label?: string
@@ -52,3 +51,8 @@ export type SendInputProps = {
 } & RNTextInputProps
 
 export type SearchInputProps = StrictOmit<TextInputProps, 'LeftComponent'>
+
+export type TextAreaInputProps = StrictOmit<
+	TextInputProps,
+	'multiline' | 'textAlignVertical' | 'style'
+>
