@@ -10,13 +10,13 @@ const buttonPresets: Record<ButtonPreset, ButtonState> = {
 			container: {
 				backgroundColor: 'primary',
 			},
-			content: 'primaryContrast',
+			content: { color: 'primaryContrast' },
 		},
 		disabled: {
 			container: {
 				backgroundColor: 'gray4',
 			},
-			content: 'gray2',
+			content: { color: 'gray2' },
 		},
 	},
 	outline: {
@@ -25,14 +25,36 @@ const buttonPresets: Record<ButtonPreset, ButtonState> = {
 				borderWidth: 1,
 				borderColor: 'primary',
 			},
-			content: 'primary',
+			content: { color: 'primary' },
 		},
 		disabled: {
 			container: {
 				borderWidth: 1,
 				borderColor: 'gray4',
 			},
-			content: 'gray2',
+			content: { color: 'gray2' },
+		},
+	},
+	ghost: {
+		default: {
+			container: {
+				backgroundColor: 'white70',
+				height: 40,
+			},
+			content: {
+				color: 'grayBlack',
+				textProps: {
+					preset: 'paragraphSmall',
+					bold: false,
+				},
+			},
+		},
+		disabled: {
+			container: {
+				backgroundColor: 'grayWhite',
+				height: 40,
+			},
+			content: { color: 'grayBlack' },
 		},
 	},
 }
@@ -61,9 +83,14 @@ const ButtonMemoized = ({
 			{...touchableOpacityBoxProps}
 		>
 			{loading ? (
-				<Loading color={buttonPreset.content} />
+				<Loading color={buttonPreset.content.color} />
 			) : (
-				<Text preset="paragraphMedium" bold color={buttonPreset.content}>
+				<Text
+					preset="paragraphMedium"
+					bold
+					color={buttonPreset.content.color}
+					{...buttonPreset.content.textProps}
+				>
 					{title}
 				</Text>
 			)}

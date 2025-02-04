@@ -36,6 +36,13 @@ export const Basic: Story = {
 				<Button {...args} preset="outline" loading />
 				<Button {...args} preset="outline" disabled />
 			</Box>
+
+			<Box gap="s12">
+				<Text preset="headingSmall">Ghost</Text>
+				<Button {...args} preset="ghost" />
+				<Button {...args} preset="ghost" loading />
+				<Button {...args} preset="ghost" disabled />
+			</Box>
 		</Box>
 	),
 }
