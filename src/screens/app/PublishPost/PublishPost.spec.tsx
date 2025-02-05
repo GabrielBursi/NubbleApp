@@ -22,6 +22,12 @@ describe('<PublishPostScreen/>', () => {
 			/>
 		)
 
-		expect(screen.getByRole('text', { name: mockImage })).toBeOnTheScreen()
+		expect(screen.getByRole('img', { name: mockImage })).toBeOnTheScreen()
+		expect(
+			screen.getByLabelText('Escreva uma legenda', { exact: true })
+		).toBeOnTheScreen()
+		expect(
+			screen.getByRole('button', { name: 'Publicar post' })
+		).toBeOnTheScreen()
 	})
 })
