@@ -316,6 +316,7 @@ const TextAreaInputInternalMemoized = forwardRef<
 >((props, ref) => {
 	return (
 		<TextInputInternal
+			allowClear
 			{...props}
 			style={stylesTextArea.textArea}
 			ref={ref}
@@ -327,8 +328,8 @@ const TextAreaInputInternalMemoized = forwardRef<
 
 const stylesTextArea = StyleSheet.create({
 	textArea: {
-		maxHeight: themeConfig.spacings.s48 * 2,
-		minHeight: themeConfig.spacings.s40,
+		maxHeight: themeConfig.spacings.s56 * 2,
+		minHeight: themeConfig.spacings.s56,
 	},
 })
 
