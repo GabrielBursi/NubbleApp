@@ -1,15 +1,17 @@
 import React, { memo } from 'react'
-import { Dimensions, Image } from 'react-native'
+import { Image } from 'react-native'
 
 import { FlashList } from '@shopify/flash-list'
 
+import { usePhotoList } from '@/hooks'
+
 import { PhotoListProps } from './PhotoList.types'
 
-const SCREEN_WIDTH = Dimensions.get('screen').width
 const NUM_COLUMNS = 4
-const ITEM_WIDTH = SCREEN_WIDTH / NUM_COLUMNS
 
 const PhotoListMemoized = ({ urlImages = [] }: Readonly<PhotoListProps>) => {
+	const { PHOTO_ITEM_WIDTH } = usePhotoList(NUM_COLUMNS)
+
 	return (
 		<FlashList
 			data={urlImages}
@@ -19,14 +21,14 @@ const PhotoListMemoized = ({ urlImages = [] }: Readonly<PhotoListProps>) => {
 					role="listitem"
 					accessibilityLabel={urlImagem}
 					source={{ uri: urlImagem }}
-					style={{ width: ITEM_WIDTH, height: ITEM_WIDTH }}
+					style={{ width: PHOTO_ITEM_WIDTH, height: PHOTO_ITEM_WIDTH }}
 				/>
 			)}
 			numColumns={NUM_COLUMNS}
 			keyExtractor={(urlImage, index) => `${urlImage}-${index}`}
 			showsVerticalScrollIndicator={false}
 			disableAutoLayout
-			estimatedItemSize={ITEM_WIDTH * ITEM_WIDTH}
+			estimatedItemSize={PHOTO_ITEM_WIDTH * PHOTO_ITEM_WIDTH}
 			accessible
 			accessibilityLabel="photos"
 			aria-label="photos"
