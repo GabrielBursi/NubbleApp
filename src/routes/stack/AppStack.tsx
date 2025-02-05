@@ -7,6 +7,7 @@ import {
 	SettingsScreen,
 	SearchScreen,
 	ProfileScreen,
+	PublishPostScreen,
 } from '@/screens'
 import { RootAppStackRouterParamList } from '@/types/routes'
 
@@ -27,6 +28,7 @@ export const AppStackRouter = () => {
 			<Stack.Screen name="PostCommentScreen" component={PostCommentsScreen} />
 			<Stack.Screen name="SearchScreen" component={SearchScreen} />
 			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+			<Stack.Screen name="PublishPostScreen" component={PublishPostScreen} />
 		</Stack.Navigator>
 	)
 }

@@ -11,4 +11,7 @@ export type RootAppStackRouterParamList = {
 	ProfileScreen: {
 		userId: number
 	}
+	PublishPostScreen: {
+		imageUri: string
+	}
 }
