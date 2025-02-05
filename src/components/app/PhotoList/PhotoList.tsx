@@ -3,6 +3,7 @@ import { Image } from 'react-native'
 
 import { FlashList } from '@shopify/flash-list'
 
+import { AppImages } from '@/assets/images'
 import { HeaderPhotoList } from '@/components'
 import { usePhotoList } from '@/hooks'
 
@@ -23,6 +24,7 @@ const PhotoListMemoized = ({ urlImages = [] }: Readonly<PhotoListProps>) => {
 					accessibilityLabel={urlImagem}
 					source={{ uri: urlImagem }}
 					style={{ width: PHOTO_ITEM_WIDTH, height: PHOTO_ITEM_WIDTH }}
+					defaultSource={{ uri: AppImages.ImagePlaceholder }}
 				/>
 			)}
 			numColumns={NUM_COLUMNS}
@@ -35,7 +37,11 @@ const PhotoListMemoized = ({ urlImages = [] }: Readonly<PhotoListProps>) => {
 			aria-label="photos"
 			role="list"
 			accessibilityRole="list"
-			ListHeaderComponent={<HeaderPhotoList imageSelected={urlImages[0]} />}
+			ListHeaderComponent={
+				<HeaderPhotoList
+					imageSelected={urlImages[0] ?? AppImages.ImagePlaceholder}
+				/>
+			}
 		/>
 	)
 }

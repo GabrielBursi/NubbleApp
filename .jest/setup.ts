@@ -6,7 +6,12 @@ import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
 require('@shopify/flash-list/jestSetup')
 
 import { serverTest } from '@/tests/server'
-import { mockAuth, mockStorage, mockUseNavigation } from '@/tests/mocks'
+import {
+	mockAppImages,
+	mockAuth,
+	mockStorage,
+	mockUseNavigation,
+} from '@/tests/mocks'
 import { userEvent } from '@testing-library/react-native'
 import { testQueryClient } from '@/providers'
 import { initializeStorage } from '@/services/storage'
@@ -46,6 +51,9 @@ jest.mock('@react-native-camera-roll/camera-roll', () => ({
 }))
 
 jest.mock('@/services/auth/store/useAuthCredentialsStorage')
+jest.mock('@/assets/images', () => ({
+	AppImages: mockAppImages,
+}))
 
 type UseAuthCredentialsStorage = typeof useAuthCredentialsStorage
 type MockUseAuthCredentialsStorage = HookMocked<UseAuthCredentialsStorage>

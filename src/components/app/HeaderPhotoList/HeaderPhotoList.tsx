@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { ImageBackground, StyleSheet } from 'react-native'
 
+import { AppImages } from '@/assets/images'
 import { Box, Button, Container, Icon, Text } from '@/components'
 import { usePhotoList } from '@/hooks'
 
@@ -18,6 +19,7 @@ const HeaderPhotoListMemoized = ({
 				role="banner"
 				accessibilityLabel={imageSelected}
 				source={{ uri: imageSelected }}
+				defaultSource={{ uri: AppImages.ImagePlaceholder }}
 				style={[
 					{
 						width: PHOTO_ITEM_WIDTH,
