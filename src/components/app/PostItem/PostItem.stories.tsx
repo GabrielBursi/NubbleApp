@@ -10,11 +10,11 @@ const meta: Meta<typeof PostItem> = {
 	args: {
 		...mockPosts[0],
 		author: {
-			...mockPosts[0].author,
-			profileURL: mockPosts[1].author.profileURL,
+			...mockPosts[0]!.author,
+			profileURL: mockPosts[1]!.author.profileURL,
 		},
 		reactionCount: 10,
-		id: mockPosts[0].id,
+		id: mockPosts[0]?.id,
 	},
 	argTypes: {
 		author: {

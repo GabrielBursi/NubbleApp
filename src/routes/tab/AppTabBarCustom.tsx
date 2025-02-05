@@ -73,7 +73,7 @@ const AppTabBarCustomMemoized = ({
 			]}
 		>
 			{state.routes.map((route, index) => {
-				const { options } = descriptors[route.key]
+				const { options } = descriptors[route.key]!
 
 				const tabItem =
 					mapScreenToProps[route.name as keyof RootAppTabBottomRouterParamList]

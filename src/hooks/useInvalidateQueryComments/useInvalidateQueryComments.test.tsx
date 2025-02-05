@@ -51,15 +51,15 @@ describe('useInvalidateQueryComments', () => {
 
 	it('should update comment count correctly when incrementing', async () => {
 		const mockPosts = [generatePost()]
-		const postId = mockPosts[0].id
+		const postId = mockPosts[0]!.id
 
 		mockSetQueryData.mockImplementation((key, updater) => {
 			const updatedData = updater({
 				pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
 				pageParams: [1],
 			})
-			expect(updatedData?.pages[0].data[0].commentCount).toBe(
-				mockPosts[0].commentCount + 1
+			expect(updatedData?.pages[0]!.data[0]!.commentCount).toBe(
+				mockPosts[0]!.commentCount + 1
 			)
 		})
 
@@ -77,15 +77,15 @@ describe('useInvalidateQueryComments', () => {
 
 	it('should update comment count correctly when decrementing', async () => {
 		const mockPosts = [generatePost()]
-		const postId = mockPosts[0].id
+		const postId = mockPosts[0]!.id
 
 		mockSetQueryData.mockImplementation((key, updater) => {
 			const updatedData = updater({
 				pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
 				pageParams: [1],
 			})
-			expect(updatedData?.pages[0].data[0].commentCount).toBe(
-				mockPosts[0].commentCount - 1
+			expect(updatedData?.pages[0]!.data[0]!.commentCount).toBe(
+				mockPosts[0]!.commentCount - 1
 			)
 		})
 
@@ -116,7 +116,7 @@ describe('useInvalidateQueryComments', () => {
 					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
 					pageParams: [1],
 				})
-				expect(updatedData?.pages[0].data).toEqual(mockPosts)
+				expect(updatedData?.pages[0]!.data).toEqual(mockPosts)
 			}
 		)
 

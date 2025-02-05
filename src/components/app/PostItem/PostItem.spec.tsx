@@ -6,7 +6,7 @@ import { customRender } from '@/tests/utils'
 import { PostItem } from './PostItem'
 
 describe('<PostItem/>', () => {
-	const post = mockPosts[0]
+	const post = mockPosts[0]!
 
 	it('should render the post item correctly', () => {
 		customRender(<PostItem {...post} />)

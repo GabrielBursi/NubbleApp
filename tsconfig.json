@@ -30,6 +30,7 @@
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
+		"noUncheckedIndexedAccess": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"rootDir": "./",

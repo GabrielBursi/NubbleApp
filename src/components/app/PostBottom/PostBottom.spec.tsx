@@ -6,7 +6,7 @@ import { customRender } from '@/tests/utils'
 import { PostBottom } from './PostBottom'
 
 describe('<PostBottom/>', () => {
-	const post = mockPosts[0]
+	const post = mockPosts[0]!
 	const userName = post.author.userName
 	const text = post.text
 

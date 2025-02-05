@@ -24,7 +24,7 @@ describe('<ProfileUsernameList/>', () => {
 	it('should render the user item correctly', () => {
 		customRender(<ProfileUsernameList users={mockUsers} />)
 
-		expect(screen.getByText(mockUsers[0].username)).toBeOnTheScreen()
+		expect(screen.getByText(mockUsers[0]!.username)).toBeOnTheScreen()
 	})
 
 	it('should press the user item correctly', async () => {
@@ -35,19 +35,19 @@ describe('<ProfileUsernameList/>', () => {
 			/>
 		)
 
-		await userEvent.press(screen.getByText(mockUsers[0].username))
-		expect(mockOnPressProfileItem).toHaveBeenCalledWith(mockUsers[0])
+		await userEvent.press(screen.getByText(mockUsers[0]!.username))
+		expect(mockOnPressProfileItem).toHaveBeenCalledWith(mockUsers[0]!)
 	})
 
 	it('should remove the user from history correctly', async () => {
 		customRender(
 			<ProfileUsernameList
-				users={[mockUsers[0]]}
+				users={[mockUsers[0]!]}
 				onRemoveProfileItem={mockOnRemoveProfileItem}
 			/>
 		)
 
 		await userEvent.press(screen.getByRole('img', { name: 'trash' }))
-		expect(mockOnRemoveProfileItem).toHaveBeenCalledWith(mockUsers[0])
+		expect(mockOnRemoveProfileItem).toHaveBeenCalledWith(mockUsers[0]!)
 	})
 })

@@ -8,7 +8,7 @@ const meta: Meta<typeof PostImage> = {
 	title: 'Components/Post/PostImage',
 	component: PostImage,
 	args: {
-		imageURL: mockPosts[0].imageURL,
+		imageURL: mockPosts[0]!.imageURL,
 	},
 	argTypes: {
 		imageURL: {

@@ -55,7 +55,7 @@ describe('<SearchScreen/>', () => {
 		expect(
 			screen.getByText('Buscas recentes', { exact: true })
 		).toBeOnTheScreen()
-		expect(screen.getByText(mockUsers[0].username)).toBeOnTheScreen()
+		expect(screen.getByText(mockUsers[0]!.username)).toBeOnTheScreen()
 	})
 
 	it('should search users correctly', async () => {
@@ -63,15 +63,15 @@ describe('<SearchScreen/>', () => {
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Procure usuários aqui', { exact: true }),
-			mockUsersApi[0].username
+			mockUsersApi[0]!.username
 		)
 
 		await waitFor(() => {
-			expect(spyGetUsers).toHaveBeenCalledWith(mockUsersApi[0].username)
+			expect(spyGetUsers).toHaveBeenCalledWith(mockUsersApi[0]!.username)
 		})
 
 		await waitFor(() => {
-			expect(screen.getByText(mockUsersApi[0].username)).toBeOnTheScreen()
+			expect(screen.getByText(mockUsersApi[0]!.username)).toBeOnTheScreen()
 		})
 
 		await waitFor(() => {
@@ -90,27 +90,27 @@ describe('<SearchScreen/>', () => {
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Procure usuários aqui', { exact: true }),
-			mockUsersApi[0].username
+			mockUsersApi[0]!.username
 		)
 
 		await waitFor(() => {
-			expect(screen.getByText(mockUsersApi[0].username)).toBeOnTheScreen()
+			expect(screen.getByText(mockUsersApi[0]!.username)).toBeOnTheScreen()
 		})
 
-		await userEvent.press(screen.getByText(mockUsersApi[0].username))
+		await userEvent.press(screen.getByText(mockUsersApi[0]!.username))
 
 		expect(mockAddUser).toHaveBeenCalledWith(
-			UserAdapters.ToUser(mockUsersApi[0])
+			UserAdapters.ToUser(mockUsersApi[0]!)
 		)
 	})
 
 	it('should remove user from history correctly', async () => {
-		;(useSearchHistory as MockUseSearchHistory).mockReturnValue([mockUsers[0]])
+		;(useSearchHistory as MockUseSearchHistory).mockReturnValue([mockUsers[0]!])
 
 		customRender(<SearchScreen />)
 
 		await userEvent.press(screen.getByRole('img', { name: 'trash' }))
 
-		expect(mockRemoveUser).toHaveBeenCalledWith(mockUsers[0].id)
+		expect(mockRemoveUser).toHaveBeenCalledWith(mockUsers[0]!.id)
 	})
 })

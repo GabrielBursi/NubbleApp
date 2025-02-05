@@ -34,10 +34,10 @@ async function hasAndroidPermission() {
 		if (Number(Platform.Version) >= 33) {
 			return Promise.all([
 				PermissionsAndroid.check(
-					PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
+					PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES!
 				),
 				PermissionsAndroid.check(
-					PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO
+					PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO!
 				),
 			]).then(
 				([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
@@ -45,7 +45,7 @@ async function hasAndroidPermission() {
 			)
 		} else {
 			return PermissionsAndroid.check(
-				PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+				PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE!
 			)
 		}
 	}
@@ -57,18 +57,18 @@ async function hasAndroidPermission() {
 	const getRequestPermissionPromise = () => {
 		if (Number(Platform.Version) >= 33) {
 			return PermissionsAndroid.requestMultiple([
-				PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-				PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+				PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES!,
+				PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO!,
 			]).then(
 				(statuses) =>
-					statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
+					statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES!] ===
 						PermissionsAndroid.RESULTS.GRANTED &&
-					statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
+					statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO!] ===
 						PermissionsAndroid.RESULTS.GRANTED
 			)
 		} else {
 			return PermissionsAndroid.request(
-				PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+				PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE!
 			).then((status) => status === PermissionsAndroid.RESULTS.GRANTED)
 		}
 	}
