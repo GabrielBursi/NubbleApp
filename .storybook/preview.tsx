@@ -3,6 +3,12 @@ import type { Preview } from '@storybook/react'
 import { TestProvider } from '../src/providers'
 import { appTheme } from '../src/styles'
 import { Container } from '../src/components'
+import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
+
+configureReanimatedLogger({
+	level: ReanimatedLogLevel.warn,
+	strict: false,
+});
 
 const preview: Preview = {
 	parameters: {
