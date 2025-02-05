@@ -1,77 +1,46 @@
 import { useEffect, useState } from 'react'
-// eslint-disable-next-line react-native/split-platform-components
-import { Platform, PermissionsAndroid } from 'react-native'
 
-import { CameraRoll } from '@react-native-camera-roll/camera-roll'
+import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 
-export const useCameraRoll = () => {
-	const [list, setList] = useState<string[]>([])
-	async function getPhotos() {
-		const hasPermission = await hasAndroidPermission()
-		if (hasPermission) {
-			const photoPage = await CameraRoll.getPhotos({ first: 10 })
-			setList(photoPage.edges.map((edge) => edge.node.image.uri))
-		}
-		return []
-	}
+import { AppQueryKeys } from '@/types/api'
+
+import { PhotoListPaginated } from './models'
+import { useAppCameraRollService } from './useAppCameraRollService'
+
+/**
+ * @param hasPermission
+ * @default false
+ */
+export const useCameraRoll = (hasPermission: boolean = false) => {
+	const [photoList, setPhotoList] = useState<string[]>([])
+	const { getUriPhotos } = useAppCameraRollService()
+
+	const { data, hasNextPage, fetchNextPage } = useInfiniteQuery<
+		Readonly<PhotoListPaginated>,
+		Error,
+		InfiniteData<Readonly<PhotoListPaginated>, unknown>,
+		AppQueryKeys[],
+		string | undefined
+	>({
+		queryKey: [AppQueryKeys.CAMERA_ROLL],
+		initialPageParam: undefined,
+		queryFn: ({ pageParam }) => getUriPhotos(pageParam),
+		getNextPageParam: ({ endCursor: cursor }) => cursor,
+		enabled: hasPermission,
+	})
 
 	useEffect(() => {
-		getPhotos()
-			.then(() => console.log('deu certo!'))
-			.catch((err) => console.log(err))
-	}, [])
+		if (data) {
+			const newList = data.pages.reduce<string[]>((prev, curr) => {
+				return [...prev, ...curr.photoList]
+			}, [])
+			setPhotoList(newList)
+		}
+	}, [data])
 
 	return {
-		list,
-	}
-}
-
-async function hasAndroidPermission() {
-	if (Platform.OS === 'ios') {
-		return true
-	}
-	const getCheckPermissionPromise = () => {
-		if (Number(Platform.Version) >= 33) {
-			return Promise.all([
-				PermissionsAndroid.check(
-					PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES!
-				),
-				PermissionsAndroid.check(
-					PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO!
-				),
-			]).then(
-				([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
-					hasReadMediaImagesPermission && hasReadMediaVideoPermission
-			)
-		} else {
-			return PermissionsAndroid.check(
-				PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE!
-			)
-		}
-	}
-
-	const hasPermission = await getCheckPermissionPromise()
-	if (hasPermission) {
-		return true
-	}
-	const getRequestPermissionPromise = () => {
-		if (Number(Platform.Version) >= 33) {
-			return PermissionsAndroid.requestMultiple([
-				PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES!,
-				PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO!,
-			]).then(
-				(statuses) =>
-					statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES!] ===
-						PermissionsAndroid.RESULTS.GRANTED &&
-					statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO!] ===
-						PermissionsAndroid.RESULTS.GRANTED
-			)
-		} else {
-			return PermissionsAndroid.request(
-				PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE!
-			).then((status) => status === PermissionsAndroid.RESULTS.GRANTED)
-		}
-	}
-
-	return await getRequestPermissionPromise()
+		photoList,
+		hasNextPage,
+		fetchNextPage,
+	} as const
 }

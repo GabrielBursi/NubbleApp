@@ -17,8 +17,12 @@ describe('<NewPostScreen/>', () => {
 		customFaker.image.urlPicsumPhotos()
 	)
 
+	const mockFetchNextPage = jest.fn()
+
 	const mockReturn: ReturnUseCameraRoll = {
-		list: mockImages,
+		photoList: mockImages,
+		fetchNextPage: mockFetchNextPage,
+		hasNextPage: false,
 	}
 
 	beforeEach(() => {

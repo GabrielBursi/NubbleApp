@@ -17,8 +17,8 @@ const HeaderPhotoListMemoized = ({
 			<ImageBackground
 				accessible
 				role="banner"
-				accessibilityLabel={imageSelected}
-				source={{ uri: imageSelected }}
+				accessibilityLabel={imageSelected ?? AppImages.ImagePlaceholder}
+				source={{ uri: imageSelected ?? AppImages.ImagePlaceholder }}
 				defaultSource={{ uri: AppImages.ImagePlaceholder }}
 				style={[
 					{
