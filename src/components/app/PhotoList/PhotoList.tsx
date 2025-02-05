@@ -3,6 +3,7 @@ import { Image } from 'react-native'
 
 import { FlashList } from '@shopify/flash-list'
 
+import { HeaderPhotoList } from '@/components'
 import { usePhotoList } from '@/hooks'
 
 import { PhotoListProps } from './PhotoList.types'
@@ -34,6 +35,7 @@ const PhotoListMemoized = ({ urlImages = [] }: Readonly<PhotoListProps>) => {
 			aria-label="photos"
 			role="list"
 			accessibilityRole="list"
+			ListHeaderComponent={<HeaderPhotoList imageSelected={urlImages[0]} />}
 		/>
 	)
 }

@@ -31,7 +31,7 @@ const preview: Preview = {
 	},
 	decorators: [
 		(Story, { title }) => {
-			if (title.startsWith('Screen'))
+			if (title.startsWith('Screen') || title.includes('Photo'))
 				return (
 					<TestProvider>
 						<Story />
