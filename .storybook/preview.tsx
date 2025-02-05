@@ -3,12 +3,15 @@ import type { Preview } from '@storybook/react'
 import { TestProvider } from '../src/providers'
 import { appTheme } from '../src/styles'
 import { Container } from '../src/components'
-import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated'
+import {
+	configureReanimatedLogger,
+	ReanimatedLogLevel,
+} from 'react-native-reanimated'
 
 configureReanimatedLogger({
 	level: ReanimatedLogLevel.warn,
 	strict: false,
-});
+})
 
 const preview: Preview = {
 	parameters: {
@@ -27,13 +30,22 @@ const preview: Preview = {
 		},
 	},
 	decorators: [
-		(Story) => (
-			<TestProvider>
-				<Container marginTop="s24">
-					<Story />
-				</Container>
-			</TestProvider>
-		),
+		(Story, { title }) => {
+			if (title.startsWith('Screen'))
+				return (
+					<TestProvider>
+						<Story />
+					</TestProvider>
+				)
+
+			return (
+				<TestProvider>
+					<Container marginTop="s24">
+						<Story />
+					</Container>
+				</TestProvider>
+			)
+		},
 	],
 }
 
