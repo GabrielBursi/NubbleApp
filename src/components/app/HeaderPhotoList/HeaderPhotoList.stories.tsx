@@ -8,10 +8,10 @@ const meta: Meta<typeof HeaderPhotoList> = {
 	title: 'Components/Photo/HeaderPhotoList',
 	component: HeaderPhotoList,
 	args: {
-		imageSelected: customFaker.image.url(),
+		selectedImage: customFaker.image.url(),
 	},
 	argTypes: {
-		imageSelected: {
+		selectedImage: {
 			type: 'symbol',
 		},
 	},

@@ -8,7 +8,7 @@ import { usePhotoList } from '@/hooks'
 import { HeaderPhotoListProps } from './HeaderPhotoList.types'
 
 const HeaderPhotoListMemoized = ({
-	imageSelected,
+	selectedImage,
 }: Readonly<HeaderPhotoListProps>) => {
 	const { PHOTO_ITEM_WIDTH } = usePhotoList(1)
 
@@ -17,8 +17,8 @@ const HeaderPhotoListMemoized = ({
 			<ImageBackground
 				accessible
 				role="banner"
-				accessibilityLabel={imageSelected ?? AppImages.ImagePlaceholder}
-				source={{ uri: imageSelected ?? AppImages.ImagePlaceholder }}
+				accessibilityLabel={selectedImage ?? AppImages.ImagePlaceholder}
+				source={{ uri: selectedImage ?? AppImages.ImagePlaceholder }}
 				defaultSource={{ uri: AppImages.ImagePlaceholder }}
 				style={[
 					{

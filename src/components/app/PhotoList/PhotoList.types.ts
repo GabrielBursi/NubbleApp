@@ -9,6 +9,8 @@ type URI = Required<ImageURISource>['uri']
 export type PhotoListProps = {
 	/** @default [] */
 	urlImages?: URI[]
+	onPressImage?: (selectedImage: URI) => void
+	selectedImage?: URI
 } & StrictOmit<
 	FlashListProps<string>,
 	| 'data'

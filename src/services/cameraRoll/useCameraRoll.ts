@@ -11,7 +11,10 @@ import { useAppCameraRollService } from './useAppCameraRollService'
  * @param hasPermission
  * @default false
  */
-export const useCameraRoll = (hasPermission: boolean = false) => {
+export const useCameraRoll = (
+	hasPermission: boolean = false,
+	onInitialLoad?: (firstImageUri: string) => void
+) => {
 	const [photoList, setPhotoList] = useState<string[]>([])
 	const { getUriPhotos } = useAppCameraRollService()
 
@@ -35,8 +38,10 @@ export const useCameraRoll = (hasPermission: boolean = false) => {
 				return [...prev, ...curr.photoList]
 			}, [])
 			setPhotoList(newList)
+
+			if (newList.length) onInitialLoad?.(newList[0]!)
 		}
-	}, [data])
+	}, [data, onInitialLoad])
 
 	return {
 		photoList,
