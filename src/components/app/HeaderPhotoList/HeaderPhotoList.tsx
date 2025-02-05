@@ -26,7 +26,7 @@ const HeaderPhotoListMemoized = ({
 					styles.imageBackground,
 				]}
 			>
-				<Button title="Escolher essa" mb="s24" />
+				<Button title="Escolher essa" mb="s24" preset="ghost" />
 			</ImageBackground>
 			<Container
 				flexDirection="row"
