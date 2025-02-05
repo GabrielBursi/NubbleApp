@@ -39,7 +39,6 @@ const buttonPresets: Record<ButtonPreset, ButtonState> = {
 		default: {
 			container: {
 				backgroundColor: 'white70',
-				height: 40,
 			},
 			content: {
 				color: 'grayBlack',
@@ -52,7 +51,6 @@ const buttonPresets: Record<ButtonPreset, ButtonState> = {
 		disabled: {
 			container: {
 				backgroundColor: 'grayWhite',
-				height: 40,
 			},
 			content: { color: 'grayBlack' },
 		},
