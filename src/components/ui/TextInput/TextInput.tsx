@@ -9,19 +9,27 @@ import React, {
 	useRef,
 	useState,
 } from 'react'
-import { Pressable, TextInput as RNTextInput, TextStyle } from 'react-native'
+import {
+	Pressable,
+	TextInput as RNTextInput,
+	StyleProp,
+	TextStyle,
+	StyleSheet,
+} from 'react-native'
 
 import { Box } from '@/components/ui/Box/Box'
 import { Icon } from '@/components/ui/Icon/Icon'
 import { RightIconTextInput } from '@/components/ui/RightIconTextInput/RightIconTextInput'
 import { Text } from '@/components/ui/Text/Text'
 import { useAppTheme, useFontFamily } from '@/hooks'
+import { themeConfig } from '@/styles'
 
 import {
 	EmailInputProps,
 	PasswordInputProps,
 	SearchInputProps,
 	SendInputProps,
+	TextAreaInputProps,
 	TextInputProps,
 } from './TextInput.types'
 
@@ -39,6 +47,7 @@ const TextInputInternalMemoized = forwardRef<
 			disabled = false,
 			loading = false,
 			allowClear = true,
+			style,
 			...rnTextInputProps
 		},
 		externalRef
@@ -100,7 +109,7 @@ const TextInputInternalMemoized = forwardRef<
 			return styleContainer
 		}, [disabled, errorMessage, isFocused])
 
-		const $textInputStyle: TextStyle = useMemo(
+		const $textInputStyle: StyleProp<TextStyle> = useMemo(
 			() => ({
 				padding: 0,
 				flexGrow: 1,
@@ -140,7 +149,7 @@ const TextInputInternalMemoized = forwardRef<
 							testID="internal-input"
 							{...rnTextInputProps}
 							placeholderTextColor={colors.gray2}
-							style={$textInputStyle}
+							style={[style, $textInputStyle]}
 							editable={!disabled}
 							onBlur={() => setIsFocused(false)}
 							onFocus={() => setIsFocused(true)}
@@ -301,16 +310,43 @@ const SearchInputInternalMemoized = forwardRef<
 
 const SearchInputInternal = memo(SearchInputInternalMemoized)
 
+const TextAreaInputInternalMemoized = forwardRef<
+	RNTextInput,
+	TextAreaInputProps
+>((props, ref) => {
+	return (
+		<TextInputInternal
+			allowClear
+			{...props}
+			style={stylesTextArea.textArea}
+			ref={ref}
+			multiline
+			textAlignVertical="top"
+		/>
+	)
+})
+
+const stylesTextArea = StyleSheet.create({
+	textArea: {
+		maxHeight: themeConfig.spacings.s56 * 2,
+		minHeight: themeConfig.spacings.s56,
+	},
+})
+
+const TextAreaInputInternal = memo(TextAreaInputInternalMemoized)
+
 type TextInputComponent = typeof TextInputInternal
 type EmailInputComponent = typeof EmailInputInternal
 type PasswordInputComponent = typeof PasswordInputInternal
 type SendInputComponent = typeof SendInputInternal
 type SearchInputComponent = typeof SearchInputInternal
+type TextAreaInputComponent = typeof TextAreaInputInternal
 type CompoundTextInput = TextInputComponent & {
 	Email: EmailInputComponent
 	Password: PasswordInputComponent
 	Send: SendInputComponent
 	Search: SearchInputComponent
+	TextArea: TextAreaInputComponent
 }
 
 export const TextInput = TextInputInternal as CompoundTextInput
@@ -318,3 +354,4 @@ TextInput.Email = EmailInputInternal
 TextInput.Password = PasswordInputInternal
 TextInput.Send = SendInputInternal
 TextInput.Search = SearchInputInternal
+TextInput.TextArea = TextAreaInputInternal

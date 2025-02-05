@@ -236,4 +236,14 @@ describe('TextInput Compound', () => {
 			).toBeOnTheScreen()
 		})
 	})
+
+	describe('<TextInput.TextArea />', () => {
+		it('should render the text area input correctly', () => {
+			customRender(<TextInput.TextArea ref={inputRef} />)
+
+			expect(
+				screen.getByPlaceholderText('Digite aqui', { exact: true })
+			).toBeOnTheScreen()
+		})
+	})
 })
