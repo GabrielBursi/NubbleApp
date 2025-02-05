@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet } from 'react-native'
 
 import { AppImages } from '@/assets/images'
 import { Box, Button, Container, Icon, Text } from '@/components'
-import { usePhotoList } from '@/hooks'
+import { useNavigationApp, usePhotoList } from '@/hooks'
 
 import { HeaderPhotoListProps } from './HeaderPhotoList.types'
 
@@ -11,6 +11,14 @@ const HeaderPhotoListMemoized = ({
 	selectedImage,
 }: Readonly<HeaderPhotoListProps>) => {
 	const { PHOTO_ITEM_WIDTH } = usePhotoList(1)
+
+	const { navigationAppStack } = useNavigationApp()
+
+	const navigateToPublishPost = () => {
+		navigationAppStack.navigate('PublishPostScreen', {
+			imageUri: selectedImage!,
+		})
+	}
 
 	return (
 		<Box>
@@ -28,7 +36,14 @@ const HeaderPhotoListMemoized = ({
 					styles.imageBackground,
 				]}
 			>
-				<Button title="Escolher essa" mb="s24" preset="ghost" />
+				{!!selectedImage && (
+					<Button
+						title="Escolher essa"
+						mb="s24"
+						preset="ghost"
+						onPress={navigateToPublishPost}
+					/>
+				)}
 			</ImageBackground>
 			<Container
 				flexDirection="row"

@@ -1,6 +1,6 @@
-import { screen } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
-import { mockAppImages } from '@/tests/mocks'
+import { mockAppImages, mockUseNavigation } from '@/tests/mocks'
 import { customFaker, customRender } from '@/tests/utils'
 
 import { HeaderPhotoList } from './HeaderPhotoList'
@@ -14,6 +14,21 @@ describe('<HeaderPhotoList/>', () => {
 		expect(screen.getByRole('banner', { name: mockImage })).toBeOnTheScreen()
 		expect(screen.getByRole('text', { name: 'Sua galeria' })).toBeOnTheScreen()
 		expect(screen.getByRole('img', { name: 'camera' })).toBeOnTheScreen()
+	})
+
+	it('should navigate to publish post screen correctly', async () => {
+		customRender(<HeaderPhotoList selectedImage={mockImage} />)
+
+		await userEvent.press(
+			screen.getByRole('button', { name: /Escolher essa/i })
+		)
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
+			'PublishPostScreen',
+			{
+				imageUri: mockImage,
+			}
+		)
 	})
 
 	it('should render the placeholder imagem on header correctly', () => {
