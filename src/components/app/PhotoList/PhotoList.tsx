@@ -33,6 +33,7 @@ const PhotoListMemoized = forwardRef<
 				role="list"
 				accessibilityRole="list"
 				ref={ref}
+				extraData={selectedImage}
 				{...propsFlashList}
 				data={urlImages}
 				renderItem={({ item: urlImagem }) => (
@@ -46,7 +47,7 @@ const PhotoListMemoized = forwardRef<
 								{ width: PHOTO_ITEM_WIDTH, height: PHOTO_ITEM_WIDTH },
 								selectedImage === urlImagem && styles.imageSelected,
 							]}
-							defaultSource={{ uri: AppImages.ImagePlaceholder }}
+							defaultSource={AppImages.ImagePlaceholder}
 						/>
 					</Pressable>
 				)}
@@ -65,9 +66,8 @@ const PhotoListMemoized = forwardRef<
 const styles = StyleSheet.create({
 	imageSelected: {
 		borderColor: themeConfig.colors.greenPrimary,
-		borderRadius: 8,
 		borderWidth: 2,
-		opacity: 0.5,
+		opacity: 0.4,
 	},
 })
 

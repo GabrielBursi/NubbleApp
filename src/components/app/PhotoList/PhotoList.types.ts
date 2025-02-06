@@ -19,4 +19,5 @@ export type PhotoListProps = {
 	| 'showsVerticalScrollIndicator'
 	| 'disableAutoLayout'
 	| 'estimatedItemSize'
+	| 'extraData'
 >
