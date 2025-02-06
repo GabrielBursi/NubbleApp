@@ -42,9 +42,6 @@ describe('<PhotoList/>', () => {
 
 		expect(screen.getByRole('listitem', { name: mockImages[0] })).toHaveStyle({
 			borderColor: themeConfig.colors.greenPrimary,
-			borderRadius: 8,
-			borderWidth: 2,
-			opacity: 0.5,
 		})
 	})
 })

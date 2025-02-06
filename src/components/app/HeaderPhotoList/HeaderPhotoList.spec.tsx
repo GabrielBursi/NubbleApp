@@ -34,8 +34,9 @@ describe('<HeaderPhotoList/>', () => {
 	it('should render the placeholder imagem on header correctly', () => {
 		customRender(<HeaderPhotoList />)
 
-		expect(screen.getByRole('banner')).toHaveProp('source', {
-			uri: mockAppImages.ImagePlaceholder,
-		})
+		expect(screen.getByRole('banner')).toHaveProp(
+			'source',
+			mockAppImages.ImagePlaceholder
+		)
 	})
 })

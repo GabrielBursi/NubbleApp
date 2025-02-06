@@ -14,7 +14,7 @@ export const PublishPostScreen = ({
 
 	return (
 		<ScreenTemplate scrollable canGoBack title="Novo Post">
-			<Box mt="s20" gap="s4">
+			<Box mt="s20" gap="s10">
 				<Image
 					accessible
 					accessibilityLabel={route.params.imageUri}
