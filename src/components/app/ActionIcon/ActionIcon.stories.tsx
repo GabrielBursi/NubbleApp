@@ -8,11 +8,9 @@ const meta: Meta<typeof ActionIcon> = {
 	args: {
 		label: 775200,
 		positionLabel: 'right',
-		icon: {
+		name: {
 			default: 'heart',
-			marked: 'heartFill',
 		},
-		marked: false,
 		onPress: () => console.log('Hi storybook!'),
 	},
 	argTypes: {
@@ -23,7 +21,7 @@ const meta: Meta<typeof ActionIcon> = {
 		onPress: {
 			type: 'symbol',
 		},
-		icon: {
+		name: {
 			type: 'symbol',
 		},
 	},
@@ -38,7 +36,10 @@ export const Basic: Story = {
 
 export const Marked: Story = {
 	args: {
-		marked: true,
+		name: {
+			default: 'heart',
+			marked: 'heartFill',
+		},
 	},
 }
 

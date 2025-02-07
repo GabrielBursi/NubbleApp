@@ -12,11 +12,11 @@ import { Icon, Text, TouchableOpacityBox } from '@/components'
 import { ActionIconProps } from './ActionIcon.types'
 
 const ActionIconMemoized = ({
-	icon,
-	marked = false,
+	name,
 	onPress,
 	label,
 	positionLabel = 'right',
+	...iconProps
 }: Readonly<ActionIconProps>) => {
 	const scale = useSharedValue(1)
 
@@ -71,8 +71,9 @@ const ActionIconMemoized = ({
 			)}
 			<Animated.View style={animatedStyle}>
 				<Icon
-					color={marked ? 'iconMarked' : undefined}
-					name={marked ? icon.marked : icon.default}
+					{...iconProps}
+					color={name.marked ? 'iconMarked' : iconProps.color}
+					name={name.marked ? name.marked : name.default}
 				/>
 			</Animated.View>
 			{formattedLabel && positionLabel === 'right' && (

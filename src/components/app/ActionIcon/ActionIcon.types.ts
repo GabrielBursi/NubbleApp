@@ -1,14 +1,15 @@
 import { ButtonProps } from 'react-native'
 
 import { IconProps } from '@/components/ui/Icon/Icon.types'
+import { StrictOmit } from '@/types/utils'
 
 export type ActionIconProps = {
-	marked?: boolean
 	label?: number | string
 	/** @default right */
 	positionLabel?: 'right' | 'left'
-	icon: {
+	name: {
 		default: IconProps['name']
-		marked: IconProps['name']
+		marked?: IconProps['name']
 	}
-} & Pick<ButtonProps, 'onPress'>
+} & Pick<ButtonProps, 'onPress'> &
+	StrictOmit<IconProps, 'name' | 'onPress'>
