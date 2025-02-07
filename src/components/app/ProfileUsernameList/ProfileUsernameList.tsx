@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import { useScrollToTop } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, Icon, ProfileUsername, Text } from '@/components'
+import { ActionIcon, Box, ProfileUsername, Text } from '@/components'
 import { UserModel } from '@/domain/User'
 
 import { ProfileUsernameListProps } from './ProfileUsernameList.types'
@@ -33,9 +33,9 @@ const ProfileUsernameListMemoized = ({
 					avatarProps={{ size: 48 }}
 					onPress={() => onPressProfileItem?.(user)}
 					RightComponent={
-						<Icon
+						<ActionIcon
 							color="redError"
-							name="trash"
+							name={{ default: 'trash' }}
 							onPress={() => onRemoveProfileItem?.(user)}
 						/>
 					}
