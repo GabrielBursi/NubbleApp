@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 
@@ -32,6 +32,10 @@ export const useCameraRoll = (
 		enabled: hasPermission,
 	})
 
+	const handleFetchNextPage = useCallback(async () => {
+		if (hasPermission) await fetchNextPage()
+	}, [fetchNextPage, hasPermission])
+
 	useEffect(() => {
 		if (data) {
 			const newList = data.pages.reduce<string[]>((prev, curr) => {
@@ -46,6 +50,6 @@ export const useCameraRoll = (
 	return {
 		photoList,
 		hasNextPage,
-		fetchNextPage,
+		fetchNextPage: handleFetchNextPage,
 	} as const
 }

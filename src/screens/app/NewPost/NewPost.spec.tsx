@@ -1,6 +1,9 @@
-import { screen, userEvent } from '@testing-library/react-native'
+import { Alert } from 'react-native'
+
+import { screen, userEvent, waitFor } from '@testing-library/react-native'
 
 import { useCameraRoll } from '@/services/cameraRoll/useCameraRoll'
+import { usePermission } from '@/services/permission/usePermission'
 import { customFaker, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -10,14 +13,21 @@ type UseCameraRoll = typeof useCameraRoll
 type ReturnUseCameraRoll = ReturnHookMocked<UseCameraRoll>
 type MockUseCameraRoll = HookMocked<UseCameraRoll>
 
+type UsePermission = typeof usePermission
+type ReturnUsePermission = ReturnHookMocked<UsePermission>
+type MockUsePermission = HookMocked<UsePermission>
+
 jest.mock('@/services/cameraRoll/useCameraRoll')
+jest.mock('@/services/permission/usePermission')
 
 describe('<NewPostScreen/>', () => {
 	const mockImages = Array.from({ length: 15 }, () =>
 		customFaker.image.urlPicsumPhotos()
 	)
 
+	const spyAlert = jest.spyOn(Alert, 'alert')
 	const mockFetchNextPage = jest.fn()
+	const mockCheckPermission = jest.fn()
 
 	const mockReturnUseCameraRoll: ReturnUseCameraRoll = {
 		photoList: mockImages,
@@ -25,7 +35,16 @@ describe('<NewPostScreen/>', () => {
 		hasNextPage: false,
 	}
 
+	const mockReturnUsePermission: ReturnUsePermission = [
+		{ status: 'granted', isLoading: false },
+		mockCheckPermission,
+	]
+
 	beforeEach(() => {
+		mockCheckPermission.mockResolvedValue(true)
+		;(usePermission as unknown as MockUsePermission).mockReturnValue(
+			mockReturnUsePermission
+		)
 		;(useCameraRoll as MockUseCameraRoll).mockReturnValue(
 			mockReturnUseCameraRoll
 		)
@@ -38,6 +57,16 @@ describe('<NewPostScreen/>', () => {
 		expect(
 			screen.getByRole('listitem', { name: mockImages[0] })
 		).toBeOnTheScreen()
+	})
+
+	it('should show error on try to request permission correctly', async () => {
+		mockCheckPermission.mockRejectedValue(false)
+
+		customRender(<NewPostScreen />)
+
+		await waitFor(() => {
+			expect(spyAlert).toHaveBeenCalled()
+		})
 	})
 
 	it('should select the image on list correctly', async () => {
