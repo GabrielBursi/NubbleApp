@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from 'react'
+import React, { PropsWithChildren, useEffect, useMemo } from 'react'
 import { Linking, Platform } from 'react-native'
 
 import { Box, Button, Loading, Text } from '@/components'
@@ -59,14 +59,28 @@ export const PermissionManager = ({
 	permissionName,
 	fallback,
 	children,
-	// eslint-disable-next-line sonarjs/function-return-type
+	isLoading: externalIsLoading,
+	status: externalStatus,
 }: Readonly<PropsWithChildren<PermissionManagerProps>>): React.JSX.Element => {
-	const [{ status, isLoading }, checkPermission] = usePermission(permissionName)
+	const [
+		{ status: internalStatus, isLoading: internalIsLoading },
+		checkPermission,
+	] = usePermission(permissionName)
+
+	const status = useMemo(
+		() => externalStatus ?? internalStatus,
+		[externalStatus, internalStatus]
+	)
+	const isLoading = useMemo(
+		() => externalIsLoading ?? internalIsLoading,
+		[externalIsLoading, internalIsLoading]
+	)
 
 	useEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
-		checkPermission()
-	}, [checkPermission])
+		if (!externalStatus && externalIsLoading === undefined)
+			// eslint-disable-next-line @typescript-eslint/no-floating-promises
+			checkPermission()
+	}, [checkPermission, externalIsLoading, externalStatus])
 
 	if (isLoading) return <LoadingState />
 

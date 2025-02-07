@@ -20,6 +20,19 @@ const meta: Meta<typeof PermissionManager> = {
 				camera: 'Camera',
 			},
 		},
+		status: {
+			options: ['granted', 'denied', 'never_ask_again', 'unavailable'],
+			control: 'select',
+			mapping: {
+				granted: 'Granted',
+				denied: 'Denied',
+				never_ask_again: 'Never ask again',
+				unavailable: 'Unavailable',
+			},
+		},
+		isLoading: {
+			type: 'boolean',
+		},
 		children: {
 			type: 'symbol',
 		},
@@ -46,5 +59,12 @@ export const Fallback: Story = {
 		fallback: (
 			<Text>Permission denied to Storybook, but... granted to Fallback!</Text>
 		),
+	},
+}
+
+export const Controlled: Story = {
+	args: {
+		isLoading: false,
+		status: 'never_ask_again',
 	},
 }

@@ -102,7 +102,9 @@ describe('<PermissionManager/>', () => {
 		setupMockedUsePermission('never_ask_again')
 		customRender(<PermissionManager {...defaultProps} />)
 
-		const settingsButton = screen.getByText('Abrir Configurações')
+		const settingsButton = screen.getByRole('button', {
+			name: 'Abrir Configurações',
+		})
 		expect(settingsButton).toBeOnTheScreen()
 
 		await userEvent.press(settingsButton)
@@ -128,5 +130,18 @@ describe('<PermissionManager/>', () => {
 				'É necessário abrir e fechar o App novamente após alterar as configurações'
 			)
 		).toBeOnTheScreen()
+	})
+
+	it('should render with controlled props', () => {
+		customRender(
+			<PermissionManager {...defaultProps} status="never_ask_again" />
+		)
+
+		expect(
+			screen.getByText(
+				'É necessário abrir e fechar o App novamente após alterar as configurações'
+			)
+		).toBeOnTheScreen()
+		expect(mockCheckPermission).not.toHaveBeenCalled()
 	})
 })
