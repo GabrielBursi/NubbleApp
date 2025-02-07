@@ -3,7 +3,7 @@ import { Alert, StyleSheet } from 'react-native'
 
 import { FlashList } from '@shopify/flash-list'
 
-import { HeaderPhotoList, PhotoList } from '@/components'
+import { HeaderPhotoList, PermissionManager, PhotoList } from '@/components'
 import { useCameraRoll } from '@/services/cameraRoll'
 import { usePermission } from '@/services/permission'
 import { ScreenTemplate } from '@/templates'
@@ -11,7 +11,10 @@ import { ScreenTemplate } from '@/templates'
 export const NewPostScreen = () => {
 	const [selectedImage, setSelectedImage] = useState<string>()
 	const [
-		{ status: photoLibraryPermissionStatus },
+		{
+			status: photoLibraryPermissionStatus,
+			isLoading: isLoadingPhotoLibraryPermission,
+		},
 		checkPhotoLibraryPermission,
 	] = usePermission('photoLibrary')
 	const { photoList, fetchNextPage } = useCameraRoll(
@@ -36,16 +39,25 @@ export const NewPostScreen = () => {
 
 	return (
 		<ScreenTemplate canGoBack title="Novo post" style={styles.containerScreen}>
-			<PhotoList
-				ref={flatListRef}
-				urlImages={photoList}
-				onPressImage={handleSelectImage}
-				// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
-				onEndReached={fetchNextPage}
-				selectedImage={selectedImage}
-				onEndReachedThreshold={0.1}
-				ListHeaderComponent={<HeaderPhotoList selectedImage={selectedImage} />}
-			/>
+			<PermissionManager
+				permissionName="photoLibrary"
+				description="Permita o Nubble acessar as images da sua galeria."
+				status={photoLibraryPermissionStatus}
+				isLoading={isLoadingPhotoLibraryPermission}
+			>
+				<PhotoList
+					ref={flatListRef}
+					urlImages={photoList}
+					onPressImage={handleSelectImage}
+					// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+					onEndReached={fetchNextPage}
+					selectedImage={selectedImage}
+					onEndReachedThreshold={0.1}
+					ListHeaderComponent={
+						<HeaderPhotoList selectedImage={selectedImage} />
+					}
+				/>
+			</PermissionManager>
 		</ScreenTemplate>
 	)
 }
