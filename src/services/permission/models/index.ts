@@ -1,4 +1,5 @@
 export * from './AppPermissionName'
+export * from './AppPermissionState'
 export * from './AppPermissionStatus'
 export * from './PermissionService'
 export * from './UsePermissionReturn'

@@ -28,6 +28,7 @@ export const AppBottomTabRouter = () => {
 	return (
 		<Tab.Navigator
 			tabBar={renderTabBar}
+			initialRouteName="HomeScreen"
 			screenOptions={{
 				headerShown: false,
 				tabBarStyle: {

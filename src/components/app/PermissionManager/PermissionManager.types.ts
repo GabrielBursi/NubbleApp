@@ -1,4 +1,4 @@
-import { AppPermissionName, UsePermissionReturn } from '@/services/permission'
+import { AppPermissionName, AppPermissionState } from '@/services/permission'
 
 export type PermissionManagerProps = {
 	permissionName: AppPermissionName
@@ -6,7 +6,7 @@ export type PermissionManagerProps = {
 	description?: string
 	fallback?: React.ReactElement
 	/** @default true */
-} & Partial<UsePermissionReturn[0]>
+} & Partial<AppPermissionState>
 
 export type FallbackStateProps = Pick<
 	Required<PermissionManagerProps>,
@@ -15,5 +15,4 @@ export type FallbackStateProps = Pick<
 
 export type DeniedStateProps = {
 	description: string
-	isNeverAskAgain: boolean
-}
+} & Pick<AppPermissionState, 'status'>

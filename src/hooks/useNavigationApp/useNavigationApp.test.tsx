@@ -13,6 +13,14 @@ describe('useNavigationApp', () => {
 		expect(mockUseNavigation.navigate).toHaveBeenCalled()
 	})
 
+	it('should navigate with app tab', () => {
+		const { result } = renderHook(useNavigationApp)
+
+		result.current.navigationAppTab.navigate('HomeScreen')
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalled()
+	})
+
 	it('should navigate with auth stack', () => {
 		const { result } = renderHook(useNavigationApp)
 

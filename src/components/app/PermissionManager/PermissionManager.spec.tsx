@@ -6,6 +6,7 @@ import { screen, userEvent } from '@testing-library/react-native'
 import { Text } from '@/components'
 import { AppPermissionStatus } from '@/services/permission'
 import { usePermission } from '@/services/permission/usePermission'
+import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -98,6 +99,18 @@ describe('<PermissionManager/>', () => {
 		expect(screen.getByText(customMessage)).toBeOnTheScreen()
 	})
 
+	it('should render back to feed button', async () => {
+		setupMockedUsePermission('denied')
+
+		customRender(<PermissionManager {...defaultProps} />)
+
+		await userEvent.press(
+			screen.getByRole('button', { name: /Voltar para o feed/i })
+		)
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('HomeScreen')
+	})
+
 	it('should show settings button when status is never_ask_again', async () => {
 		setupMockedUsePermission('never_ask_again')
 		customRender(<PermissionManager {...defaultProps} />)
@@ -128,6 +141,18 @@ describe('<PermissionManager/>', () => {
 		expect(
 			screen.getByText(
 				'É necessário abrir e fechar o App novamente após alterar as configurações'
+			)
+		).toBeOnTheScreen()
+	})
+
+	it('should show specific message when status is unavailable', () => {
+		setupMockedUsePermission('unavailable')
+
+		customRender(<PermissionManager {...defaultProps} />)
+
+		expect(
+			screen.getByText(
+				'Esse recurso não está disponível para esse dispositivo.'
 			)
 		).toBeOnTheScreen()
 	})

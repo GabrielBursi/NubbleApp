@@ -1,8 +1,3 @@
-import { AppPermissionStatus } from './AppPermissionStatus'
+import { AppPermissionState } from './AppPermissionState'
 
-interface PermissionState {
-	status: AppPermissionStatus | null
-	isLoading: boolean
-}
-
-export type UsePermissionReturn = [PermissionState, () => Promise<void>]
+export type UsePermissionReturn = [AppPermissionState, () => Promise<void>]
