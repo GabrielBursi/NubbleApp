@@ -6,7 +6,8 @@ const meta: Meta<typeof ActionIcon> = {
 	title: 'Components/Post/ActionIcon',
 	component: ActionIcon,
 	args: {
-		count: 775200,
+		label: 775200,
+		positionLabel: 'right',
 		icon: {
 			default: 'heart',
 			marked: 'heartFill',
@@ -15,6 +16,10 @@ const meta: Meta<typeof ActionIcon> = {
 		onPress: () => console.log('Hi storybook!'),
 	},
 	argTypes: {
+		positionLabel: {
+			control: 'inline-radio',
+			options: ['right', 'left'],
+		},
 		onPress: {
 			type: 'symbol',
 		},
@@ -34,5 +39,16 @@ export const Basic: Story = {
 export const Marked: Story = {
 	args: {
 		marked: true,
+	},
+}
+
+export const Text: Story = {
+	args: {
+		label: 'storybook',
+	},
+	argTypes: {
+		label: {
+			type: 'string',
+		},
 	},
 }

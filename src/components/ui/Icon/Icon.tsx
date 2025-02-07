@@ -100,6 +100,7 @@ export const Icon = ({
 				testID={name}
 				hitSlop={10}
 				onPress={onPress}
+				android_disableSound
 			>
 				<SVGIcon {...iconProps} />
 			</Pressable>

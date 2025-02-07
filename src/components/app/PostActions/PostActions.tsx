@@ -25,7 +25,7 @@ export const PostActions = ({
 		<Box flexDirection="row" mt="s16" gap="s24">
 			<ActionIcon
 				onPress={likePost}
-				count={reactionCount}
+				label={reactionCount}
 				icon={{
 					default: 'heart',
 					marked: 'heartFill',
@@ -33,7 +33,7 @@ export const PostActions = ({
 			/>
 			<ActionIcon
 				onPress={navigateToComments}
-				count={commentCount}
+				label={commentCount}
 				icon={{
 					default: 'comment',
 					marked: 'comment',
@@ -41,7 +41,7 @@ export const PostActions = ({
 			/>
 			<ActionIcon
 				onPress={favoritePost}
-				count={favoriteCount}
+				label={favoriteCount}
 				icon={{
 					default: 'bookmark',
 					marked: 'bookmarkFill',
