@@ -140,7 +140,7 @@ describe('<PermissionManager/>', () => {
 
 		expect(
 			screen.getByText(
-				'É necessário abrir e fechar o App novamente após alterar as configurações'
+				/É necessário abrir e fechar o App novamente após alterar as configurações./i
 			)
 		).toBeOnTheScreen()
 	})
@@ -164,7 +164,7 @@ describe('<PermissionManager/>', () => {
 
 		expect(
 			screen.getByText(
-				'É necessário abrir e fechar o App novamente após alterar as configurações'
+				/É necessário abrir e fechar o App novamente após alterar as configurações./i
 			)
 		).toBeOnTheScreen()
 		expect(mockCheckPermission).not.toHaveBeenCalled()

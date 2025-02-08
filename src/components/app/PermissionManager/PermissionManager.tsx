@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect, useMemo } from 'react'
 import { Linking, Platform } from 'react-native'
 
-import { Box, Button, Loading, Text } from '@/components'
+import { Box, Button, Container, Loading, Text } from '@/components'
 import { useNavigationApp } from '@/hooks'
 import { usePermission } from '@/services/permission'
 
@@ -18,9 +18,11 @@ const LoadingState = () => (
 )
 
 const FallbackState = ({ fallback }: Readonly<FallbackStateProps>) => (
-	<Box justifyContent="center" alignItems="center" flex={1}>
-		{fallback}
-	</Box>
+	<Container>
+		<Box justifyContent="center" alignItems="center" flex={1}>
+			{fallback}
+		</Box>
+	</Container>
 )
 
 const DeniedState = ({ description, status }: Readonly<DeniedStateProps>) => {
@@ -31,44 +33,50 @@ const DeniedState = ({ description, status }: Readonly<DeniedStateProps>) => {
 	}
 
 	return (
-		<Box justifyContent="center" alignItems="center" flex={1}>
-			<Text preset="headingSmall" textAlign="center">
-				{description}
-			</Text>
-			{status === 'unavailable' && (
-				<Text
-					preset="paragraphMedium"
-					color="error"
-					bold
-					marginVertical="s16"
-					textAlign="center"
-				>
-					Esse recurso não está disponível para esse dispositivo.
+		<Container>
+			<Box justifyContent="center" alignItems="center" flex={1} gap="s10">
+				<Text preset="headingSmall" textAlign="center">
+					{description}
 				</Text>
-			)}
-			{status === 'never_ask_again' && (
-				<Box gap="s10">
-					{Platform.OS === 'android' && (
-						<Text
-							preset="paragraphMedium"
-							color="error"
-							bold
-							marginVertical="s16"
-							textAlign="center"
-						>
-							É necessário abrir e fechar o App novamente após alterar as
-							configurações
-						</Text>
-					)}
-					<Button
-						title="Abrir Configurações"
-						// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises, @typescript-eslint/unbound-method
-						onPress={Linking.openSettings}
-					/>
-				</Box>
-			)}
-			<Button title="Voltar para o feed" onPress={goBackToFeed} />
-		</Box>
+				{status === 'unavailable' && (
+					<Text
+						preset="paragraphMedium"
+						color="error"
+						bold
+						marginVertical="s16"
+						textAlign="center"
+					>
+						Esse recurso não está disponível para esse dispositivo.
+					</Text>
+				)}
+				{status === 'never_ask_again' && (
+					<Box gap="s10" width="100%">
+						{Platform.OS === 'android' && (
+							<Text
+								preset="paragraphMedium"
+								color="error"
+								bold
+								marginVertical="s16"
+								textAlign="center"
+							>
+								É necessário abrir e fechar o App novamente após alterar as
+								configurações.
+							</Text>
+						)}
+						<Button
+							title="Abrir Configurações"
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises, @typescript-eslint/unbound-method
+							onPress={Linking.openSettings}
+						/>
+					</Box>
+				)}
+				<Button
+					title="Voltar para o feed"
+					onPress={goBackToFeed}
+					width="100%"
+				/>
+			</Box>
+		</Container>
 	)
 }
 
@@ -105,12 +113,7 @@ export const PermissionManager = ({
 	if (status !== 'granted' && fallback)
 		return <FallbackState fallback={fallback} />
 
-	if (status === 'granted')
-		return (
-			<Box flex={1} justifyContent="center" alignItems="center">
-				{children}
-			</Box>
-		)
+	if (status === 'granted') return <Box flex={1}>{children}</Box>
 
 	return <DeniedState description={description} status={status} />
 }
