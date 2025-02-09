@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { ImageBackground, StyleSheet } from 'react-native'
 
 import { AppImages } from '@/assets/images'
-import { Box, Button, Container, Icon, Text } from '@/components'
+import { ActionIcon, Box, Button, Container, Text } from '@/components'
 import { useNavigationApp, usePhotoList } from '@/hooks'
 
 import { HeaderPhotoListProps } from './HeaderPhotoList.types'
@@ -57,7 +57,7 @@ const HeaderPhotoListMemoized = ({
 				flex={0}
 			>
 				<Text preset="headingSmall">Sua galeria</Text>
-				<Icon name="camera" />
+				<ActionIcon name={{ default: 'camera' }} />
 			</Container>
 		</Box>
 	)

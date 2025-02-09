@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import { ActionIcon, Box } from '@/components'
 
@@ -9,8 +9,12 @@ export const PostActions = ({
 	favoriteCount = 0,
 	reactionCount = 0,
 }: Readonly<PostActionsProps>) => {
+	const [isLiked, setIsLiked] = useState(false)
+	const [isFavorited, setIsFavorited] = useState(false)
+
 	const likePost = useCallback(() => {
 		//TODO: Implement like post
+		setIsLiked((old) => !old)
 	}, [])
 
 	const navigateToComments = useCallback(() => {
@@ -18,6 +22,7 @@ export const PostActions = ({
 	}, [])
 
 	const favoritePost = useCallback(() => {
+		setIsFavorited((old) => !old)
 		// TODO: Implement favorite post
 	}, [])
 
@@ -25,26 +30,25 @@ export const PostActions = ({
 		<Box flexDirection="row" mt="s16" gap="s24">
 			<ActionIcon
 				onPress={likePost}
-				count={reactionCount}
-				icon={{
+				label={reactionCount}
+				name={{
 					default: 'heart',
-					marked: 'heartFill',
+					marked: isLiked ? 'heartFill' : undefined,
 				}}
 			/>
 			<ActionIcon
 				onPress={navigateToComments}
-				count={commentCount}
-				icon={{
+				label={commentCount}
+				name={{
 					default: 'comment',
-					marked: 'comment',
 				}}
 			/>
 			<ActionIcon
 				onPress={favoritePost}
-				count={favoriteCount}
-				icon={{
+				label={favoriteCount}
+				name={{
 					default: 'bookmark',
-					marked: 'bookmarkFill',
+					marked: isFavorited ? 'bookmarkFill' : undefined,
 				}}
 			/>
 		</Box>
