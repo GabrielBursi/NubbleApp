@@ -5,20 +5,21 @@ import { FlashList } from '@shopify/flash-list'
 
 import { AppImages } from '@/assets/images'
 import { usePhotoList } from '@/hooks'
+import { PhotoList as IPhotoList } from '@/services/cameraRoll'
 import { themeConfig } from '@/styles'
 
 import { PhotoListProps } from './PhotoList.types'
 
 const PhotoListMemoized = forwardRef<
-	FlashList<string>,
+	FlashList<IPhotoList>,
 	Readonly<PhotoListProps>
 >(
 	(
 		{
-			urlImages = [],
+			photos = [],
 			numColumns = 4,
 			onPressImage,
-			selectedImage,
+			indexSelectedImage,
 			...propsFlashList
 		},
 		ref
@@ -33,25 +34,25 @@ const PhotoListMemoized = forwardRef<
 				role="list"
 				accessibilityRole="list"
 				ref={ref}
-				extraData={selectedImage}
+				extraData={indexSelectedImage}
 				{...propsFlashList}
-				data={urlImages}
-				renderItem={({ item: urlImagem }) => (
-					<Pressable onPress={() => onPressImage?.(urlImagem)}>
+				data={photos}
+				renderItem={({ item: image, index }) => (
+					<Pressable onPress={() => onPressImage?.(image)}>
 						<Image
 							accessible
 							role="listitem"
-							accessibilityLabel={urlImagem}
-							source={{ uri: urlImagem }}
+							accessibilityLabel={image.uri}
+							source={{ uri: image.uri }}
 							style={[
 								{ width: PHOTO_ITEM_WIDTH, height: PHOTO_ITEM_WIDTH },
-								selectedImage === urlImagem && styles.imageSelected,
+								indexSelectedImage === index && styles.imageSelected,
 							]}
 							defaultSource={AppImages.ImagePlaceholder}
 						/>
 					</Pressable>
 				)}
-				keyExtractor={(urlImage, index) => `${urlImage}-${index}`}
+				keyExtractor={(image, index) => `${image.id}-${image.uri}-${index}`}
 				showsVerticalScrollIndicator={false}
 				disableAutoLayout
 				estimatedItemSize={PHOTO_ITEM_WIDTH * PHOTO_ITEM_WIDTH}

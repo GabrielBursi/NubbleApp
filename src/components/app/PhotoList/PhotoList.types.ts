@@ -1,18 +1,15 @@
-import { ImageURISource } from 'react-native'
-
 import { FlashListProps } from '@shopify/flash-list'
 
+import { PhotoList } from '@/services/cameraRoll'
 import { StrictOmit } from '@/types/utils'
-
-type URI = Required<ImageURISource>['uri']
 
 export type PhotoListProps = {
 	/** @default [] */
-	urlImages?: URI[]
-	onPressImage?: (selectedImage: URI) => void
-	selectedImage?: URI
+	photos?: PhotoList[]
+	onPressImage?: (selectedImage: PhotoList) => void
+	indexSelectedImage?: number
 } & StrictOmit<
-	FlashListProps<string>,
+	FlashListProps<PhotoList>,
 	| 'data'
 	| 'renderItem'
 	| 'keyExtractor'

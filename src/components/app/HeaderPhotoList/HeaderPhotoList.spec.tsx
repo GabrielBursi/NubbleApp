@@ -1,17 +1,23 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
+import { PhotoList } from '@/services/cameraRoll'
 import { mockAppImages, mockUseNavigation } from '@/tests/mocks'
 import { customFaker, customRender } from '@/tests/utils'
 
 import { HeaderPhotoList } from './HeaderPhotoList'
 
 describe('<HeaderPhotoList/>', () => {
-	const mockImage = customFaker.image.url()
+	const mockImage: PhotoList = {
+		uri: customFaker.image.url(),
+		id: customFaker.string.uuid(),
+	}
 
 	it('should render the header correctly', () => {
 		customRender(<HeaderPhotoList selectedImage={mockImage} />)
 
-		expect(screen.getByRole('banner', { name: mockImage })).toBeOnTheScreen()
+		expect(
+			screen.getByRole('banner', { name: mockImage.uri })
+		).toBeOnTheScreen()
 		expect(screen.getByRole('text', { name: 'Sua galeria' })).toBeOnTheScreen()
 		expect(screen.getByRole('img', { name: 'camera' })).toBeOnTheScreen()
 	})
@@ -26,7 +32,7 @@ describe('<HeaderPhotoList/>', () => {
 		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
 			'PublishPostScreen',
 			{
-				imageUri: mockImage,
+				imageUri: mockImage.uri,
 			}
 		)
 	})

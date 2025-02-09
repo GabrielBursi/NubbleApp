@@ -2,6 +2,7 @@ import { Alert } from 'react-native'
 
 import { screen, userEvent, waitFor } from '@testing-library/react-native'
 
+import { PhotoList } from '@/services/cameraRoll'
 import { useCameraRoll } from '@/services/cameraRoll/useCameraRoll'
 import { usePermission } from '@/services/permission/usePermission'
 import { customFaker, customRender } from '@/tests/utils'
@@ -21,9 +22,10 @@ jest.mock('@/services/cameraRoll/useCameraRoll')
 jest.mock('@/services/permission/usePermission')
 
 describe('<NewPostScreen/>', () => {
-	const mockImages = Array.from({ length: 15 }, () =>
-		customFaker.image.urlPicsumPhotos()
-	)
+	const mockImages: PhotoList[] = Array.from({ length: 15 }, () => ({
+		uri: customFaker.image.url(),
+		id: customFaker.string.uuid(),
+	}))
 
 	const spyAlert = jest.spyOn(Alert, 'alert')
 	const mockFetchNextPage = jest.fn()
@@ -55,7 +57,7 @@ describe('<NewPostScreen/>', () => {
 
 		expect(screen.getByRole('list', { name: /photos/i })).toBeOnTheScreen()
 		expect(
-			screen.getByRole('listitem', { name: mockImages[0] })
+			screen.getByRole('listitem', { name: mockImages[0]?.uri })
 		).toBeOnTheScreen()
 	})
 
@@ -77,10 +79,12 @@ describe('<NewPostScreen/>', () => {
 
 		customRender(<NewPostScreen />)
 
-		await userEvent.press(screen.getByRole('listitem', { name: mockImages[0] }))
+		await userEvent.press(
+			screen.getByRole('listitem', { name: mockImages[0]?.uri })
+		)
 
 		expect(
-			screen.getByRole('banner', { name: mockImages[0] })
+			screen.getByRole('banner', { name: mockImages[0]?.uri })
 		).toBeOnTheScreen()
 	})
 })

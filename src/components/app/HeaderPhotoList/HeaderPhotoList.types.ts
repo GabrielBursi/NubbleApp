@@ -1,5 +1,5 @@
-import { ImageURISource } from 'react-native'
+import { PhotoList } from '@/services/cameraRoll'
 
 export type HeaderPhotoListProps = {
-	selectedImage?: ImageURISource['uri']
+	selectedImage?: PhotoList
 }

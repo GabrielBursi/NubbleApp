@@ -16,7 +16,7 @@ const HeaderPhotoListMemoized = ({
 
 	const navigateToPublishPost = () => {
 		navigationAppStack.navigate('PublishPostScreen', {
-			imageUri: selectedImage!,
+			imageUri: selectedImage!.uri,
 		})
 	}
 
@@ -25,9 +25,11 @@ const HeaderPhotoListMemoized = ({
 			<ImageBackground
 				accessible
 				role="banner"
-				accessibilityLabel={selectedImage}
+				accessibilityLabel={selectedImage?.uri}
 				source={
-					selectedImage ? { uri: selectedImage } : AppImages.ImagePlaceholder
+					selectedImage?.uri
+						? { uri: selectedImage?.uri }
+						: AppImages.ImagePlaceholder
 				}
 				defaultSource={AppImages.ImagePlaceholder}
 				style={[

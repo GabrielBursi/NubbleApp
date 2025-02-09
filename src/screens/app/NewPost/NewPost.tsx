@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Alert, StyleSheet } from 'react-native'
 
 import { FlashList } from '@shopify/flash-list'
 
 import { HeaderPhotoList, PermissionManager, PhotoList } from '@/components'
-import { useCameraRoll } from '@/services/cameraRoll'
+import { PhotoList as IPhotoList, useCameraRoll } from '@/services/cameraRoll'
 import { usePermission } from '@/services/permission'
 import { ScreenTemplate } from '@/templates'
 
 export const NewPostScreen = () => {
-	const [selectedImage, setSelectedImage] = useState<string>()
+	const [selectedImage, setSelectedImage] = useState<IPhotoList>()
 	const [
 		{
 			status: photoLibraryPermissionStatus,
@@ -22,12 +22,17 @@ export const NewPostScreen = () => {
 		setSelectedImage
 	)
 
-	const flatListRef = useRef<FlashList<string>>(null)
+	const flatListRef = useRef<FlashList<IPhotoList>>(null)
 
-	const handleSelectImage = useCallback((imageUri: string) => {
-		setSelectedImage(imageUri)
+	const handleSelectImage = useCallback((image: IPhotoList) => {
+		setSelectedImage(image)
 		flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
 	}, [])
+
+	const indexSelectedImage = useMemo(
+		() => photoList.findIndex((img) => img.id === selectedImage?.id),
+		[photoList, selectedImage]
+	)
 
 	useEffect(() => {
 		checkPhotoLibraryPermission()
@@ -47,11 +52,11 @@ export const NewPostScreen = () => {
 			>
 				<PhotoList
 					ref={flatListRef}
-					urlImages={photoList}
+					photos={photoList}
 					onPressImage={handleSelectImage}
 					// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 					onEndReached={fetchNextPage}
-					selectedImage={selectedImage}
+					indexSelectedImage={indexSelectedImage}
 					onEndReachedThreshold={0.1}
 					ListHeaderComponent={
 						<HeaderPhotoList selectedImage={selectedImage} />

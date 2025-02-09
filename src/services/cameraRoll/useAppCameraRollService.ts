@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
 import { useCameraRoll as useRNCameraRoll } from '@react-native-camera-roll/camera-roll'
+import { uniqueId } from 'lodash'
 
 import { PhotoListPaginated } from './models'
 
@@ -10,7 +11,10 @@ export const useAppCameraRollService = () => {
 	const getUriPhotos = useCallback(
 		async (cursor?: string): Promise<Readonly<PhotoListPaginated>> => {
 			await getPhotos({ first: 12, after: cursor })
-			const photoList = photos.edges.map((edge) => edge.node.image.uri)
+			const photoList = photos.edges.map((edge) => ({
+				uri: edge.node.image.uri,
+				id: `${uniqueId()}-${edge.node.id}`,
+			}))
 			return {
 				photoList,
 				endCursor: photos.page_info.end_cursor,
