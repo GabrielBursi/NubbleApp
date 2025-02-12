@@ -37,6 +37,14 @@ describe('<HeaderPhotoList/>', () => {
 		)
 	})
 
+	it('should navigate to camera screen correctly', async () => {
+		customRender(<HeaderPhotoList selectedImage={mockImage} />)
+
+		await userEvent.press(screen.getByRole('img', { name: /camera/i }))
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('CameraScreen')
+	})
+
 	it('should render the placeholder imagem on header correctly', () => {
 		customRender(<HeaderPhotoList />)
 

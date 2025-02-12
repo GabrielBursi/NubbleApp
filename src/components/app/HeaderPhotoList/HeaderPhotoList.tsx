@@ -20,6 +20,10 @@ const HeaderPhotoListMemoized = ({
 		})
 	}
 
+	const navigateToCamera = () => {
+		navigationAppStack.navigate('CameraScreen')
+	}
+
 	return (
 		<Box>
 			<ImageBackground
@@ -57,7 +61,7 @@ const HeaderPhotoListMemoized = ({
 				flex={0}
 			>
 				<Text preset="headingSmall">Sua galeria</Text>
-				<ActionIcon name={{ default: 'camera' }} />
+				<ActionIcon name={{ default: 'camera' }} onPress={navigateToCamera} />
 			</Container>
 		</Box>
 	)
