@@ -57,6 +57,7 @@ export const themeConfig = {
 		gray4: '#E1E1E1',
 		gray5: '#F5F5F5',
 		grayWhite: '#FFFFFF',
+		black60: 'rgba(0,0,0,0.6)',
 		white70: 'rgba(255,255,255,0.7)',
 		primaryShadow: lighten(0.4, `#000`),
 		secondaryShadow: lighten(0.4, `#bbb`),

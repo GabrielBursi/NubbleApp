@@ -1,3 +1,4 @@
+export * from './Camera'
 export * from './Favorite'
 export * from './ForgotPassword'
 export * from './Home'

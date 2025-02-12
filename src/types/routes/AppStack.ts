@@ -14,4 +14,5 @@ export type RootAppStackRouterParamList = {
 	PublishPostScreen: {
 		imageUri: string
 	}
+	CameraScreen: undefined
 }

@@ -1,3 +1,4 @@
+export * from './Camera/Camera'
 export * from './Favorite/Favorite'
 export * from './Home/Home'
 export * from './MyProfile/MyProfile'
