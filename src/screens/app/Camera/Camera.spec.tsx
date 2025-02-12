@@ -1,11 +1,48 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
+import { AppPermissionStatus } from '@/services/permission'
+import { usePermission } from '@/services/permission/usePermission'
 import { mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { CameraScreen } from './Camera'
 
+type UsePermission = typeof usePermission
+type ReturnUsePermission = ReturnHookMocked<UsePermission>
+type MockUsePermission = HookMocked<UsePermission>
+
+jest.mock('@/services/permission/usePermission')
+
 describe('<CameraScreen/>', () => {
+	const mockCheckPermission = jest.fn()
+
+	const mockReturnUsePermission: ReturnUsePermission = [
+		{ status: 'granted', isLoading: false },
+		mockCheckPermission,
+	]
+
+	const setupMockedUsePermission = (
+		status: AppPermissionStatus = 'granted',
+		isLoading = false
+	) => {
+		const mockReturnUsePermission: ReturnUsePermission = [
+			{ status, isLoading },
+			mockCheckPermission,
+		]
+		;(usePermission as unknown as MockUsePermission).mockReturnValue(
+			mockReturnUsePermission
+		)
+	}
+
+	beforeEach(() => {
+		setupMockedUsePermission()
+		mockCheckPermission.mockResolvedValue(true)
+		;(usePermission as unknown as MockUsePermission).mockReturnValue(
+			mockReturnUsePermission
+		)
+	})
+
 	it('should render camera screen correctly', () => {
 		customRender(
 			<CameraScreen
