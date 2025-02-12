@@ -111,7 +111,7 @@ describe('<PermissionManager/>', () => {
 		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('HomeScreen')
 	})
 
-	it('should show settings button when status is never_ask_again', async () => {
+	it('should show settings button when status is denied', async () => {
 		setupMockedUsePermission('never_ask_again')
 		customRender(<PermissionManager {...defaultProps} />)
 

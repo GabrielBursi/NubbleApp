@@ -49,27 +49,25 @@ const DeniedState = ({ description, status }: Readonly<DeniedStateProps>) => {
 						Esse recurso não está disponível para esse dispositivo.
 					</Text>
 				)}
-				{status === 'never_ask_again' && (
-					<Box gap="s10" width="100%">
-						{Platform.OS === 'android' && (
-							<Text
-								preset="paragraphMedium"
-								color="error"
-								bold
-								marginVertical="s16"
-								textAlign="center"
-							>
-								É necessário abrir e fechar o App novamente após alterar as
-								configurações.
-							</Text>
-						)}
-						<Button
-							title="Abrir Configurações"
-							// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises, @typescript-eslint/unbound-method
-							onPress={Linking.openSettings}
-						/>
-					</Box>
-				)}
+				<Box gap="s10" width="100%">
+					{Platform.OS === 'android' && (
+						<Text
+							preset="paragraphMedium"
+							color="error"
+							bold
+							marginVertical="s16"
+							textAlign="center"
+						>
+							É necessário abrir e fechar o App novamente após alterar as
+							configurações.
+						</Text>
+					)}
+					<Button
+						title="Abrir Configurações"
+						// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises, @typescript-eslint/unbound-method
+						onPress={Linking.openSettings}
+					/>
+				</Box>
 				<Button
 					title="Voltar para o feed"
 					onPress={goBackToFeed}
