@@ -1,10 +1,15 @@
-import React, { ComponentProps, useState } from 'react'
+import React, { ComponentProps, useRef, useState } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
 import { useIsFocused } from '@react-navigation/native'
-import { Camera, useCameraDevice } from 'react-native-vision-camera'
+import {
+	Camera,
+	Templates,
+	useCameraDevice,
+	useCameraFormat,
+} from 'react-native-vision-camera'
 
-import { Box, Icon, PermissionManager } from '@/components'
+import { ActionIcon, Box, Icon, PermissionManager } from '@/components'
 import { useAppSafeArea, useAppState } from '@/hooks'
 import { CameraScreenProps } from '@/types/screens'
 
@@ -15,8 +20,31 @@ const CONTROL_DIFF = 30
 export const CameraScreen = ({ navigation }: Readonly<CameraScreenProps>) => {
 	const { top } = useAppSafeArea()
 	const [flashOn, setFlashOn] = useState(false)
+	const [isReady, setIsReady] = useState(false)
 
-	const device = useCameraDevice('back')
+	const cameraRef = useRef<Camera>(null)
+
+	const takePhoto = async () => {
+		if (cameraRef.current) {
+			const photoFile = await cameraRef.current?.takePhoto({
+				flash: flashOn ? 'on' : 'off',
+			})
+
+			navigation.navigate('PublishPostScreen', {
+				imageUri: `file://${photoFile?.path}`,
+			})
+		}
+	}
+
+	const device = useCameraDevice('back', {
+		physicalDevices: [
+			'ultra-wide-angle-camera',
+			'wide-angle-camera',
+			'telephoto-camera',
+		],
+	})
+
+	const format = useCameraFormat(device, Templates.Instagram)
 
 	const isFocused = useIsFocused()
 	const appState = useAppState()
@@ -37,6 +65,10 @@ export const CameraScreen = ({ navigation }: Readonly<CameraScreenProps>) => {
 						style={StyleSheet.absoluteFill}
 						device={device}
 						isActive={isActive}
+						format={format}
+						photo
+						ref={cameraRef}
+						onInitialized={() => setIsReady(true)}
 					/>
 				)}
 				<Box flex={1} justifyContent="space-between">
@@ -57,7 +89,15 @@ export const CameraScreen = ({ navigation }: Readonly<CameraScreenProps>) => {
 					</Box>
 
 					<Box {...$controlAreaBottom}>
-						<Icon size={80} name="cameraClick" color="grayWhite" />
+						{isReady && (
+							<ActionIcon
+								size={80}
+								name={{ default: 'cameraClick' }}
+								color="grayWhite"
+								// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
+								onPress={takePhoto}
+							/>
+						)}
 					</Box>
 				</Box>
 			</Box>
