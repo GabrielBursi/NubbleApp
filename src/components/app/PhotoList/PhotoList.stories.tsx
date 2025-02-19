@@ -2,7 +2,7 @@ import { Alert } from 'react-native'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { PhotoList as IPhotoList } from '@/services/cameraRoll'
+import { PhotoList as IPhotoList } from '@/services/multimedia'
 import { customFaker } from '@/tests/utils/customFaker'
 
 import { PhotoList } from './PhotoList'

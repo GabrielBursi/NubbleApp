@@ -1,6 +1,6 @@
 import { FlashListProps } from '@shopify/flash-list'
 
-import { PhotoList } from '@/services/cameraRoll'
+import { PhotoList } from '@/services/multimedia'
 import { StrictOmit } from '@/types/utils'
 
 export type PhotoListProps = {

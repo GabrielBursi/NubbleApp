@@ -5,7 +5,7 @@ import { uniqueId } from 'lodash'
 
 import { PhotoListPaginated } from './models'
 
-export const useAppCameraRollService = () => {
+export const useMultimediaGetPhotosService = () => {
 	const [photos, getPhotos] = useRNCameraRoll()
 
 	const getUriPhotos = useCallback(

@@ -4,7 +4,10 @@ import { Alert, StyleSheet } from 'react-native'
 import { FlashList } from '@shopify/flash-list'
 
 import { HeaderPhotoList, PermissionManager, PhotoList } from '@/components'
-import { PhotoList as IPhotoList, useCameraRoll } from '@/services/cameraRoll'
+import {
+	PhotoList as IPhotoList,
+	useMultimediaGetPhotos,
+} from '@/services/multimedia'
 import { usePermission } from '@/services/permission'
 import { ScreenTemplate } from '@/templates'
 
@@ -17,7 +20,7 @@ export const NewPostScreen = () => {
 		},
 		checkPhotoLibraryPermission,
 	] = usePermission('photoLibrary')
-	const { photoList, fetchNextPage } = useCameraRoll(
+	const { photoList, fetchNextPage } = useMultimediaGetPhotos(
 		photoLibraryPermissionStatus === 'granted',
 		setSelectedImage
 	)

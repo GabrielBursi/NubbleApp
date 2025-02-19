@@ -5,18 +5,18 @@ import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 import { AppQueryKeys } from '@/types/api'
 
 import { PhotoList, PhotoListPaginated } from './models'
-import { useAppCameraRollService } from './useAppCameraRollService'
+import { useMultimediaGetPhotosService } from './useMultimediaGetPhotosService'
 
 /**
  * @param hasPermission
  * @default false
  */
-export const useCameraRoll = (
+export const useMultimediaGetPhotos = (
 	hasPermission: boolean = false,
 	onInitialLoad?: (firstImage: PhotoList) => void
 ) => {
 	const [photoList, setPhotoList] = useState<PhotoList[]>([])
-	const { getUriPhotos } = useAppCameraRollService()
+	const { getUriPhotos } = useMultimediaGetPhotosService()
 
 	const { data, hasNextPage, fetchNextPage } = useInfiniteQuery<
 		Readonly<PhotoListPaginated>,

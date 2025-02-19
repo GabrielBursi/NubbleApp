@@ -1,6 +1,6 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { PhotoList as IPhotoList } from '@/services/cameraRoll'
+import { PhotoList as IPhotoList } from '@/services/multimedia'
 import { themeConfig } from '@/styles'
 import { customFaker, customRender } from '@/tests/utils'
 

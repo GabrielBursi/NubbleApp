@@ -1,6 +1,6 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { PhotoList } from '@/services/cameraRoll'
+import { PhotoList } from '@/services/multimedia'
 import { mockAppImages, mockUseNavigation } from '@/tests/mocks'
 import { customFaker, customRender } from '@/tests/utils'
 

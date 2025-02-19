@@ -1,4 +1,4 @@
-import { PhotoList } from '@/services/cameraRoll'
+import { PhotoList } from '@/services/multimedia'
 
 export type HeaderPhotoListProps = {
 	selectedImage?: PhotoList

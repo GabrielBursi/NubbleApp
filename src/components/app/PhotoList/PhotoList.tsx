@@ -5,7 +5,7 @@ import { FlashList } from '@shopify/flash-list'
 
 import { AppImages } from '@/assets/images'
 import { usePhotoList } from '@/hooks'
-import { PhotoList as IPhotoList } from '@/services/cameraRoll'
+import { PhotoList as IPhotoList } from '@/services/multimedia'
 import { themeConfig } from '@/styles'
 
 import { PhotoListProps } from './PhotoList.types'

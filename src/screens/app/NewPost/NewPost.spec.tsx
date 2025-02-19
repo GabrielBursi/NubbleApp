@@ -2,15 +2,15 @@ import { Alert } from 'react-native'
 
 import { screen, userEvent, waitFor } from '@testing-library/react-native'
 
-import { PhotoList } from '@/services/cameraRoll'
-import { useCameraRoll } from '@/services/cameraRoll/useCameraRoll'
+import { PhotoList } from '@/services/multimedia'
+import { useMultimediaGetPhotos } from '@/services/multimedia/useMultimediaGetPhotos'
 import { usePermission } from '@/services/permission/usePermission'
 import { customFaker, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { NewPostScreen } from './NewPost'
 
-type UseCameraRoll = typeof useCameraRoll
+type UseCameraRoll = typeof useMultimediaGetPhotos
 type ReturnUseCameraRoll = ReturnHookMocked<UseCameraRoll>
 type MockUseCameraRoll = HookMocked<UseCameraRoll>
 
@@ -18,7 +18,7 @@ type UsePermission = typeof usePermission
 type ReturnUsePermission = ReturnHookMocked<UsePermission>
 type MockUsePermission = HookMocked<UsePermission>
 
-jest.mock('@/services/cameraRoll/useCameraRoll')
+jest.mock('@/services/multimedia/useMultimediaGetPhotos')
 jest.mock('@/services/permission/usePermission')
 
 describe('<NewPostScreen/>', () => {
@@ -47,7 +47,7 @@ describe('<NewPostScreen/>', () => {
 		;(usePermission as unknown as MockUsePermission).mockReturnValue(
 			mockReturnUsePermission
 		)
-		;(useCameraRoll as MockUseCameraRoll).mockReturnValue(
+		;(useMultimediaGetPhotos as MockUseCameraRoll).mockReturnValue(
 			mockReturnUseCameraRoll
 		)
 	})
@@ -72,7 +72,7 @@ describe('<NewPostScreen/>', () => {
 	})
 
 	it('should select the image on list correctly', async () => {
-		;(useCameraRoll as MockUseCameraRoll).mockReturnValue({
+		;(useMultimediaGetPhotos as MockUseCameraRoll).mockReturnValue({
 			...mockReturnUseCameraRoll,
 			photoList: [mockImages[0]],
 		})
