@@ -25,8 +25,8 @@ export const PublishPostScreen = ({
 		},
 	})
 
-	const publishPost = () => {
-		createPost({ description, imageUri })
+	const publishPost = async () => {
+		await createPost({ description, imageUri })
 	}
 
 	return (
@@ -53,6 +53,7 @@ export const PublishPostScreen = ({
 				/>
 				<Button
 					title="Publicar post"
+					// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 					onPress={publishPost}
 					loading={loading}
 					disabled={!description.length}

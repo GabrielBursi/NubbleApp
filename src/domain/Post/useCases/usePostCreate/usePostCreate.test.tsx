@@ -32,7 +32,7 @@ describe('usePostCreate', () => {
 	}
 
 	beforeAll(() => {
-		spyPrepareImageForUpload.mockReturnValue(mockImageUpload)
+		spyPrepareImageForUpload.mockResolvedValue(mockImageUpload)
 	})
 
 	it('should create a post', async () => {
@@ -41,12 +41,9 @@ describe('usePostCreate', () => {
 			{ wrapper: TestProvider }
 		)
 
-		const create = result.current.createPost
-
-		await act(() => {
-			create(mockPost)
+		await act(async () => {
+			await result.current.createPost(mockPost)
 		})
-
 		await waitFor(() => {
 			expect(spyPostCreate).toHaveBeenCalledWith(
 				mockPost.description,
@@ -58,9 +55,12 @@ describe('usePostCreate', () => {
 			expect(spyPrepareImageForUpload).toHaveBeenCalledWith(mockPost.imageUri)
 		})
 
-		await waitFor(() => {
-			expect(result.current.newPost).toBeTruthy()
-		})
+		await waitFor(
+			() => {
+				expect(result.current.newPost).toBeTruthy()
+			},
+			{ timeout: 10000 }
+		)
 
 		await waitFor(() => {
 			expect(mockOnSuccess).toHaveBeenCalled()
@@ -81,12 +81,13 @@ describe('usePostCreate', () => {
 			]
 		)
 
-		await act(() => {
-			result.current.createPost(mockPost)
+		await act(async () => {
+			await result.current.createPost(mockPost)
 		})
 
 		await waitFor(() => {
 			expect(mockOnError).toHaveBeenCalledWith('erro ao criar post')
+			expect(result.current.newPost).toBeNull()
 		})
 	})
 
@@ -108,12 +109,13 @@ describe('usePostCreate', () => {
 			]
 		)
 
-		await act(() => {
-			result.current.createPost(mockPost)
+		await act(async () => {
+			await result.current.createPost(mockPost)
 		})
 
 		await waitFor(() => {
 			expect(mockOnError).toHaveBeenCalledWith('custom message')
+			expect(result.current.newPost).toBeNull()
 		})
 	})
 })

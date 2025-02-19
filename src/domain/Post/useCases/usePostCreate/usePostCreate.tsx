@@ -28,8 +28,14 @@ export const usePostCreate = (options?: MutationOptions<PostModel>) => {
 	})
 
 	const createPost = useCallback(
-		({ description, imageUri }: { description: string; imageUri: string }) => {
-			const imageCover = MultimediaService.prepareImageForUpload(imageUri)
+		async ({
+			description,
+			imageUri,
+		}: {
+			description: string
+			imageUri: string
+		}) => {
+			const imageCover = await MultimediaService.prepareImageForUpload(imageUri)
 			mutate({ text: description, imageCover })
 		},
 		[mutate]

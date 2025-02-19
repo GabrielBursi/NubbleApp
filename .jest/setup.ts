@@ -18,6 +18,10 @@ import { initializeStorage } from '@/services/storage'
 import { useAuthCredentialsStorage } from '@/services/auth/store/useAuthCredentialsStorage'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
+jest.mock('expo-image-manipulator', () => ({
+	manipulateAsync: jest.fn(),
+}))
+
 jest.mock('react-native-reanimated', () => {
 	const Reanimated = require('react-native-reanimated/mock')
 	Reanimated.default.call = () => {}

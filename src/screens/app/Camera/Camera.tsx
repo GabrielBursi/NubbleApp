@@ -11,6 +11,7 @@ import {
 
 import { ActionIcon, Box, Icon, PermissionManager } from '@/components'
 import { useAppSafeArea, useAppState } from '@/hooks'
+import { MultimediaService } from '@/services/multimedia'
 import { CameraScreenProps } from '@/types/screens'
 
 const CAMERA_VIEW = Dimensions.get('screen').width
@@ -31,7 +32,7 @@ export const CameraScreen = ({ navigation }: Readonly<CameraScreenProps>) => {
 			})
 
 			navigation.navigate('PublishPostScreen', {
-				imageUri: `file://${photoFile?.path}`,
+				imageUri: MultimediaService.prepareImageUri(photoFile.path),
 			})
 		}
 	}
