@@ -122,15 +122,7 @@ const TextInputInternalMemoized = forwardRef<
 
 		return (
 			<Box flexGrow={1} flexShrink={1} {...boxProps}>
-				<Pressable
-					accessible
-					accessibilityLabel={label}
-					accessibilityState={{
-						selected: isFocused,
-						disabled: disabled,
-					}}
-					onPress={() => setIsFocused(true)}
-				>
+				<Pressable accessible onPress={() => setIsFocused(true)}>
 					{label && (
 						<Text preset="paragraphMedium" marginBottom="s4">
 							{label}
@@ -143,6 +135,11 @@ const TextInputInternalMemoized = forwardRef<
 							</Box>
 						)}
 						<RNTextInput
+							accessibilityLabel={label}
+							accessibilityState={{
+								selected: isFocused,
+								disabled: disabled,
+							}}
 							ref={internalRef}
 							placeholder="Digite aqui"
 							autoCapitalize="none"
