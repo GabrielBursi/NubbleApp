@@ -73,3 +73,8 @@ swagger.yml
 todo.md
 artifacts
 .vscode
+
+# Expo
+.expo
+dist/
+web-build/
