@@ -11,14 +11,22 @@ class MultimediaServiceSingleton {
 	 * @returns `ImageForUpload` - an object with props requested by a `FormData`
 	 */
 	async prepareImageForUpload(imageUri: string): Promise<ImageForUpload> {
-		const image = await manipulateAsync(this.prepareImageUri(imageUri), [], {
-			compress: 0.5,
-			format: SaveFormat.JPEG,
-		})
-		return {
-			uri: image.uri,
-			name: Date.now().toString(),
-			type: 'image/jpeg',
+		try {
+			const image = await manipulateAsync(this.prepareImageUri(imageUri), [], {
+				compress: 0.5,
+				format: SaveFormat.JPEG,
+			})
+			return {
+				uri: image.uri,
+				name: Date.now().toString(),
+				type: 'image/jpeg',
+			}
+		} catch {
+			return {
+				uri: imageUri,
+				name: Date.now().toString(),
+				type: 'image/jpeg',
+			}
 		}
 	}
 
