@@ -21,4 +21,5 @@ export type MenuItemListProps = {
 	| 'aria-label'
 	| 'role'
 	| 'accessibilityRole'
+	| 'showsHorizontalScrollIndicator'
 >

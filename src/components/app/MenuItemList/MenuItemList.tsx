@@ -13,6 +13,7 @@ const MenuItemListMemoized = ({
 	return (
 		<FlashList
 			{...props}
+			showsHorizontalScrollIndicator={false}
 			data={items}
 			bounces={false}
 			keyExtractor={(menuItem, index) => `${menuItem.label}-${index}`}
