@@ -11,6 +11,7 @@ import {
 	mockAuth,
 	mockStorage,
 	mockUseNavigation,
+	mockCamera,
 } from '@/tests/mocks'
 import { userEvent } from '@testing-library/react-native'
 import { testQueryClient } from '@/providers'
@@ -20,6 +21,14 @@ import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 jest.mock('expo-image-manipulator', () => ({
 	manipulateAsync: jest.fn(),
+}))
+
+jest.mock('react-native-vision-camera', () => ({
+	Camera: jest.fn(() => 'Camera'),
+	...mockCamera,
+	Templates: {
+		Instagram: {},
+	},
 }))
 
 jest.mock('react-native-reanimated', () => {

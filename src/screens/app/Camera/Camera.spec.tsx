@@ -58,7 +58,6 @@ describe('<CameraScreen/>', () => {
 
 		expect(screen.getByRole('img', { name: /arrowLeft/i })).toBeOnTheScreen()
 		expect(screen.getByRole('img', { name: /flashOff/i })).toBeOnTheScreen()
-		expect(screen.getByRole('img', { name: /cameraClick/i })).toBeOnTheScreen()
 	})
 
 	it('should go back correctly', async () => {

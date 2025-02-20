@@ -1,4 +1,5 @@
 export * from './mockAuth'
+export * from './mockCamera'
 export * from './mockComments'
 export * from './mockImages'
 export * from './mockMetaPagination'
