@@ -12,6 +12,10 @@ const MenuItemMemoized = ({ label, onPress }: Readonly<MenuItemProps>) => {
 			alignItems="center"
 			paddingVertical="s16"
 			justifyContent="space-between"
+			accessible
+			role="menuitem"
+			accessibilityRole="menuitem"
+			accessibilityLabel={label}
 		>
 			<Text>{label}</Text>
 			<Icon name="chevronRight" />
