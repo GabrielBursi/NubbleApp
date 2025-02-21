@@ -1,6 +1,7 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo } from 'react'
 
 import { Box, PressableBox } from '@/components'
+import { useRadioButton } from '@/hooks'
 
 import { RadioButtonProps } from './RadioButton.types'
 
@@ -10,39 +11,29 @@ const RadioButtonMemoized = ({
 	disabled = false,
 	...props
 }: Readonly<RadioButtonProps>) => {
-	const [internalValue, setInternalValue] = useState(checked)
-
-	const handleChangeValue = useCallback(() => {
-		setInternalValue((old) => {
-			onChange?.(!old)
-			return !old
-		})
-	}, [onChange])
-
-	useEffect(() => {
-		setInternalValue(checked)
-	}, [checked])
+	const { checked: internalChecked, onChange: internalOnChange } =
+		useRadioButton({ checked, disabled, onChange })
 
 	return (
 		<PressableBox
 			{...props}
 			hitSlop={10}
-			onPress={handleChangeValue}
+			onPress={internalOnChange}
 			justifyContent="center"
 			alignItems="center"
 			height={20}
 			width={20}
-			borderWidth={internalValue ? 2 : 1}
+			borderWidth={internalChecked ? 2 : 1}
 			borderRadius={'s12'}
-			borderColor={internalValue ? 'primary' : undefined}
+			borderColor={internalChecked ? 'primary' : undefined}
 			accessible
-			accessibilityState={{ checked: internalValue, disabled }}
+			accessibilityState={{ checked: internalChecked, disabled }}
 			role="radio"
 			accessibilityRole="radio"
 			// eslint-disable-next-line react-native/no-inline-styles
 			style={{ opacity: disabled ? 0.5 : 1 }}
 		>
-			{internalValue && (
+			{internalChecked && (
 				<Box
 					backgroundColor={'primary'}
 					height={12}
