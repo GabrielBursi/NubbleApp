@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 
 import { MenuItemList, Button } from '@/components'
-import { MenuItemListProps } from '@/components/app/MenuItemList/MenuItemList.types'
+import { MenuItemListProps } from '@/components/ui/MenuItemList/MenuItemList.types'
 import { useAuthLogout } from '@/domain/Auth'
 import { ScreenTemplate } from '@/templates'
 

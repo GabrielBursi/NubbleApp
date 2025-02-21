@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { MenuItem } from './MenuItem'
 
 const meta: Meta<typeof MenuItem> = {
-	title: 'Components/MenuItem',
+	title: 'UI/MenuItem',
 	component: MenuItem,
 	args: {
 		label: 'Storybook',

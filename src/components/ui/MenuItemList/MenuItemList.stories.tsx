@@ -6,7 +6,7 @@ import { customFaker } from '@/tests/utils/customFaker'
 import { MenuItemList } from './MenuItemList'
 
 const meta: Meta<typeof MenuItemList> = {
-	title: 'Components/MenuItemList',
+	title: 'UI/MenuItemList',
 	component: MenuItemList,
 	args: {
 		items: [
