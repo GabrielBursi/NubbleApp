@@ -36,6 +36,7 @@ describe('<ProfileUsernameList/>', () => {
 		)
 
 		await userEvent.press(screen.getByText(mockUsers[0]!.username))
+		expect(screen.queryByRole('img', { name: 'trash' })).not.toBeOnTheScreen()
 		expect(mockOnPressProfileItem).toHaveBeenCalledWith(mockUsers[0]!)
 	})
 

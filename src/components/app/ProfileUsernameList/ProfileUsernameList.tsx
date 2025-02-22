@@ -33,11 +33,13 @@ const ProfileUsernameListMemoized = ({
 					avatarProps={{ size: 48 }}
 					onPress={() => onPressProfileItem?.(user)}
 					RightComponent={
-						<ActionIcon
-							color="redError"
-							name={{ default: 'trash' }}
-							onPress={() => onRemoveProfileItem?.(user)}
-						/>
+						onRemoveProfileItem ? (
+							<ActionIcon
+								color="redError"
+								name={{ default: 'trash' }}
+								onPress={() => onRemoveProfileItem?.(user)}
+							/>
+						) : undefined
 					}
 				/>
 			)}
