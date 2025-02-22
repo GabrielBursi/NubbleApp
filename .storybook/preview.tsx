@@ -2,6 +2,9 @@ import React from 'react'
 import type { Preview } from '@storybook/react'
 import { TestProvider } from '../src/providers'
 import { appTheme } from '../src/styles'
+import { AuthStackRouter } from '../src/routes/stack/AuthStack'
+import { AppStackRouter } from '../src/routes/stack/AppStack'
+import { AppBottomTabRouter } from '../src/routes/tab/AppTabBottom'
 import { Container } from '../src/components'
 import {
 	configureReanimatedLogger,
@@ -31,7 +34,33 @@ const preview: Preview = {
 	},
 	decorators: [
 		(Story, { title }) => {
-			if (title.startsWith('Screen') || title.includes('Photo'))
+			const folderComponent = title.split('/')
+			const componentName = folderComponent[folderComponent.length - 1]
+			if (title.startsWith('Screens/Auth/Stack')) {
+				return (
+					<TestProvider>
+						<AuthStackRouter initialRouteName={componentName} />
+					</TestProvider>
+				)
+			}
+
+			if (title.startsWith('Screens/App/Stack')) {
+				return (
+					<TestProvider>
+						<AppStackRouter initialRouteName={componentName} />
+					</TestProvider>
+				)
+			}
+
+			if (title.startsWith('Screens/App/Tab')) {
+				return (
+					<TestProvider>
+						<AppBottomTabRouter initialRouteName={componentName} />
+					</TestProvider>
+				)
+			}
+
+			if (title.startsWith('Components/Photo'))
 				return (
 					<TestProvider>
 						<Story />

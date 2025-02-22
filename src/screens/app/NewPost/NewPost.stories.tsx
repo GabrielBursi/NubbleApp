@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { NewPostScreen } from './NewPost'
 
 const meta: Meta<typeof NewPostScreen> = {
-	title: 'Screens/App/NewPostScreen',
+	title: 'Screens/App/Tab/NewPostScreen',
 	component: NewPostScreen,
 	args: {},
 	argTypes: {},

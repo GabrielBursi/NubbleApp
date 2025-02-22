@@ -12,10 +12,16 @@ import { RootAuthStackRouterParamList } from '@/types/routes'
 
 const AuthStack = createNativeStackNavigator<RootAuthStackRouterParamList>()
 
-export const AuthStackRouter = () => {
+type AuthStackRouterProps = {
+	initialRouteName?: keyof RootAuthStackRouterParamList
+}
+
+export const AuthStackRouter = ({
+	initialRouteName = 'LoginScreen',
+}: AuthStackRouterProps) => {
 	return (
 		<AuthStack.Navigator
-			initialRouteName="LoginScreen"
+			initialRouteName={initialRouteName}
 			screenOptions={{
 				headerShown: false,
 			}}

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { CameraScreen } from './Camera'
 
 const meta: Meta<typeof CameraScreen> = {
-	title: 'Screens/App/CameraScreen',
+	title: 'Screens/App/Stack/CameraScreen',
 	component: CameraScreen,
 	args: {},
 	argTypes: {},

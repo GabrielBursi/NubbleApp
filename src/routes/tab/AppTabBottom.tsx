@@ -18,7 +18,13 @@ import { AppTabBarCustom } from './AppTabBarCustom'
 
 const Tab = createBottomTabNavigator<RootAppTabBottomRouterParamList>()
 
-export const AppBottomTabRouter = () => {
+type AppTabRouterProps = {
+	initialRouteName?: keyof RootAppTabBottomRouterParamList
+}
+
+export const AppBottomTabRouter = ({
+	initialRouteName = 'HomeScreen',
+}: AppTabRouterProps) => {
 	const { spacing } = useAppTheme()
 
 	function renderTabBar(props: BottomTabBarProps) {
@@ -28,7 +34,7 @@ export const AppBottomTabRouter = () => {
 	return (
 		<Tab.Navigator
 			tabBar={renderTabBar}
-			initialRouteName="HomeScreen"
+			initialRouteName={initialRouteName}
 			screenOptions={{
 				headerShown: false,
 				tabBarStyle: {

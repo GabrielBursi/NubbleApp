@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { LoginScreen } from './Login'
 
 const meta: Meta<typeof LoginScreen> = {
-	title: 'Screens/Auth/LoginScreen',
+	title: 'Screens/Auth/Stack/LoginScreen',
 	component: LoginScreen,
 	args: {},
 	argTypes: {

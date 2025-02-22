@@ -16,10 +16,16 @@ import { AppBottomTabRouter } from '../tab/AppTabBottom'
 
 const Stack = createNativeStackNavigator<RootAppStackRouterParamList>()
 
-export const AppStackRouter = () => {
+type AppStackRouterProps = {
+	initialRouteName?: keyof RootAppStackRouterParamList
+}
+
+export const AppStackRouter = ({
+	initialRouteName = 'AppTabNavigator',
+}: AppStackRouterProps) => {
 	return (
 		<Stack.Navigator
-			initialRouteName="AppTabNavigator"
+			initialRouteName={initialRouteName}
 			screenOptions={{
 				headerShown: false,
 			}}

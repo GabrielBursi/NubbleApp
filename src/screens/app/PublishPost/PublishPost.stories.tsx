@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { PublishPostScreen } from './PublishPost'
 
 const meta: Meta<typeof PublishPostScreen> = {
-	title: 'Screens/App/PublishPostScreen',
+	title: 'Screens/App/Stack/PublishPostScreen',
 	component: PublishPostScreen,
 	args: {},
 	argTypes: {},

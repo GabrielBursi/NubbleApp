@@ -1,11 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { customFaker } from '@/tests/utils/customFaker'
+
 import { SuccessScreen } from './Success'
 
 const meta: Meta<typeof SuccessScreen> = {
-	title: 'Screens/Auth/SuccessScreen',
+	title: 'Screens/Auth/Stack/SuccessScreen',
 	component: SuccessScreen,
-	args: {},
+	args: {
+		route: {
+			key: 'SuccessScreen',
+			name: 'SuccessScreen',
+			params: {
+				description: customFaker.lorem.paragraph(),
+				icon: {
+					name: 'check',
+				},
+				title: customFaker.lorem.word(),
+			},
+		},
+	},
 	argTypes: {
 		navigation: {
 			type: 'symbol',
