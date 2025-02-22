@@ -23,19 +23,6 @@ const normalizedStories = [
       /^\.(?:(?:^|[\\/]|(?:(?:(?!(?:^|[\\/])\.).)*?)[\\/])(?!\.)(?=.)[^\\/]*?\.stories\.(ts|tsx))$/
     ),
   },
-  {
-    titlePrefix: "",
-    directory: "./src/screens",
-    files: "**/*.stories.(ts|tsx)",
-    importPathMatcher:
-      /^\.(?:(?:^|[\\/]|(?:(?:(?!(?:^|[\\/])\.).)*?)[\\/])(?!\.)(?=.)[^\\/]*?\.stories\.(ts|tsx))$/,
-    // @ts-ignore
-    req: require.context(
-      "../src/screens",
-      true,
-      /^\.(?:(?:^|[\\/]|(?:(?:(?!(?:^|[\\/])\.).)*?)[\\/])(?!\.)(?=.)[^\\/]*?\.stories\.(ts|tsx))$/
-    ),
-  },
 ];
 
 declare global {

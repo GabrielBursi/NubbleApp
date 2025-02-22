@@ -1,10 +1,7 @@
 import { StorybookConfig } from '@storybook/react-native'
 
 const main: StorybookConfig = {
-	stories: [
-		'../src/components/**/*.stories.(ts|tsx)',
-		'../src/screens/**/*.stories.(ts|tsx)',
-	],
+	stories: ['../src/components/**/*.stories.(ts|tsx)'],
 	addons: [
 		'@storybook/addon-ondevice-controls',
 		'@storybook/addon-ondevice-actions',
