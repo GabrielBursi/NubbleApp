@@ -53,6 +53,8 @@
 		"@tanstack/react-query-devtools": "^5.17.10",
 		"axios": "^1.7.4",
 		"date-fns": "^4.1.0",
+		"expo": "^50.0.0",
+		"expo-image-manipulator": "~11.8.0",
 		"polished": "^4.3.1",
 		"react": "18.2.0",
 		"react-dom": "^18.2.0",
@@ -69,9 +71,7 @@
 		"react-native-screens": "^3.28.0",
 		"react-native-vision-camera": "^4.6.3",
 		"zod": "^3.23.8",
-		"zustand": "^5.0.2",
-		"expo": "^50.0.0",
-		"expo-image-manipulator": "~11.8.0"
+		"zustand": "^5.0.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.23.7",
@@ -93,7 +93,8 @@
 		"@react-native/metro-config": "^0.73.0",
 		"@react-native/typescript-config": "0.73.1",
 		"@rnx-kit/align-deps": "^2.5.0",
-		"@storybook/addon-ondevice-actions": "^8.3.10",
+		"@storybook/addon-actions": "^8.5.8",
+		"@storybook/addon-ondevice-actions": "^8.5.5",
 		"@storybook/addon-ondevice-backgrounds": "^8.3.10",
 		"@storybook/addon-ondevice-controls": "^8.3.10",
 		"@storybook/addon-ondevice-notes": "^8.3.10",

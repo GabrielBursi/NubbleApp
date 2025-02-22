@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Box, Button, Text } from '@/components/ui'
@@ -7,7 +8,7 @@ const meta: Meta<typeof Button> = {
 	component: Button,
 	args: {
 		title: 'Storybook',
-		onPress: () => console.log('Hi!'),
+		onPress: action('onPress'),
 	},
 	argTypes: {
 		onPress: {

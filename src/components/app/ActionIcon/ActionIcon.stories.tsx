@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { ActionIcon } from './ActionIcon'
@@ -11,7 +12,7 @@ const meta: Meta<typeof ActionIcon> = {
 		name: {
 			default: 'heart',
 		},
-		onPress: () => console.log('Hi storybook!'),
+		onPress: action('onPress'),
 	},
 	argTypes: {
 		positionLabel: {

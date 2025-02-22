@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Icon } from './Icon'
@@ -23,6 +24,6 @@ export const Basic: Story = {
 
 export const Pressable: Story = {
 	args: {
-		onPress: () => console.log('Hi storybook'),
+		onPress: action('onPress'),
 	},
 }

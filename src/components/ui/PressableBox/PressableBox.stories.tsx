@@ -1,5 +1,4 @@
-import { Alert } from 'react-native'
-
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Text } from '../Text/Text'
@@ -14,7 +13,7 @@ const meta: Meta<typeof PressableBox> = {
 		paddingLeft: 's56',
 		marginTop: 's20',
 		backgroundColor: 'carrotSecondary',
-		onPress: () => Alert.alert('onPress!'),
+		onPress: action('onPress'),
 	},
 	argTypes: {
 		onPress: {

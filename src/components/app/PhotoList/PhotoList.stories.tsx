@@ -1,5 +1,4 @@
-import { Alert } from 'react-native'
-
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { PhotoList as IPhotoList } from '@/services/multimedia'
@@ -17,7 +16,7 @@ const meta: Meta<typeof PhotoList> = {
 	component: PhotoList,
 	args: {
 		photos: mockImages,
-		onPressImage: (image) => Alert.alert(image.uri),
+		onPressImage: action('onPressImage'),
 	},
 	argTypes: {
 		photos: {

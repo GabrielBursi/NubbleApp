@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Icon } from '../Icon/Icon'
@@ -12,7 +13,7 @@ const meta: Meta<typeof RightIconTextInput> = {
 		isFocused: false,
 		loading: false,
 		rightIcon: <Icon name="bookmark" color="gray3" />,
-		onClear: () => console.log('Clear!'),
+		onClear: action('onClear'),
 		value: 'sb',
 	},
 	argTypes: {

@@ -1,5 +1,4 @@
-import { Alert } from 'react-native'
-
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { TextInput, Container, Icon } from '@/components/ui'
@@ -74,7 +73,7 @@ export const Password: PasswordInputStory = {
 
 export const Send: SendInputStory = {
 	args: {
-		onPressSend: () => Alert.alert('send!'),
+		onPressSend: action('onPressSend'),
 	},
 	argTypes: {
 		onPressSend: {

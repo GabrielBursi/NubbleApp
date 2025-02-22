@@ -1,5 +1,4 @@
-import { Alert } from 'react-native'
-
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { mockUsers } from '@/tests/mocks/mockUser'
@@ -11,8 +10,8 @@ const meta: Meta<typeof ProfileUsernameList> = {
 	component: ProfileUsernameList,
 	args: {
 		users: mockUsers,
-		onPressProfileItem: (user) => Alert.alert(user.fullName),
-		onRemoveProfileItem: (user) => Alert.alert(user.fullName),
+		onPressProfileItem: action('onPressProfileItem'),
+		onRemoveProfileItem: action('onRemoveProfileItem'),
 	},
 	argTypes: {
 		users: {

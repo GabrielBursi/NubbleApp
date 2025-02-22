@@ -1,5 +1,4 @@
-import { Alert } from 'react-native'
-
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { mockUser } from '@/tests/mocks/mockUser'
@@ -11,7 +10,7 @@ const meta: Meta<typeof ProfileUsername> = {
 	component: ProfileUsername,
 	args: {
 		...mockUser,
-		onPress: () => Alert.alert(mockUser.fullName),
+		onPress: action('onPress'),
 	},
 	argTypes: {
 		profileUrl: {

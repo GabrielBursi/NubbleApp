@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { FeedEmpty } from './FeedEmpty'
@@ -8,7 +9,7 @@ const meta: Meta<typeof FeedEmpty> = {
 	args: {
 		error: null,
 		loading: false,
-		refetch: async () => await Promise.resolve(() => console.log('Hi SB!')),
+		refetch: action('refetch'),
 	},
 	argTypes: {
 		error: {
