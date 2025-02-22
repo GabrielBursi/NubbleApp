@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { SearchScreen } from './Search'
 
 const meta: Meta<typeof SearchScreen> = {
-	title: 'Screens/SearchScreen',
+	title: 'Screens/App/SearchScreen',
 	component: SearchScreen,
 	args: {},
 	argTypes: {},
