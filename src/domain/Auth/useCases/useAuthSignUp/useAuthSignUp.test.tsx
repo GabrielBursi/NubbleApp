@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -6,6 +6,7 @@ import { AuthServices } from '@/api/services'
 import { TestProvider } from '@/providers'
 import { mockSignUpData } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
+import { customAct } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
 
 import { useAuthSignUp } from './useAuthSignUp'
@@ -17,7 +18,7 @@ describe('useAuthSignUp', () => {
 	it('should signup correctly', async () => {
 		const { result } = renderHook(useAuthSignUp, { wrapper: TestProvider })
 
-		await act(() => {
+		await customAct(() => {
 			result.current.signUp(mockSignUpData)
 		})
 
@@ -40,7 +41,7 @@ describe('useAuthSignUp', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.signUp(mockSignUpData)
 		})
 
@@ -63,7 +64,7 @@ describe('useAuthSignUp', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.signUp(mockSignUpData)
 		})
 

@@ -1,4 +1,6 @@
-import { act, renderHook } from '@testing-library/react-native'
+import { renderHook } from '@testing-library/react-native'
+
+import { customAct } from '@/tests/utils'
 
 import { useDebounce } from './useDebounce'
 
@@ -25,7 +27,7 @@ describe('useDebounce', () => {
 		expect(result.current.debouncedValue).toBe('initial')
 		expect(result.current.isDebouncing).toBe(true)
 
-		await act(() => {
+		await customAct(() => {
 			jest.advanceTimersByTime(500)
 		})
 

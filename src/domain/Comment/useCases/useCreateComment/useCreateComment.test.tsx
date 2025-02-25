@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -6,6 +6,7 @@ import { CommentApi } from '@/domain/Comment'
 import { useInvalidateQueryComments } from '@/hooks/useInvalidateQueryComments/useInvalidateQueryComments'
 import { TestProvider } from '@/providers'
 import { serverTest } from '@/tests/server'
+import { customAct } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -44,7 +45,7 @@ describe('useCreateComment', () => {
 			}
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 		await waitFor(() => {
@@ -61,7 +62,7 @@ describe('useCreateComment', () => {
 	it('should return the comment created correctly', async () => {
 		const { result } = renderHook(useCreateComment, { wrapper: TestProvider })
 
-		await act(() => {
+		await customAct(() => {
 			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 		await waitFor(() => {
@@ -80,7 +81,7 @@ describe('useCreateComment', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 
@@ -103,7 +104,7 @@ describe('useCreateComment', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 
@@ -130,7 +131,7 @@ describe('useCreateComment', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.createComment({ message: 'jest', postId: '1' })
 		})
 

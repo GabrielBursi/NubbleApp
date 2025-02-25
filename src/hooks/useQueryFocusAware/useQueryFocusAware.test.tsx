@@ -1,5 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { act, renderHook } from '@testing-library/react-native'
+import { renderHook } from '@testing-library/react-native'
+
+import { customAct } from '@/tests/utils'
 
 import { useQueryFocusAware } from './useQueryFocusAware'
 
@@ -11,7 +13,7 @@ describe('useQueryFocusAware', () => {
 
 		const isFocused = result.current()
 
-		await act(() => {
+		await customAct(() => {
 			expect(isFocused).toBe(true)
 		})
 	})
@@ -21,13 +23,13 @@ describe('useQueryFocusAware', () => {
 			wrapper: NavigationContainer,
 		})
 
-		await act(() => {
+		await customAct(() => {
 			unmount()
 		})
 
 		const isFocused = result.current()
 
-		await act(() => {
+		await customAct(() => {
 			expect(isFocused).toBe(false)
 		})
 	})

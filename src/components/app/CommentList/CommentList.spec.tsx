@@ -1,7 +1,7 @@
-import { act, screen, userEvent } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
 import { mockComments } from '@/tests/mocks'
-import { customFaker, customRender } from '@/tests/utils'
+import { customAct, customFaker, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useCommentList } from '../../../domain/Comment/useCases/useCommentList/useCommentList'
@@ -54,7 +54,7 @@ describe('<CommentList/>', () => {
 
 		debug()
 
-		await act(() => {
+		await customAct(() => {
 			expect(screen.getAllByRole('listitem')).toHaveLength(1)
 		})
 	})

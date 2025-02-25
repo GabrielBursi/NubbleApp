@@ -1,5 +1,5 @@
 /* eslint-disable sonarjs/no-hardcoded-credentials */
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -9,6 +9,7 @@ import { TestProvider } from '@/providers'
 import { useAuthCredentialsService } from '@/services/auth/useAuthCredentials'
 import { mockAuthApi } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
+import { customAct } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -41,7 +42,7 @@ describe('useAuthLogin', () => {
 
 		expect(result.current.authCredentials).toBeNull()
 
-		await act(() => {
+		await customAct(() => {
 			result.current.login({ email: 'jest@email.com', password: 'jest' })
 		})
 
@@ -59,7 +60,7 @@ describe('useAuthLogin', () => {
 
 		expect(result.current.authCredentials).toBeNull()
 
-		await act(() => {
+		await customAct(() => {
 			result.current.login({ email: 'jest@email.com', password: 'jest' })
 		})
 
@@ -83,7 +84,7 @@ describe('useAuthLogin', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.login({ email: 'jest@email.com', password: 'jest' })
 		})
 
@@ -106,7 +107,7 @@ describe('useAuthLogin', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.login({ email: 'jest@email.com', password: 'jest' })
 		})
 

@@ -1,13 +1,8 @@
-import {
-	act,
-	fireEvent,
-	screen,
-	userEvent,
-} from '@testing-library/react-native'
+import { fireEvent, screen, userEvent } from '@testing-library/react-native'
 
 import { usePostList } from '@/domain/Post/useCases/usePostList/usePostList'
 import { mockPosts } from '@/tests/mocks'
-import { customRender } from '@/tests/utils'
+import { customAct, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { FeedList } from './FeedList'
@@ -56,7 +51,7 @@ describe('<FeedList/>', () => {
 
 		customRender(<FeedList />)
 
-		await act(() => {
+		await customAct(() => {
 			expect(screen.getAllByRole('listitem')).toHaveLength(1)
 		})
 	})

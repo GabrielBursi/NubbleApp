@@ -1,8 +1,9 @@
 import { InfiniteData, QueryKey } from '@tanstack/react-query'
-import { act, renderHook } from '@testing-library/react-native'
+import { renderHook } from '@testing-library/react-native'
 
 import { PostModel } from '@/domain/Post'
 import { generatePost, mockMetaPaginationApp } from '@/tests/mocks'
+import { customAct } from '@/tests/utils'
 import { AppQueryKeys } from '@/types/api'
 import { PageApp } from '@/types/shared'
 
@@ -39,7 +40,7 @@ describe('useInvalidateQueryComments', () => {
 	it('should invalidate comments query', async () => {
 		const { result } = renderHook(useInvalidateQueryComments)
 
-		await act(async () => {
+		await customAct(async () => {
 			await result.current.invalidateQueryComments(mockPostId)
 		})
 
@@ -65,7 +66,7 @@ describe('useInvalidateQueryComments', () => {
 
 		const { result } = renderHook(useInvalidateQueryComments)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.invalidateCommentCountPost(postId, 'increment')
 		})
 
@@ -91,7 +92,7 @@ describe('useInvalidateQueryComments', () => {
 
 		const { result } = renderHook(useInvalidateQueryComments)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.invalidateCommentCountPost(postId, 'decrement')
 		})
 
@@ -122,7 +123,7 @@ describe('useInvalidateQueryComments', () => {
 
 		const { result } = renderHook(useInvalidateQueryComments)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.invalidateCommentCountPost(nonExistentPostId, 'increment')
 		})
 
@@ -140,7 +141,7 @@ describe('useInvalidateQueryComments', () => {
 
 		const { result } = renderHook(useInvalidateQueryComments)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.invalidateCommentCountPost('mock-post-id', 'increment')
 		})
 

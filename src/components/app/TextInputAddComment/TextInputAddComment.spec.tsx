@@ -1,9 +1,9 @@
-import { act, screen, userEvent } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
 import { useCreateComment } from '@/domain/Comment/useCases/useCreateComment/useCreateComment'
 import { useToastService } from '@/services/toast/useToast'
 import { generateComment } from '@/tests/mocks'
-import { customRender } from '@/tests/utils'
+import { customAct, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { TextInputAddComment } from './TextInputAddComment'
@@ -67,7 +67,7 @@ describe('<TextInputAddComment/>', () => {
 
 		customRender(<TextInputAddComment postId={mockPostId} />)
 
-		await act(() => {
+		await customAct(() => {
 			expect(mockResetCreateComment).toHaveBeenCalled()
 		})
 	})
@@ -81,7 +81,7 @@ describe('<TextInputAddComment/>', () => {
 		)
 		await userEvent.press(screen.getByRole('button', { name: /enviar/i }))
 
-		await act(() => {
+		await customAct(() => {
 			expect(mockCreateComment).toHaveBeenCalledWith({
 				message: 'jest',
 				postId: mockPostId,

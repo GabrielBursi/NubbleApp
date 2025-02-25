@@ -1,8 +1,9 @@
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 
 import { AuthServices } from '@/api/services'
 import { TestProvider } from '@/providers'
 import { useAuthCredentialsService } from '@/services/auth/useAuthCredentials'
+import { customAct } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { useAuthLogout } from './useAuthLogout'
@@ -33,7 +34,7 @@ describe('useAuthLogout', () => {
 
 		expect(result.current.message).toBeNull()
 
-		await act(() => {
+		await customAct(() => {
 			result.current.logout()
 		})
 
@@ -48,7 +49,7 @@ describe('useAuthLogout', () => {
 
 		expect(result.current.message).toBeNull()
 
-		await act(() => {
+		await customAct(() => {
 			result.current.logout()
 		})
 

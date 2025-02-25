@@ -1,6 +1,7 @@
-import { act, renderHook } from '@testing-library/react-native'
+import { renderHook } from '@testing-library/react-native'
 
 import { mockUseNavigation } from '@/tests/mocks'
+import { customAct } from '@/tests/utils'
 
 import { useResetNavigation } from './useResetNavigation'
 
@@ -10,7 +11,7 @@ describe('useResetNavigation', () => {
 
 		const resetSuccess = result.current.resetSuccess
 
-		await act(() => {
+		await customAct(() => {
 			resetSuccess({
 				description: 'jest',
 				icon: { name: 'arrowLeft' },

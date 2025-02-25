@@ -1,10 +1,11 @@
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
 import { AuthApi } from '@/domain/Auth'
 import { TestProvider } from '@/providers'
 import { serverTest } from '@/tests/server'
+import { customAct } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
 
 import { useAuthRequestNewPassword } from './useAuthRequestNewPassword'
@@ -19,7 +20,7 @@ describe('useAuthRequestNewPassword', () => {
 			wrapper: TestProvider,
 		})
 
-		await act(() => {
+		await customAct(() => {
 			result.current.requestNewPassword(mockEmail)
 		})
 
@@ -47,7 +48,7 @@ describe('useAuthRequestNewPassword', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.requestNewPassword(mockEmail)
 		})
 
@@ -71,7 +72,7 @@ describe('useAuthRequestNewPassword', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.requestNewPassword(mockEmail)
 		})
 

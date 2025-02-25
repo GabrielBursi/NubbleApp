@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -7,6 +7,7 @@ import { PostApi, PostAPIModel } from '@/domain/Post'
 import { TestProvider } from '@/providers'
 import { mockMetaPaginationApi, mockPostsAPI } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
+import { customAct } from '@/tests/utils'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
 import { usePaginatedList } from './usePaginatedList'
@@ -25,7 +26,7 @@ describe('usePaginatedList', () => {
 				wrapper: TestProvider,
 			}
 		)
-		await act(async () => {
+		await customAct(async () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 1,
@@ -47,7 +48,7 @@ describe('usePaginatedList', () => {
 			}
 		)
 
-		await act(async () => {
+		await customAct(async () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 1,
@@ -56,11 +57,11 @@ describe('usePaginatedList', () => {
 			})
 		})
 
-		await act(async () => {
+		await customAct(async () => {
 			await result.current.fetchNextPage()
 		})
 
-		await act(async () => {
+		await customAct(async () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 2,
@@ -82,7 +83,7 @@ describe('usePaginatedList', () => {
 			}
 		)
 
-		await act(async () => {
+		await customAct(async () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 1,
@@ -91,15 +92,15 @@ describe('usePaginatedList', () => {
 			})
 		})
 
-		await act(async () => {
+		await customAct(async () => {
 			await result.current.fetchNextPage()
 		})
 
-		await act(async () => {
+		await customAct(async () => {
 			await result.current.refreshList()
 		})
 
-		await act(async () => {
+		await customAct(async () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledTimes(4)
 			})
@@ -178,7 +179,7 @@ describe('usePaginatedList', () => {
 			}
 		)
 
-		await act(async () => {
+		await customAct(async () => {
 			await waitFor(() => {
 				expect(getAllWithPagination).toHaveBeenCalledWith({
 					page: 1,
@@ -187,7 +188,7 @@ describe('usePaginatedList', () => {
 			})
 		})
 
-		await act(async () => {
+		await customAct(async () => {
 			await result.current.fetchNextPage()
 		})
 
@@ -216,7 +217,7 @@ describe('usePaginatedList', () => {
 			}
 		)
 
-		await act(async () => {
+		await customAct(async () => {
 			const data = await result.current.refreshList()
 			expect(data).toBeNull()
 		})
@@ -242,7 +243,7 @@ describe('usePaginatedList', () => {
 			}
 		)
 
-		await act(async () => {
+		await customAct(async () => {
 			const data = await result.current.fetchNextPage()
 			expect(data).toBeNull()
 		})

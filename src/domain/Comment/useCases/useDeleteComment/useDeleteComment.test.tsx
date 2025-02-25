@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 
-import { act, renderHook, waitFor } from '@testing-library/react-native'
+import { renderHook, waitFor } from '@testing-library/react-native'
 import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
@@ -9,6 +9,7 @@ import { useInvalidateQueryComments } from '@/hooks/useInvalidateQueryComments/u
 import { TestProvider } from '@/providers'
 import { generateComment } from '@/tests/mocks'
 import { serverTest } from '@/tests/server'
+import { customAct } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -50,7 +51,7 @@ describe('useDeleteComment', () => {
 			}
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.deleteComment(1)
 		})
 		await waitFor(() => {
@@ -67,7 +68,7 @@ describe('useDeleteComment', () => {
 	it('should return the message of comment deleted correctly', async () => {
 		const { result } = renderHook(useDeleteComment, { wrapper: TestProvider })
 
-		await act(() => {
+		await customAct(() => {
 			result.current.deleteComment(1)
 		})
 		await waitFor(() => {
@@ -78,7 +79,7 @@ describe('useDeleteComment', () => {
 	it('should confirm to delete correctly', async () => {
 		const { result } = renderHook(useDeleteComment, { wrapper: TestProvider })
 
-		await act(() => {
+		await customAct(() => {
 			result.current.confirmDelete(mockConfirmDelete)
 		})
 
@@ -116,7 +117,7 @@ describe('useDeleteComment', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.deleteComment(1)
 		})
 
@@ -139,7 +140,7 @@ describe('useDeleteComment', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.deleteComment(1)
 		})
 
@@ -166,7 +167,7 @@ describe('useDeleteComment', () => {
 			]
 		)
 
-		await act(() => {
+		await customAct(() => {
 			result.current.deleteComment(1)
 		})
 
