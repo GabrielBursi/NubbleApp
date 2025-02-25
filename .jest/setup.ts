@@ -1,6 +1,6 @@
 jest.setTimeout(10000)
 
-import '@testing-library/react-native/extend-expect'
+import '@testing-library/react-native/pure'
 import '@testing-library/jest-native/extend-expect'
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock'
 require('@shopify/flash-list/jestSetup')

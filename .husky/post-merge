@@ -1,2 +1,2 @@
-npm run format
+npm run prettier:write
 git add .

@@ -6,7 +6,10 @@ import { StrictOmit } from '@/types/utils'
 import { SRText } from './Text'
 
 type SRTextProps = ComponentProps<typeof SRText>
-export type TextProps = StrictOmit<SRTextProps, 'children' | 'accessible'> & {
+export type TextProps = StrictOmit<
+	SRTextProps,
+	'children' | 'accessible' | 'ref'
+> & {
 	preset?: TextVariants
 	bold?: boolean
 	italic?: boolean
