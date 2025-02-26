@@ -15,4 +15,5 @@ export type RootAppStackRouterParamList = {
 		imageUri: string
 	}
 	CameraScreen: undefined
+	ThemeScreen: undefined
 }

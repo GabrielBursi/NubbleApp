@@ -17,7 +17,7 @@ const MenuItemMemoized = ({ label, onPress }: Readonly<MenuItemProps>) => {
 			accessibilityRole="menuitem"
 			accessibilityLabel={label}
 		>
-			<Text>{label}</Text>
+			<Text semiBold>{label}</Text>
 			<Icon name="chevronRight" />
 		</PressableBox>
 	)

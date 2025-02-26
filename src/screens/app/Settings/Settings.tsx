@@ -4,17 +4,20 @@ import { MenuItemList, Button } from '@/components'
 import { MenuItemListProps } from '@/components/ui/MenuItemList/MenuItemList.types'
 import { useAuthLogout } from '@/domain/Auth'
 import { ScreenTemplate } from '@/templates'
+import { SettingsScreenProps } from '@/types/screens'
 
-export const SettingsScreen = () => {
+export const SettingsScreen = ({
+	navigation,
+}: Readonly<SettingsScreenProps>) => {
 	const { isLoading, logout } = useAuthLogout()
 
 	const items: Required<MenuItemListProps>['items'] = useMemo(
 		() => [
 			{ label: 'Termos de uso' },
 			{ label: 'Política de privacidade' },
-			{ label: 'Tema' },
+			{ label: 'Tema', onPress: () => navigation.navigate('ThemeScreen') },
 		],
-		[]
+		[navigation]
 	)
 
 	return (

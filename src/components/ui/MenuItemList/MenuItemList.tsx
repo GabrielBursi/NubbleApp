@@ -19,7 +19,7 @@ const MenuItemListMemoized = ({
 			keyExtractor={(menuItem, index) => `${menuItem.label}-${index}`}
 			renderItem={({ item: menuItem }) => <MenuItem {...menuItem} />}
 			ItemSeparatorComponent={Divider}
-			estimatedItemSize={400 * 60}
+			estimatedItemSize={60}
 			disableAutoLayout
 			accessible
 			accessibilityLabel="menu"
