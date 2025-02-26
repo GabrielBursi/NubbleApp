@@ -48,8 +48,8 @@ export type RadioGroupProps<TItem extends Record<string, unknown>> = {
 	items: RadioItem<TItem>[]
 	labelKey: keyof TItem
 	descriptionKey?: keyof TItem
-	initialItemIndexSelected?: number
-	onSelect?: (
+	initialSelectedIndex?: number
+	onOptionSelect?: (
 		item: TItem,
 		checked: Required<RadioButtonProps>['checked']
 	) => void

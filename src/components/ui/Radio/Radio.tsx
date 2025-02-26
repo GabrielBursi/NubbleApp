@@ -110,57 +110,62 @@ const RadioButtonMemoized = ({
 
 const RadioButtonInternal = memo(RadioButtonMemoized)
 
-const RadioGroupInternal = <TItem extends Record<string, unknown>>({
-	items,
-	descriptionKey,
-	labelKey,
-	onSelect,
-	initialItemIndexSelected,
+const RadioGroupInternal = <TOption extends Record<string, unknown>>({
+	items: radioOptions,
+	descriptionKey: optionDescriptionKey,
+	labelKey: optionLabelKey,
+	onOptionSelect,
+	initialSelectedIndex,
 	...props
-}: Readonly<RadioGroupProps<TItem>>) => {
-	const [selectedItemIndex, setSelectedItemIndex] = useState<number | null>(
+}: Readonly<RadioGroupProps<TOption>>) => {
+	const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(
 		null
 	)
 
-	const findItem = useCallback(
-		(itemSelected: TItem | null = null, indexSelected?: number) => {
-			const itemSelectedIndex = items.findIndex((item, index) => {
-				if (itemSelected) return itemSelected === item
-				if (indexSelected !== undefined) return indexSelected === index
+	const updateSelectedIndex = useCallback(
+		(selectedOption: TOption | null = null, selectedIndex?: number) => {
+			const foundIndex = radioOptions.findIndex((option, index) => {
+				if (selectedOption) return selectedOption === option
+				if (selectedIndex !== undefined) return selectedIndex === index
 			})
-			if (itemSelectedIndex >= 0) setSelectedItemIndex(itemSelectedIndex)
+
+			if (foundIndex >= 0) setSelectedOptionIndex(foundIndex)
 		},
-		[items]
+		[radioOptions]
 	)
 
-	const handleSelectRadio = useCallback(
-		(item: TItem, checked: boolean) => {
-			onSelect?.(item, checked)
-			findItem(item)
+	const handleRadioSelection = useCallback(
+		(option: TOption, isChecked: boolean) => {
+			onOptionSelect?.(option, isChecked)
+			updateSelectedIndex(option)
 		},
-		[onSelect, findItem]
+		[onOptionSelect, updateSelectedIndex]
 	)
 
 	useEffect(() => {
-		findItem(undefined, initialItemIndexSelected)
-	}, [initialItemIndexSelected, findItem])
+		updateSelectedIndex(null, initialSelectedIndex)
+	}, [initialSelectedIndex, updateSelectedIndex])
 
 	return (
-		<FlashList<TItem>
+		<FlashList<TOption>
 			{...props}
-			data={items}
+			data={radioOptions}
 			bounces={false}
-			keyExtractor={(item, index) => `${String(item[labelKey])}-${index}`}
-			renderItem={({ item, index }) => (
+			keyExtractor={(option, index) =>
+				`${String(option[optionLabelKey])}-${index}`
+			}
+			renderItem={({ item: option, index }) => (
 				<RadioButtonInternal
-					{...item}
-					label={String(item[labelKey])}
-					description={descriptionKey && String(item[descriptionKey])}
-					onChange={(checked) => handleSelectRadio(item, checked)}
-					checked={index === selectedItemIndex}
+					{...option}
+					label={String(option[optionLabelKey])}
+					description={
+						optionDescriptionKey && String(option[optionDescriptionKey])
+					}
+					onChange={(isChecked) => handleRadioSelection(option, isChecked)}
+					checked={index === selectedOptionIndex}
 				/>
 			)}
-			extraData={selectedItemIndex}
+			extraData={selectedOptionIndex}
 			ItemSeparatorComponent={Divider}
 			estimatedItemSize={400 * 60}
 			disableAutoLayout

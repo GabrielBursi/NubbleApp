@@ -46,7 +46,7 @@ const meta: Meta<typeof Radio | typeof Radio.Button | typeof Radio.Group> = {
 		onChange: {
 			type: 'symbol',
 		},
-		onSelect: {
+		onOptionSelect: {
 			type: 'symbol',
 		},
 		side: {
@@ -57,7 +57,7 @@ const meta: Meta<typeof Radio | typeof Radio.Button | typeof Radio.Group> = {
 		items: {
 			type: 'symbol',
 		},
-		initialItemIndexSelected: {
+		initialSelectedIndex: {
 			type: 'number',
 			control: {
 				min: 0,
@@ -105,8 +105,8 @@ export const Group: StoryRadioGroup = {
 		items: mockList,
 		descriptionKey: 'job',
 		labelKey: 'name',
-		onSelect: action('onSelect'),
-		initialItemIndexSelected: 1,
+		onOptionSelect: action('onSelect'),
+		initialSelectedIndex: 1,
 	},
 	render: (args) => <Radio.Group {...args} />,
 }

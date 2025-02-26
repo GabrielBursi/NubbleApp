@@ -152,7 +152,7 @@ describe('Radio Compound', () => {
 					items={[mockList[0]!]}
 					descriptionKey="job"
 					labelKey="name"
-					onSelect={mockOnSelect}
+					onOptionSelect={mockOnSelect}
 				/>
 			)
 
@@ -172,8 +172,8 @@ describe('Radio Compound', () => {
 					items={[mockList[0]!]}
 					descriptionKey="job"
 					labelKey="name"
-					onSelect={mockOnSelect}
-					initialItemIndexSelected={0}
+					onOptionSelect={mockOnSelect}
+					initialSelectedIndex={0}
 				/>
 			)
 
@@ -188,8 +188,8 @@ describe('Radio Compound', () => {
 					items={[mockList[0]!]}
 					descriptionKey="job"
 					labelKey="name"
-					onSelect={mockOnSelect}
-					initialItemIndexSelected={999}
+					onOptionSelect={mockOnSelect}
+					initialSelectedIndex={999}
 				/>
 			)
 
