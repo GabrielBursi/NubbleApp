@@ -32,6 +32,7 @@ const RadioButtonMemoized = ({
 			accessibilityRole="radio"
 			// eslint-disable-next-line react-native/no-inline-styles
 			style={{ opacity: disabled ? 0.5 : 1 }}
+			android_disableSound
 		>
 			{internalChecked && (
 				<Box

@@ -3,28 +3,26 @@ import { useCallback, useEffect, useState } from 'react'
 import { RadioButtonProps } from '@/components/ui/RadioButton/RadioButton.types'
 
 export const useRadioButton = (
-	{
-		checked,
-		disabled,
-		onChange,
-	}: Pick<RadioButtonProps, 'checked' | 'disabled' | 'onChange'> = {
+	opt: Partial<Pick<RadioButtonProps, 'checked' | 'disabled' | 'onChange'>> = {
 		checked: false,
 		disabled: false,
 		onChange: undefined,
 	}
 ) => {
-	const [internalValue, setInternalValue] = useState(checked)
+	const { checked, disabled, onChange } = opt
+
+	const [internalValue, setInternalValue] = useState(!!checked)
 
 	const handleChangeValue = useCallback(() => {
 		if (disabled) return
-		setInternalValue((old) => {
-			onChange?.(!old)
-			return !old
-		})
-	}, [onChange, disabled])
+
+		const newValue = !internalValue
+		setInternalValue(newValue)
+		onChange?.(newValue)
+	}, [onChange, disabled, internalValue])
 
 	useEffect(() => {
-		setInternalValue(checked)
+		setInternalValue(!!checked)
 	}, [checked])
 
 	return {

@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import { Box, RadioButton, Text } from '@/components'
+import { Box, PressableBox, RadioButton, Text } from '@/components'
 import { useRadioButton } from '@/hooks'
 
 import { RadioButtonItemProps } from './RadioButtonItem.types'
@@ -26,16 +26,16 @@ const RadioButtonItemMemoized = ({
 				gap="s8"
 			>
 				{side === 'left' && (
-					<Box gap="s4" flex={1}>
-						<Text onPress={internalOnChange} semiBold>
-							{label}
-						</Text>
-						{description && (
-							<Text.Expanded onPress={internalOnChange}>
-								{description}
-							</Text.Expanded>
-						)}
-					</Box>
+					<PressableBox
+						onPress={internalOnChange}
+						hitSlop={10}
+						android_disableSound
+						gap="s4"
+						flex={1}
+					>
+						<Text semiBold>{label}</Text>
+						{description && <Text.Expanded>{description}</Text.Expanded>}
+					</PressableBox>
 				)}
 				<RadioButton
 					{...radioButtonProps}
@@ -46,16 +46,16 @@ const RadioButtonItemMemoized = ({
 					onChange={internalOnChange}
 				/>
 				{side === 'right' && (
-					<Box gap="s4" flex={1}>
-						<Text onPress={internalOnChange} semiBold>
-							{label}
-						</Text>
-						{description && (
-							<Text.Expanded onPress={internalOnChange}>
-								{description}
-							</Text.Expanded>
-						)}
-					</Box>
+					<PressableBox
+						onPress={internalOnChange}
+						hitSlop={10}
+						android_disableSound
+						gap="s4"
+						flex={1}
+					>
+						<Text semiBold>{label}</Text>
+						{description && <Text.Expanded>{description}</Text.Expanded>}
+					</PressableBox>
 				)}
 			</Box>
 		</Box>
