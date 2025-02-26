@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react'
+import { StyleProp, ViewStyle } from 'react-native'
 
 import { Box } from '@/components'
 
@@ -12,4 +13,5 @@ export type ScreenTemplateProps = {
 export type ContainerScreenProps = {
 	children: React.ReactNode
 	backgroundColor: string
+	style?: StyleProp<ViewStyle>
 }

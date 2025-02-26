@@ -9,12 +9,13 @@ import { ContainerScreenProps, ScreenTemplateProps } from './Screen.types'
 export function ScrollViewContainer({
 	children,
 	backgroundColor,
+	style,
 }: Readonly<ContainerScreenProps>) {
 	return (
 		<ScrollView
 			keyboardShouldPersistTaps="handled"
 			// eslint-disable-next-line react-native/no-inline-styles
-			style={{ backgroundColor, flex: 1 }}
+			style={[{ backgroundColor, flex: 1 }, style]}
 		>
 			{children}
 		</ScrollView>
@@ -23,9 +24,10 @@ export function ScrollViewContainer({
 export function ViewContainer({
 	children,
 	backgroundColor,
+	style,
 }: Readonly<ContainerScreenProps>) {
 	// eslint-disable-next-line react-native/no-inline-styles
-	return <View style={{ backgroundColor, flex: 1 }}>{children}</View>
+	return <View style={[{ backgroundColor, flex: 1 }, style]}>{children}</View>
 }
 
 export const ScreenTemplate = ({
@@ -48,17 +50,18 @@ export const ScreenTemplate = ({
 			style={{ flex: 1 }}
 			behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 		>
-			<ContainerScreen backgroundColor={colors.background}>
-				<Container
-					flex={1}
-					style={[{ paddingTop: top, paddingBottom: bottom }, style]}
-					{...boxProps}
-				>
+			<ContainerScreen
+				style={{ paddingTop: top, paddingBottom: bottom }}
+				backgroundColor={colors.background}
+			>
+				<Container flex={0}>
 					<ScreenHeader
 						HeaderComponent={HeaderComponent}
 						canGoBack={canGoBack}
 						title={title}
 					/>
+				</Container>
+				<Container flex={1} style={style} {...boxProps}>
 					{children}
 				</Container>
 			</ContainerScreen>
