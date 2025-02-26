@@ -160,7 +160,11 @@ describe('Radio Compound', () => {
 				screen.getByRole('text', { name: mockList[0]?.job })
 			)
 
-			expect(mockOnSelect).toHaveBeenCalledWith(mockList[0], true)
+			expect(mockOnSelect).toHaveBeenCalledWith({
+				checked: true,
+				index: 0,
+				option: mockList[0],
+			})
 			expect(screen.getByRole('radio')).toHaveAccessibilityState({
 				checked: true,
 			})

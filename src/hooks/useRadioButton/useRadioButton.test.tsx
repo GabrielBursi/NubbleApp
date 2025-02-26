@@ -22,12 +22,29 @@ describe('useRadioButton', () => {
 			useRadioButton({ checked: true, onChange: mockOnChange })
 		)
 
-		const change = result.current.onChange
-
-		await act(() => change())
+		await act(() => result.current.onChange())
 
 		expect(mockOnChange).toHaveBeenCalledWith(false)
 		expect(result.current.checked).toBe(false)
+
+		await act(() => result.current.onChange())
+		expect(mockOnChange).toHaveBeenCalledWith(true)
+		expect(result.current.checked).toBe(true)
+	})
+
+	it('should not allow to uncheck', async () => {
+		const { result } = renderHook(() =>
+			useRadioButton({ onChange: mockOnChange, canUncheck: false })
+		)
+
+		await act(() => result.current.onChange())
+		expect(mockOnChange).toHaveBeenCalledWith(true)
+		expect(result.current.checked).toBe(true)
+
+		await act(() => result.current.onChange())
+		expect(result.current.checked).toBe(true)
+		expect(mockOnChange).not.toHaveBeenCalledWith(false)
+		expect(mockOnChange).toHaveBeenCalledTimes(1)
 	})
 
 	it('should disable change of the value', async () => {

@@ -9,6 +9,8 @@ export type RadioProps = {
 	checked?: boolean
 	/** @default false */
 	disabled?: boolean
+	/** @default true */
+	canUncheck?: boolean
 	onChange?: (value: boolean) => void
 } & StrictOmit<
 	PressableBoxProps,
@@ -38,21 +40,24 @@ export type RadioButtonProps = {
 
 type RadioItemProps = StrictOmit<
 	RadioButtonProps,
-	'label' | 'description' | 'onChange' | 'checked'
+	'label' | 'description' | 'onChange' | 'checked' | 'canUncheck'
 >
 
 export type RadioItem<TItem extends Record<string, unknown>> = TItem &
 	RadioItemProps
+
+export type OptionSelected<TItem extends Record<string, unknown>> = {
+	option: TItem
+	index: number
+	checked: boolean
+}
 
 export type RadioGroupProps<TItem extends Record<string, unknown>> = {
 	items: RadioItem<TItem>[]
 	labelKey: keyof TItem
 	descriptionKey?: keyof TItem
 	initialSelectedIndex?: number
-	onOptionSelect?: (
-		item: TItem,
-		checked: Required<RadioButtonProps>['checked']
-	) => void
+	onOptionSelect?: (opt: OptionSelected<TItem>) => void
 } & StrictOmit<
 	FlashListProps<TItem>,
 	| 'data'

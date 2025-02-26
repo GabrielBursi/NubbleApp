@@ -5,16 +5,22 @@ import { FlashList } from '@shopify/flash-list'
 import { Box, Divider, PressableBox, Text } from '@/components'
 import { useRadioButton } from '@/hooks'
 
-import { RadioButtonProps, RadioGroupProps, RadioProps } from './Radio.types'
+import {
+	OptionSelected,
+	RadioButtonProps,
+	RadioGroupProps,
+	RadioProps,
+} from './Radio.types'
 
 const RadioMemoized = ({
 	checked = false,
 	onChange,
 	disabled = false,
+	canUncheck = true,
 	...props
 }: Readonly<RadioProps>) => {
 	const { checked: internalChecked, onChange: internalOnChange } =
-		useRadioButton({ checked, disabled, onChange })
+		useRadioButton({ checked, disabled, onChange, canUncheck })
 
 	return (
 		<PressableBox
@@ -57,11 +63,12 @@ const RadioButtonMemoized = ({
 	side = 'left',
 	checked = false,
 	disabled = false,
+	canUncheck = true,
 	onChange,
 	...radioButtonProps
 }: Readonly<RadioButtonProps>) => {
 	const { checked: internalChecked, onChange: internalOnChange } =
-		useRadioButton({ checked, disabled, onChange })
+		useRadioButton({ checked, disabled, onChange, canUncheck })
 
 	return (
 		<Box paddingVertical="s16">
@@ -123,27 +130,24 @@ const RadioGroupInternal = <TOption extends Record<string, unknown>>({
 	)
 
 	const updateSelectedIndex = useCallback(
-		(selectedOption: TOption | null = null, selectedIndex?: number) => {
-			const foundIndex = radioOptions.findIndex((option, index) => {
-				if (selectedOption) return selectedOption === option
-				if (selectedIndex !== undefined) return selectedIndex === index
-			})
-
+		(index: number) => {
+			const foundIndex = radioOptions.findIndex((_o, i) => i === index)
 			if (foundIndex >= 0) setSelectedOptionIndex(foundIndex)
 		},
 		[radioOptions]
 	)
 
 	const handleRadioSelection = useCallback(
-		(option: TOption, isChecked: boolean) => {
-			onOptionSelect?.(option, isChecked)
-			updateSelectedIndex(option)
+		({ checked, option, index }: OptionSelected<TOption>) => {
+			onOptionSelect?.({ checked, index, option })
+			updateSelectedIndex(index)
 		},
 		[onOptionSelect, updateSelectedIndex]
 	)
 
 	useEffect(() => {
-		updateSelectedIndex(null, initialSelectedIndex)
+		if (initialSelectedIndex !== undefined)
+			updateSelectedIndex(initialSelectedIndex)
 	}, [initialSelectedIndex, updateSelectedIndex])
 
 	return (
@@ -158,10 +162,13 @@ const RadioGroupInternal = <TOption extends Record<string, unknown>>({
 				<RadioButtonInternal
 					{...option}
 					label={String(option[optionLabelKey])}
+					canUncheck={false}
 					description={
 						optionDescriptionKey && String(option[optionDescriptionKey])
 					}
-					onChange={(isChecked) => handleRadioSelection(option, isChecked)}
+					onChange={(checked) =>
+						handleRadioSelection({ index, option, checked })
+					}
 					checked={index === selectedOptionIndex}
 				/>
 			)}
