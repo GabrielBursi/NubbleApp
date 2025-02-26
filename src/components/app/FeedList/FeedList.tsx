@@ -36,7 +36,7 @@ const FeedListMemoized = () => {
 			}
 			disableAutoLayout
 			// size PostItem device: Pixel 8 Pro API 34
-			estimatedItemSize={448 * 714}
+			estimatedItemSize={714}
 			// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 			onEndReached={fetchMorePosts}
 			onEndReachedThreshold={0.1}

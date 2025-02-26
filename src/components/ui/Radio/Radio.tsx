@@ -174,7 +174,7 @@ const RadioGroupInternal = <TOption extends Record<string, unknown>>({
 			)}
 			extraData={selectedOptionIndex}
 			ItemSeparatorComponent={Divider}
-			estimatedItemSize={400 * 60}
+			estimatedItemSize={60}
 			disableAutoLayout
 			accessible
 			accessibilityLabel="radio-group"

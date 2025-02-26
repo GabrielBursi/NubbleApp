@@ -57,7 +57,7 @@ describe('<FeedList/>', () => {
 		customRender(<FeedList />)
 
 		await act(() => {
-			expect(screen.getAllByRole('listitem')).toHaveLength(1)
+			expect(screen.getAllByRole('listitem')).toHaveLength(2)
 		})
 	})
 

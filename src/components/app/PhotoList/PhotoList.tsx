@@ -55,7 +55,7 @@ const PhotoListMemoized = forwardRef<
 				keyExtractor={(image, index) => `${image.id}-${image.uri}-${index}`}
 				showsVerticalScrollIndicator={false}
 				disableAutoLayout
-				estimatedItemSize={PHOTO_ITEM_WIDTH * PHOTO_ITEM_WIDTH}
+				estimatedItemSize={PHOTO_ITEM_WIDTH}
 				numColumns={numColumns}
 			/>
 		)

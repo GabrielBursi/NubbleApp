@@ -51,7 +51,7 @@ describe('<CommentList/>', () => {
 		customRender(<CommentList id={mockId} authorId={mockId} />)
 
 		await act(() => {
-			expect(screen.getAllByRole('listitem')).toHaveLength(1)
+			expect(screen.getAllByRole('listitem')).toHaveLength(2)
 		})
 	})
 

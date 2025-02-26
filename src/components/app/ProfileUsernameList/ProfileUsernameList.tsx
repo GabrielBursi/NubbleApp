@@ -53,7 +53,7 @@ const ProfileUsernameListMemoized = ({
 			}
 			disableAutoLayout
 			// size ProfileUsername device: Medium Phone API 34
-			estimatedItemSize={364 * 64}
+			estimatedItemSize={64}
 			// eslint-disable-next-line @typescript-eslint/no-misused-promises, sonarjs/no-misused-promises
 			accessible
 			accessibilityLabel="feed"

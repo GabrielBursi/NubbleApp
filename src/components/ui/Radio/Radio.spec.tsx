@@ -126,7 +126,7 @@ describe('Radio Compound', () => {
 			)
 
 			expect(screen.getByRole('radiogroup')).toBeOnTheScreen()
-			expect(screen.getByRole('radio')).toBeOnTheScreen()
+			expect(screen.getAllByRole('radio')).toHaveLength(3)
 		})
 
 		it('should render the radio item with correct text', () => {
