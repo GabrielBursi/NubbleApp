@@ -164,7 +164,9 @@ const RadioGroupInternal = <TOption extends Record<string, unknown>>({
 					label={String(option[optionLabelKey])}
 					canUncheck={false}
 					description={
-						optionDescriptionKey && String(option[optionDescriptionKey])
+						optionDescriptionKey &&
+						option[optionDescriptionKey] &&
+						String(option[optionDescriptionKey])
 					}
 					onChange={(checked) =>
 						handleRadioSelection({ index, option, checked })
