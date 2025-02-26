@@ -1,9 +1,8 @@
 import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Radio } from '@/components/ui'
 import { customFaker } from '@/tests/utils/customFaker'
-
-import { RadioGroup } from './RadioGroup'
 
 type List = {
 	name: string
@@ -39,19 +38,22 @@ const mockList: List[] = [
 	},
 ]
 
-type RadioGroupList = typeof RadioGroup<List>
-
-const meta: Meta<RadioGroupList> = {
-	title: 'UI/RadioGroup',
-	component: RadioGroup,
-	args: {
-		items: mockList,
-		descriptionKey: 'job',
-		labelKey: 'name',
-		onSelect: action('onSelect'),
-		initialItemIndexSelected: 1,
-	},
+const meta: Meta<typeof Radio | typeof Radio.Button | typeof Radio.Group> = {
+	title: 'Components/Radio',
+	component: Radio,
+	args: {},
 	argTypes: {
+		onChange: {
+			type: 'symbol',
+		},
+		onSelect: {
+			type: 'symbol',
+		},
+		side: {
+			type: 'string',
+			control: 'radio',
+			options: ['left', 'right'],
+		},
 		items: {
 			type: 'symbol',
 		},
@@ -76,8 +78,35 @@ const meta: Meta<RadioGroupList> = {
 }
 export default meta
 
-type Story = StoryObj<RadioGroupList>
+type StoryRadio = StoryObj<typeof Radio>
+type StoryRadioButton = StoryObj<typeof Radio.Button>
+type StoryRadioGroup = StoryObj<typeof Radio.Group>
 
-export const Basic: Story = {
-	args: {},
+export const Basic: StoryRadio = {
+	args: {
+		checked: true,
+		onChange: action('onChange'),
+		disabled: false,
+	},
+	render: (args) => <Radio {...args} />,
+}
+
+export const Button: StoryRadioButton = {
+	args: {
+		side: 'left',
+		label: 'Storybook',
+		description: customFaker.lorem.paragraph({ min: 10, max: 15 }),
+	},
+	render: (args) => <Radio.Button {...args} />,
+}
+
+export const Group: StoryRadioGroup = {
+	args: {
+		items: mockList,
+		descriptionKey: 'job',
+		labelKey: 'name',
+		onSelect: action('onSelect'),
+		initialItemIndexSelected: 1,
+	},
+	render: (args) => <Radio.Group {...args} />,
 }

@@ -2,11 +2,42 @@ import { FlashListProps } from '@shopify/flash-list'
 
 import { StrictOmit } from '@/types/utils'
 
-import { RadioButtonProps } from '../RadioButton/RadioButton.types'
-import { RadioButtonItemProps } from '../RadioButtonItem/RadioButtonItem.types'
+import { PressableBoxProps } from '../PressableBox/PressableBox.types'
+
+export type RadioProps = {
+	/** @default false */
+	checked?: boolean
+	/** @default false */
+	disabled?: boolean
+	onChange?: (value: boolean) => void
+} & StrictOmit<
+	PressableBoxProps,
+	| 'hitSlop'
+	| 'onPress'
+	| 'justifyContent'
+	| 'alignItems'
+	| 'height'
+	| 'width'
+	| 'borderWidth'
+	| 'borderRadius'
+	| 'borderColor'
+	| 'accessible'
+	| 'role'
+	| 'disabled'
+>
+
+export type RadioButtonProps = {
+	label: string
+	description?: string
+	/**
+	 * @description side that the content will be place
+	 * @default 'left'
+	 *  */
+	side?: 'left' | 'right'
+} & StrictOmit<RadioProps, 'aria-label' | 'accessibilityLabel'>
 
 type RadioItemProps = StrictOmit<
-	RadioButtonItemProps,
+	RadioButtonProps,
 	'label' | 'description' | 'onChange' | 'checked'
 >
 

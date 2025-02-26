@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { RadioButtonProps } from '@/components/ui/RadioButton/RadioButton.types'
+import { RadioButtonProps } from '@/components/ui/Radio/Radio.types'
 
 export const useRadioButton = (
 	opt: Partial<Pick<RadioButtonProps, 'checked' | 'disabled' | 'onChange'>> = {
