@@ -3,18 +3,19 @@ import React, { useMemo } from 'react'
 import { Radio } from '@/components'
 import { RadioItem } from '@/components/ui/Radio/Radio.types'
 import { ScreenTemplate } from '@/templates'
+import { ThemeType } from '@/types/theme'
 
 type ThemeButton = {
 	label: string
-	value: boolean | null
+	value: ThemeType
 	description?: string
 }
 
 export const ThemeScreen = () => {
 	const options = useMemo(
 		(): RadioItem<ThemeButton>[] => [
-			{ label: 'Claro', value: true },
-			{ label: 'Escuro', value: false },
+			{ label: 'Claro', value: 'light' },
+			{ label: 'Escuro', value: 'dark' },
 			{
 				label: 'Padrão do sistema',
 				value: null,

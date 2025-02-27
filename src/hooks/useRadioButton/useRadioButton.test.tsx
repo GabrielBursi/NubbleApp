@@ -46,17 +46,4 @@ describe('useRadioButton', () => {
 		expect(mockOnChange).not.toHaveBeenCalledWith(false)
 		expect(mockOnChange).toHaveBeenCalledTimes(1)
 	})
-
-	it('should disable change of the value', async () => {
-		const { result } = renderHook(() =>
-			useRadioButton({ checked: true, onChange: mockOnChange, disabled: true })
-		)
-
-		const change = result.current.onChange
-
-		await act(() => change())
-
-		expect(mockOnChange).not.toHaveBeenCalled()
-		expect(result.current.checked).toBe(true)
-	})
 })

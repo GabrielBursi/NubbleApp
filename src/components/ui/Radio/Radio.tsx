@@ -20,7 +20,7 @@ const RadioMemoized = ({
 	...props
 }: Readonly<RadioProps>) => {
 	const { checked: internalChecked, onChange: internalOnChange } =
-		useRadioButton({ checked, disabled, onChange, canUncheck })
+		useRadioButton({ checked, onChange, canUncheck })
 
 	return (
 		<PressableBox
@@ -41,6 +41,7 @@ const RadioMemoized = ({
 			// eslint-disable-next-line react-native/no-inline-styles
 			style={{ opacity: disabled ? 0.5 : 1 }}
 			android_disableSound
+			disabled={disabled}
 		>
 			{internalChecked && (
 				<Box
@@ -68,7 +69,7 @@ const RadioButtonMemoized = ({
 	...radioButtonProps
 }: Readonly<RadioButtonProps>) => {
 	const { checked: internalChecked, onChange: internalOnChange } =
-		useRadioButton({ checked, disabled, onChange, canUncheck })
+		useRadioButton({ checked, onChange, canUncheck })
 
 	return (
 		<Box paddingVertical="s16">
@@ -85,6 +86,7 @@ const RadioButtonMemoized = ({
 						android_disableSound
 						gap="s4"
 						flex={1}
+						disabled={disabled}
 					>
 						<Text semiBold>{label}</Text>
 						{description && <Text.Expanded>{description}</Text.Expanded>}
@@ -97,6 +99,7 @@ const RadioButtonMemoized = ({
 					accessibilityLabel={label}
 					checked={internalChecked}
 					onChange={internalOnChange}
+					canUncheck={canUncheck}
 				/>
 				{side === 'right' && (
 					<PressableBox
@@ -105,6 +108,7 @@ const RadioButtonMemoized = ({
 						android_disableSound
 						gap="s4"
 						flex={1}
+						disabled={disabled}
 					>
 						<Text semiBold>{label}</Text>
 						{description && <Text.Expanded>{description}</Text.Expanded>}

@@ -23,3 +23,5 @@ export type IconBase = {
 	color?: string
 	fillColor?: string
 }
+
+export type ThemeType = 'light' | 'dark' | null
