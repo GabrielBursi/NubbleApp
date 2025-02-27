@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 
-import { ProfileUsernameList, TextInput } from '@/components'
+import { Box, ProfileUsernameList, TextInput } from '@/components'
 import { UserModel, useUserSearch } from '@/domain/User'
 import { useDebounce } from '@/hooks'
 import {
@@ -28,12 +28,14 @@ export const SearchScreen = () => {
 		<ScreenTemplate
 			canGoBack
 			HeaderComponent={
-				<TextInput.Search
-					value={search}
-					onChangeText={setSearch}
-					placeholder="Procure usuários aqui"
-					loading={isLoading || isDebouncing}
-				/>
+				<Box ml="s10" flex={1}>
+					<TextInput.Search
+						value={search}
+						onChangeText={setSearch}
+						placeholder="Procure usuários aqui"
+						loading={isLoading || isDebouncing}
+					/>
+				</Box>
 			}
 		>
 			{search.length ? (
