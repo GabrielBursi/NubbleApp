@@ -44,7 +44,7 @@ export const themeConfig = {
 		},
 	},
 	colors: {
-		...colors.darkTheme,
+		...colors.lightTheme,
 		primaryShadow: lighten(0.4, `#000`),
 		secondaryShadow: lighten(0.4, `#bbb`),
 		shadow: lighten(0.4, `#828282`),

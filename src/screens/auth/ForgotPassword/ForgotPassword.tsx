@@ -35,7 +35,8 @@ export const ForgotPasswordScreen = () => {
 					'Clique no link enviado no seu e-mail para recuperar sua senha',
 				icon: {
 					name: 'messageRound',
-					color: 'primary',
+					color: 'iconColor',
+					fillColor: 'iconFillColor',
 				},
 			}),
 		onError: (message) => showToast({ message, type: 'error' }),
