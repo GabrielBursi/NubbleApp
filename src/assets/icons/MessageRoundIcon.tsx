@@ -2,13 +2,13 @@ import React from 'react'
 
 import { Svg, Path, Circle } from 'react-native-svg'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 import { IconBase } from '@/types/theme'
 
 export function MessageRoundIcon({
 	size = 48,
-	color = appTheme.colors.greenPrimary,
-	fillColor = appTheme.colors.grayWhite,
+	color = lightTheme.colors.greenPrimary,
+	fillColor = lightTheme.colors.grayWhite,
 }: Readonly<IconBase>) {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 48 48" fill="none">

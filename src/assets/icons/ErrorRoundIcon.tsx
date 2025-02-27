@@ -2,12 +2,12 @@ import React from 'react'
 
 import { Svg, Path, Circle } from 'react-native-svg'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 import { IconBase } from '@/types/theme'
 
 export function ErrorRoundIcon({
 	size = 48,
-	color = appTheme.colors.redError,
+	color = lightTheme.colors.redError,
 }: Readonly<IconBase>) {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 48 48" fill="none">

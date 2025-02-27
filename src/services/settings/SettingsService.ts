@@ -1,6 +1,6 @@
 import { Appearance, ColorSchemeName, Platform, StatusBar } from 'react-native'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 
 import { AppThemeOption, ThemePreference } from './models'
 
@@ -33,8 +33,8 @@ export abstract class SettingsService {
 		if (Platform.OS === 'android') {
 			StatusBar.setBackgroundColor(
 				appColor === 'dark'
-					? appTheme.colors.grayBlack
-					: appTheme.colors.grayWhite
+					? lightTheme.colors.grayBlack
+					: lightTheme.colors.grayWhite
 			)
 		}
 	}

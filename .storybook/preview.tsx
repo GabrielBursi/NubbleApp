@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Preview } from '@storybook/react'
 import { TestProvider } from '../src/providers'
-import { appTheme } from '../src/styles'
+import { lightTheme } from '../src/styles'
 import { AuthStackRouter } from '../src/routes/stack/AuthStack'
 import { AppStackRouter } from '../src/routes/stack/AppStack'
 import { AppBottomTabRouter } from '../src/routes/tab/AppTabBottom'
@@ -27,8 +27,8 @@ const preview: Preview = {
 		backgrounds: {
 			default: 'primary',
 			values: [
-				{ name: 'primary', value: appTheme.colors.background },
-				{ name: 'secondary', value: appTheme.colors.backgroundContrast },
+				{ name: 'primary', value: lightTheme.colors.background },
+				{ name: 'secondary', value: lightTheme.colors.backgroundContrast },
 			],
 		},
 	},

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 
 import { Loading } from './Loading'
 
@@ -13,7 +13,7 @@ const meta: Meta<typeof Loading> = {
 	},
 	argTypes: {
 		color: {
-			options: Object.keys(appTheme.colors),
+			options: Object.keys(lightTheme.colors),
 			control: { type: 'radio' },
 		},
 	},

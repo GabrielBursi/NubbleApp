@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react-native'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 import { customRender } from '@/tests/utils'
 
 import { Loading } from './Loading'
@@ -11,7 +11,7 @@ describe('<Loading/>', () => {
 
 		expect(screen.getByTestId('loading', { exact: true })).toHaveProp(
 			'color',
-			appTheme.colors.primary
+			lightTheme.colors.primary
 		)
 	})
 })

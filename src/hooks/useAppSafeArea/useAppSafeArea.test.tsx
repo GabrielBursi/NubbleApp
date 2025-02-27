@@ -5,13 +5,13 @@ import { renderHook } from '@testing-library/react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { TestProvider } from '@/providers'
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 
 import { useAppSafeArea } from './useAppSafeArea'
 
 const wrapperWithInitialMetrics = ({ children }: PropsWithChildren) => {
 	return (
-		<ThemeProvider theme={appTheme}>
+		<ThemeProvider theme={lightTheme}>
 			<SafeAreaProvider
 				initialMetrics={{
 					frame: { x: 0, y: 0, width: 0, height: 0 },

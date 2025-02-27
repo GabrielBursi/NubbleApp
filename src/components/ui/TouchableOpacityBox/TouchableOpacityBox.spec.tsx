@@ -2,7 +2,7 @@ import { Text } from 'react-native'
 
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 import { customRender } from '@/tests/utils'
 
 import { TouchableOpacityBox } from './TouchableOpacityBox'
@@ -22,7 +22,7 @@ describe('<TouchableOpacityBox/>', () => {
 		)
 
 		expect(screen.getByTestId('box', { exact: true })).toHaveStyle({
-			backgroundColor: appTheme.colors.background,
+			backgroundColor: lightTheme.colors.background,
 		})
 	})
 

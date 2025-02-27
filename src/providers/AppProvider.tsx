@@ -11,7 +11,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { ContextProvider } from '@/context'
 import { useHandleTheme } from '@/services/settings'
 import { initializeStorage, MMKVStorage } from '@/services/storage'
-import { appTheme } from '@/styles'
+import { darkTheme, lightTheme } from '@/styles'
 
 export const queryClient = new QueryClient()
 
@@ -23,9 +23,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NavigationContainer>
-				{/* TODO: mudança de tema */}
-				{/* eslint-disable-next-line sonarjs/no-all-duplicated-branches, sonarjs/no-all-duplicated-branches */}
-				<ThemeProvider theme={theme === 'dark' ? appTheme : appTheme}>
+				<ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
 					<SafeAreaProvider>
 						<StatusBar
 							barStyle="dark-content"

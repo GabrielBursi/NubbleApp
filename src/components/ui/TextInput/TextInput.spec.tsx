@@ -3,7 +3,7 @@ import { TextInput as RNTextInput } from 'react-native'
 
 import { screen, userEvent, fireEvent } from '@testing-library/react-native'
 
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 import { customRender } from '@/tests/utils'
 
 import { Icon } from '../Icon/Icon'
@@ -69,7 +69,7 @@ describe('TextInput Compound', () => {
 
 			fireEvent.press(screen.getByPlaceholderText('Digite aqui'))
 			expect(screen.getByTestId('container-internal-input')).toHaveStyle({
-				borderColor: appTheme.colors['primary'],
+				borderColor: lightTheme.colors['primary'],
 			})
 			expect(
 				screen.getByLabelText('jest', { exact: true })
@@ -83,7 +83,7 @@ describe('TextInput Compound', () => {
 
 			await userEvent.type(screen.getByPlaceholderText('Digite aqui'), 'sb')
 			expect(screen.getByTestId('container-internal-input')).toHaveStyle({
-				borderColor: appTheme.colors['gray4'],
+				borderColor: lightTheme.colors['gray4'],
 			})
 			expect(
 				screen.getByLabelText('jest', { exact: true })
@@ -98,7 +98,7 @@ describe('TextInput Compound', () => {
 			await userEvent.press(screen.getByText('jest', { exact: true }))
 
 			expect(screen.getByTestId('container-internal-input')).toHaveStyle({
-				borderColor: appTheme.colors['primary'],
+				borderColor: lightTheme.colors['primary'],
 			})
 			expect(
 				screen.getByLabelText('jest', { exact: true })
@@ -111,7 +111,7 @@ describe('TextInput Compound', () => {
 			customRender(<TextInput ref={inputRef} label="jest" disabled />)
 
 			expect(screen.getByTestId('container-internal-input')).toHaveStyle({
-				backgroundColor: appTheme.colors['gray5'],
+				backgroundColor: lightTheme.colors['gray5'],
 			})
 			expect(
 				screen.getByLabelText('jest', { exact: true })
@@ -127,7 +127,7 @@ describe('TextInput Compound', () => {
 
 			expect(screen.getByTestId('container-internal-input')).toHaveStyle({
 				borderWidth: 2,
-				borderColor: appTheme.colors['error'],
+				borderColor: lightTheme.colors['error'],
 			})
 			expect(screen.getByText('jest error', { exact: true })).toBeOnTheScreen()
 		})
@@ -148,7 +148,7 @@ describe('TextInput Compound', () => {
 
 			expect(mockOnChangeText).toHaveBeenCalledWith('')
 			expect(screen.getByTestId('container-internal-input')).toHaveStyle({
-				borderColor: appTheme.colors['primary'],
+				borderColor: lightTheme.colors['primary'],
 			})
 			expect(
 				screen.getByLabelText('Allow Clear', { exact: true })

@@ -9,7 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 //? Only use ContextProvider if it is using Context implementation. Zustand implementation doesn't need a provider
 import { ContextProvider } from '@/context'
-import { appTheme } from '@/styles'
+import { lightTheme } from '@/styles'
 
 export const testQueryClient = new QueryClient({
 	defaultOptions: {
@@ -29,7 +29,7 @@ export const TestProvider = ({ children }: PropsWithChildren) => {
 	return (
 		<QueryClientProvider client={testQueryClient}>
 			<NavigationContainer>
-				<ThemeProvider theme={appTheme}>
+				<ThemeProvider theme={lightTheme}>
 					<SafeAreaProvider
 						initialMetrics={{
 							frame: { x: 0, y: 0, width: 0, height: 0 },

@@ -78,7 +78,7 @@ export const themeConfig = {
 	},
 } as const
 
-export const appTheme = createTheme({
+export const lightTheme = createTheme({
 	colors: {
 		...themeConfig.colors,
 	},
@@ -88,4 +88,9 @@ export const appTheme = createTheme({
 	textVariants: {
 		defaults: {},
 	},
+})
+
+export const darkTheme = createTheme({
+	...lightTheme,
+	colors: colors.darkTheme,
 })
