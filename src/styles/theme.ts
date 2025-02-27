@@ -5,6 +5,8 @@ import { lighten } from 'polished'
 import normalize from 'react-native-normalize'
 import { RFValue } from 'react-native-responsive-fontsize'
 
+import { colors } from './colors'
+
 const windowHeight = Dimensions.get('window').height
 
 export const themeConfig = {
@@ -42,23 +44,7 @@ export const themeConfig = {
 		},
 	},
 	colors: {
-		greenPrimary: '#074C4E',
-		greenPrimaryLight: '#EAF6F6',
-		carrotSecondary: '#F86F2D',
-		carrotSecondaryLight: '#FAE6DD',
-		greenSuccess: '#4ABC86',
-		greenSuccessLight: '#D8FFEC',
-		redError: '#EA3838',
-		redErrorLight: '#FBECEC',
-		grayBlack: '#000000',
-		gray1: '#636363',
-		gray2: '#8E8E8E',
-		gray3: '#B3B3B3',
-		gray4: '#E1E1E1',
-		gray5: '#F5F5F5',
-		grayWhite: '#FFFFFF',
-		black60: 'rgba(0,0,0,0.6)',
-		white70: 'rgba(255,255,255,0.7)',
+		...colors.darkTheme,
 		primaryShadow: lighten(0.4, `#000`),
 		secondaryShadow: lighten(0.4, `#bbb`),
 		shadow: lighten(0.4, `#828282`),
@@ -95,16 +81,6 @@ export const themeConfig = {
 export const appTheme = createTheme({
 	colors: {
 		...themeConfig.colors,
-		primary: themeConfig.colors.greenPrimary,
-		primaryContrast: themeConfig.colors.grayWhite,
-		buttonPrimary: themeConfig.colors.greenPrimary,
-		background: themeConfig.colors.grayWhite,
-		backgroundContrast: themeConfig.colors.grayBlack,
-		error: themeConfig.colors.redError,
-		errorLight: themeConfig.colors.redErrorLight,
-		success: themeConfig.colors.greenSuccess,
-		successLight: themeConfig.colors.greenSuccessLight,
-		iconMarked: themeConfig.colors.carrotSecondary,
 	},
 	spacing: themeConfig.spacings,
 	borderRadii: themeConfig.border.radius,
