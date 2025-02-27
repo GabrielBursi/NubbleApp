@@ -18,6 +18,9 @@ export const ThemeScreen = () => {
 	const themePreference = useThemePreference()
 	const { setThemePreference } = useSettingsService()
 
+	console.log(jest.isMockFunction(setThemePreference))
+	console.log(jest.isMockFunction(useSettingsService))
+
 	const handleChangeTheme = useCallback(
 		(opt: OptionSelected<ThemeButton>) => {
 			setThemePreference(opt.option.value)
