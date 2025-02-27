@@ -114,10 +114,11 @@ const TextInputInternalMemoized = forwardRef<
 				padding: 0,
 				flexGrow: 1,
 				flexShrink: 1,
+				color: colors.grayBlack,
 				fontFamily: font.family.regular,
 				...fontSizes.paragraphMedium,
 			}),
-			[font, fontSizes]
+			[font, fontSizes, colors]
 		)
 
 		return (
@@ -280,7 +281,7 @@ const SendInputMemoizedInternal = forwardRef<
 					disabled={sendIsDisabled}
 					onPress={onPressSend}
 				>
-					<Text color={sendIsDisabled ? 'gray2' : 'primary'} bold>
+					<Text color={sendIsDisabled ? 'gray2' : 'greenPrimary'} bold>
 						Enviar
 					</Text>
 				</Pressable>

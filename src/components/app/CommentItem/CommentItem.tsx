@@ -60,7 +60,7 @@ export const CommentItemMemoized = ({
 						</Text>
 						<Text preset="paragraphCaption">{createdAtRelative}</Text>
 					</Box>
-					<Text.Expanded preset="paragraphSmall" color="gray1">
+					<Text.Expanded preset="paragraphSmall" color="paragraph">
 						{message}
 					</Text.Expanded>
 				</Box>
