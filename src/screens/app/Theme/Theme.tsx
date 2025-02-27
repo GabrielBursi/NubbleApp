@@ -18,7 +18,7 @@ export const ThemeScreen = () => {
 			{ label: 'Escuro', value: 'dark' },
 			{
 				label: 'Padrão do sistema',
-				value: null,
+				value: 'system',
 				description:
 					'A aparência será a mesma que você configurou no seu dispositivo',
 			},

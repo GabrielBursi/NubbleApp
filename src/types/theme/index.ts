@@ -1,5 +1,9 @@
+import { ColorSchemeName } from 'react-native'
+
 import { iconRegistry } from '@/components'
 import { appTheme, themeConfig } from '@/styles'
+
+import { NonUndefined } from '../utils'
 
 export type AppTheme = typeof appTheme
 export type ThemeConfig = typeof themeConfig
@@ -24,4 +28,4 @@ export type IconBase = {
 	fillColor?: string
 }
 
-export type ThemeType = 'light' | 'dark' | null
+export type ThemeType = NonUndefined<NonNullable<ColorSchemeName>> | 'system'

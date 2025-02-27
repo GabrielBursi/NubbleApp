@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 //? Only use ContextProvider if it is using Context implementation. Zustand implementation doesn't need a provider
 import { ContextProvider } from '@/context'
+import { useHandleTheme } from '@/services/settings'
 import { initializeStorage, MMKVStorage } from '@/services/storage'
 import { appTheme } from '@/styles'
 
@@ -17,10 +18,14 @@ export const queryClient = new QueryClient()
 initializeStorage(MMKVStorage)
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
+	const theme = useHandleTheme()
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<NavigationContainer>
-				<ThemeProvider theme={appTheme}>
+				{/* TODO: mudança de tema */}
+				{/* eslint-disable-next-line sonarjs/no-all-duplicated-branches, sonarjs/no-all-duplicated-branches */}
+				<ThemeProvider theme={theme === 'dark' ? appTheme : appTheme}>
 					<SafeAreaProvider>
 						<StatusBar
 							barStyle="dark-content"
