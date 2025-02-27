@@ -33,7 +33,7 @@ const RadioMemoized = ({
 			width={20}
 			borderWidth={internalChecked ? 2 : 1}
 			borderRadius={'s12'}
-			borderColor={internalChecked ? 'primary' : undefined}
+			borderColor={internalChecked ? 'primary' : 'onBackgroundGray2'}
 			accessible
 			accessibilityState={{ checked: internalChecked, disabled }}
 			role="radio"

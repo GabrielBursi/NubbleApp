@@ -39,6 +39,8 @@ const lightTheme = {
 	paragraph: palette.gray1,
 	iconColor: palette.greenPrimary,
 	iconFillColor: palette.grayWhite,
+	onBackgroundGray1: palette.gray1,
+	onBackgroundGray2: palette.gray4,
 }
 const darkTheme: typeof lightTheme = {
 	...palette,
@@ -60,6 +62,8 @@ const darkTheme: typeof lightTheme = {
 	paragraph: palette.grayWhite,
 	iconColor: palette.greenPrimaryLight,
 	iconFillColor: palette.grayBlack,
+	onBackgroundGray1: palette.gray3,
+	onBackgroundGray2: palette.gray1,
 }
 
 export const colors = { palette, lightTheme, darkTheme }
