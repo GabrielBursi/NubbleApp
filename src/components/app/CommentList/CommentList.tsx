@@ -51,7 +51,7 @@ export const CommentList = ({
 				refreshing={isLoading}
 				disableAutoLayout
 				// size CommentItem device: Pixel 8 Pro API 34
-				estimatedItemSize={80}
+				estimatedItemSize={120}
 				accessible
 				accessibilityLabel="feed"
 				aria-label="feed"
