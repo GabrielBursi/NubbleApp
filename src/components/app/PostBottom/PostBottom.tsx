@@ -36,7 +36,7 @@ const PostBottomMemoized = ({
 			<Text preset="paragraphMedium" bold>
 				{userName}
 			</Text>
-			<Text.Expanded preset="paragraphMedium" color="gray1">
+			<Text.Expanded preset="paragraphMedium" color="paragraph">
 				{text}
 			</Text.Expanded>
 			{commentText && (

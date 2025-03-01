@@ -42,6 +42,11 @@ const lightTheme = {
 	onBackgroundGray1: palette.gray1,
 	onBackgroundGray2: palette.gray4,
 } as const
+
+type ThemeColors = {
+	readonly [K in keyof typeof lightTheme]: string
+}
+
 const darkTheme = {
 	...palette,
 	primary: palette.carrotSecondary,
@@ -59,11 +64,11 @@ const darkTheme = {
 	successLight: palette.greenSuccessLight,
 
 	iconMarked: palette.carrotSecondary,
-	paragraph: palette.grayWhite,
+	paragraph: palette.gray3,
 	iconColor: palette.greenPrimaryLight,
 	iconFillColor: palette.grayBlack,
 	onBackgroundGray1: palette.gray3,
 	onBackgroundGray2: palette.gray1,
-} as const
+} satisfies ThemeColors
 
 export const colors = { palette, lightTheme, darkTheme }

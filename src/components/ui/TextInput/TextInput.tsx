@@ -281,7 +281,7 @@ const SendInputMemoizedInternal = forwardRef<
 					disabled={sendIsDisabled}
 					onPress={onPressSend}
 				>
-					<Text color={sendIsDisabled ? 'gray2' : 'greenPrimary'} bold>
+					<Text color={sendIsDisabled ? 'gray2' : 'primary'} bold>
 						Enviar
 					</Text>
 				</Pressable>
