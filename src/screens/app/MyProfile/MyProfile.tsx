@@ -1,15 +1,16 @@
 import React from 'react'
 
 import { Button } from '@/components'
-import { useAuthLogout } from '@/domain/Auth'
 import { ScreenTemplate } from '@/templates'
+import { MyProfileScreenProps } from '@/types/screens'
 
-export const MyProfileScreen = () => {
-	const { logout } = useAuthLogout()
-
+export const MyProfileScreen = ({ navigation }: MyProfileScreenProps) => {
 	return (
 		<ScreenTemplate>
-			<Button title="Sair" onPress={() => logout()} />
+			<Button
+				title="Configurações"
+				onPress={() => navigation.navigate('SettingsScreen')}
+			/>
 		</ScreenTemplate>
 	)
 }
