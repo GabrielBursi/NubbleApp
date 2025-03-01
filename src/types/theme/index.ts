@@ -1,11 +1,11 @@
 import { ColorSchemeName } from 'react-native'
 
 import { iconRegistry } from '@/components'
-import { lightTheme, themeConfig } from '@/styles'
+import { darkTheme, lightTheme, themeConfig } from '@/styles'
 
 import { NonUndefined } from '../utils'
 
-export type AppTheme = typeof lightTheme
+export type AppTheme = typeof lightTheme | typeof darkTheme
 export type ThemeConfig = typeof themeConfig
 export type ThemeColors = keyof AppTheme['colors']
 export type ThemeFontFamilyKeys = keyof ThemeConfig['font']['family']

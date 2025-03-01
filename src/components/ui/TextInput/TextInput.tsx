@@ -114,7 +114,7 @@ const TextInputInternalMemoized = forwardRef<
 				padding: 0,
 				flexGrow: 1,
 				flexShrink: 1,
-				color: colors.grayBlack,
+				color: colors.backgroundContrast,
 				fontFamily: font.family.regular,
 				...fontSizes.paragraphMedium,
 			}),

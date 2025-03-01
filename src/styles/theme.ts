@@ -92,5 +92,11 @@ export const lightTheme = createTheme({
 
 export const darkTheme = createTheme({
 	...lightTheme,
-	colors: colors.darkTheme,
+	colors: {
+		...colors.darkTheme,
+		primaryShadow: 'rgba(255, 255, 255, 0.1)',
+		secondaryShadow: 'rgba(0, 0, 0, 0.5)',
+		shadow: 'rgba(0, 0, 0, 0.3)',
+		lightShadow: 'rgba(255, 255, 255, 0.05)',
+	},
 })
