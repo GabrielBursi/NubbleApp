@@ -6,12 +6,16 @@ import { OnBoardingItemProps } from '@/components/onboarding/OnBoardingItem/OnBo
 import { customFaker } from '@/tests/utils/customFaker'
 
 const mockProps: OnBoardingItemProps = {
-	subtitle: customFaker.lorem.sentence(),
-	title: customFaker.lorem.word(),
-	image: {
-		dark: AppImages.OnboardingDark1,
-		light: AppImages.OnboardingLight1,
+	item: {
+		subtitle: customFaker.lorem.sentence(),
+		title: customFaker.lorem.word(),
+		image: {
+			dark: AppImages.OnboardingDark1,
+			light: AppImages.OnboardingLight1,
+		},
 	},
+	onPressNext: () => console.log('onPressNext'),
+	onPressSkip: () => console.log('onPressSkip'),
 }
 
 export const OnBoardingScreen = () => {

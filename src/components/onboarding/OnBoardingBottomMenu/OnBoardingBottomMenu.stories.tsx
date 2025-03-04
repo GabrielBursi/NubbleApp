@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { OnBoardingBottomMenu } from './OnBoardingBottomMenu'
@@ -5,8 +6,18 @@ import { OnBoardingBottomMenu } from './OnBoardingBottomMenu'
 const meta: Meta<typeof OnBoardingBottomMenu> = {
 	title: 'OnBoarding/BottomMenu',
 	component: OnBoardingBottomMenu,
-	args: {},
-	argTypes: {},
+	args: {
+		onPressNext: action('onPressNext'),
+		onPressSkip: action('onPressSkip'),
+	},
+	argTypes: {
+		onPressNext: {
+			type: 'symbol',
+		},
+		onPressSkip: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 

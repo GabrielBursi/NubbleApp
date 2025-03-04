@@ -11,9 +11,9 @@ import {
 import { OnBoardingItemProps } from './OnBoardingItem.types'
 
 const OnBoardingItemMemoized = ({
-	subtitle,
-	title,
-	image,
+	item,
+	onPressNext,
+	onPressSkip,
 }: Readonly<OnBoardingItemProps>) => {
 	return (
 		<Box
@@ -23,14 +23,17 @@ const OnBoardingItemMemoized = ({
 			accessible
 		>
 			<Box flex={4}>
-				<OnBoardingHeader image={image} />
+				<OnBoardingHeader image={item.image} />
 			</Box>
 			<Container flex={6}>
 				<Box flex={5}>
-					<OnBoardingContent subtitle={subtitle} title={title} />
+					<OnBoardingContent subtitle={item.subtitle} title={item.title} />
 				</Box>
 				<Box flex={1}>
-					<OnBoardingBottomMenu />
+					<OnBoardingBottomMenu
+						onPressNext={onPressNext}
+						onPressSkip={onPressSkip}
+					/>
 				</Box>
 			</Container>
 		</Box>

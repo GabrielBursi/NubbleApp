@@ -1,15 +1,27 @@
 import React from 'react'
 
-import { Box, Icon, Text } from '@/components'
+import { Box, Icon, PressableBox, Text } from '@/components'
 
-export const OnBoardingBottomMenu = () => {
+import { OnBoardingBottomMenuProps } from './OnBoardingBottomMenu.types'
+
+export const OnBoardingBottomMenu = ({
+	onPressNext,
+	onPressSkip,
+}: Readonly<OnBoardingBottomMenuProps>) => {
 	return (
 		<Box flexDirection="row" justifyContent="space-between">
-			<Text>Pular</Text>
-			<Box flexDirection="row" alignItems="center">
+			<PressableBox hitSlop={10} onPress={onPressSkip}>
+				<Text>Pular</Text>
+			</PressableBox>
+			<PressableBox
+				hitSlop={10}
+				onPress={onPressNext}
+				flexDirection="row"
+				alignItems="center"
+			>
 				<Text mr="s4">Próximo</Text>
 				<Icon name="arrowRight" />
-			</Box>
+			</PressableBox>
 		</Box>
 	)
 }

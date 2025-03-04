@@ -18,12 +18,16 @@ describe('<OnBoardingItem/>', () => {
 	const lightUrl = customFaker.image.url()
 
 	const mockProps: OnBoardingItemProps = {
-		subtitle: customFaker.lorem.sentence(),
-		title: customFaker.lorem.word(),
-		image: {
-			dark: { uri: darkUrl },
-			light: { uri: lightUrl },
+		item: {
+			subtitle: customFaker.lorem.sentence(),
+			title: customFaker.lorem.word(),
+			image: {
+				dark: { uri: darkUrl },
+				light: { uri: lightUrl },
+			},
 		},
+		onPressNext: jest.fn(),
+		onPressSkip: jest.fn(),
 	}
 
 	const mockReturn: ReturnUseAppThemeOption = 'dark'
@@ -36,10 +40,10 @@ describe('<OnBoardingItem/>', () => {
 		customRender(<OnBoardingItem {...mockProps} />)
 
 		expect(
-			screen.getByRole('text', { name: mockProps.title })
+			screen.getByRole('text', { name: mockProps.item.title })
 		).toBeOnTheScreen()
 		expect(
-			screen.getByRole('text', { name: mockProps.subtitle })
+			screen.getByRole('text', { name: mockProps.item.subtitle })
 		).toBeOnTheScreen()
 		expect(screen.getAllByRole('img')).toHaveLength(2)
 		expect(screen.getByRole('text', { name: /pular/i })).toBeOnTheScreen()
