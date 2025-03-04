@@ -1,8 +1,7 @@
 import { action } from '@storybook/addon-actions'
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { AppImages } from '@/assets/images'
-import { customFaker } from '@/tests/utils/customFaker'
+import { generateOnBoardingItem } from '@/tests/mocks/onboarding'
 
 import { OnBoardingItem } from './OnBoardingItem'
 
@@ -12,14 +11,7 @@ const meta: Meta<typeof OnBoardingItem> = {
 	args: {
 		onPressNext: action('onPressNext'),
 		onPressSkip: action('onPressSkip'),
-		item: {
-			subtitle: customFaker.lorem.sentence(),
-			title: customFaker.lorem.word(),
-			image: {
-				dark: AppImages.OnboardingDark3,
-				light: AppImages.OnboardingLight3,
-			},
-		},
+		item: generateOnBoardingItem(),
 	},
 	argTypes: {
 		item: {
