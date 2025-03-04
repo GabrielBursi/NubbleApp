@@ -1,17 +1,12 @@
 import React from 'react'
 
-import { Box, Container, Text } from '@/components'
+import { Box, Container, OnBoardingHeader, Text } from '@/components'
 
 export const OnBoardingScreen = () => {
 	return (
 		<Box flex={1} backgroundColor="background">
-			<Box
-				flex={4}
-				backgroundColor="error"
-				justifyContent="center"
-				alignItems="center"
-			>
-				<Text>Box 1</Text>
+			<Box flex={4} justifyContent="center" alignItems="center">
+				<OnBoardingHeader />
 			</Box>
 			<Container flex={6}>
 				<Box
