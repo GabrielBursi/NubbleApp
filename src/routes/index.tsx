@@ -1,5 +1,5 @@
-import { StackRouter } from './StackRouter'
+import { OnboardingStackRouter } from './stack/OnBoardingStack'
 
 export const RouterApp = () => {
-	return <StackRouter />
+	return <OnboardingStackRouter />
 }
