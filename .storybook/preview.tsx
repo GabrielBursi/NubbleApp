@@ -60,7 +60,10 @@ const preview: Preview = {
 				)
 			}
 
-			if (title.startsWith('Components/Photo'))
+			if (
+				title.startsWith('Components/Photo') ||
+				title.startsWith('OnBoarding')
+			)
 				return (
 					<TestProvider>
 						<Story />

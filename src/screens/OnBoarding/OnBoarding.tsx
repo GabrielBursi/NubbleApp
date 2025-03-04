@@ -1,31 +1,19 @@
 import React from 'react'
 
-import { Box, Container, OnBoardingHeader, Text } from '@/components'
+import { AppImages } from '@/assets/images'
+import { OnBoardingItem } from '@/components'
+import { OnBoardingItemProps } from '@/components/onboarding/OnBoardingItem/OnBoardingItem.types'
+import { customFaker } from '@/tests/utils/customFaker'
+
+const mockProps: OnBoardingItemProps = {
+	subtitle: customFaker.lorem.sentence(),
+	title: customFaker.lorem.word(),
+	image: {
+		dark: AppImages.OnboardingDark1,
+		light: AppImages.OnboardingLight1,
+	},
+}
 
 export const OnBoardingScreen = () => {
-	return (
-		<Box flex={1} backgroundColor="background">
-			<Box flex={4} justifyContent="center" alignItems="center">
-				<OnBoardingHeader />
-			</Box>
-			<Container flex={6}>
-				<Box
-					flex={5}
-					backgroundColor="carrotSecondary"
-					justifyContent="center"
-					alignItems="center"
-				>
-					<Text>Box 2</Text>
-				</Box>
-				<Box
-					flex={1}
-					backgroundColor="success"
-					justifyContent="center"
-					alignItems="center"
-				>
-					<Text>Box 3</Text>
-				</Box>
-			</Container>
-		</Box>
-	)
+	return <OnBoardingItem {...mockProps} />
 }
