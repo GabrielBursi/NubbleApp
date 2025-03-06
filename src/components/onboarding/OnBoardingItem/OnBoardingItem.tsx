@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { Dimensions } from 'react-native'
 
 import {
 	Box,
@@ -9,6 +10,8 @@ import {
 } from '@/components'
 
 import { OnBoardingItemProps } from './OnBoardingItem.types'
+
+const SCREEN_WIDTH = Dimensions.get('screen').width
 
 const OnBoardingItemMemoized = ({
 	item,
@@ -21,6 +24,9 @@ const OnBoardingItemMemoized = ({
 			backgroundColor="background"
 			testID="onboarding-item"
 			accessible
+			role="listitem"
+			accessibilityLabel={item.title}
+			width={SCREEN_WIDTH}
 		>
 			<Box flex={4}>
 				<OnBoardingHeader image={item.image} />

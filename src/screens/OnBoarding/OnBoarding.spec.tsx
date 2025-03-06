@@ -8,6 +8,6 @@ describe('<OnBoardingScreen/>', () => {
 	it('should render the screen correctly', () => {
 		customRender(<OnBoardingScreen />)
 
-		expect(screen.getByTestId('onboarding-item')).toBeOnTheScreen()
+		expect(screen.getAllByTestId('onboarding-item')).toHaveLength(3)
 	})
 })

@@ -1,4 +1,5 @@
 export * from './OnBoardingBottomMenu/OnBoardingBottomMenu'
+export * from './OnBoardingCarousel/OnBoardingCarousel'
 export * from './OnBoardingContent/OnBoardingContent'
 export * from './OnBoardingHeader/OnBoardingHeader'
 export * from './OnBoardingItem/OnBoardingItem'
