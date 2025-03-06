@@ -8,8 +8,16 @@ type OnBoardingTitle = {
 export type OnboardingPageItem = {
 	title: OnBoardingTitle[]
 	subtitle: string
+	index: number
+	total: number
+	isLast: boolean
 	image: {
 		light: Required<ImageProps>['source']
 		dark: Required<ImageProps>['source']
 	}
 }
+
+export type OnboardingPageItemWithoutMeta = Omit<
+	OnboardingPageItem,
+	'index' | 'total' | 'isLast'
+>

@@ -39,6 +39,7 @@ export const OnBoardingCarousel = ({
 					item={item}
 					onPressNext={onPressNext}
 					onPressSkip={onFinishOnboarding}
+					isLast={item.isLast}
 				/>
 			)}
 			bounces={false}

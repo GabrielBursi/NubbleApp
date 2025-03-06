@@ -12,4 +12,7 @@ export const generateOnBoardingItem = (): OnboardingPageItem => ({
 		dark: { uri: customFaker.image.url() },
 		light: { uri: customFaker.image.url() },
 	},
+	index: customFaker.number.int({ min: 0, max: 10 }),
+	isLast: customFaker.datatype.boolean(),
+	total: customFaker.number.int({ min: 1, max: 20 }),
 })

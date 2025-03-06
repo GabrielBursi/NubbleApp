@@ -17,6 +17,7 @@ const OnBoardingItemMemoized = ({
 	item,
 	onPressNext,
 	onPressSkip,
+	isLast,
 }: Readonly<OnBoardingItemProps>) => {
 	return (
 		<Box
@@ -39,6 +40,7 @@ const OnBoardingItemMemoized = ({
 					<OnBoardingBottomMenu
 						onPressNext={onPressNext}
 						onPressSkip={onPressSkip}
+						isLast={isLast}
 					/>
 				</Box>
 			</Container>

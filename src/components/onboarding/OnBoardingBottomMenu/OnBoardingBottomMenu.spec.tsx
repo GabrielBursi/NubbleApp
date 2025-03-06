@@ -13,6 +13,7 @@ describe('<OnBoardingBottomMenu/>', () => {
 			<OnBoardingBottomMenu
 				onPressNext={mockOnPressNext}
 				onPressSkip={mockOnPressSkip}
+				isLast={false}
 			/>
 		)
 
@@ -20,11 +21,25 @@ describe('<OnBoardingBottomMenu/>', () => {
 		expect(screen.getByRole('text', { name: /próximo/i })).toBeOnTheScreen()
 	})
 
+	it('should render with last correctly', () => {
+		customRender(
+			<OnBoardingBottomMenu
+				onPressNext={mockOnPressNext}
+				onPressSkip={mockOnPressSkip}
+				isLast
+			/>
+		)
+
+		expect(screen.getByRole('text', { name: /pular/i })).toBeOnTheScreen()
+		expect(screen.getByRole('text', { name: /Começar/i })).toBeOnTheScreen()
+	})
+
 	it('should press the buttons correctly', async () => {
 		customRender(
 			<OnBoardingBottomMenu
 				onPressNext={mockOnPressNext}
 				onPressSkip={mockOnPressSkip}
+				isLast={false}
 			/>
 		)
 

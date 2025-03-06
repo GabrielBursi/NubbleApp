@@ -1,8 +1,11 @@
 import { AppImages } from '@/assets/images'
 import { OnBoardingCarousel } from '@/components'
-import { OnboardingPageItem } from '@/types/shared'
+import {
+	OnboardingPageItem,
+	OnboardingPageItemWithoutMeta,
+} from '@/types/shared'
 
-const page1: OnboardingPageItem = {
+const page1: OnboardingPageItemWithoutMeta = {
 	title: [
 		{ text: 'Uma rede social de', highlight: false },
 		{ text: '\nconexões reais', highlight: true },
@@ -14,7 +17,7 @@ const page1: OnboardingPageItem = {
 		dark: AppImages.OnboardingDark1,
 	},
 }
-const page2: OnboardingPageItem = {
+const page2: OnboardingPageItemWithoutMeta = {
 	title: [
 		{ text: 'Compartilhe suas', highlight: false },
 		{ text: '\nhistórias', highlight: true },
@@ -27,7 +30,7 @@ const page2: OnboardingPageItem = {
 	},
 }
 
-const page3: OnboardingPageItem = {
+const page3: OnboardingPageItemWithoutMeta = {
 	title: [
 		{ text: 'Interaja', highlight: true },
 		{ text: ' em tempo real com as pessoas', highlight: false },
@@ -39,6 +42,15 @@ const page3: OnboardingPageItem = {
 	},
 }
 
+const onboardingPages: OnboardingPageItem[] = [page1, page2, page3].map(
+	(page, index, array) => ({
+		...page,
+		index,
+		total: array.length,
+		isLast: index + 1 === array.length,
+	})
+)
+
 export const OnBoardingScreen = () => {
-	return <OnBoardingCarousel items={[page1, page2, page3]} />
+	return <OnBoardingCarousel items={onboardingPages} />
 }

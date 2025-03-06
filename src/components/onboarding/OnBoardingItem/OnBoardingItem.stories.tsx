@@ -12,6 +12,7 @@ const meta: Meta<typeof OnBoardingItem> = {
 		onPressNext: action('onPressNext'),
 		onPressSkip: action('onPressSkip'),
 		item: generateOnBoardingItem(),
+		isLast: false,
 	},
 	argTypes: {
 		item: {

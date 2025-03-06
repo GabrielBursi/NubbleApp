@@ -7,6 +7,7 @@ import { OnBoardingBottomMenuProps } from './OnBoardingBottomMenu.types'
 export const OnBoardingBottomMenu = ({
 	onPressNext,
 	onPressSkip,
+	isLast,
 }: Readonly<OnBoardingBottomMenuProps>) => {
 	return (
 		<Box flexDirection="row" justifyContent="space-between">
@@ -22,7 +23,7 @@ export const OnBoardingBottomMenu = ({
 				alignItems="center"
 			>
 				<Text bold mr="s4">
-					Próximo
+					{isLast ? 'Começar' : 'Próximo'}
 				</Text>
 				<Icon name="arrowRight" color="carrotSecondary" />
 			</PressableBox>

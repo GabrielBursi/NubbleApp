@@ -9,6 +9,7 @@ const meta: Meta<typeof OnBoardingBottomMenu> = {
 	args: {
 		onPressNext: action('onPressNext'),
 		onPressSkip: action('onPressSkip'),
+		isLast: false,
 	},
 	argTypes: {
 		onPressNext: {

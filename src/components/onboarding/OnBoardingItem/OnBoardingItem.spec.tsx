@@ -26,6 +26,7 @@ describe('<OnBoardingItem/>', () => {
 				light: { uri: lightUrl },
 			},
 		},
+		isLast: false,
 		onPressNext: jest.fn(),
 		onPressSkip: jest.fn(),
 	}
