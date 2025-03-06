@@ -25,8 +25,8 @@ const OnBoardingItemMemoized = ({
 			testID="onboarding-item"
 			accessible
 			role="listitem"
-			accessibilityLabel={item.title}
 			width={SCREEN_WIDTH}
+			gap="s8"
 		>
 			<Box flex={4}>
 				<OnBoardingHeader image={item.image} />

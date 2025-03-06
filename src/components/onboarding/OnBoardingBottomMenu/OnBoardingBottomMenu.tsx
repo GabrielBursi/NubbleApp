@@ -11,7 +11,9 @@ export const OnBoardingBottomMenu = ({
 	return (
 		<Box flexDirection="row" justifyContent="space-between">
 			<PressableBox hitSlop={10} onPress={onPressSkip}>
-				<Text>Pular</Text>
+				<Text semiBold color="gray2">
+					Pular
+				</Text>
 			</PressableBox>
 			<PressableBox
 				hitSlop={10}
@@ -19,8 +21,10 @@ export const OnBoardingBottomMenu = ({
 				flexDirection="row"
 				alignItems="center"
 			>
-				<Text mr="s4">Próximo</Text>
-				<Icon name="arrowRight" />
+				<Text bold mr="s4">
+					Próximo
+				</Text>
+				<Icon name="arrowRight" color="carrotSecondary" />
 			</PressableBox>
 		</Box>
 	)

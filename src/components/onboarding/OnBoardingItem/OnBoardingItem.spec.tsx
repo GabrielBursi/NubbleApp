@@ -20,7 +20,7 @@ describe('<OnBoardingItem/>', () => {
 	const mockProps: OnBoardingItemProps = {
 		item: {
 			subtitle: customFaker.lorem.sentence(),
-			title: customFaker.lorem.word(),
+			title: [{ text: customFaker.lorem.word(), highlight: true }],
 			image: {
 				dark: { uri: darkUrl },
 				light: { uri: lightUrl },
@@ -40,7 +40,7 @@ describe('<OnBoardingItem/>', () => {
 		customRender(<OnBoardingItem {...mockProps} />)
 
 		expect(
-			screen.getByRole('text', { name: mockProps.item.title })
+			screen.getByRole('text', { name: mockProps.item.title[0]?.text })
 		).toBeOnTheScreen()
 		expect(
 			screen.getByRole('text', { name: mockProps.item.subtitle })

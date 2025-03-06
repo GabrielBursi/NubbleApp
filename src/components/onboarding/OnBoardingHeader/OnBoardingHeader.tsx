@@ -17,7 +17,8 @@ export const OnBoardingHeader = ({
 	return (
 		<Image
 			source={source}
-			style={{ width: SCREEN_WIDTH }}
+			// eslint-disable-next-line react-native/no-inline-styles
+			style={{ width: SCREEN_WIDTH, height: '100%' }}
 			role="img"
 			accessible
 		/>

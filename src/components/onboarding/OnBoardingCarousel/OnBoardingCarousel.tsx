@@ -33,7 +33,7 @@ export const OnBoardingCarousel = ({
 		<FlatList
 			ref={flatListRef}
 			data={items}
-			keyExtractor={({ title }, index) => `${title}-${index}`}
+			keyExtractor={({ subtitle }, index) => `${subtitle}-${index}`}
 			renderItem={({ item }) => (
 				<OnBoardingItem
 					item={item}
