@@ -18,6 +18,8 @@ const OnBoardingItemMemoized = ({
 	onPressNext,
 	onPressSkip,
 	isLast,
+	index,
+	total,
 }: Readonly<OnBoardingItemProps>) => {
 	return (
 		<Box
@@ -26,6 +28,7 @@ const OnBoardingItemMemoized = ({
 			testID="onboarding-item"
 			accessible
 			role="listitem"
+			accessibilityLabel={item.subtitle}
 			width={SCREEN_WIDTH}
 			gap="s8"
 		>
@@ -34,7 +37,12 @@ const OnBoardingItemMemoized = ({
 			</Box>
 			<Container flex={6}>
 				<Box flex={5}>
-					<OnBoardingContent subtitle={item.subtitle} title={item.title} />
+					<OnBoardingContent
+						index={index}
+						total={total}
+						subtitle={item.subtitle}
+						title={item.title}
+					/>
 				</Box>
 				<Box flex={1}>
 					<OnBoardingBottomMenu

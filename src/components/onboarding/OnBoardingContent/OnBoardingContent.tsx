@@ -1,16 +1,23 @@
 import React from 'react'
 import { Text as RNText } from 'react-native'
 
-import { Box, Text } from '@/components'
+import { Box, OnBoardingProgressIndicator, Text } from '@/components'
 
 import { OnBoardingContentProps } from './OnBoardingContent.types'
 
 export const OnBoardingContent = ({
 	subtitle,
 	title,
+	index,
+	total,
 }: Readonly<OnBoardingContentProps>) => {
 	return (
-		<Box>
+		<Box gap="s16">
+			<OnBoardingProgressIndicator
+				total={total}
+				currentIndex={index}
+				marginBottom="s24"
+			/>
 			<RNText accessible={false} role="heading">
 				{title.map((text, index) => (
 					<Text

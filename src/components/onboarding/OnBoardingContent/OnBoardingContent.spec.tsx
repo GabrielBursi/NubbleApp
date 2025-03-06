@@ -10,6 +10,8 @@ describe('<OnBoardingContent/>', () => {
 	const mockProps: OnBoardingContentProps = {
 		subtitle: customFaker.lorem.sentence(),
 		title: generateOnBoardingItem().title,
+		total: customFaker.number.int({ min: 5, max: 10 }),
+		index: customFaker.number.int({ min: 5, max: 10 }),
 	}
 
 	it('should render correctly', () => {
@@ -18,6 +20,7 @@ describe('<OnBoardingContent/>', () => {
 		expect(
 			screen.getByRole('text', { name: mockProps.subtitle })
 		).toBeOnTheScreen()
+		expect(screen.getByRole('list')).toBeOnTheScreen()
 		expect(
 			screen.getByRole('text', { name: mockProps.title[0]?.text })
 		).toBeOnTheScreen()

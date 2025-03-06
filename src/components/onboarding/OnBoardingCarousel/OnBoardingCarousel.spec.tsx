@@ -23,6 +23,8 @@ describe('<OnBoardingCarousel/>', () => {
 	it('should render the items', () => {
 		customRender(<OnBoardingCarousel items={mockItems} />)
 
-		expect(screen.getAllByRole('listitem')).toHaveLength(mockItems.length)
+		expect(screen.getAllByTestId('onboarding-item')).toHaveLength(
+			mockItems.length
+		)
 	})
 })

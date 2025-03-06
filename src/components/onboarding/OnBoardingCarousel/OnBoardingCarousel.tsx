@@ -40,6 +40,8 @@ export const OnBoardingCarousel = ({
 					onPressNext={onPressNext}
 					onPressSkip={onFinishOnboarding}
 					isLast={item.isLast}
+					index={pageIndex}
+					total={items.length}
 				/>
 			)}
 			bounces={false}

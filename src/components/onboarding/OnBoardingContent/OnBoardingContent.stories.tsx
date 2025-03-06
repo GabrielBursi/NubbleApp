@@ -11,8 +11,23 @@ const meta: Meta<typeof OnBoardingContent> = {
 	args: {
 		subtitle: customFaker.lorem.sentence(),
 		title: generateOnBoardingItem().title,
+		total: customFaker.number.int({ min: 5, max: 10 }),
+		index: customFaker.number.int({ min: 5, max: 10 }),
 	},
-	argTypes: {},
+	argTypes: {
+		total: {
+			control: {
+				min: 1,
+				max: 10,
+			},
+		},
+		index: {
+			control: {
+				min: 1,
+				max: 10,
+			},
+		},
+	},
 }
 export default meta
 

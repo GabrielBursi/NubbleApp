@@ -26,6 +26,8 @@ describe('<OnBoardingItem/>', () => {
 				light: { uri: lightUrl },
 			},
 		},
+		total: customFaker.number.int({ min: 5, max: 10 }),
+		index: customFaker.number.int({ min: 5, max: 10 }),
 		isLast: false,
 		onPressNext: jest.fn(),
 		onPressSkip: jest.fn(),
