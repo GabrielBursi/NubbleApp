@@ -1,9 +1,17 @@
-import { screen } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
+import { useSettingsService } from '@/services/settings'
 import { generateOnBoardingItem } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { OnBoardingCarousel } from './OnBoardingCarousel'
+
+type UseSettingsService = typeof useSettingsService
+type MockUseSettingsService = HookMocked<UseSettingsService>
+type ReturnUseSettingsService = ReturnHookMocked<UseSettingsService>
+
+jest.mock('@/services/settings')
 
 describe('<OnBoardingCarousel/>', () => {
 	const mockItems = [
@@ -13,6 +21,18 @@ describe('<OnBoardingCarousel/>', () => {
 		generateOnBoardingItem(),
 		generateOnBoardingItem(),
 	]
+
+	const mockFinishOnboarding = jest.fn()
+
+	const mockReturnUseSettingsService: ReturnUseSettingsService = {
+		finishOnboarding: mockFinishOnboarding,
+	}
+
+	beforeEach(() => {
+		;(useSettingsService as MockUseSettingsService).mockReturnValue(
+			mockReturnUseSettingsService
+		)
+	})
 
 	it('should render the list', () => {
 		customRender(<OnBoardingCarousel />)
@@ -26,5 +46,20 @@ describe('<OnBoardingCarousel/>', () => {
 		expect(screen.getAllByTestId('onboarding-item')).toHaveLength(
 			mockItems.length
 		)
+	})
+
+	it('should finish when is in the last page', async () => {
+		customRender(<OnBoardingCarousel items={[mockItems[0]!, mockItems[1]!]} />)
+
+		await userEvent.press(screen.getAllByRole('text', { name: /próximo/i })[0]!)
+		await userEvent.press(screen.getAllByRole('text', { name: /próximo/i })[1]!)
+		expect(mockFinishOnboarding).toHaveBeenCalledTimes(1)
+	})
+
+	it('should finish when press to skip', async () => {
+		customRender(<OnBoardingCarousel items={mockItems} />)
+
+		await userEvent.press(screen.getAllByRole('text', { name: /pular/i })[0]!)
+		expect(mockFinishOnboarding).toHaveBeenCalled()
 	})
 })
