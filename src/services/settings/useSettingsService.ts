@@ -4,6 +4,7 @@ import { Appearance } from 'react-native'
 import { SettingsService } from './SettingsService'
 import {
 	useAppThemeOptionZustand,
+	useOnBoardingZustand,
 	useSettingsServiceZustand,
 	useThemePreferenceZustand,
 } from './store'
@@ -11,6 +12,7 @@ import {
 export const useAppThemeOption = useAppThemeOptionZustand
 export const useThemePreference = useThemePreferenceZustand
 export const useSettingsService = useSettingsServiceZustand
+export const useOnBoarding = useOnBoardingZustand
 export const useHandleTheme = () => {
 	const themeOption = useAppThemeOption()
 
