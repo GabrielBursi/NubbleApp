@@ -1,6 +1,8 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { forwardRef, memo, useMemo } from 'react'
 
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable'
+import Swipeable, {
+	SwipeableMethods,
+} from 'react-native-gesture-handler/ReanimatedSwipeable'
 
 import { Icon, Box, ProfileAvatar, Text, PressableBox } from '@/components'
 import { useDeleteComment } from '@/domain/Comment'
@@ -8,12 +10,10 @@ import { useToastService } from '@/services/toast'
 
 import { CommentItemProps } from './CommentItem.types'
 
-export const CommentItemMemoized = ({
-	comment,
-	postAuthorId,
-	userId = 0,
-	postId,
-}: Readonly<CommentItemProps>) => {
+export const CommentItemMemoized = forwardRef<
+	SwipeableMethods,
+	Readonly<CommentItemProps>
+>(({ comment, postAuthorId, userId = 0, postId }, ref) => {
 	const { author, createdAtRelative, id, message } = comment
 
 	const { showToast } = useToastService()
@@ -36,6 +36,7 @@ export const CommentItemMemoized = ({
 			dragOffsetFromRightEdge={20}
 			friction={2}
 			testID="container-comment"
+			ref={ref}
 			renderRightActions={() =>
 				isAllowedToDeleteComment ? (
 					<Box
@@ -46,9 +47,23 @@ export const CommentItemMemoized = ({
 						borderTopRightRadius="s8"
 						borderBottomRightRadius="s8"
 					>
-						<PressableBox justifyContent="center" alignItems="center" gap="s8">
+						<PressableBox
+							onPress={() => deleteComment(id)}
+							justifyContent="center"
+							alignItems="center"
+							gap="s4"
+							role="button"
+							accessibilityRole="button"
+							accessible
+							accessibilityLabel="Excluir comentário"
+						>
 							<Icon name="trash" color="white70" />
-							<Text preset="paragraphCaption" textAlign="center">
+							<Text
+								preset="paragraphCaption"
+								textAlign="center"
+								color="white70"
+								bold
+							>
 								Excluir comentário
 							</Text>
 						</PressableBox>
@@ -91,6 +106,6 @@ export const CommentItemMemoized = ({
 			</Box>
 		</Swipeable>
 	)
-}
+})
 
 export const CommentItem = memo(CommentItemMemoized)

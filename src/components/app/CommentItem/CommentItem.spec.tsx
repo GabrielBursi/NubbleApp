@@ -1,4 +1,4 @@
-import { screen, userEvent } from '@testing-library/react-native'
+import { screen, userEvent, fireEvent } from '@testing-library/react-native'
 
 import { useDeleteComment } from '@/domain/Comment/useCases/useDeleteComment/useDeleteComment'
 import { useToastService } from '@/services/toast/useToast'
@@ -96,15 +96,39 @@ describe('<CommentItem/>', () => {
 	it('should delete the comment correctly', async () => {
 		customRender(<CommentItem {...mockProps} />)
 
-		await userEvent.longPress(screen.getByTestId('container-comment'))
-		expect(mockConfirmDelete).toHaveBeenCalledTimes(1)
-		expect(mockConfirmDelete).toHaveBeenCalledWith(expect.any(Function))
+		fireEvent(screen.getByTestId('container-comment'), 'onResponderMove', {
+			nativeEvent: {
+				pageX: 50,
+				pageY: 100,
+			},
+		})
+
+		await userEvent.press(
+			screen.getByRole('button', { name: /Excluir comentário/i })
+		)
+
+		expect(mockDeleteComment).toHaveBeenCalledTimes(1)
+		expect(mockDeleteComment).toHaveBeenCalledWith(mockProps.comment.id)
 		expect(mockShowToast).toHaveBeenCalledWith({
 			message: 'Comentário excluído.',
 			position: 'bottom',
 		})
+	})
 
-		expect(mockDeleteComment).toHaveBeenCalledTimes(1)
-		expect(mockDeleteComment).toHaveBeenCalledWith(mockProps.comment.id)
+	it('should not show the delete button when the user has no permission', () => {
+		mockIsAllowedToDelete.mockReturnValue(false)
+
+		customRender(<CommentItem {...mockProps} />)
+
+		fireEvent(screen.getByTestId('container-comment'), 'onResponderMove', {
+			nativeEvent: {
+				pageX: 50,
+				pageY: 100,
+			},
+		})
+
+		expect(
+			screen.queryByRole('button', { name: /Excluir comentário/i })
+		).not.toBeOnTheScreen()
 	})
 })
