@@ -1,5 +1,7 @@
 import { Appearance, ColorSchemeName, Platform, StatusBar } from 'react-native'
 
+import BootSplash from 'react-native-bootsplash'
+
 import { lightTheme } from '@/styles'
 
 import { AppThemeOption, ThemePreference } from './models'
@@ -36,6 +38,17 @@ export abstract class SettingsService {
 					? lightTheme.colors.grayBlack
 					: lightTheme.colors.grayWhite
 			)
+		}
+	}
+
+	static async hideSplashScreen() {
+		try {
+			const isVisible = await BootSplash.isVisible()
+			if (isVisible) {
+				await BootSplash.hide({ fade: true })
+			}
+		} catch {
+			await BootSplash.hide()
 		}
 	}
 }

@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-feature
+		android:name="android.hardware.camera"
+		android:required="false" />
+
+	<uses-permission android:name="android.permission.INTERNET" />
 		<uses-permission android:name="android.permission.CAMERA" />
 		<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 		<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
@@ -22,7 +26,9 @@
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize"
+				android:screenOrientation="portrait"
         android:exported="true"
+				android:theme="@style/BootTheme"
 			>
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
