@@ -9,4 +9,5 @@ export enum END_POINTS_API {
 	AUTH_VALIDATE_USERNAME = '/auth/validate-username',
 	AUTH_FORGOT_PASSWORD = '/auth/forgot-password',
 	AUTH_REFRESH_TOKEN = '/auth/refresh-token',
+	POST_REACTION = 'user/reactions',
 }
