@@ -8,7 +8,7 @@ export interface PostReactionBaseAPIModel {
 	emoji_type: PostReactionType
 	user_id: number
 	post_id: number
-	is_checked: true
+	is_checked: boolean
 	created_at: string
 	updated_at: string
 }
