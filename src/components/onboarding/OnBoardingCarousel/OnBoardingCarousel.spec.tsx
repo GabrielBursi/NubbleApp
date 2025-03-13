@@ -49,10 +49,17 @@ describe('<OnBoardingCarousel/>', () => {
 	})
 
 	it('should finish when is in the last page', async () => {
-		customRender(<OnBoardingCarousel items={[mockItems[0]!, mockItems[1]!]} />)
+		customRender(
+			<OnBoardingCarousel
+				items={[
+					{ ...mockItems[0]!, isLast: false },
+					{ ...mockItems[1]!, isLast: true },
+				]}
+			/>
+		)
 
-		await userEvent.press(screen.getAllByRole('text', { name: /próximo/i })[0]!)
-		await userEvent.press(screen.getAllByRole('text', { name: /próximo/i })[1]!)
+		await userEvent.press(screen.getByRole('text', { name: /próximo/i }))
+		await userEvent.press(screen.getByRole('text', { name: /Começar/i }))
 		expect(mockFinishOnboarding).toHaveBeenCalledTimes(1)
 	})
 
