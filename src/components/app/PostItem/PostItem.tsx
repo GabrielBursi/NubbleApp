@@ -18,6 +18,7 @@ const PostItemMemoized = ({
 	reactionCount,
 	text,
 	id,
+	hideCommentAction = false,
 }: Readonly<PostItemProps>) => {
 	return (
 		<Box
@@ -38,6 +39,7 @@ const PostItemMemoized = ({
 				commentCount={commentCount}
 				favoriteCount={favoriteCount}
 				reactionCount={reactionCount}
+				hideCommentAction={hideCommentAction}
 			/>
 			<PostBottom
 				userName={author.userName}
@@ -45,6 +47,7 @@ const PostItemMemoized = ({
 				commentCount={commentCount}
 				id={id}
 				authorId={author.id}
+				hideCommentAction={hideCommentAction}
 			/>
 		</Box>
 	)

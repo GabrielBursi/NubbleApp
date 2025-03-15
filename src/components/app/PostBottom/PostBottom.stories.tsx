@@ -10,6 +10,7 @@ const meta: Meta<typeof PostBottom> = {
 		text: 'Storybook',
 		userName: 'SB',
 		id: 'sb',
+		hideCommentAction: false,
 	},
 	argTypes: {},
 }

@@ -59,7 +59,9 @@ export const CommentList = ({
 					)
 				}
 				ItemSeparatorComponent={ItemSeparatorComponent}
-				ListHeaderComponent={post ? <PostItem {...post} /> : null}
+				ListHeaderComponent={
+					post ? <PostItem {...post} hideCommentAction /> : null
+				}
 				ListFooterComponent={
 					hasNextPage ? (
 						<SeeMore

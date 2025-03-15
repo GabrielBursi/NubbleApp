@@ -11,6 +11,7 @@ const PostBottomMemoized = ({
 	text,
 	id,
 	authorId,
+	hideCommentAction = false,
 }: Readonly<PostBottomProps>) => {
 	const { navigationAppStack } = useNavigationApp()
 
@@ -39,7 +40,7 @@ const PostBottomMemoized = ({
 			<Text.Expanded preset="paragraphMedium" color="paragraph">
 				{text}
 			</Text.Expanded>
-			{commentText && (
+			{commentText && !hideCommentAction && (
 				<Text
 					onPress={navigateToPostCommentScreen}
 					mt="s12"

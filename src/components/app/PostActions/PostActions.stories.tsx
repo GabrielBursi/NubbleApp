@@ -9,6 +9,7 @@ const meta: Meta<typeof PostActions> = {
 		commentCount: 50,
 		favoriteCount: 25,
 		reactionCount: 10,
+		hideCommentAction: false,
 	},
 	argTypes: {},
 }

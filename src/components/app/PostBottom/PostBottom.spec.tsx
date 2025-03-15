@@ -35,6 +35,23 @@ describe('<PostBottom/>', () => {
 		).toBeOnTheScreen()
 	})
 
+	it('should hide comments correctly', () => {
+		customRender(
+			<PostBottom
+				id={post.id}
+				authorId="1"
+				text={text}
+				userName={userName}
+				commentCount={10}
+				hideCommentAction
+			/>
+		)
+
+		expect(
+			screen.queryByRole('text', { name: /ver 10 comentários/i })
+		).not.toBeOnTheScreen()
+	})
+
 	it('should render the post bottom with just only one comment correctly', () => {
 		customRender(
 			<PostBottom

@@ -15,6 +15,7 @@ const meta: Meta<typeof PostItem> = {
 		},
 		reactionCount: 10,
 		id: mockPosts[0]?.id,
+		hideCommentAction: false,
 	},
 	argTypes: {
 		author: {

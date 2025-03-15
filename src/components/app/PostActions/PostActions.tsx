@@ -8,6 +8,7 @@ export const PostActions = ({
 	commentCount = 0,
 	favoriteCount = 0,
 	reactionCount = 0,
+	hideCommentAction = false,
 }: Readonly<PostActionsProps>) => {
 	const [isLiked, setIsLiked] = useState(false)
 	const [isFavorited, setIsFavorited] = useState(false)
@@ -36,13 +37,15 @@ export const PostActions = ({
 					marked: isLiked ? 'heartFill' : undefined,
 				}}
 			/>
-			<ActionIcon
-				onPress={navigateToComments}
-				label={commentCount}
-				name={{
-					default: 'comment',
-				}}
-			/>
+			{!hideCommentAction && (
+				<ActionIcon
+					onPress={navigateToComments}
+					label={commentCount}
+					name={{
+						default: 'comment',
+					}}
+				/>
+			)}
 			<ActionIcon
 				onPress={favoritePost}
 				label={favoriteCount}
