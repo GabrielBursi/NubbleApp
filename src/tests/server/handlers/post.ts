@@ -21,6 +21,22 @@ export const postHandlers: HttpHandler[] = [
 			{ status: 200 }
 		)
 	}),
+	http.get<{ postId: string }>(
+		`${Config.API_URL}${END_POINTS_API.POST}/:postId`,
+		({ request, params }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			const post = mockPostsClone.find(
+				(post) => post.id === Number(params.postId)
+			)
+
+			if (!post) return HttpResponse.json(null, { status: 404 })
+
+			return HttpResponse.json<PostAPIModel>(post, { status: 200 })
+		}
+	),
 
 	http.post(`${Config.API_URL}${END_POINTS_API.POST}`, ({ request }) => {
 		console.log('Handler', request.method, request.url)
