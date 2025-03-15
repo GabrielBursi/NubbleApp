@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { customFaker } from '@/tests/utils'
+import { customFaker } from '@/tests/utils/customFaker'
 
 import { ProfileAvatar } from './ProfileAvatar'
 

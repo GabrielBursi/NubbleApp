@@ -94,7 +94,7 @@ describe('<CommentList/>', () => {
 			post: mockPost,
 		})
 
-		customRender(<CommentList id={mockId} authorId={mockId} />)
+		customRender(<CommentList id={mockId} authorId={mockId} showPost />)
 
 		expect(
 			screen.getByRole('listitem', { name: mockPost.author.userName })

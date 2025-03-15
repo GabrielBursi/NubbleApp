@@ -1,6 +1,6 @@
 import { AppImages } from '@/assets/images'
 
-import { customFaker } from '../utils'
+import { customFaker } from '../utils/customFaker'
 
 type Images = keyof typeof AppImages
 type MockImages = Record<Images, string>

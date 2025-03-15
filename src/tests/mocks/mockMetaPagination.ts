@@ -1,7 +1,7 @@
 import { MetaDataPaginationAPI } from '@/types/api'
 import { MetaDataPaginationApp } from '@/types/shared'
 
-import { customFaker } from '../utils'
+import { customFaker } from '../utils/customFaker'
 
 export const generateMockMetaPaginationApi = (): MetaDataPaginationAPI => {
 	const per_page = customFaker.number.int({ min: 5, max: 20 })

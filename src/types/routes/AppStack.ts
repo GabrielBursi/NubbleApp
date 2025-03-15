@@ -7,6 +7,8 @@ export type RootAppStackRouterParamList = {
 	PostCommentScreen: {
 		postId: string
 		postAuthorId: string
+		/** @default false */
+		showPost?: boolean
 	}
 	ProfileScreen: {
 		userId: number

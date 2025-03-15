@@ -7,13 +7,13 @@ import {
 	PostReactionBaseAPIModel,
 	PostReactionType,
 } from '@/domain/PostReaction'
+import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
 import {
 	generateMockPostReactionBaseApi,
-	generatePostAPI,
-	generateUserApi,
 	mockReactionsApi,
-} from '@/tests/mocks'
-import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
+} from '@/tests/mocks/mockPostReaction'
+import { generatePostAPI } from '@/tests/mocks/mockPosts'
+import { generateUserApi } from '@/tests/mocks/mockUser'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
 const mockReactionsClone = cloneDeep(mockReactionsApi)

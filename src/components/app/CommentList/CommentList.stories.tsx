@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { customFaker } from '@/tests/utils'
+import { customFaker } from '@/tests/utils/customFaker'
 
 import { CommentList } from './CommentList'
 
@@ -9,8 +9,17 @@ const meta: Meta<typeof CommentList> = {
 	component: CommentList,
 	args: {
 		id: customFaker.string.uuid(),
+		showPost: false,
+		authorId: customFaker.string.uuid(),
 	},
-	argTypes: {},
+	argTypes: {
+		id: {
+			type: 'symbol',
+		},
+		authorId: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 

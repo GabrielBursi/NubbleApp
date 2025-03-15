@@ -5,6 +5,7 @@ import { FlashList } from '@shopify/flash-list'
 import {
 	Box,
 	CommentItem,
+	Container,
 	PostItem,
 	SeeMore,
 	TextInputAddComment,
@@ -21,6 +22,7 @@ const ItemSeparatorComponent = () => <Box mb="s16" />
 export const CommentList = ({
 	id: postId,
 	authorId,
+	showPost = false,
 }: Readonly<CommentListProps>) => {
 	const { comments, isLoading, hasNextPage, fetchMoreComments } =
 		useCommentList(postId)
@@ -29,7 +31,7 @@ export const CommentList = ({
 
 	const authCre = useAuthCredentials()
 
-	const { post } = usePostGetById(postId)
+	const { post } = usePostGetById(showPost ? postId : undefined)
 
 	return (
 		<Box flex={1} justifyContent="space-between">
@@ -37,14 +39,25 @@ export const CommentList = ({
 				showsVerticalScrollIndicator={false}
 				data={comments}
 				keyExtractor={(comment, index) => `${comment.id}-${index}`}
-				renderItem={({ item: comment }) => (
-					<CommentItem
-						comment={comment}
-						postAuthorId={authorId}
-						userId={authCre?.user.id}
-						postId={postId}
-					/>
-				)}
+				renderItem={({ item: comment }) =>
+					showPost ? (
+						<Container>
+							<CommentItem
+								comment={comment}
+								postAuthorId={authorId}
+								userId={authCre?.user.id}
+								postId={postId}
+							/>
+						</Container>
+					) : (
+						<CommentItem
+							comment={comment}
+							postAuthorId={authorId}
+							userId={authCre?.user.id}
+							postId={postId}
+						/>
+					)
+				}
 				ItemSeparatorComponent={ItemSeparatorComponent}
 				ListHeaderComponent={post ? <PostItem {...post} /> : null}
 				ListFooterComponent={
