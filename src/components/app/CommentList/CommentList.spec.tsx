@@ -87,7 +87,7 @@ describe('<CommentList/>', () => {
 	it('should render a post item as a header component correctly', () => {
 		;(useCommentList as MockUseCommentList).mockReturnValue({
 			...initialMockReturnUseCommentList,
-			hasNextPage: true,
+			comments: [mockComments[0], mockComments[1]],
 		})
 		;(usePostGetById as MockUsePostGetById).mockReturnValue({
 			...initialMockReturnUsePostGetById,
