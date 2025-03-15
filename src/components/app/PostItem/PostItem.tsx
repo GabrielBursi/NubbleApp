@@ -20,7 +20,14 @@ const PostItemMemoized = ({
 	id,
 }: Readonly<PostItemProps>) => {
 	return (
-		<Box paddingHorizontal="s24" marginBottom="s24" role="listitem" accessible>
+		<Box
+			paddingHorizontal="s24"
+			marginBottom="s24"
+			role="listitem"
+			accessible
+			accessibilityLabel={author.userName}
+			aria-label={author.userName}
+		>
 			<ProfileUsername
 				profileUrl={author.profileURL}
 				username={author.userName}

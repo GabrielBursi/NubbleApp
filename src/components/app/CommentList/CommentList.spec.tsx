@@ -1,10 +1,10 @@
 import { act, screen, userEvent } from '@testing-library/react-native'
 
-import { mockComments } from '@/tests/mocks'
+import { useCommentList } from '@/domain/Comment/useCases/useCommentList/useCommentList'
+import { usePostGetById } from '@/domain/Post/useCases/usePostGetById/usePostGetById'
+import { generatePost, mockComments } from '@/tests/mocks'
 import { customFaker, customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
-
-import { useCommentList } from '../../../domain/Comment/useCases/useCommentList/useCommentList'
 
 import { CommentList } from './CommentList'
 
@@ -12,12 +12,19 @@ type UseCommentList = typeof useCommentList
 type ReturnUseCommentList = ReturnHookMocked<UseCommentList>
 type MockUseCommentList = HookMocked<UseCommentList>
 
-jest.mock('../../../domain/Comment/useCases/useCommentList/useCommentList')
+type UsePostGetById = typeof usePostGetById
+type ReturnUsePostGetById = ReturnHookMocked<UsePostGetById>
+type MockUsePostGetById = HookMocked<UsePostGetById>
+
+jest.mock('@/domain/Comment/useCases/useCommentList/useCommentList')
+jest.mock('@/domain/Post/useCases/usePostGetById/usePostGetById')
 
 describe('<CommentList/>', () => {
 	const mockId = customFaker.string.uuid()
 	const mockFetchMoreCommentsWithPagination = jest.fn()
 	const mockRefreshComments = jest.fn()
+
+	const mockPost = generatePost()
 
 	const initialMockReturnUseCommentList: ReturnUseCommentList = {
 		error: null,
@@ -28,9 +35,18 @@ describe('<CommentList/>', () => {
 		hasNextPage: false,
 	}
 
+	const initialMockReturnUsePostGetById: ReturnUsePostGetById = {
+		error: null,
+		isLoading: false,
+		post: null,
+	}
+
 	beforeEach(() => {
 		;(useCommentList as MockUseCommentList).mockReturnValue(
 			initialMockReturnUseCommentList
+		)
+		;(usePostGetById as MockUsePostGetById).mockReturnValue(
+			initialMockReturnUsePostGetById
 		)
 	})
 
@@ -66,5 +82,22 @@ describe('<CommentList/>', () => {
 		await userEvent.press(screen.getByRole('text', { name: /ver mais/i }))
 
 		expect(mockFetchMoreCommentsWithPagination).toHaveBeenCalled()
+	})
+
+	it('should render a post item as a header component correctly', () => {
+		;(useCommentList as MockUseCommentList).mockReturnValue({
+			...initialMockReturnUseCommentList,
+			hasNextPage: true,
+		})
+		;(usePostGetById as MockUsePostGetById).mockReturnValue({
+			...initialMockReturnUsePostGetById,
+			post: mockPost,
+		})
+
+		customRender(<CommentList id={mockId} authorId={mockId} />)
+
+		expect(
+			screen.getByRole('listitem', { name: mockPost.author.userName })
+		).toBeOnTheScreen()
 	})
 })

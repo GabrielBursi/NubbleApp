@@ -2,8 +2,15 @@ import React from 'react'
 
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, CommentItem, SeeMore, TextInputAddComment } from '@/components'
+import {
+	Box,
+	CommentItem,
+	PostItem,
+	SeeMore,
+	TextInputAddComment,
+} from '@/components'
 import { useCommentList } from '@/domain/Comment'
+import { usePostGetById } from '@/domain/Post'
 import { useAppSafeArea } from '@/hooks'
 import { useAuthCredentials } from '@/services/auth'
 
@@ -22,6 +29,8 @@ export const CommentList = ({
 
 	const authCre = useAuthCredentials()
 
+	const { post } = usePostGetById(postId)
+
 	return (
 		<Box flex={1} justifyContent="space-between">
 			<FlashList
@@ -37,6 +46,7 @@ export const CommentList = ({
 					/>
 				)}
 				ItemSeparatorComponent={ItemSeparatorComponent}
+				ListHeaderComponent={post ? <PostItem {...post} /> : null}
 				ListFooterComponent={
 					hasNextPage ? (
 						<SeeMore
