@@ -1,18 +1,20 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { ActivityIndicator } from 'react-native'
 
 import { Box, Button, Text } from '@/components'
 
-import { FeedEmptyProps } from './FeedEmpty.types'
+import { EmptyListProps } from './EmptyList.types'
 
-export const FeedEmptyMemoized = ({
-	error = null,
-	loading = false,
+export const EmptyList = ({
+	emptyMessage = 'A lista está vazia',
+	error,
+	errorMessage = 'Ocorreu um erro ao tentar carregar a lista',
+	loading,
 	refetch,
-}: Readonly<FeedEmptyProps>) => {
+}: Readonly<EmptyListProps>) => {
 	let component = (
 		<Text bold preset="paragraphMedium">
-			Não há publicações no seu feed
+			{emptyMessage}
 		</Text>
 	)
 
@@ -30,7 +32,7 @@ export const FeedEmptyMemoized = ({
 		component = (
 			<>
 				<Text bold preset="paragraphMedium" mb="s16">
-					Não foi possível carregar o feed 😢
+					{errorMessage}
 				</Text>
 				<Button
 					title="recarregar"
@@ -48,5 +50,3 @@ export const FeedEmptyMemoized = ({
 		</Box>
 	)
 }
-
-export const FeedEmpty = memo(FeedEmptyMemoized)

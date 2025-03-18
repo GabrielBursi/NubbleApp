@@ -4,7 +4,7 @@ import { RefreshControl } from 'react-native'
 import { useScrollToTop } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 
-import { Box, FeedEmpty, FeedHeader, PostItem } from '@/components'
+import { Box, EmptyList, FeedHeader, PostItem } from '@/components'
 import { PostModel, usePostList } from '@/domain/Post'
 
 const ItemSeparatorComponent = () => <Box mb="s16" />
@@ -27,7 +27,13 @@ const FeedListMemoized = () => {
 			ItemSeparatorComponent={ItemSeparatorComponent}
 			ListHeaderComponent={FeedHeader}
 			ListEmptyComponent={
-				<FeedEmpty refetch={refreshPosts} error={error} loading={isLoading} />
+				<EmptyList
+					emptyMessage="Não há publicações no seu feed"
+					errorMessage="Não foi possível carregar o feed 😢"
+					refetch={refreshPosts}
+					error={error}
+					loading={isLoading}
+				/>
 			}
 			refreshing={isLoading}
 			refreshControl={
