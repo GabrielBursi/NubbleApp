@@ -1,10 +1,8 @@
 import React, { memo } from 'react'
 
-import { Box, FeedHeader, InfinityScrollList, PostItem } from '@/components'
+import { FeedHeader, InfinityScrollList, PostItem } from '@/components'
 import { PostApi } from '@/domain/Post'
 import { AppQueryKeys } from '@/types/api'
-
-const ItemSeparatorComponent = () => <Box mb="s16" />
 
 const FeedListMemoized = () => {
 	return (
@@ -15,7 +13,6 @@ const FeedListMemoized = () => {
 			estimatedItemSize={714}
 			keyExtractor={(post, index) => `${post.id}-${index}`}
 			renderItem={({ item: post }) => <PostItem {...post} />}
-			ItemSeparatorComponent={ItemSeparatorComponent}
 			ListHeaderComponent={FeedHeader}
 			emptyMessage="Não há publicações no seu feed"
 			errorMessage="Não foi possível carregar o feed 😢"

@@ -4,10 +4,12 @@ import { RefreshControl } from 'react-native'
 import { useScrollToTop } from '@react-navigation/native'
 import { FlashList } from '@shopify/flash-list'
 
-import { EmptyList } from '@/components'
+import { Box, EmptyList } from '@/components'
 import { usePaginatedList } from '@/hooks'
 
 import { InfinityScrollListProps } from './InfinityScrollList.types'
+
+const ItemSeparatorComponent = () => <Box mb="s16" />
 
 export const InfinityScrollList = <TItem extends object>({
 	queryOpt,
@@ -27,6 +29,7 @@ export const InfinityScrollList = <TItem extends object>({
 
 	return (
 		<FlashList
+			ItemSeparatorComponent={ItemSeparatorComponent}
 			{...flashListProps}
 			ref={flatListRef}
 			data={list}
