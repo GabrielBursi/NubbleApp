@@ -53,7 +53,7 @@ const preview: Preview = {
 				)
 			}
 
-			if (title.includes('InfinityScrollList')) {
+			if (title.includes('InfinityScrollList') || title.includes('FeedList')) {
 				return (
 					<TestProvider>
 						<TestNavigator component={Story} />

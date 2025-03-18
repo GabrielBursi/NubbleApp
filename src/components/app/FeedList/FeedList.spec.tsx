@@ -5,40 +5,52 @@ import {
 	userEvent,
 } from '@testing-library/react-native'
 
-import { usePostList } from '@/domain/Post/useCases/usePostList/usePostList'
+import { PostApi } from '@/domain/Post'
+import { usePaginatedList } from '@/hooks/usePaginatedList/usePaginatedList'
 import { mockPosts } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
+import { AppQueryKeys } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { FeedList } from './FeedList'
 
-type UsePostList = typeof usePostList
-type ReturnUsePostList = ReturnHookMocked<UsePostList>
-type MockUsePostList = HookMocked<UsePostList>
+type UsePaginatedList = typeof usePaginatedList
+type ReturnUsePaginatedList = ReturnHookMocked<UsePaginatedList>
+type MockUsePaginatedList = HookMocked<UsePaginatedList>
 
-jest.mock('@/domain/Post/useCases/usePostList/usePostList')
+jest.mock('@/hooks/usePaginatedList/usePaginatedList')
 
 describe('<FeedList/>', () => {
 	const mockFetchMorePostsWithPagination = jest.fn()
 	const mockRefreshPosts = jest.fn()
 
-	const initialMockReturnUsePostList: ReturnUsePostList = {
+	const spyGetPosts = jest.spyOn(PostApi, 'GetPosts')
+
+	const initialMockReturnUsePaginatedList: ReturnUsePaginatedList = {
 		error: null,
 		isLoading: false,
-		posts: [],
-		fetchMorePosts: mockFetchMorePostsWithPagination,
-		refreshPosts: mockRefreshPosts,
+		list: [],
+		fetchNextPage: mockFetchMorePostsWithPagination,
+		refreshList: mockRefreshPosts,
 	}
 
 	beforeEach(() => {
-		;(usePostList as MockUsePostList).mockReturnValue(
-			initialMockReturnUsePostList
+		;(usePaginatedList as MockUsePaginatedList).mockReturnValue(
+			initialMockReturnUsePaginatedList
 		)
 	})
 
 	it('should render the list component', () => {
 		customRender(<FeedList />)
 		expect(screen.getByRole('list')).toBeOnTheScreen()
+	})
+
+	it('should call the hook correctly', () => {
+		customRender(<FeedList />)
+
+		expect(usePaginatedList).toHaveBeenCalledWith(spyGetPosts, {
+			queryKey: [AppQueryKeys.POSTS],
+		})
 	})
 
 	it('should render list empty correctly', () => {
@@ -49,9 +61,9 @@ describe('<FeedList/>', () => {
 	})
 
 	it('should render posts when data is available', async () => {
-		;(usePostList as MockUsePostList).mockReturnValue({
-			...initialMockReturnUsePostList,
-			posts: [mockPosts[0], mockPosts[1]],
+		;(usePaginatedList as MockUsePaginatedList).mockReturnValue({
+			...initialMockReturnUsePaginatedList,
+			list: [mockPosts[0], mockPosts[1]],
 		})
 
 		customRender(<FeedList />)
@@ -62,8 +74,8 @@ describe('<FeedList/>', () => {
 	})
 
 	it('should render loading indicator when loading is true', () => {
-		;(usePostList as MockUsePostList).mockReturnValue({
-			...initialMockReturnUsePostList,
+		;(usePaginatedList as MockUsePaginatedList).mockReturnValue({
+			...initialMockReturnUsePaginatedList,
 			isLoading: true,
 		})
 
@@ -73,8 +85,8 @@ describe('<FeedList/>', () => {
 	})
 
 	it('should display error message when there is an error', () => {
-		;(usePostList as MockUsePostList).mockReturnValue({
-			...initialMockReturnUsePostList,
+		;(usePaginatedList as MockUsePaginatedList).mockReturnValue({
+			...initialMockReturnUsePaginatedList,
 			error: 'Error',
 		})
 
@@ -86,8 +98,8 @@ describe('<FeedList/>', () => {
 	})
 
 	it('should call refetch when FeedEmpty refetch button is pressed', async () => {
-		;(usePostList as MockUsePostList).mockReturnValue({
-			...initialMockReturnUsePostList,
+		;(usePaginatedList as MockUsePaginatedList).mockReturnValue({
+			...initialMockReturnUsePaginatedList,
 			error: 'Error',
 		})
 

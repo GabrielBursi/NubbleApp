@@ -17,7 +17,7 @@ export const InfinityScrollList = <TItem extends object>({
 	accessibilityLabel,
 	...flashListProps
 }: Readonly<InfinityScrollListProps<TItem>>) => {
-	const { list, isError, isLoading, refreshList, fetchNextPage } =
+	const { list, isLoading, refreshList, fetchNextPage, error } =
 		usePaginatedList(getList, queryOpt)
 
 	const flatListRef = useRef<FlashList<TItem>>(null)
@@ -48,7 +48,7 @@ export const InfinityScrollList = <TItem extends object>({
 			ListEmptyComponent={
 				<EmptyList
 					refetch={refreshList}
-					error={isError}
+					error={error}
 					loading={isLoading}
 					errorMessage={errorMessage}
 					emptyMessage={emptyMessage}

@@ -148,7 +148,7 @@ describe('<InfinityScrollList/>', () => {
 	it('should display error message when there is an error', () => {
 		;(usePaginatedList as MockUsePaginatedList).mockReturnValue({
 			...initialMockReturnUsePaginatedList,
-			isError: true,
+			error: 'error',
 		})
 
 		customRender(
@@ -171,7 +171,7 @@ describe('<InfinityScrollList/>', () => {
 	it('should call refetch when EmptyList refetch button is pressed', async () => {
 		;(usePaginatedList as MockUsePaginatedList).mockReturnValue({
 			...initialMockReturnUsePaginatedList,
-			isError: true,
+			error: 'error',
 		})
 
 		customRender(
