@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { ActivityIndicator } from 'react-native'
 
 import { Box, Button, Text } from '@/components'
 
 import { EmptyListProps } from './EmptyList.types'
 
-export const EmptyList = ({
+const EmptyListMemoized = ({
 	emptyMessage = 'A lista está vazia',
 	error,
 	errorMessage = 'Ocorreu um erro ao tentar carregar a lista',
@@ -35,7 +35,7 @@ export const EmptyList = ({
 					{errorMessage}
 				</Text>
 				<Button
-					title="recarregar"
+					title="Recarregar"
 					preset="outline"
 					// eslint-disable-next-line sonarjs/no-misused-promises
 					onPress={refetch}
@@ -50,3 +50,5 @@ export const EmptyList = ({
 		</Box>
 	)
 }
+
+export const EmptyList = memo(EmptyListMemoized)

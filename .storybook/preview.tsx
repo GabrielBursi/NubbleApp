@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Preview } from '@storybook/react'
 import { TestProvider } from '../src/providers'
+import { TestNavigator } from '../src/tests/utils/TestNavigator'
 import { lightTheme } from '../src/styles'
 import { AuthStackRouter } from '../src/routes/stack/AuthStack'
 import { AppStackRouter } from '../src/routes/stack/AppStack'
@@ -48,6 +49,14 @@ const preview: Preview = {
 				return (
 					<TestProvider>
 						<AppStackRouter initialRouteName={componentName} />
+					</TestProvider>
+				)
+			}
+
+			if (title.includes('InfinityScrollList')) {
+				return (
+					<TestProvider>
+						<TestNavigator component={Story} />
 					</TestProvider>
 				)
 			}
