@@ -14,9 +14,18 @@ import { customFaker } from '../utils/customFaker'
 import { generatePost, generatePostAPI } from './mockPosts'
 import { generateUser, generateUserApi } from './mockUser'
 
-const getRandomPostReactionType = (): PostReactionType => {
+const getShuffledReactions = (): PostReactionType[] => {
 	const values = Object.values(PostReactionType)
-	return values[Math.floor(Math.random() * values.length)]!
+	return values.sort(() => Math.random() - 0.5)
+}
+
+let reactionQueue: PostReactionType[] = getShuffledReactions()
+
+const getRandomPostReactionType = (): PostReactionType => {
+	if (reactionQueue.length === 0) {
+		reactionQueue = getShuffledReactions()
+	}
+	return reactionQueue.pop()!
 }
 
 export const generateMockPostReactionBaseApi =

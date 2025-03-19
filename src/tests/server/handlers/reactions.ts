@@ -17,6 +17,12 @@ import { generateUserApi } from '@/tests/mocks/mockUser'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
 const mockReactionsClone = cloneDeep(mockReactionsApi)
+const mockFavorites = mockReactionsClone.filter(
+	(r) => r.emoji_type === PostReactionType.FAVORITE
+)
+const mockLikes = mockReactionsClone.filter(
+	(r) => r.emoji_type === PostReactionType.LIKE
+)
 
 export const reactionHandlers: HttpHandler[] = [
 	http.get(
@@ -24,7 +30,22 @@ export const reactionHandlers: HttpHandler[] = [
 		({ request }) => {
 			console.log('Handler', request.method, request.url)
 
+			const url = new URL(request.url)
+			const reaction_type = url.searchParams.get('reaction_type')
+
 			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			if (reaction_type === PostReactionType.FAVORITE)
+				return HttpResponse.json<PageAPI<PostReactionAPIModel>>(
+					{ data: mockFavorites, meta: mockMetaPaginationApi },
+					{ status: 200 }
+				)
+
+			if (reaction_type === PostReactionType.LIKE)
+				return HttpResponse.json<PageAPI<PostReactionAPIModel>>(
+					{ data: mockLikes, meta: mockMetaPaginationApi },
+					{ status: 200 }
+				)
 
 			return HttpResponse.json<PageAPI<PostReactionAPIModel>>(
 				{ data: mockReactionsClone, meta: mockMetaPaginationApi },
