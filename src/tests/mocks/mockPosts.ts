@@ -1,6 +1,7 @@
 import { uniqueId } from 'lodash'
 
 import { PostModel, PostAPIModel } from '@/domain/Post'
+import { PostReactionType } from '@/domain/PostReaction'
 
 import { customFaker } from '../utils/customFaker'
 
@@ -29,6 +30,24 @@ export const generatePostAPI = (): PostAPIModel => ({
 		favorite_count: customFaker.number.int({ min: 0, max: 1000 }).toString(),
 		comments_count: customFaker.number.int({ min: 0, max: 1000 }).toString(),
 	},
+	reactions: [
+		{
+			emoji_type: PostReactionType.FAVORITE,
+			post_id: Number(uniqueId()),
+		},
+		{
+			emoji_type: PostReactionType.FAVORITE,
+			post_id: Number(uniqueId()),
+		},
+		{
+			emoji_type: PostReactionType.LIKE,
+			post_id: Number(uniqueId()),
+		},
+		{
+			emoji_type: PostReactionType.LIKE,
+			post_id: Number(uniqueId()),
+		},
+	],
 })
 
 export const generatePost = (): PostModel => ({
@@ -44,6 +63,24 @@ export const generatePost = (): PostModel => ({
 	reactionCount: customFaker.number.int({ min: 0, max: 1000 }),
 	commentCount: customFaker.number.int({ min: 0, max: 500 }),
 	favoriteCount: customFaker.number.int({ min: 0, max: 300 }),
+	reactions: [
+		{
+			emojiType: PostReactionType.FAVORITE,
+			postId: Number(uniqueId()),
+		},
+		{
+			emojiType: PostReactionType.FAVORITE,
+			postId: Number(uniqueId()),
+		},
+		{
+			emojiType: PostReactionType.LIKE,
+			postId: Number(uniqueId()),
+		},
+		{
+			emojiType: PostReactionType.LIKE,
+			postId: Number(uniqueId()),
+		},
+	],
 })
 
 export const mockPosts: PostModel[] = [

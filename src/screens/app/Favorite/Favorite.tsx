@@ -1,6 +1,8 @@
 import React from 'react'
 import { Dimensions, Image } from 'react-native'
 
+import normalize from 'react-native-normalize'
+
 import { InfinityScrollList, PressableBox, Text } from '@/components'
 import {
 	PostReactionApi,
@@ -13,19 +15,18 @@ import { FavoriteScreenProps } from '@/types/screens'
 
 const NUM_COLUMNS = 2
 const SCREEN_WIDTH = Dimensions.get('window').width
-const SCREEN_PADDING = 24
-const ITEM_MARGIN = 16
+const SCREEN_PADDING = normalize(24, 'width')
+const ITEM_MARGIN = normalize(16, 'width')
 const ITEM_WITH =
 	(SCREEN_WIDTH - ITEM_MARGIN - SCREEN_PADDING * 2) / NUM_COLUMNS
-
-//TODO: estimatedItemSize, estilo contentContainerStyle columnWrapperStyle, separar componente de item
 
 export const FavoriteScreen = ({ navigation }: FavoriteScreenProps) => {
 	return (
 		<ScreenTemplate title="Favoritos">
 			<InfinityScrollList<PostReactionModel>
 				accessibilityLabel="favorites"
-				estimatedItemSize={100}
+				// Pixel 5 API 34
+				estimatedItemSize={200}
 				keyExtractor={(item, index) => `${item.id}-${index}`}
 				queryOpt={{ queryKey: [AppQueryKeys.FAVORITES] }}
 				getList={(page) =>
@@ -58,8 +59,6 @@ export const FavoriteScreen = ({ navigation }: FavoriteScreenProps) => {
 					</PressableBox>
 				)}
 				numColumns={NUM_COLUMNS}
-				// contentContainerStyle={{ rowGap: SCREEN_PADDING }}
-				// columnWrapperStyle={{ columnGap: ITEM_MARGIN }}
 				errorMessage="erro ao carregar favoritos"
 				emptyMessage="não há favoritos"
 			/>

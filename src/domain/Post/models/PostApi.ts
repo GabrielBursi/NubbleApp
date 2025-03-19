@@ -1,3 +1,4 @@
+import { PostReactionAPIModel } from '@/domain/PostReaction'
 import { User } from '@/types/api'
 import { StrictOmit } from '@/types/utils'
 
@@ -23,4 +24,5 @@ export interface PostAPIModel {
 		favorite_count: string
 		comments_count: string
 	}
+	reactions: Pick<PostReactionAPIModel, 'emoji_type' | 'post_id'>[]
 }

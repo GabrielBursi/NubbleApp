@@ -1,3 +1,5 @@
+import { PostReactionModel } from '@/domain/PostReaction'
+
 export interface PostModel {
 	id: string
 	text: string
@@ -11,4 +13,5 @@ export interface PostModel {
 	reactionCount: number
 	commentCount: number
 	favoriteCount: number
+	reactions: Pick<PostReactionModel, 'emojiType' | 'postId'>[]
 }
