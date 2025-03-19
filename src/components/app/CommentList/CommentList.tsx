@@ -78,8 +78,8 @@ export const CommentList = ({
 				// size CommentItem device: Pixel 8 Pro API 34
 				estimatedItemSize={80}
 				accessible
-				accessibilityLabel="feed"
-				aria-label="feed"
+				accessibilityLabel="comments"
+				aria-label="comments"
 				role="list"
 				accessibilityRole="list"
 			/>
