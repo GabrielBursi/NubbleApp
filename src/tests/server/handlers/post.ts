@@ -32,7 +32,10 @@ export const postHandlers: HttpHandler[] = [
 				(post) => post.id === Number(params.postId)
 			)
 
-			if (!post) return HttpResponse.json(null, { status: 404 })
+			if (!post)
+				return HttpResponse.json<PostAPIModel>(generatePostAPI(), {
+					status: 200,
+				})
 
 			return HttpResponse.json<PostAPIModel>(post, { status: 200 })
 		}

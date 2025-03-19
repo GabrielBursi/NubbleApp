@@ -18,7 +18,7 @@ const ITEM_MARGIN = 16
 const ITEM_WITH =
 	(SCREEN_WIDTH - ITEM_MARGIN - SCREEN_PADDING * 2) / NUM_COLUMNS
 
-//TODO: navegação, estimatedItemSize, estilo contentContainerStyle columnWrapperStyle, separar componente de item
+//TODO: estimatedItemSize, estilo contentContainerStyle columnWrapperStyle, separar componente de item
 
 export const FavoriteScreen = ({ navigation }: FavoriteScreenProps) => {
 	return (
