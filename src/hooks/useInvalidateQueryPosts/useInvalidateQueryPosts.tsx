@@ -49,24 +49,33 @@ export const useInvalidateQueryPosts = () => {
 	)
 
 	const createReactionUpdater = useCallback(
-		(reaction: PostReactionType, action: PostAction) => (post: PostModel) => {
-			if (reaction === PostReactionType.FAVORITE) {
+		(reaction: PostReactionType, action: PostAction) =>
+			(post: PostModel): PostModel => {
+				if (reaction === PostReactionType.FAVORITE) {
+					return {
+						...post,
+						reactions: [
+							...post.reactions,
+							{ postId: Number(post.id), emojiType: reaction },
+						],
+						favoriteCount:
+							action === 'increment'
+								? post.favoriteCount + 1
+								: post.favoriteCount - 1,
+					}
+				}
 				return {
 					...post,
-					favoriteCount:
+					reactions: [
+						...post.reactions,
+						{ postId: Number(post.id), emojiType: reaction },
+					],
+					reactionCount:
 						action === 'increment'
-							? post.favoriteCount + 1
-							: post.favoriteCount - 1,
+							? post.reactionCount + 1
+							: post.reactionCount - 1,
 				}
-			}
-			return {
-				...post,
-				reactionCount:
-					action === 'increment'
-						? post.reactionCount + 1
-						: post.reactionCount - 1,
-			}
-		},
+			},
 		[]
 	)
 
