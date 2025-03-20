@@ -2,15 +2,15 @@ import { useMutation } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
-import { useInvalidateQueryComments } from '@/hooks'
+import { useInvalidateQueryComments, useInvalidateQueryPosts } from '@/hooks'
 import { MutationOptions } from '@/types/shared'
 
 export const useCreateComment = (
 	postId: PostModel['id'],
 	options?: MutationOptions<CommentModel>
 ) => {
-	const { invalidateCommentCountPost, invalidateQueryComments } =
-		useInvalidateQueryComments()
+	const { invalidateQueryComments } = useInvalidateQueryComments()
+	const { updatePostCommentCount } = useInvalidateQueryPosts()
 
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['post-comment'],
@@ -24,7 +24,7 @@ export const useCreateComment = (
 		}) => CommentApi.SendComment(postId, message),
 		onSuccess: async (data) => {
 			await invalidateQueryComments(postId)
-			invalidateCommentCountPost(postId, 'increment')
+			updatePostCommentCount(postId, 'increment')
 			if (options?.onSuccess) options.onSuccess(data)
 		},
 		onError: () => {

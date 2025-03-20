@@ -5,15 +5,15 @@ import { useMutation } from '@tanstack/react-query'
 
 import { CommentApi, CommentModel } from '@/domain/Comment'
 import { PostModel } from '@/domain/Post'
-import { useInvalidateQueryComments } from '@/hooks'
+import { useInvalidateQueryComments, useInvalidateQueryPosts } from '@/hooks'
 import { MutationOptions } from '@/types/shared'
 
 export const useDeleteComment = (
 	postId: PostModel['id'],
 	options?: MutationOptions<string>
 ) => {
-	const { invalidateCommentCountPost, invalidateQueryComments } =
-		useInvalidateQueryComments()
+	const { invalidateQueryComments } = useInvalidateQueryComments()
+	const { updatePostCommentCount } = useInvalidateQueryPosts()
 
 	const { data, error, isPending, isSuccess, mutate, reset } = useMutation({
 		mutationKey: ['delete-comment'],
@@ -22,7 +22,7 @@ export const useDeleteComment = (
 			CommentApi.DeleteComment(commentId),
 		onSuccess: async (message) => {
 			await invalidateQueryComments(postId)
-			invalidateCommentCountPost(postId, 'decrement')
+			updatePostCommentCount(postId, 'decrement')
 			if (options?.onSuccess) options.onSuccess(message)
 		},
 		onError: () => {

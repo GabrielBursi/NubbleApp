@@ -4,6 +4,7 @@ import Config from 'react-native-config'
 
 import { CommentApi } from '@/domain/Comment'
 import { useInvalidateQueryComments } from '@/hooks/useInvalidateQueryComments/useInvalidateQueryComments'
+import { useInvalidateQueryPosts } from '@/hooks/useInvalidateQueryPosts/useInvalidateQueryPosts'
 import { TestProvider } from '@/providers'
 import { serverTest } from '@/tests/server'
 import { END_POINTS_API } from '@/types/api'
@@ -16,7 +17,12 @@ type ReturnUseInvalidateQueryComments =
 	ReturnHookMocked<UseInvalidateQueryComments>
 type MockUseInvalidateQueryComments = HookMocked<UseInvalidateQueryComments>
 
+type UseInvalidateQueryPosts = typeof useInvalidateQueryPosts
+type ReturnUseInvalidateQueryPosts = ReturnHookMocked<UseInvalidateQueryPosts>
+type MockUseInvalidateQueryPosts = HookMocked<UseInvalidateQueryPosts>
+
 jest.mock('@/hooks/useInvalidateQueryComments/useInvalidateQueryComments')
+jest.mock('@/hooks/useInvalidateQueryPosts/useInvalidateQueryPosts')
 
 describe('useCreateComment', () => {
 	const spySendComment = jest.spyOn(CommentApi, 'SendComment')
@@ -26,14 +32,20 @@ describe('useCreateComment', () => {
 	const mockOnError = jest.fn()
 
 	const mockUseInvalidateQueryComments: ReturnUseInvalidateQueryComments = {
-		invalidateCommentCountPost: mockInvalidateCommentCountPost,
 		invalidateQueryComments: mockInvalidateQueryComments,
+	}
+
+	const mockUseInvalidateQueryPosts: ReturnUseInvalidateQueryPosts = {
+		updatePostCommentCount: mockInvalidateCommentCountPost,
 	}
 
 	beforeEach(() => {
 		;(
 			useInvalidateQueryComments as MockUseInvalidateQueryComments
 		).mockReturnValue(mockUseInvalidateQueryComments)
+		;(useInvalidateQueryPosts as MockUseInvalidateQueryPosts).mockReturnValue(
+			mockUseInvalidateQueryPosts
+		)
 	})
 
 	it('should create a comment correctly', async () => {
