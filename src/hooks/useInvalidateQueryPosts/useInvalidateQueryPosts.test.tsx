@@ -1,4 +1,4 @@
-import { InfiniteData, QueryKey } from '@tanstack/react-query'
+import { InfiniteData, QueryKey, useQueryClient } from '@tanstack/react-query'
 import { act, renderHook } from '@testing-library/react-native'
 
 import { PostModel } from '@/domain/Post'
@@ -6,6 +6,7 @@ import { PostReactionType } from '@/domain/PostReaction'
 import { generatePost, mockMetaPaginationApp } from '@/tests/mocks'
 import { AppQueryKeys } from '@/types/api'
 import { PageApp } from '@/types/shared'
+import { ReturnHookMocked } from '@/types/tests'
 
 import { useInvalidateQueryPosts } from './useInvalidateQueryPosts'
 
@@ -18,12 +19,16 @@ type MockSetQueryData = jest.MockedFunction<
 	) => void
 >
 
-const mockSetQueryData: MockSetQueryData = jest.fn()
+type ReturnUseQueryClient = ReturnHookMocked<typeof useQueryClient>
+
+const mockSetQueryData = jest.fn()
+const mockCancelQueries = jest.fn()
 const mockInvalidateQueries = jest.fn()
 
-const mockReturnUseQueryClient = {
+const mockReturnUseQueryClient: ReturnUseQueryClient = {
 	setQueryData: mockSetQueryData,
 	invalidateQueries: mockInvalidateQueries,
+	cancelQueries: mockCancelQueries,
 }
 
 jest.mock<{ useQueryClient: () => typeof mockReturnUseQueryClient }>(
@@ -48,20 +53,48 @@ describe('useInvalidateQueryPosts', () => {
 		})
 	})
 
+	it('should invalidate posts query', async () => {
+		const { result } = renderHook(useInvalidateQueryPosts)
+
+		await act(async () => {
+			await result.current.invalidateQueryPosts()
+		})
+
+		expect(mockInvalidateQueries).toHaveBeenCalledWith({
+			exact: true,
+			queryKey: [AppQueryKeys.POSTS],
+		})
+	})
+
+	it('should cancel posts query', async () => {
+		const { result } = renderHook(useInvalidateQueryPosts)
+
+		await act(async () => {
+			await result.current.cancelQueryPosts()
+		})
+
+		expect(mockCancelQueries).toHaveBeenCalledWith({
+			exact: true,
+			queryKey: [AppQueryKeys.POSTS],
+		})
+	})
+
 	describe('updatePostCommentCount', () => {
 		it('should update comment count correctly when incrementing', async () => {
 			const mockPosts = [generatePost()]
 			const postId = mockPosts[0]!.id
 
-			mockSetQueryData.mockImplementation((key, updater) => {
-				const updatedData = updater({
-					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
-					pageParams: [1],
-				})
-				expect(updatedData?.pages[0]!.data[0]!.commentCount).toBe(
-					mockPosts[0]!.commentCount + 1
-				)
-			})
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
+				(key, updater) => {
+					const updatedData = updater({
+						pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
+						pageParams: [1],
+					})
+					expect(updatedData?.pages[0]!.data[0]!.commentCount).toBe(
+						mockPosts[0]!.commentCount + 1
+					)
+				}
+			)
 
 			const { result } = renderHook(useInvalidateQueryPosts)
 
@@ -79,15 +112,17 @@ describe('useInvalidateQueryPosts', () => {
 			const mockPosts = [generatePost()]
 			const postId = mockPosts[0]!.id
 
-			mockSetQueryData.mockImplementation((key, updater) => {
-				const updatedData = updater({
-					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
-					pageParams: [1],
-				})
-				expect(updatedData?.pages[0]!.data[0]!.commentCount).toBe(
-					mockPosts[0]!.commentCount - 1
-				)
-			})
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
+				(key, updater) => {
+					const updatedData = updater({
+						pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
+						pageParams: [1],
+					})
+					expect(updatedData?.pages[0]!.data[0]!.commentCount).toBe(
+						mockPosts[0]!.commentCount - 1
+					)
+				}
+			)
 
 			const { result } = renderHook(useInvalidateQueryPosts)
 
@@ -105,7 +140,7 @@ describe('useInvalidateQueryPosts', () => {
 			const mockPosts = [generatePost()]
 			const nonExistentPostId = 'non-existent-id'
 
-			mockSetQueryData.mockImplementation(
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
 				(
 					key: QueryKey,
 					updater: (
@@ -138,15 +173,17 @@ describe('useInvalidateQueryPosts', () => {
 			const mockPosts = [generatePost()]
 			const postId = mockPosts[0]!.id
 
-			mockSetQueryData.mockImplementation((key, updater) => {
-				const updatedData = updater({
-					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
-					pageParams: [1],
-				})
-				expect(updatedData?.pages[0]!.data[0]!.favoriteCount).toBe(
-					mockPosts[0]!.favoriteCount + 1
-				)
-			})
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
+				(key, updater) => {
+					const updatedData = updater({
+						pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
+						pageParams: [1],
+					})
+					expect(updatedData?.pages[0]!.data[0]!.favoriteCount).toBe(
+						mockPosts[0]!.favoriteCount + 1
+					)
+				}
+			)
 
 			const { result } = renderHook(useInvalidateQueryPosts)
 
@@ -168,15 +205,17 @@ describe('useInvalidateQueryPosts', () => {
 			const mockPosts = [generatePost()]
 			const postId = mockPosts[0]!.id
 
-			mockSetQueryData.mockImplementation((key, updater) => {
-				const updatedData = updater({
-					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
-					pageParams: [1],
-				})
-				expect(updatedData?.pages[0]!.data[0]!.favoriteCount).toBe(
-					mockPosts[0]!.favoriteCount - 1
-				)
-			})
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
+				(key, updater) => {
+					const updatedData = updater({
+						pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
+						pageParams: [1],
+					})
+					expect(updatedData?.pages[0]!.data[0]!.favoriteCount).toBe(
+						mockPosts[0]!.favoriteCount - 1
+					)
+				}
+			)
 
 			const { result } = renderHook(useInvalidateQueryPosts)
 
@@ -198,15 +237,17 @@ describe('useInvalidateQueryPosts', () => {
 			const mockPosts = [generatePost()]
 			const postId = mockPosts[0]!.id
 
-			mockSetQueryData.mockImplementation((key, updater) => {
-				const updatedData = updater({
-					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
-					pageParams: [1],
-				})
-				expect(updatedData?.pages[0]!.data[0]!.reactionCount).toBe(
-					mockPosts[0]!.reactionCount + 1
-				)
-			})
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
+				(key, updater) => {
+					const updatedData = updater({
+						pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
+						pageParams: [1],
+					})
+					expect(updatedData?.pages[0]!.data[0]!.reactionCount).toBe(
+						mockPosts[0]!.reactionCount + 1
+					)
+				}
+			)
 
 			const { result } = renderHook(useInvalidateQueryPosts)
 
@@ -228,15 +269,17 @@ describe('useInvalidateQueryPosts', () => {
 			const mockPosts = [generatePost()]
 			const postId = mockPosts[0]!.id
 
-			mockSetQueryData.mockImplementation((key, updater) => {
-				const updatedData = updater({
-					pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
-					pageParams: [1],
-				})
-				expect(updatedData?.pages[0]!.data[0]!.reactionCount).toBe(
-					mockPosts[0]!.reactionCount - 1
-				)
-			})
+			;(mockSetQueryData as MockSetQueryData).mockImplementation(
+				(key, updater) => {
+					const updatedData = updater({
+						pages: [{ data: mockPosts, meta: mockMetaPaginationApp }],
+						pageParams: [1],
+					})
+					expect(updatedData?.pages[0]!.data[0]!.reactionCount).toBe(
+						mockPosts[0]!.reactionCount - 1
+					)
+				}
+			)
 
 			const { result } = renderHook(useInvalidateQueryPosts)
 
@@ -256,10 +299,12 @@ describe('useInvalidateQueryPosts', () => {
 	})
 
 	it('should return undefined if oldData is not defined', async () => {
-		mockSetQueryData.mockImplementation((key, updater) => {
-			const result = updater(undefined)
-			expect(result).toBeUndefined()
-		})
+		;(mockSetQueryData as MockSetQueryData).mockImplementation(
+			(key, updater) => {
+				const result = updater(undefined)
+				expect(result).toBeUndefined()
+			}
+		)
 
 		const { result } = renderHook(useInvalidateQueryPosts)
 

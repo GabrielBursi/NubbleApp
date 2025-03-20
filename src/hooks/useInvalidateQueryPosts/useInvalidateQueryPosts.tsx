@@ -13,6 +13,27 @@ type InfinitePosts = InfiniteData<PageApp<PostModel>>
 export const useInvalidateQueryPosts = () => {
 	const queryClient = useQueryClient()
 
+	const invalidateQueryFavorites = useCallback(async () => {
+		await queryClient.invalidateQueries({
+			exact: true,
+			queryKey: [AppQueryKeys.FAVORITES],
+		})
+	}, [queryClient])
+
+	const invalidateQueryPosts = useCallback(async () => {
+		await queryClient.invalidateQueries({
+			exact: true,
+			queryKey: [AppQueryKeys.POSTS],
+		})
+	}, [queryClient])
+
+	const cancelQueryPosts = useCallback(async () => {
+		await queryClient.cancelQueries({
+			exact: true,
+			queryKey: [AppQueryKeys.POSTS],
+		})
+	}, [queryClient])
+
 	const updatePostsQueryData = useCallback(
 		(updater: (oldPosts: InfinitePosts) => InfinitePosts) => {
 			queryClient.setQueryData<InfinitePosts>(
@@ -31,13 +52,6 @@ export const useInvalidateQueryPosts = () => {
 		) => posts.map((post) => (post.id === postId ? updater(post) : post)),
 		[]
 	)
-
-	const invalidateQueryFavorites = useCallback(async () => {
-		await queryClient.invalidateQueries({
-			exact: true,
-			queryKey: [AppQueryKeys.FAVORITES],
-		})
-	}, [queryClient])
 
 	const createCommentUpdater = useCallback(
 		(action: PostAction) => (post: PostModel) => ({
@@ -127,5 +141,7 @@ export const useInvalidateQueryPosts = () => {
 		updatePostCommentCount,
 		updatePostReactionCount,
 		invalidateQueryFavorites,
+		invalidateQueryPosts,
+		cancelQueryPosts,
 	} as const
 }

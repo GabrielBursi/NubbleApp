@@ -1,14 +1,14 @@
 import { useCallback } from 'react'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 import { PostApi, PostModel } from '@/domain/Post'
+import { useInvalidateQueryPosts } from '@/hooks'
 import { ImageForUpload, MultimediaService } from '@/services/multimedia'
-import { AppQueryKeys } from '@/types/api'
 import { MutationOptions } from '@/types/shared'
 
 export const usePostCreate = (options?: MutationOptions<PostModel>) => {
-	const queryClient = useQueryClient()
+	const { invalidateQueryPosts } = useInvalidateQueryPosts()
 
 	const { mutate, isPending, isError, data } = useMutation({
 		mutationFn: ({
@@ -19,7 +19,7 @@ export const usePostCreate = (options?: MutationOptions<PostModel>) => {
 			imageCover: ImageForUpload
 		}) => PostApi.Create(text, imageCover),
 		onSuccess: async (post) => {
-			await queryClient.invalidateQueries({ queryKey: [AppQueryKeys.POSTS] })
+			await invalidateQueryPosts()
 			options?.onSuccess?.(post)
 		},
 		onError: () => {

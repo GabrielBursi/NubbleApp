@@ -8,7 +8,7 @@ import { END_POINTS_API } from '@/types/api'
 //TODO: TRATAMENTO DE ERRO
 /** create if not exists, otherelse edit */
 export const Update = async (
-	post_id: number,
+	post_id: string,
 	reaction_type: PostReactionType
 ): Promise<PostReactionBaseAPIModel> => {
 	const path = `${END_POINTS_API.POST_REACTION}/${post_id}/${reaction_type}`

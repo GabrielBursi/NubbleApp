@@ -3,13 +3,21 @@ import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
 import { PostApi } from '@/domain/Post'
+import { useInvalidateQueryPosts } from '@/hooks/useInvalidateQueryPosts/useInvalidateQueryPosts'
 import { TestProvider } from '@/providers'
 import { ImageForUpload, MultimediaService } from '@/services/multimedia'
 import { serverTest } from '@/tests/server'
 import { customFaker } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { usePostCreate } from './usePostCreate'
+
+type UseInvalidateQueryPosts = typeof useInvalidateQueryPosts
+type ReturnUseInvalidateQueryPosts = ReturnHookMocked<UseInvalidateQueryPosts>
+type MockUseInvalidateQueryPosts = HookMocked<UseInvalidateQueryPosts>
+
+jest.mock('@/hooks/useInvalidateQueryPosts/useInvalidateQueryPosts')
 
 describe('usePostCreate', () => {
 	const spyPostCreate = jest.spyOn(PostApi, 'Create')
@@ -19,17 +27,25 @@ describe('usePostCreate', () => {
 	)
 	const mockOnSuccess = jest.fn()
 	const mockOnError = jest.fn()
-
+	const mockInvalidateQueryPosts = jest.fn()
 	const mockImageUpload: ImageForUpload = {
 		name: customFaker.lorem.word(5),
 		type: 'image/jpeg',
 		uri: customFaker.internet.url(),
 	}
-
 	const mockPost = {
 		description: customFaker.lorem.text(),
 		imageUri: customFaker.internet.url(),
 	}
+	const mockUseInvalidateQueryPosts: ReturnUseInvalidateQueryPosts = {
+		invalidateQueryPosts: mockInvalidateQueryPosts,
+	}
+
+	beforeEach(() => {
+		;(useInvalidateQueryPosts as MockUseInvalidateQueryPosts).mockReturnValue(
+			mockUseInvalidateQueryPosts
+		)
+	})
 
 	beforeAll(() => {
 		spyPrepareImageForUpload.mockResolvedValue(mockImageUpload)
@@ -49,6 +65,10 @@ describe('usePostCreate', () => {
 				mockPost.description,
 				mockImageUpload
 			)
+		})
+
+		await waitFor(() => {
+			expect(mockInvalidateQueryPosts).toHaveBeenCalled()
 		})
 
 		await waitFor(() => {

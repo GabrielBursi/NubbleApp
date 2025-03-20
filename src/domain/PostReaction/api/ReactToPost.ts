@@ -4,7 +4,7 @@ import { PostReactionServices } from '@/api/services'
 import { PostReactionBaseModel, PostReactionType } from '../models'
 
 export const ReactToPost = async (
-	postId: number,
+	postId: string,
 	reactionType: PostReactionType
 ): Promise<PostReactionBaseModel> => {
 	const postReactionBaseAPI = await PostReactionServices.Update(
