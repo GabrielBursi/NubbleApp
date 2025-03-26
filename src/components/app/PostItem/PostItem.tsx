@@ -11,15 +11,11 @@ import {
 import { PostItemProps } from './PostItem.types'
 
 const PostItemMemoized = ({
-	author,
-	commentCount,
-	favoriteCount,
-	imageURL,
-	reactionCount,
-	text,
-	id,
+	post,
 	hideCommentAction = false,
 }: Readonly<PostItemProps>) => {
+	const { author, imageURL, text, id, commentCount } = post
+
 	return (
 		<Box
 			paddingHorizontal="s24"
@@ -35,12 +31,7 @@ const PostItemMemoized = ({
 				id={Number(author.id)}
 			/>
 			<PostImage imageURL={imageURL} />
-			<PostActions
-				commentCount={commentCount}
-				favoriteCount={favoriteCount}
-				reactionCount={reactionCount}
-				hideCommentAction={hideCommentAction}
-			/>
+			<PostActions post={post} hideCommentAction={hideCommentAction} />
 			<PostBottom
 				userName={author.userName}
 				text={text}

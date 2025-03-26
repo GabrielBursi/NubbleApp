@@ -1,6 +1,7 @@
 import { PostModel } from '@/domain/Post'
 
-export type PostItemProps = PostModel & {
+export type PostItemProps = {
 	/** @default false */
 	hideCommentAction?: boolean
+	post: PostModel
 }

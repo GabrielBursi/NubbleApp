@@ -12,7 +12,7 @@ const FeedListMemoized = () => {
 			accessibilityLabel="feed"
 			estimatedItemSize={714}
 			keyExtractor={(post, index) => `${post.id}-${index}`}
-			renderItem={({ item: post }) => <PostItem {...post} />}
+			renderItem={({ item: post }) => <PostItem post={post} />}
 			ListHeaderComponent={FeedHeader}
 			emptyMessage="Não há publicações no seu feed"
 			errorMessage="Não foi possível carregar o feed 😢"

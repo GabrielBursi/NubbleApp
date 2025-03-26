@@ -1,17 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { generatePost } from '@/tests/mocks/mockPosts'
+
 import { PostActions } from './PostActions'
 
 const meta: Meta<typeof PostActions> = {
 	title: 'Components/Post/PostActions',
 	component: PostActions,
 	args: {
-		commentCount: 50,
-		favoriteCount: 25,
-		reactionCount: 10,
+		post: generatePost(),
 		hideCommentAction: false,
 	},
-	argTypes: {},
+	argTypes: {
+		post: {
+			type: 'symbol',
+		},
+	},
 }
 export default meta
 

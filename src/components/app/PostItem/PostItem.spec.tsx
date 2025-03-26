@@ -9,7 +9,7 @@ describe('<PostItem/>', () => {
 	const post = mockPosts[0]!
 
 	it('should render the post item correctly', () => {
-		customRender(<PostItem {...post} />)
+		customRender(<PostItem post={post} />)
 
 		expect(
 			screen.getByText(`${post.commentCount}`, { exact: true })
