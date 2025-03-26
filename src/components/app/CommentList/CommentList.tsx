@@ -83,7 +83,13 @@ export const CommentList = ({
 				role="list"
 				accessibilityRole="list"
 			/>
-			<TextInputAddComment postId={postId} />
+			{showPost ? (
+				<Container flex={0}>
+					<TextInputAddComment postId={postId} />
+				</Container>
+			) : (
+				<TextInputAddComment postId={postId} />
+			)}
 		</Box>
 	)
 }
