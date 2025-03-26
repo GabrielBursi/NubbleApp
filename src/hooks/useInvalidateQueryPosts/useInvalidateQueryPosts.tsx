@@ -68,10 +68,13 @@ export const useInvalidateQueryPosts = () => {
 				if (reaction === PostReactionType.FAVORITE) {
 					return {
 						...post,
-						reactions: [
-							...post.reactions,
-							{ postId: Number(post.id), emojiType: reaction },
-						],
+						reactions:
+							action === 'increment'
+								? [
+										...post.reactions,
+										{ postId: Number(post.id), emojiType: reaction },
+									]
+								: post.reactions.filter((r) => r.emojiType !== reaction),
 						favoriteCount:
 							action === 'increment'
 								? post.favoriteCount + 1
@@ -80,10 +83,13 @@ export const useInvalidateQueryPosts = () => {
 				}
 				return {
 					...post,
-					reactions: [
-						...post.reactions,
-						{ postId: Number(post.id), emojiType: reaction },
-					],
+					reactions:
+						action === 'increment'
+							? [
+									...post.reactions,
+									{ postId: Number(post.id), emojiType: reaction },
+								]
+							: post.reactions.filter((r) => r.emojiType !== reaction),
 					reactionCount:
 						action === 'increment'
 							? post.reactionCount + 1
