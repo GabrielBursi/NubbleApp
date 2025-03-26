@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider } from '@shopify/restyle'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Config from 'react-native-config'
+import { DevToolsBubble } from 'react-native-react-query-devtools'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 //? Only use ContextProvider if it is using Context implementation. Zustand implementation doesn't need a provider
@@ -19,6 +20,8 @@ initializeStorage(MMKVStorage)
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
 	const theme = useHandleTheme()
+
+	const onCopy = async () => await Promise.resolve(false)
 
 	return (
 		<QueryClientProvider client={queryClient}>
@@ -38,6 +41,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 					</SafeAreaProvider>
 				</ThemeProvider>
 			</NavigationContainer>
+			<DevToolsBubble onCopy={onCopy} />
 		</QueryClientProvider>
 	)
 }
