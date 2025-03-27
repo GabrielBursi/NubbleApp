@@ -44,6 +44,21 @@ export const useInvalidateQueryPosts = () => {
 		[queryClient]
 	)
 
+	const updatePostByIdData = useCallback(
+		(postId: PostModel['id'], updater: (oldPost: PostModel) => PostModel) => {
+			const postByIdData = queryClient.getQueryData<PostModel>([
+				AppQueryKeys.POSTS_BY_ID,
+				postId,
+			])
+			if (postByIdData)
+				queryClient.setQueryData<PostModel>(
+					[AppQueryKeys.POSTS_BY_ID, postId],
+					(oldPost) => updater(oldPost!)
+				)
+		},
+		[queryClient]
+	)
+
 	const updatePostById = useCallback(
 		(
 			posts: PostModel[],
@@ -128,14 +143,27 @@ export const useInvalidateQueryPosts = () => {
 		]
 	)
 
-	const updatePostReactionCount = useCallback(
+	const updatePostByIdReactionCount = useCallback(
 		(postId: PostModel['id'], reaction: PostReactionType, action: PostAction) =>
+			updatePostByIdData(postId, createReactionUpdater(reaction, action)),
+		[createReactionUpdater, updatePostByIdData]
+	)
+
+	const updatePostReactionCount = useCallback(
+		(
+			postId: PostModel['id'],
+			reaction: PostReactionType,
+			action: PostAction
+		) => {
+			updatePostByIdReactionCount(postId, reaction, action)
 			updatePostsQueryData((postsData) =>
 				updateInfinitePosts(postsData, (posts) =>
 					updatePostById(posts, postId, createReactionUpdater(reaction, action))
 				)
-			),
+			)
+		},
 		[
+			updatePostByIdReactionCount,
 			updatePostsQueryData,
 			updateInfinitePosts,
 			updatePostById,

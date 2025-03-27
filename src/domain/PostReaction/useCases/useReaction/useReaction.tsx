@@ -19,8 +19,6 @@ type UseReactionParams = {
 	options?: MutationOptions<PostReactionBaseModel>
 }
 
-// TODO: ações de post na tela de comentário nao funcionando
-
 export const useReaction = ({
 	post,
 	postReactionType,
