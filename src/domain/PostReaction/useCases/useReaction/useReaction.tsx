@@ -19,7 +19,6 @@ type UseReactionParams = {
 	options?: MutationOptions<PostReactionBaseModel>
 }
 
-// TODO: invalidação de favorito nao funcionando
 // TODO: ações de post na tela de comentário nao funcionando
 
 export const useReaction = ({

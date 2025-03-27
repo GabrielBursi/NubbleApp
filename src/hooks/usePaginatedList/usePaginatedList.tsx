@@ -7,7 +7,6 @@ import {
 	useInfiniteQuery,
 } from '@tanstack/react-query'
 
-import { useQueryFocusAware } from '@/hooks'
 import { MetaDataPaginationApp, PageApp } from '@/types/shared'
 import { StrictOmit } from '@/types/utils'
 
@@ -36,8 +35,6 @@ export const usePaginatedList = <TData extends object>(
 ): UsePaginatedList<TData> => {
 	const [listData, setListData] = useState<TData[]>([])
 
-	const isFocused = useQueryFocusAware()
-
 	const {
 		data,
 		error,
@@ -52,7 +49,6 @@ export const usePaginatedList = <TData extends object>(
 		queryFn: ({ pageParam }) => getList(pageParam),
 		getNextPageParam: ({ meta }) =>
 			meta.hasNextPage ? meta.currentPage + 1 : null,
-		enabled: isFocused(),
 		staleTime: 5 * 60 * 1000,
 		refetchOnMount: true,
 		refetchOnWindowFocus: true,
