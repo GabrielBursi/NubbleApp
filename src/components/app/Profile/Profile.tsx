@@ -1,13 +1,7 @@
 import React, { useCallback } from 'react'
 import { Image } from 'react-native'
 
-import {
-	Box,
-	InfinityScrollList,
-	Loading,
-	ProfileAvatar,
-	Text,
-} from '@/components'
+import { InfinityScrollList, Loading, ProfileHeader } from '@/components'
 import { PostApi } from '@/domain/Post'
 import { useUserGetById } from '@/domain/User'
 import { AppQueryKeys } from '@/types/api'
@@ -35,13 +29,7 @@ export const Profile = ({ userId }: Readonly<ProfileProps>) => {
 			getList={getUserPosts}
 			keyExtractor={({ id }, index) => `${id}-${index}`}
 			queryOpt={{ queryKey: [AppQueryKeys.POSTS, userId] }}
-			ListHeaderComponent={
-				<Box>
-					<ProfileAvatar imageURL={user.profileUrl} />
-					<Text>{user.fullName}</Text>
-					<Text>{`@${user.username}`}</Text>
-				</Box>
-			}
+			ListHeaderComponent={<ProfileHeader user={user} />}
 			renderItem={({ item: post }) => (
 				<Image
 					source={{ uri: post.imageURL }}

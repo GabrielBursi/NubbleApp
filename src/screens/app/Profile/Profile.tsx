@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { Text } from '@/components'
+import { Profile } from '@/components'
 import { ScreenTemplate } from '@/templates'
+import { ProfileScreenProps } from '@/types/screens'
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({ route: { params } }: ProfileScreenProps) => {
 	return (
 		<ScreenTemplate canGoBack>
-			<Text>Profile</Text>
+			<Profile userId={params.userId} />
 		</ScreenTemplate>
 	)
 }

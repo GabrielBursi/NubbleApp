@@ -1,16 +1,16 @@
 import React from 'react'
 
-import { Button } from '@/components'
+import { Profile } from '@/components'
+import { useAuthCredentials } from '@/services/auth'
 import { ScreenTemplate } from '@/templates'
-import { MyProfileScreenProps } from '@/types/screens'
 
-export const MyProfileScreen = ({ navigation }: MyProfileScreenProps) => {
+export const MyProfileScreen = () => {
+	const auth = useAuthCredentials()
+	if (!auth?.user.id) return null
+
 	return (
 		<ScreenTemplate>
-			<Button
-				title="Configurações"
-				onPress={() => navigation.navigate('SettingsScreen')}
-			/>
+			<Profile userId={auth.user.id} />
 		</ScreenTemplate>
 	)
 }
