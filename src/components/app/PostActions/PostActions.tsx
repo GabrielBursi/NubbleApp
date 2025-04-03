@@ -40,18 +40,18 @@ export const PostActions = ({
 		},
 	})
 
-	const { navigationAppStack } = useAppNavigation()
+	const { navigate } = useAppNavigation()
 
 	const handleLikePost = useCallback(() => {
 		likePost()
 	}, [likePost])
 
 	const navigateToComments = useCallback(() => {
-		navigationAppStack.navigate('PostCommentScreen', {
+		navigate.toComments({
 			postAuthorId: author.id,
 			postId: id,
 		})
-	}, [author.id, id, navigationAppStack])
+	}, [author.id, id, navigate])
 
 	const handleFavoritePost = useCallback(() => {
 		favoritePost()

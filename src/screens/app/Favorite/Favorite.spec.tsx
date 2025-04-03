@@ -43,12 +43,7 @@ describe('<FavoriteScreen/>', () => {
 	})
 
 	it('should render the screen', () => {
-		customRender(
-			<FavoriteScreen // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-				navigation={mockUseNavigation as any}
-				route={{ name: 'FavoriteScreen', key: 'FavoriteScreen' }}
-			/>
-		)
+		customRender(<FavoriteScreen />)
 
 		expect(screen.getByRole('list', { name: /favorites/i })).toBeOnTheScreen()
 	})
@@ -61,13 +56,7 @@ describe('<FavoriteScreen/>', () => {
 			}
 		)
 
-		customRender(
-			<FavoriteScreen
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-				navigation={mockUseNavigation as any}
-				route={{ name: 'FavoriteScreen', key: 'FavoriteScreen' }}
-			/>
-		)
+		customRender(<FavoriteScreen />)
 
 		expect(spyGetReactions).toHaveBeenCalledWith(PostReactionType.FAVORITE, 1)
 
@@ -82,12 +71,7 @@ describe('<FavoriteScreen/>', () => {
 			list: [mockFavorites[0]],
 		})
 
-		customRender(
-			<FavoriteScreen // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-				navigation={mockUseNavigation as any}
-				route={{ name: 'FavoriteScreen', key: 'FavoriteScreen' }}
-			/>
-		)
+		customRender(<FavoriteScreen />)
 
 		expect(screen.getByTestId('favorite-item')).toBeOnTheScreen()
 		expect(
@@ -104,12 +88,7 @@ describe('<FavoriteScreen/>', () => {
 			list: [mockFavorites[0]],
 		})
 
-		customRender(
-			<FavoriteScreen // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-				navigation={mockUseNavigation as any}
-				route={{ name: 'FavoriteScreen', key: 'FavoriteScreen' }}
-			/>
-		)
+		customRender(<FavoriteScreen />)
 
 		await userEvent.press(screen.getAllByTestId('favorite-item')[0]!)
 

@@ -10,6 +10,11 @@ import {
 	RootAuthStackRouterParamList,
 } from '@/types/routes'
 
+type PostCommentsScreenParams = Omit<
+	RootAppStackRouterParamList['PostCommentScreen'],
+	'showPost'
+>
+
 export const useAppNavigation = () => {
 	const authCredentials = useAuthCredentials()
 
@@ -33,12 +38,32 @@ export const useAppNavigation = () => {
 		[authCredentials?.user.id, navigationAppStack, navigationAppTab]
 	)
 
+	const navigateToPostComments = useCallback(
+		(params: PostCommentsScreenParams) =>
+			navigationAppStack.navigate('PostCommentScreen', {
+				...params,
+				showPost: false,
+			}),
+		[navigationAppStack]
+	)
+
+	const navigateToPostDetails = useCallback(
+		(params: PostCommentsScreenParams) =>
+			navigationAppStack.navigate('PostCommentScreen', {
+				...params,
+				showPost: true,
+			}),
+		[navigationAppStack]
+	)
+
 	const navigate = useMemo(
 		() =>
 			({
-				ToProfile: navigateToProfile,
+				toProfile: navigateToProfile,
+				toComments: navigateToPostComments,
+				toPostDetails: navigateToPostDetails,
 			}) as const,
-		[navigateToProfile]
+		[navigateToPostComments, navigateToPostDetails, navigateToProfile]
 	)
 
 	return {

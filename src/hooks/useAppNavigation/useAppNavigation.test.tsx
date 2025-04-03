@@ -53,7 +53,7 @@ describe('useAppNavigation', () => {
 		const { result } = renderHook(useAppNavigation)
 
 		await act(() => {
-			result.current.navigate.ToProfile(mockUser.id)
+			result.current.navigate.toProfile(mockUser.id)
 		})
 
 		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('MyProfileScreen')
@@ -63,11 +63,45 @@ describe('useAppNavigation', () => {
 		const { result } = renderHook(useAppNavigation)
 
 		await act(() => {
-			result.current.navigate.ToProfile(-777)
+			result.current.navigate.toProfile(-777)
 		})
 
 		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('ProfileScreen', {
 			userId: -777,
 		})
+	})
+
+	it('should navigate to comments screen correctly', async () => {
+		const { result } = renderHook(useAppNavigation)
+
+		await act(() => {
+			result.current.navigate.toComments({ postAuthorId: '1', postId: '1' })
+		})
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
+			'PostCommentScreen',
+			{
+				postAuthorId: '1',
+				postId: '1',
+				showPost: false,
+			}
+		)
+	})
+
+	it('should navigate to post details screen correctly', async () => {
+		const { result } = renderHook(useAppNavigation)
+
+		await act(() => {
+			result.current.navigate.toPostDetails({ postAuthorId: '1', postId: '1' })
+		})
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
+			'PostCommentScreen',
+			{
+				postAuthorId: '1',
+				postId: '1',
+				showPost: true,
+			}
+		)
 	})
 })

@@ -15,11 +15,11 @@ const ProfileUsernameMemoized = ({
 	RightComponent,
 	...pressableBoxProps
 }: Readonly<ProfileUsernameProps>) => {
-	const { navigationAppStack } = useAppNavigation()
+	const { navigate } = useAppNavigation()
 
 	const handleOnPress = (event: GestureResponderEvent) => {
 		onPress?.(event)
-		navigationAppStack.navigate('ProfileScreen', { userId: id })
+		navigate.toProfile(id)
 	}
 
 	return (

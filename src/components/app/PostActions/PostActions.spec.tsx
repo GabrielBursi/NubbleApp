@@ -5,7 +5,7 @@ import { PostReactionType } from '@/domain/PostReaction'
 import { useReaction } from '@/domain/PostReaction/useCases/useReaction/useReaction'
 import { useAppNavigation } from '@/hooks/useAppNavigation/useAppNavigation'
 import { useToastService } from '@/services/toast/useToast'
-import { generatePost, mockUseNavigation } from '@/tests/mocks'
+import { generatePost } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -31,6 +31,7 @@ describe('<PostActions/>', () => {
 	const mockHideToast = jest.fn()
 	const mockShowToast = jest.fn()
 	const mockReactToPost = jest.fn()
+	const mockNavigateToComments = jest.fn()
 
 	const mockUseToastService: ReturnUseToastService = {
 		hideToast: mockHideToast,
@@ -38,7 +39,9 @@ describe('<PostActions/>', () => {
 	}
 
 	const mockUseNavigationApp: ReturnUseNavigationApp = {
-		navigationAppStack: mockUseNavigation,
+		navigate: {
+			toComments: mockNavigateToComments,
+		},
 	}
 
 	const mockUseReaction: ReturnUseReaction = {
@@ -102,13 +105,10 @@ describe('<PostActions/>', () => {
 
 		await userEvent.press(screen.getByRole('img', { name: 'comment' }))
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
-			'PostCommentScreen',
-			{
-				postAuthorId: post.author.id,
-				postId: post.id,
-			}
-		)
+		expect(mockNavigateToComments).toHaveBeenCalledWith({
+			postAuthorId: post.author.id,
+			postId: post.id,
+		})
 	})
 
 	it('should like post correctly', async () => {

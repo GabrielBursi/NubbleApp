@@ -18,7 +18,7 @@ describe('<ProfileAvatar/>', () => {
 
 	const mockReturnUseAppNavigation: ReturnUseAppNavigation = {
 		navigate: {
-			ToProfile: mockNavigateToProfile,
+			toProfile: mockNavigateToProfile,
 		},
 	}
 

@@ -9,9 +9,9 @@ import {
 	PostReactionModel,
 	PostReactionType,
 } from '@/domain/PostReaction'
+import { useAppNavigation } from '@/hooks'
 import { ScreenTemplate } from '@/templates'
 import { AppQueryKeys } from '@/types/api'
-import { FavoriteScreenProps } from '@/types/screens'
 
 const NUM_COLUMNS = 2
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -20,7 +20,9 @@ const ITEM_MARGIN = normalize(16, 'width')
 const ITEM_WITH =
 	(SCREEN_WIDTH - ITEM_MARGIN - SCREEN_PADDING * 2) / NUM_COLUMNS
 
-export const FavoriteScreen = ({ navigation }: FavoriteScreenProps) => {
+export const FavoriteScreen = () => {
+	const { navigate } = useAppNavigation()
+
 	return (
 		<ScreenTemplate title="Favoritos">
 			<InfinityScrollList<PostReactionModel>
@@ -39,10 +41,9 @@ export const FavoriteScreen = ({ navigation }: FavoriteScreenProps) => {
 						accessibilityLabel={item.post.text}
 						testID="favorite-item"
 						onPress={() =>
-							navigation.navigate('PostCommentScreen', {
+							navigate.toPostDetails({
 								postId: item.post.id,
 								postAuthorId: item.author.id.toString(),
-								showPost: true,
 							})
 						}
 					>

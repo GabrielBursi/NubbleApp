@@ -21,7 +21,7 @@ const ProfileAvatarMemoized = ({
 	const { navigate } = useAppNavigation()
 
 	const handleOnPress = useCallback(() => {
-		navigate.ToProfile(authorId!)
+		navigate.toProfile(authorId!)
 	}, [authorId, navigate])
 
 	return (
