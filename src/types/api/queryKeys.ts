@@ -7,4 +7,5 @@ export enum AppQueryKeys {
 	EMAIL_AVAILABLE = 'IsEmailAvailable',
 	CAMERA_ROLL = 'CameraRollList',
 	FAVORITES = 'favorite',
+	USER_BY_ID = 'user_by_id',
 }

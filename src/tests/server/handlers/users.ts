@@ -3,7 +3,7 @@ import Config from 'react-native-config'
 
 import { UserAPIModel } from '@/domain/User'
 import { mockMetaPaginationApi } from '@/tests/mocks/mockMetaPagination'
-import { mockUsersApi } from '@/tests/mocks/mockUser'
+import { generateUserApi, mockUsersApi } from '@/tests/mocks/mockUser'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
 export const usersHandlers: HttpHandler[] = [
@@ -31,4 +31,14 @@ export const usersHandlers: HttpHandler[] = [
 			{ status: 200 }
 		)
 	}),
+	http.get(
+		`${Config.API_URL}${END_POINTS_API.USERS}/:userId`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<UserAPIModel>(generateUserApi(), { status: 200 })
+		}
+	),
 ]
