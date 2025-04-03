@@ -26,7 +26,7 @@ describe('<ProfileUsername/>', () => {
 			screen.getByRole('button', { name: mockUser.username })
 		)
 		expect(mockOnPress).toHaveBeenCalled()
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('ProfileScreen', {
+		expect(mockUseNavigation.push).toHaveBeenCalledWith('ProfileScreen', {
 			userId: mockUser.id,
 		})
 	})

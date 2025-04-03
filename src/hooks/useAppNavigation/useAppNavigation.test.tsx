@@ -66,7 +66,7 @@ describe('useAppNavigation', () => {
 			result.current.navigate.toProfile(-777)
 		})
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('ProfileScreen', {
+		expect(mockUseNavigation.push).toHaveBeenCalledWith('ProfileScreen', {
 			userId: -777,
 		})
 	})
@@ -78,14 +78,11 @@ describe('useAppNavigation', () => {
 			result.current.navigate.toComments({ postAuthorId: '1', postId: '1' })
 		})
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
-			'PostCommentScreen',
-			{
-				postAuthorId: '1',
-				postId: '1',
-				showPost: false,
-			}
-		)
+		expect(mockUseNavigation.push).toHaveBeenCalledWith('PostCommentScreen', {
+			postAuthorId: '1',
+			postId: '1',
+			showPost: false,
+		})
 	})
 
 	it('should navigate to post details screen correctly', async () => {
@@ -95,13 +92,10 @@ describe('useAppNavigation', () => {
 			result.current.navigate.toPostDetails({ postAuthorId: '1', postId: '1' })
 		})
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
-			'PostCommentScreen',
-			{
-				postAuthorId: '1',
-				postId: '1',
-				showPost: true,
-			}
-		)
+		expect(mockUseNavigation.push).toHaveBeenCalledWith('PostCommentScreen', {
+			postAuthorId: '1',
+			postId: '1',
+			showPost: true,
+		})
 	})
 })

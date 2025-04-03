@@ -80,9 +80,10 @@ describe('<PostBottom/>', () => {
 		)
 
 		await userEvent.press(screen.getByRole('text', { name: /ver comentário/i }))
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
-			'PostCommentScreen',
-			{ postId: post.id, postAuthorId: '1', showPost: false }
-		)
+		expect(mockUseNavigation.push).toHaveBeenCalledWith('PostCommentScreen', {
+			postId: post.id,
+			postAuthorId: '1',
+			showPost: false,
+		})
 	})
 })

@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import { UserModel } from '@/domain/User'
 import { useAuthCredentials } from '@/services/auth'
@@ -19,20 +20,20 @@ export const useAppNavigation = () => {
 	const authCredentials = useAuthCredentials()
 
 	const navigationAppStack =
-		useNavigation<NavigationProp<RootAppStackRouterParamList>>()
+		useNavigation<NativeStackNavigationProp<RootAppStackRouterParamList>>()
 
 	const navigationAppTab =
 		useNavigation<NavigationProp<RootAppTabBottomRouterParamList>>()
 
 	const navigationAuthStack =
-		useNavigation<NavigationProp<RootAuthStackRouterParamList>>()
+		useNavigation<NativeStackNavigationProp<RootAuthStackRouterParamList>>()
 
 	const navigateToProfile = useCallback(
 		(userId: UserModel['id']) => {
 			if (authCredentials?.user.id === userId) {
 				navigationAppTab.navigate('MyProfileScreen')
 			} else {
-				navigationAppStack.navigate('ProfileScreen', { userId })
+				navigationAppStack.push('ProfileScreen', { userId })
 			}
 		},
 		[authCredentials?.user.id, navigationAppStack, navigationAppTab]
@@ -40,7 +41,7 @@ export const useAppNavigation = () => {
 
 	const navigateToPostComments = useCallback(
 		(params: PostCommentsScreenParams) =>
-			navigationAppStack.navigate('PostCommentScreen', {
+			navigationAppStack.push('PostCommentScreen', {
 				...params,
 				showPost: false,
 			}),
@@ -49,7 +50,7 @@ export const useAppNavigation = () => {
 
 	const navigateToPostDetails = useCallback(
 		(params: PostCommentsScreenParams) =>
-			navigationAppStack.navigate('PostCommentScreen', {
+			navigationAppStack.push('PostCommentScreen', {
 				...params,
 				showPost: true,
 			}),

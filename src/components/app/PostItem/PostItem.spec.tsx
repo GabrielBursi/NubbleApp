@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react-native'
 
-import { mockPosts } from '@/tests/mocks'
+import { generatePost } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 
 import { PostItem } from './PostItem'
 
 describe('<PostItem/>', () => {
-	const post = mockPosts[0]!
+	const post = generatePost()
 
 	it('should render the post item correctly', () => {
 		customRender(<PostItem post={post} />)

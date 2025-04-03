@@ -92,13 +92,10 @@ describe('<FavoriteScreen/>', () => {
 
 		await userEvent.press(screen.getAllByTestId('favorite-item')[0]!)
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
-			'PostCommentScreen',
-			{
-				postId: mockFavorites[0]!.post.id.toString(),
-				postAuthorId: mockFavorites[0]!.author.id.toString(),
-				showPost: true,
-			}
-		)
+		expect(mockUseNavigation.push).toHaveBeenCalledWith('PostCommentScreen', {
+			postId: mockFavorites[0]!.post.id.toString(),
+			postAuthorId: mockFavorites[0]!.author.id.toString(),
+			showPost: true,
+		})
 	})
 })
