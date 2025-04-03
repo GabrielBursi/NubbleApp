@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Dimensions, Image } from 'react-native'
+import { Dimensions, Image, Pressable } from 'react-native'
 
 import {
 	Container,
@@ -9,6 +9,7 @@ import {
 } from '@/components'
 import { PostApi } from '@/domain/Post'
 import { useUserGetById } from '@/domain/User'
+import { useAppNavigation } from '@/hooks'
 import { AppQueryKeys } from '@/types/api'
 
 import { ProfileProps } from './Profile.types'
@@ -22,6 +23,7 @@ export const Profile = ({
 	isMyProfile = false,
 }: Readonly<ProfileProps>) => {
 	const { user, isLoading } = useUserGetById(userId)
+	const { navigate } = useAppNavigation()
 
 	const [postsCount, setPostsCount] = useState(0)
 
@@ -55,17 +57,26 @@ export const Profile = ({
 			}
 			ItemSeparatorComponent={null}
 			renderItem={({ item: post }) => (
-				<Image
-					source={{ uri: post.imageURL }}
-					// eslint-disable-next-line react-native/no-inline-styles
-					style={{
-						width: ITEM_WIDTH,
-						height: ITEM_WIDTH,
+				<Pressable
+					onPress={() => {
+						navigate.toPostDetails({
+							postAuthorId: userId.toString(),
+							postId: post.id,
+						})
 					}}
-					role="img"
-					accessible
-					accessibilityLabel={post.imageURL}
-				/>
+				>
+					<Image
+						source={{ uri: post.imageURL }}
+						// eslint-disable-next-line react-native/no-inline-styles
+						style={{
+							width: ITEM_WIDTH,
+							height: ITEM_WIDTH,
+						}}
+						role="img"
+						accessible
+						accessibilityLabel={post.imageURL}
+					/>
+				</Pressable>
 			)}
 		/>
 	)
