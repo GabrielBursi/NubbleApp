@@ -48,7 +48,7 @@ const ProfileHeaderMemoized = ({
 					</Box>
 				)}
 			</Box>
-			<ProfileButton />
+			<ProfileButton isMyProfile={isMyProfile} />
 		</>
 	)
 }

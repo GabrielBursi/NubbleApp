@@ -11,9 +11,13 @@ const meta: Meta<typeof ProfileAvatar> = {
 		imageURL: customFaker.image.url(),
 		borderRadius: 14,
 		size: 32,
+		authorId: customFaker.number.int({ min: 1 }),
 	},
 	argTypes: {
 		imageURL: {
+			type: 'symbol',
+		},
+		authorId: {
 			type: 'symbol',
 		},
 	},

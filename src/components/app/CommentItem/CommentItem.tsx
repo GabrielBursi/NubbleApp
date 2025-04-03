@@ -52,6 +52,7 @@ export const CommentItemMemoized = ({
 				<ProfileAvatar
 					imageURL={author.profileURL}
 					aria-label={author.userName}
+					authorId={author.id}
 				/>
 				<Box ml="s12" flex={1}>
 					<Box gap="s8" alignItems="center" flexDirection="row">

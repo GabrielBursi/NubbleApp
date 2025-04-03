@@ -1,12 +1,13 @@
 import { act, renderHook } from '@testing-library/react-native'
 
+import { TestProvider } from '@/providers'
 import { mockUseNavigation } from '@/tests/mocks'
 
 import { useResetNavigation } from './useResetNavigation'
 
 describe('useResetNavigation', () => {
 	it('should reset stack navigator to login and success screen', async () => {
-		const { result } = renderHook(useResetNavigation)
+		const { result } = renderHook(useResetNavigation, { wrapper: TestProvider })
 
 		const resetSuccess = result.current.resetSuccess
 

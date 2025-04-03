@@ -8,4 +8,5 @@ export type ProfileAvatarProps = {
 	size?: number
 	/** @default 14 */
 	borderRadius?: number
+	authorId?: number
 } & StrictOmit<ImageProps, 'source' | 'src'>

@@ -37,7 +37,7 @@ const ProfileUsernameMemoized = ({
 			{...pressableBoxProps}
 		>
 			<Box flexDirection="row" alignItems="center">
-				<ProfileAvatar {...avatarProps} imageURL={profileUrl} />
+				<ProfileAvatar {...avatarProps} authorId={id} imageURL={profileUrl} />
 				<Text ml="s12" semiBold preset="paragraphMedium">
 					{username}
 				</Text>
