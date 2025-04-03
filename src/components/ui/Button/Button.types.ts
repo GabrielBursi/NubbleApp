@@ -12,7 +12,7 @@ export type ButtonState = {
 	default: ButtonUI
 	disabled: ButtonUI
 }
-export type ButtonPreset = 'primary' | 'outline' | 'ghost'
+export type ButtonPreset = 'primary' | 'outline' | 'ghost' | 'gray'
 export type ButtonProps = TouchableOpacityBoxProps & {
 	title: string
 	loading?: boolean

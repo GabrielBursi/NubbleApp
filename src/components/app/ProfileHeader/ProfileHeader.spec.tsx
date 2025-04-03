@@ -14,6 +14,7 @@ describe('<ProfileHeader/>', () => {
 		expect(
 			screen.getByRole('img', { name: mockUser.profileUrl })
 		).toBeOnTheScreen()
+		expect(screen.getByRole('button')).toBeOnTheScreen()
 		expect(screen.getByText(mockUser.fullName)).toBeOnTheScreen()
 		expect(screen.getByText(`@${mockUser.username}`)).toBeOnTheScreen()
 		expect(

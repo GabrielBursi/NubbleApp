@@ -41,6 +41,8 @@ const lightTheme = {
 	iconFillColor: palette.grayWhite,
 	onBackgroundGray1: palette.gray1,
 	onBackgroundGray2: palette.gray4,
+	buttonGrayContainer: palette.gray5,
+	buttonGrayContent: palette.grayBlack,
 } as const
 
 type ThemeColors = {
@@ -69,6 +71,8 @@ const darkTheme = {
 	iconFillColor: palette.grayBlack,
 	onBackgroundGray1: palette.gray3,
 	onBackgroundGray2: palette.gray1,
+	buttonGrayContainer: palette.gray1,
+	buttonGrayContent: palette.grayWhite,
 } satisfies ThemeColors
 
 export const colors = { palette, lightTheme, darkTheme }

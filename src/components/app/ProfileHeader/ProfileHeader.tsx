@@ -2,9 +2,9 @@ import React, { memo } from 'react'
 
 import {
 	Box,
-	Button,
 	Icon,
 	ProfileAvatar,
+	ProfileButton,
 	ProfileMetadata,
 	Text,
 } from '@/components'
@@ -48,7 +48,7 @@ const ProfileHeaderMemoized = ({
 					</Box>
 				)}
 			</Box>
-			<Button title="TO DO" marginVertical="s24" />
+			<ProfileButton />
 		</>
 	)
 }
