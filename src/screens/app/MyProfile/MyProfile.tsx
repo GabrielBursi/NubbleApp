@@ -9,7 +9,12 @@ export const MyProfileScreen = () => {
 	if (!auth?.user.id) return null
 
 	return (
-		<ScreenTemplate>
+		<ScreenTemplate
+			// eslint-disable-next-line react-native/no-inline-styles
+			style={{
+				paddingHorizontal: 0,
+			}}
+		>
 			<Profile userId={auth.user.id} isMyProfile />
 		</ScreenTemplate>
 	)

@@ -15,7 +15,7 @@ export const generatePostAPI = (): PostAPIModel => ({
 	created_at: customFaker.date.past().toISOString(),
 	updated_at: customFaker.date.recent().toISOString(),
 	user: {
-		id: customFaker.string.uuid(),
+		id: uniqueId(),
 		full_name: customFaker.person.fullName(),
 		first_name: customFaker.person.firstName(),
 		last_name: customFaker.person.lastName(),
@@ -51,13 +51,13 @@ export const generatePostAPI = (): PostAPIModel => ({
 })
 
 export const generatePost = (): PostModel => ({
-	id: customFaker.database.mongodbObjectId(),
+	id: uniqueId(),
 	text: customFaker.lorem.sentence(),
 	author: {
 		profileURL: customFaker.image.url(),
 		name: customFaker.person.fullName(),
 		userName: customFaker.internet.username(),
-		id: customFaker.database.mongodbObjectId(),
+		id: uniqueId(),
 	},
 	imageURL: customFaker.image.url(),
 	reactionCount: customFaker.number.int({ min: 0, max: 1000 }),

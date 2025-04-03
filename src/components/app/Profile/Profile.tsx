@@ -1,12 +1,21 @@
 import React, { useCallback } from 'react'
-import { Image } from 'react-native'
+import { Dimensions, Image } from 'react-native'
 
-import { InfinityScrollList, Loading, ProfileHeader } from '@/components'
+import {
+	Container,
+	InfinityScrollList,
+	Loading,
+	ProfileHeader,
+} from '@/components'
 import { PostApi } from '@/domain/Post'
 import { useUserGetById } from '@/domain/User'
 import { AppQueryKeys } from '@/types/api'
 
 import { ProfileProps } from './Profile.types'
+
+const NUM_COLUMNS = 3
+const SCREEN_WIDTH = Dimensions.get('screen').width
+const ITEM_WIDTH = SCREEN_WIDTH / NUM_COLUMNS
 
 export const Profile = ({
 	userId,
@@ -27,19 +36,25 @@ export const Profile = ({
 	return (
 		<InfinityScrollList
 			accessibilityLabel="user posts"
-			// TODO
-			estimatedItemSize={100}
+			estimatedItemSize={ITEM_WIDTH}
 			getList={getUserPosts}
 			keyExtractor={({ id }, index) => `${id}-${index}`}
 			queryOpt={{ queryKey: [AppQueryKeys.POSTS, userId] }}
+			numColumns={NUM_COLUMNS}
 			ListHeaderComponent={
-				<ProfileHeader isMyProfile={isMyProfile} user={user} />
+				<Container>
+					<ProfileHeader isMyProfile={isMyProfile} user={user} />
+				</Container>
 			}
+			ItemSeparatorComponent={null}
 			renderItem={({ item: post }) => (
 				<Image
 					source={{ uri: post.imageURL }}
 					// eslint-disable-next-line react-native/no-inline-styles
-					style={{ width: 100, height: 100 }}
+					style={{
+						width: ITEM_WIDTH,
+						height: ITEM_WIDTH,
+					}}
 					role="img"
 					accessible
 					accessibilityLabel={post.imageURL}
