@@ -1,12 +1,12 @@
 import React, { memo } from 'react'
 
 import { TouchableOpacityBox, Icon, Text } from '@/components/ui'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 
 import { GoBackProps } from './GoBack.types'
 
 const GoBackMemoized = ({ showLabel = true }: GoBackProps) => {
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	return (
 		<TouchableOpacityBox

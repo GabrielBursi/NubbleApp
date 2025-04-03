@@ -3,7 +3,7 @@ import { screen, userEvent } from '@testing-library/react-native'
 
 import { PostReactionType } from '@/domain/PostReaction'
 import { useReaction } from '@/domain/PostReaction/useCases/useReaction/useReaction'
-import { useNavigationApp } from '@/hooks/useNavigationApp/useNavigationApp'
+import { useAppNavigation } from '@/hooks/useAppNavigation/useAppNavigation'
 import { useToastService } from '@/services/toast/useToast'
 import { generatePost, mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
@@ -19,13 +19,13 @@ type UseReaction = typeof useReaction
 type ReturnUseReaction = ReturnHookMocked<UseReaction>
 type MockUseReaction = HookMocked<UseReaction>
 
-type UseNavigationApp = typeof useNavigationApp
+type UseNavigationApp = typeof useAppNavigation
 type ReturnUseNavigationApp = ReturnHookMocked<UseNavigationApp>
 type MockUseNavigationApp = HookMocked<UseNavigationApp>
 
 jest.mock('@/services/toast/useToast')
 jest.mock('@/domain/PostReaction/useCases/useReaction/useReaction')
-jest.mock('@/hooks/useNavigationApp/useNavigationApp')
+jest.mock('@/hooks/useAppNavigation/useAppNavigation')
 
 describe('<PostActions/>', () => {
 	const mockHideToast = jest.fn()
@@ -55,7 +55,7 @@ describe('<PostActions/>', () => {
 		;(useToastService as MockUseToastService).mockReturnValue(
 			mockUseToastService
 		)
-		;(useNavigationApp as MockUseNavigationApp).mockReturnValue(
+		;(useAppNavigation as MockUseNavigationApp).mockReturnValue(
 			mockUseNavigationApp
 		)
 		;(useReaction as MockUseReaction).mockReturnValue(mockUseReaction)

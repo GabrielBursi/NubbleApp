@@ -2,11 +2,11 @@ import { renderHook } from '@testing-library/react-native'
 
 import { mockUseNavigation } from '@/tests/mocks'
 
-import { useNavigationApp } from './useNavigationApp'
+import { useAppNavigation } from './useAppNavigation'
 
-describe('useNavigationApp', () => {
+describe('useAppNavigation', () => {
 	it('should navigate with app stack', () => {
-		const { result } = renderHook(useNavigationApp)
+		const { result } = renderHook(useAppNavigation)
 
 		result.current.navigationAppStack.navigate('SettingsScreen')
 
@@ -14,7 +14,7 @@ describe('useNavigationApp', () => {
 	})
 
 	it('should navigate with app tab', () => {
-		const { result } = renderHook(useNavigationApp)
+		const { result } = renderHook(useAppNavigation)
 
 		result.current.navigationAppTab.navigate('HomeScreen')
 
@@ -22,7 +22,7 @@ describe('useNavigationApp', () => {
 	})
 
 	it('should navigate with auth stack', () => {
-		const { result } = renderHook(useNavigationApp)
+		const { result } = renderHook(useAppNavigation)
 
 		result.current.navigationAuthStack.navigate('SignUpScreen')
 

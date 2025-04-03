@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect, useMemo } from 'react'
 import { Linking, Platform } from 'react-native'
 
 import { Box, Button, Container, Loading, Text } from '@/components'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 import { usePermission } from '@/services/permission'
 
 import {
@@ -26,7 +26,7 @@ const FallbackState = ({ fallback }: Readonly<FallbackStateProps>) => (
 )
 
 const DeniedState = ({ description, status }: Readonly<DeniedStateProps>) => {
-	const { navigationAppTab } = useNavigationApp()
+	const { navigationAppTab } = useAppNavigation()
 
 	const goBackToFeed = () => {
 		navigationAppTab.navigate('HomeScreen')

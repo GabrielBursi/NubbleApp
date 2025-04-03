@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
 
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 import { RootAuthStackRouterParamList } from '@/types/routes'
 
 export const useResetNavigation = () => {
-	const { navigationAuthStack } = useNavigationApp()
+	const { navigationAuthStack } = useAppNavigation()
 
 	const resetSuccess = useCallback(
 		(params: RootAuthStackRouterParamList['SuccessScreen']) => {

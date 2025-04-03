@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import { ActionIcon, Box } from '@/components'
 import { PostReactionType } from '@/domain/PostReaction'
 import { useReaction } from '@/domain/PostReaction/useCases/useReaction/useReaction'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 import { useToastService } from '@/services/toast'
 
 import { PostActionsProps } from './PostActions.types'
@@ -40,7 +40,7 @@ export const PostActions = ({
 		},
 	})
 
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	const handleLikePost = useCallback(() => {
 		likePost()

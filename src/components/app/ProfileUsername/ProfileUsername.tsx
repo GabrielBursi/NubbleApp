@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { GestureResponderEvent } from 'react-native'
 
 import { Box, PressableBox, ProfileAvatar, Text } from '@/components'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 
 import { ProfileUsernameProps } from './ProfileUsername.types'
 
@@ -15,7 +15,7 @@ const ProfileUsernameMemoized = ({
 	RightComponent,
 	...pressableBoxProps
 }: Readonly<ProfileUsernameProps>) => {
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	const handleOnPress = (event: GestureResponderEvent) => {
 		onPress?.(event)

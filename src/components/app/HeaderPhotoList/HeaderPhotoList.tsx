@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet } from 'react-native'
 
 import { AppImages } from '@/assets/images'
 import { ActionIcon, Box, Button, Container, Text } from '@/components'
-import { useNavigationApp, usePhotoList } from '@/hooks'
+import { useAppNavigation, usePhotoList } from '@/hooks'
 
 import { HeaderPhotoListProps } from './HeaderPhotoList.types'
 
@@ -12,7 +12,7 @@ const HeaderPhotoListMemoized = ({
 }: Readonly<HeaderPhotoListProps>) => {
 	const { PHOTO_ITEM_WIDTH } = usePhotoList(1)
 
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	const navigateToPublishPost = () => {
 		navigationAppStack.navigate('PublishPostScreen', {

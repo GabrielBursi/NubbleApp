@@ -8,7 +8,7 @@ import {
 	ProfileMetadata,
 	Text,
 } from '@/components'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 
 import { ProfileHeaderProps } from './ProfileHeader.types'
 
@@ -17,7 +17,7 @@ const ProfileHeaderMemoized = ({
 	isMyProfile = false,
 	postsCount = 0,
 }: Readonly<ProfileHeaderProps>) => {
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	return (
 		<>

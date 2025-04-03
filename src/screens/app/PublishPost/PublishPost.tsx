@@ -3,7 +3,7 @@ import { Dimensions, Image } from 'react-native'
 
 import { Box, Button, TextInput } from '@/components'
 import { usePostCreate } from '@/domain/Post'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 import { useToastService } from '@/services/toast'
 import { ScreenTemplate } from '@/templates'
 import { PublishPostScreenProps } from '@/types/screens'
@@ -16,7 +16,7 @@ export const PublishPostScreen = ({
 	const imageUri = route.params.imageUri
 
 	const [description, setDescription] = useState('')
-	const { navigationAppTab } = useNavigationApp()
+	const { navigationAppTab } = useAppNavigation()
 	const { showToast } = useToastService()
 	const { createPost, loading } = usePostCreate({
 		onSuccess: () => {

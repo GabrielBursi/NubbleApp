@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react'
 
 import { Box, Text } from '@/components'
-import { useNavigationApp } from '@/hooks'
+import { useAppNavigation } from '@/hooks'
 
 import { PostBottomProps } from './PostBottom.types'
 
@@ -13,7 +13,7 @@ const PostBottomMemoized = ({
 	authorId,
 	hideCommentAction = false,
 }: Readonly<PostBottomProps>) => {
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	const commentText = useMemo(() => {
 		if (commentCount === 0) {

@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { Box, Container, Icon, SimpleLogo } from '@/components'
-import { useAppSafeArea, useNavigationApp } from '@/hooks'
+import { useAppSafeArea, useAppNavigation } from '@/hooks'
 
 export const FeedHeader = () => {
 	const { top } = useAppSafeArea()
-	const { navigationAppStack } = useNavigationApp()
+	const { navigationAppStack } = useAppNavigation()
 
 	const handlePressIconSearch = () => {
 		navigationAppStack.navigate('SearchScreen')

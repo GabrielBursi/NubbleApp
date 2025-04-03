@@ -6,7 +6,7 @@ import {
 	RootAuthStackRouterParamList,
 } from '@/types/routes'
 
-export const useNavigationApp = () => {
+export const useAppNavigation = () => {
 	const navigationAppStack =
 		useNavigation<NavigationProp<RootAppStackRouterParamList>>()
 
