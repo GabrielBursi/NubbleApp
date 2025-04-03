@@ -1,6 +1,6 @@
-import { screen } from '@testing-library/react-native'
+import { screen, userEvent } from '@testing-library/react-native'
 
-import { generateUser } from '@/tests/mocks'
+import { generateUser, mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 
 import { ProfileHeader } from './ProfileHeader'
@@ -19,5 +19,12 @@ describe('<ProfileHeader/>', () => {
 		expect(screen.getByText('1')).toBeOnTheScreen()
 		expect(screen.getByText('2')).toBeOnTheScreen()
 		expect(screen.getByText('3')).toBeOnTheScreen()
+	})
+
+	it('should navigate to settings screen correctly', async () => {
+		customRender(<ProfileHeader user={mockUser} isMyProfile />)
+
+		await userEvent.press(screen.getByRole('img', { name: 'settings' }))
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('SettingsScreen')
 	})
 })

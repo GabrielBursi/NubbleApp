@@ -8,7 +8,10 @@ import { AppQueryKeys } from '@/types/api'
 
 import { ProfileProps } from './Profile.types'
 
-export const Profile = ({ userId }: Readonly<ProfileProps>) => {
+export const Profile = ({
+	userId,
+	isMyProfile = false,
+}: Readonly<ProfileProps>) => {
 	const { user, isLoading } = useUserGetById(userId)
 
 	const getUserPosts = useCallback(
@@ -29,7 +32,9 @@ export const Profile = ({ userId }: Readonly<ProfileProps>) => {
 			getList={getUserPosts}
 			keyExtractor={({ id }, index) => `${id}-${index}`}
 			queryOpt={{ queryKey: [AppQueryKeys.POSTS, userId] }}
-			ListHeaderComponent={<ProfileHeader user={user} />}
+			ListHeaderComponent={
+				<ProfileHeader isMyProfile={isMyProfile} user={user} />
+			}
 			renderItem={({ item: post }) => (
 				<Image
 					source={{ uri: post.imageURL }}

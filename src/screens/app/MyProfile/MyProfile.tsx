@@ -10,7 +10,7 @@ export const MyProfileScreen = () => {
 
 	return (
 		<ScreenTemplate>
-			<Profile userId={auth.user.id} />
+			<Profile userId={auth.user.id} isMyProfile />
 		</ScreenTemplate>
 	)
 }

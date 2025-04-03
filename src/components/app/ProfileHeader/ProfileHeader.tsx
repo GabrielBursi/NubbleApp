@@ -1,10 +1,16 @@
 import React, { memo } from 'react'
 
-import { Box, ProfileAvatar, ProfileMetadata, Text } from '@/components'
+import { Box, Icon, ProfileAvatar, ProfileMetadata, Text } from '@/components'
+import { useNavigationApp } from '@/hooks'
 
 import { ProfileHeaderProps } from './ProfileHeader.types'
 
-const ProfileHeaderMemoized = ({ user }: Readonly<ProfileHeaderProps>) => {
+const ProfileHeaderMemoized = ({
+	user,
+	isMyProfile = false,
+}: Readonly<ProfileHeaderProps>) => {
+	const { navigationAppStack } = useNavigationApp()
+
 	return (
 		<Box alignItems="center">
 			<ProfileAvatar imageURL={user?.profileUrl} size={100} borderRadius={40} />
@@ -15,6 +21,15 @@ const ProfileHeaderMemoized = ({ user }: Readonly<ProfileHeaderProps>) => {
 				{`@${user.username}`}
 			</Text>
 			<ProfileMetadata followersCount={1} followingCount={2} postsCount={3} />
+			{isMyProfile && (
+				<Box position="absolute" alignSelf="flex-end">
+					<Icon
+						size={30}
+						name="settings"
+						onPress={() => navigationAppStack.navigate('SettingsScreen')}
+					/>
+				</Box>
+			)}
 		</Box>
 	)
 }
