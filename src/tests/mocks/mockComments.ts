@@ -49,9 +49,23 @@ export const mockComments: CommentModel[] = [
 	generateComment(),
 	generateComment(),
 	generateComment(),
+	generateComment(),
+	generateComment(),
+	generateComment(),
+	generateComment(),
+	generateComment(),
+	generateComment(),
+	generateComment(),
 ]
 
 export const mockCommentsAPI: CommentAPIModel[] = [
+	generateCommentAPI(),
+	generateCommentAPI(),
+	generateCommentAPI(),
+	generateCommentAPI(),
+	generateCommentAPI(),
+	generateCommentAPI(),
+	generateCommentAPI(),
 	generateCommentAPI(),
 	generateCommentAPI(),
 	generateCommentAPI(),
