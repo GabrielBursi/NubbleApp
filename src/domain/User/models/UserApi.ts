@@ -7,4 +7,8 @@ export interface UserAPIModel {
 	profile_url: string
 	is_online: boolean
 	full_name: string
+	meta: {
+		following_count: string
+		followers_count: string
+	}
 }

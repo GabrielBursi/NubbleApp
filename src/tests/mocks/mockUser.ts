@@ -15,6 +15,10 @@ export const generateUserApi = (): UserAPIModel => ({
 	profile_url: customFaker.image.url(),
 	is_online: customFaker.datatype.boolean(),
 	full_name: `${customFaker.person.firstName()} ${customFaker.person.lastName()}`,
+	meta: {
+		followers_count: customFaker.number.int({ min: 150, max: 5000 }).toString(),
+		following_count: customFaker.number.int({ min: 150, max: 5000 }).toString(),
+	},
 })
 export const generateUser = (): UserModel => ({
 	id: Number(uniqueId()),
@@ -25,6 +29,10 @@ export const generateUser = (): UserModel => ({
 	profileUrl: customFaker.image.url(),
 	isOnline: customFaker.datatype.boolean(),
 	fullName: `${customFaker.person.firstName()} ${customFaker.person.lastName()}`,
+	meta: {
+		followersCount: customFaker.number.int({ min: 150, max: 5000 }),
+		followingCount: customFaker.number.int({ min: 150, max: 5000 }),
+	},
 })
 
 export const mockUsersApi = [

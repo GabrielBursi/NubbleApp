@@ -15,6 +15,7 @@ import { ProfileHeaderProps } from './ProfileHeader.types'
 const ProfileHeaderMemoized = ({
 	user,
 	isMyProfile = false,
+	postsCount = 0,
 }: Readonly<ProfileHeaderProps>) => {
 	const { navigationAppStack } = useNavigationApp()
 
@@ -32,7 +33,11 @@ const ProfileHeaderMemoized = ({
 				<Text preset="paragraphLarge" mt="s4" color="gray1">
 					{`@${user.username}`}
 				</Text>
-				<ProfileMetadata followersCount={1} followingCount={2} postsCount={3} />
+				<ProfileMetadata
+					followersCount={user.meta.followersCount}
+					followingCount={user.meta.followingCount}
+					postsCount={postsCount}
+				/>
 				{isMyProfile && (
 					<Box position="absolute" alignSelf="flex-end">
 						<Icon

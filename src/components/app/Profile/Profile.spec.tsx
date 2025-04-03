@@ -91,6 +91,21 @@ describe('<Profile/>', () => {
 		})
 		await waitFor(() => {
 			expect(
+				screen.getByText(`${mockUser.meta.followersCount}`)
+			).toBeOnTheScreen()
+		})
+		await waitFor(() => {
+			expect(
+				screen.getByText(`${mockUser.meta.followingCount}`)
+			).toBeOnTheScreen()
+		})
+		await waitFor(() => {
+			expect(
+				screen.getByText(`${mockMetaPaginationApi.total}`)
+			).toBeOnTheScreen()
+		})
+		await waitFor(() => {
+			expect(
 				screen.getAllByRole('img', { name: mockPost.image_url }).length
 			).toBeGreaterThan(1)
 		})

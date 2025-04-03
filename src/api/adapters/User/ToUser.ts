@@ -9,4 +9,8 @@ export const ToUser = (userAPI: UserAPIModel): UserModel => ({
 	profileUrl: userAPI.profile_url,
 	isOnline: userAPI.is_online,
 	fullName: userAPI.full_name,
+	meta: {
+		followersCount: Number(userAPI.meta.followers_count),
+		followingCount: Number(userAPI.meta.following_count),
+	},
 })

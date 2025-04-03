@@ -16,9 +16,13 @@ describe('<ProfileHeader/>', () => {
 		).toBeOnTheScreen()
 		expect(screen.getByText(mockUser.fullName)).toBeOnTheScreen()
 		expect(screen.getByText(`@${mockUser.username}`)).toBeOnTheScreen()
-		expect(screen.getByText('1')).toBeOnTheScreen()
-		expect(screen.getByText('2')).toBeOnTheScreen()
-		expect(screen.getByText('3')).toBeOnTheScreen()
+		expect(
+			screen.getByText(mockUser.meta.followersCount.toString())
+		).toBeOnTheScreen()
+		expect(
+			screen.getByText(mockUser.meta.followingCount.toString())
+		).toBeOnTheScreen()
+		expect(screen.getByText('0')).toBeOnTheScreen()
 	})
 
 	it('should navigate to settings screen correctly', async () => {

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Dimensions, Image } from 'react-native'
 
 import {
@@ -23,9 +23,12 @@ export const Profile = ({
 }: Readonly<ProfileProps>) => {
 	const { user, isLoading } = useUserGetById(userId)
 
+	const [postsCount, setPostsCount] = useState(0)
+
 	const getUserPosts = useCallback(
-		(page: number) => {
-			const userPosts = PostApi.GetPosts(page, String(userId))
+		async (page: number) => {
+			const userPosts = await PostApi.GetPosts(page, String(userId))
+			setPostsCount(userPosts.meta.total)
 			return userPosts
 		},
 		[userId]
@@ -43,7 +46,11 @@ export const Profile = ({
 			numColumns={NUM_COLUMNS}
 			ListHeaderComponent={
 				<Container>
-					<ProfileHeader isMyProfile={isMyProfile} user={user} />
+					<ProfileHeader
+						isMyProfile={isMyProfile}
+						user={user}
+						postsCount={postsCount}
+					/>
 				</Container>
 			}
 			ItemSeparatorComponent={null}
