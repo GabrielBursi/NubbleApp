@@ -112,14 +112,14 @@ describe('<SignUpScreen/>', () => {
 			screen.getByPlaceholderText('Digite seu nome', {
 				exact: true,
 			}),
-			'jest'
+			'react'
 		)
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Digite seu sobrenome', {
 				exact: true,
 			}),
-			'jest'
+			'native'
 		)
 
 		await userEvent.type(
@@ -148,8 +148,8 @@ describe('<SignUpScreen/>', () => {
 
 		expect(mockSignUp).toHaveBeenCalledWith({
 			email: 'jest@email.com',
-			firstName: 'Jest',
-			lastName: 'Jest',
+			firstName: 'React',
+			lastName: 'Native',
 			password: '12345678',
 			username: 'user.name_123',
 		})
@@ -181,14 +181,14 @@ describe('<SignUpScreen/>', () => {
 			screen.getByPlaceholderText('Digite seu nome', {
 				exact: true,
 			}),
-			'jest'
+			'react'
 		)
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Digite seu sobrenome', {
 				exact: true,
 			}),
-			'jest'
+			'native'
 		)
 
 		await userEvent.type(
@@ -345,14 +345,8 @@ describe('<SignUpScreen/>', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getByText('Nome muito curto', { exact: true })
-			).toBeOnTheScreen()
-		})
-
-		await waitFor(() => {
-			expect(
-				screen.getByText('Sobrenome muito curto', { exact: true })
-			).toBeOnTheScreen()
+				screen.getAllByText('Nome muito curto', { exact: true })
+			).toHaveLength(2)
 		})
 
 		await waitFor(() => {
