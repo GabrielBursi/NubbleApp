@@ -57,14 +57,25 @@ export const useAppNavigation = () => {
 		[navigationAppStack]
 	)
 
+	const navigateToEditProfile = useCallback(
+		() => navigationAppStack.navigate('EditProfileScreen'),
+		[navigationAppStack]
+	)
+
 	const navigate = useMemo(
 		() =>
 			({
 				toProfile: navigateToProfile,
 				toComments: navigateToPostComments,
 				toPostDetails: navigateToPostDetails,
+				toEditProfile: navigateToEditProfile,
 			}) as const,
-		[navigateToPostComments, navigateToPostDetails, navigateToProfile]
+		[
+			navigateToEditProfile,
+			navigateToPostComments,
+			navigateToPostDetails,
+			navigateToProfile,
+		]
 	)
 
 	return {

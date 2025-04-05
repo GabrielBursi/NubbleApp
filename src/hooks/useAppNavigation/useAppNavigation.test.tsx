@@ -98,4 +98,14 @@ describe('useAppNavigation', () => {
 			showPost: true,
 		})
 	})
+
+	it('should navigate to edit profile screen correctly', async () => {
+		const { result } = renderHook(useAppNavigation)
+
+		await act(() => {
+			result.current.navigate.toEditProfile()
+		})
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('EditProfileScreen')
+	})
 })
