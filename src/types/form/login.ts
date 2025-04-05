@@ -1,7 +1,9 @@
 import { z } from 'zod'
 
+import { schemaTypes } from '@/utils'
+
 export const loginSchema = z.object({
-	email: z.string().email('E-mail inválido'),
-	password: z.string().min(1, 'Senha obrigatória'),
+	email: schemaTypes.email,
+	password: schemaTypes.password,
 })
 export type LoginSchema = z.infer<typeof loginSchema>

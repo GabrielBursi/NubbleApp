@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
+import { schemaTypes } from '@/utils'
+
 export const forgotPasswordSchema = z.object({
-	email: z.string().email('E-mail inválido'),
+	email: schemaTypes.email,
 })
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>

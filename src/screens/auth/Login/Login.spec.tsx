@@ -264,7 +264,7 @@ describe('<LoginScreen/>', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getByText('Senha obrigatória', {
+				screen.getByText('Senha deve ter no mínimo 8 caracteres', {
 					exact: true,
 				})
 			).toBeOnTheScreen()
