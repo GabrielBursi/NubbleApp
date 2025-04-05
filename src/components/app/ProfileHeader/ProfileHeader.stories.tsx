@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { generateUser } from '@/tests/mocks/mockUser'
+import { generateUserDetails } from '@/tests/mocks/mockUser'
 
 import { ProfileHeader } from './ProfileHeader'
 
@@ -8,7 +8,7 @@ const meta: Meta<typeof ProfileHeader> = {
 	title: 'Components/ProfileHeader',
 	component: ProfileHeader,
 	args: {
-		user: generateUser(),
+		user: generateUserDetails(),
 		isMyProfile: false,
 		postsCount: 0,
 	},

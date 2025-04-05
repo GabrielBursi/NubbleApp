@@ -12,3 +12,7 @@ export interface UserModel {
 		followersCount: number
 	}
 }
+
+export interface UserDetailsModel extends UserModel {
+	isFollowing: boolean
+}

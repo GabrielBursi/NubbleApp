@@ -7,6 +7,9 @@ import { PostItem } from './PostItem'
 
 describe('<PostItem/>', () => {
 	const post = generatePost()
+	post.commentCount = 1
+	post.favoriteCount = 2
+	post.reactionCount = 3
 
 	it('should render the post item correctly', () => {
 		customRender(<PostItem post={post} />)

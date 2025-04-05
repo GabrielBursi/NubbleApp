@@ -1,12 +1,12 @@
 import { screen, userEvent } from '@testing-library/react-native'
 
-import { generateUser, mockUseNavigation } from '@/tests/mocks'
+import { generateUserDetails, mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 
 import { ProfileHeader } from './ProfileHeader'
 
 describe('<ProfileHeader/>', () => {
-	const mockUser = generateUser()
+	const mockUser = generateUserDetails()
 
 	it('should render profile header correctly', () => {
 		customRender(<ProfileHeader user={mockUser} />)

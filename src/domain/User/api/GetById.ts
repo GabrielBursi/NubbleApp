@@ -1,9 +1,14 @@
 import { UserAdapters } from '@/api/adapters'
 import { UserServices } from '@/api/services'
 
-import { UserModel } from '../models'
+import { UserDetailsModel, UserModel } from '../models'
 
-export const GetById = async (id: number): Promise<UserModel> => {
-	const userAPI = await UserServices.GetById(id.toString())
-	return UserAdapters.ToUser(userAPI)
+export const GetById = async (
+	userId: UserModel['id']
+): Promise<UserDetailsModel> => {
+	const [userApi, { isFollowing }] = await Promise.all([
+		UserServices.GetById(userId.toString()),
+		UserServices.IsFollowing(userId.toString()),
+	])
+	return UserAdapters.ToUserDetails(userApi, isFollowing)
 }

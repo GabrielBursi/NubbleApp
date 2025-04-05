@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash'
 
-import { UserAPIModel, UserModel } from '@/domain/User'
+import { UserAPIModel, UserDetailsModel, UserModel } from '@/domain/User'
 
 import { customFaker } from '../utils/customFaker'
 
@@ -29,6 +29,22 @@ export const generateUser = (): UserModel => ({
 	profileUrl: customFaker.image.url(),
 	isOnline: customFaker.datatype.boolean(),
 	fullName: `${customFaker.person.firstName()} ${customFaker.person.lastName()}`,
+	meta: {
+		followersCount: customFaker.number.int({ min: 150, max: 5000 }),
+		followingCount: customFaker.number.int({ min: 150, max: 5000 }),
+	},
+})
+
+export const generateUserDetails = (): UserDetailsModel => ({
+	id: Number(uniqueId()),
+	firstName: customFaker.person.firstName(),
+	lastName: customFaker.person.lastName(),
+	username: customFaker.internet.username(),
+	email: customFaker.internet.email(),
+	profileUrl: customFaker.image.url(),
+	isOnline: customFaker.datatype.boolean(),
+	fullName: `${customFaker.person.firstName()} ${customFaker.person.lastName()}`,
+	isFollowing: customFaker.datatype.boolean(),
 	meta: {
 		followersCount: customFaker.number.int({ min: 150, max: 5000 }),
 		followingCount: customFaker.number.int({ min: 150, max: 5000 }),
