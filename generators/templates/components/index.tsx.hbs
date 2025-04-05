@@ -1,24 +1,20 @@
 {{#if useProps}}
 import React from 'react'
-import { Text } from 'react-native'
+import { Text } from '@/components'
 import { {{pascalCase name}}Props } from './{{pascalCase name}}.types'
 
 export const {{pascalCase name}} = ({ }: Readonly<{{pascalCase name}}Props>) => {
     return (
-        <S.{{pascalCase name}}>
-            <Text accessibilityRole="text">{{pascalCase name}}</Text>
-        </S.{{pascalCase name}}>
+			<Text>{{pascalCase name}}</Text>
     )
 }
 {{else}}
 import React from 'react'
-import { Text } from 'react-native'
+import { Text } from '@/components'
 
 export const {{pascalCase name}} = () => {
     return (
-        <S.{{pascalCase name}}>
-            <Text accessibilityRole="text">{{pascalCase name}}</Text>
-        </S.{{pascalCase name}}>
+			<Text>{{pascalCase name}}</Text>
     )
 }
 {{/if}}

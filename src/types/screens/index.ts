@@ -1,4 +1,7 @@
 export * from './Camera'
+export * from './EditEmailScreen'
+export * from './EditPasswordScreen'
+export * from './EditProfileScreen'
 export * from './Favorite'
 export * from './ForgotPassword'
 export * from './Home'

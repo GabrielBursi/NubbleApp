@@ -10,6 +10,9 @@ import {
 	PublishPostScreen,
 	CameraScreen,
 	ThemeScreen,
+	EditProfileScreen,
+	EditEmailScreen,
+	EditPasswordScreen,
 } from '@/screens'
 import { RootAppStackRouterParamList } from '@/types/routes'
 
@@ -39,6 +42,9 @@ export const AppStackRouter = ({
 			<Stack.Screen name="PublishPostScreen" component={PublishPostScreen} />
 			<Stack.Screen name="CameraScreen" component={CameraScreen} />
 			<Stack.Screen name="ThemeScreen" component={ThemeScreen} />
+			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+			<Stack.Screen name="EditEmailScreen" component={EditEmailScreen} />
+			<Stack.Screen name="EditPasswordScreen" component={EditPasswordScreen} />
 		</Stack.Navigator>
 	)
 }

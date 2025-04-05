@@ -1,26 +1,28 @@
 {{#if useProps}}
 import React from 'react'
-import { Text } from 'react-native'
+import { Text } from '@/components'
+import { ScreenTemplate } from '@/templates'
 import { {{pascalCase name}}ScreenProps } from './{{pascalCase name}}.types'
 
 export const {{pascalCase name}}Screen = ({ }: Readonly<{{pascalCase name}}ScreenProps>) => {
     return (
-        <S.{{pascalCase name}}>
-            <Text accessibilityRole="text">{{pascalCase name}}</Text>
-        </S.{{pascalCase name}}>
+        <ScreenTemplate>
+            <Text>{{pascalCase name}}</Text>
+        </ScreenTemplate>
     )
 }
 
 
 {{else}}
 import React from 'react'
-import { Text } from 'react-native'
+import { Text } from '@/components'
+import { ScreenTemplate } from '@/templates'
 
 export const {{pascalCase name}}Screen = () => {
     return (
-        <S.{{pascalCase name}}>
-            <Text accessibilityRole="text">{{pascalCase name}}</Text>
-        </S.{{pascalCase name}}>
+        <ScreenTemplate>
+            <Text>{{pascalCase name}}</Text>
+        </ScreenTemplate>
     )
 }
 

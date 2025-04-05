@@ -1,4 +1,7 @@
 export * from './Camera/Camera'
+export * from './EditEmail/EditEmail'
+export * from './EditPassword/EditPassword'
+export * from './EditProfile/EditProfile'
 export * from './Favorite/Favorite'
 export * from './Home/Home'
 export * from './MyProfile/MyProfile'

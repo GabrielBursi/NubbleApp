@@ -18,4 +18,7 @@ export type RootAppStackRouterParamList = {
 	}
 	CameraScreen: undefined
 	ThemeScreen: undefined
+	EditProfileScreen: undefined
+	EditEmailScreen: undefined
+	EditPasswordScreen: undefined
 }
