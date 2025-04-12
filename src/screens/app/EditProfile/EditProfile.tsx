@@ -1,12 +1,20 @@
 import React from 'react'
 
-import { Text } from '@/components'
+import { EditProfileHeader } from '@/components'
+import { useUserGetById } from '@/domain/User'
 import { ScreenTemplate } from '@/templates'
+import { EditProfileScreenProps } from '@/types/screens'
 
-export const EditProfileScreen = () => {
+export const EditProfileScreen = ({
+	route: {
+		params: { userId },
+	},
+}: EditProfileScreenProps) => {
+	const { user } = useUserGetById(userId)
+
 	return (
-		<ScreenTemplate>
-			<Text>EditProfile</Text>
+		<ScreenTemplate canGoBack scrollable title="Editar Perfil">
+			<EditProfileHeader user={user} />
 		</ScreenTemplate>
 	)
 }

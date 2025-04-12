@@ -28,19 +28,19 @@ describe('<ProfileButton/>', () => {
 	})
 
 	it('should render follow button', () => {
-		customRender(<ProfileButton />)
+		customRender(<ProfileButton userId={1} />)
 
 		expect(screen.getByRole('button', { name: /Seguir/i })).toBeOnTheScreen()
 	})
 
 	it('should render following button', () => {
-		customRender(<ProfileButton isFollowing />)
+		customRender(<ProfileButton userId={1} isFollowing />)
 
 		expect(screen.getByRole('button', { name: /Mensagem/i })).toBeOnTheScreen()
 	})
 
 	it('should render my profile button', () => {
-		customRender(<ProfileButton isMyProfile />)
+		customRender(<ProfileButton userId={1} isMyProfile />)
 
 		expect(
 			screen.getByRole('button', { name: /Editar perfil/i })
@@ -48,7 +48,7 @@ describe('<ProfileButton/>', () => {
 	})
 
 	it('should navigate to edit profile when is my profile', async () => {
-		customRender(<ProfileButton isMyProfile />)
+		customRender(<ProfileButton userId={1} isMyProfile />)
 
 		await userEvent.press(screen.getByRole('button'))
 		expect(mockNavigateToEditProfile).toHaveBeenCalled()

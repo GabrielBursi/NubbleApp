@@ -18,4 +18,10 @@ describe('<EditProfileHeader/>', () => {
 			screen.getByRole('text', { name: /alterar foto/i })
 		).toBeOnTheScreen()
 	})
+
+	it('should render an empty component without user', () => {
+		const { root } = customRender(<EditProfileHeader />)
+
+		expect(root).toBeUndefined()
+	})
 })

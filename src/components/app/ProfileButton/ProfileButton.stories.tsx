@@ -8,6 +8,7 @@ const meta: Meta<typeof ProfileButton> = {
 	args: {
 		isFollowing: false,
 		isMyProfile: false,
+		userId: 1,
 	},
 	argTypes: {},
 }

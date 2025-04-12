@@ -3,6 +3,7 @@ export type ProfileButtonProps = {
 	isMyProfile?: boolean
 	/** @default false */
 	isFollowing?: boolean
+	userId: number
 }
 
 export type ProfileButtonVariants =

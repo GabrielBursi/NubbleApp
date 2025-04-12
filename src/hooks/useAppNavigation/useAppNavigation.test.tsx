@@ -103,9 +103,12 @@ describe('useAppNavigation', () => {
 		const { result } = renderHook(useAppNavigation)
 
 		await act(() => {
-			result.current.navigate.toEditProfile()
+			result.current.navigate.toEditProfile(1)
 		})
 
-		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('EditProfileScreen')
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
+			'EditProfileScreen',
+			{ userId: 1 }
+		)
 	})
 })

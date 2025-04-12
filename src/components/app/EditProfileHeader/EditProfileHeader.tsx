@@ -6,8 +6,10 @@ import { Box, ProfileAvatar, Text } from '@/components'
 import { EditProfileHeaderProps } from './EditProfileHeader.types'
 
 const EditProfileHeaderMemoized = ({
-	user,
+	user = null,
 }: Readonly<EditProfileHeaderProps>) => {
+	if (!user) return null
+
 	return (
 		<Box flexDirection="row" alignItems="center">
 			<ProfileAvatar imageURL={user.profileUrl} size={64} borderRadius={24} />

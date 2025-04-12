@@ -30,7 +30,10 @@ const buttonVariants: Record<
 const getVariant = ({
 	isFollowing,
 	isMyProfile,
-}: ProfileButtonProps): ProfileButtonVariants => {
+}: Pick<
+	ProfileButtonProps,
+	'isFollowing' | 'isMyProfile'
+>): ProfileButtonVariants => {
 	if (isMyProfile) return 'myProfile'
 
 	if (isFollowing) return 'isFollowing'
@@ -41,6 +44,7 @@ const getVariant = ({
 const ProfileButtonMemoized = ({
 	isFollowing = false,
 	isMyProfile = false,
+	userId,
 }: Readonly<ProfileButtonProps>) => {
 	const { navigate } = useAppNavigation()
 
@@ -48,8 +52,8 @@ const ProfileButtonMemoized = ({
 	const buttonProps = buttonVariants[variant]
 
 	const handleOnPress = useCallback(() => {
-		if (isMyProfile) navigate.toEditProfile()
-	}, [isMyProfile, navigate])
+		if (isMyProfile) navigate.toEditProfile(userId)
+	}, [isMyProfile, navigate, userId])
 
 	return (
 		<Button marginVertical="s24" onPress={handleOnPress} {...buttonProps} />

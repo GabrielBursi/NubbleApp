@@ -58,7 +58,8 @@ export const useAppNavigation = () => {
 	)
 
 	const navigateToEditProfile = useCallback(
-		() => navigationAppStack.navigate('EditProfileScreen'),
+		(userId: number) =>
+			navigationAppStack.navigate('EditProfileScreen', { userId }),
 		[navigationAppStack]
 	)
 

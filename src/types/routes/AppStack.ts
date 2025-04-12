@@ -18,7 +18,7 @@ export type RootAppStackRouterParamList = {
 	}
 	CameraScreen: undefined
 	ThemeScreen: undefined
-	EditProfileScreen: undefined
-	EditEmailScreen: undefined
-	EditPasswordScreen: undefined
+	EditProfileScreen: { userId: number }
+	EditEmailScreen: { userId: number }
+	EditPasswordScreen: { userId: number }
 }

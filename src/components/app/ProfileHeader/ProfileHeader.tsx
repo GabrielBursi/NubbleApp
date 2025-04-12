@@ -48,7 +48,11 @@ const ProfileHeaderMemoized = ({
 					</Box>
 				)}
 			</Box>
-			<ProfileButton isMyProfile={isMyProfile} isFollowing={user.isFollowing} />
+			<ProfileButton
+				isMyProfile={isMyProfile}
+				isFollowing={user.isFollowing}
+				userId={user.id}
+			/>
 		</>
 	)
 }
