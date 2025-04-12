@@ -29,6 +29,7 @@ type SendInputStory = StoryObj<typeof TextInput.Send>
 type SearchInputStory = StoryObj<typeof TextInput.Search>
 type TextAreaInputStory = StoryObj<typeof TextInput.TextArea>
 type UsernameInputStory = StoryObj<typeof TextInput.Username>
+type NameInputStory = StoryObj<typeof TextInput.Name>
 
 export const Basic: TextInputStory = {
 	args: {},
@@ -97,6 +98,12 @@ export const TextArea: TextAreaInputStory = {
 }
 
 export const Username: UsernameInputStory = {
+	args: {},
+	argTypes: {},
+	render: (args) => <TextInput.Username {...args} />,
+}
+
+export const Name: NameInputStory = {
 	args: {},
 	argTypes: {},
 	render: (args) => <TextInput.Username {...args} />,

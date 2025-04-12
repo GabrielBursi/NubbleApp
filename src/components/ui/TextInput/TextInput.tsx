@@ -26,6 +26,7 @@ import { themeConfig } from '@/styles'
 
 import {
 	EmailInputProps,
+	NameInputProps,
 	PasswordInputProps,
 	SearchInputProps,
 	SendInputProps,
@@ -315,7 +316,6 @@ const TextAreaInputInternalMemoized = forwardRef<
 >((props, ref) => {
 	return (
 		<TextInputInternal
-			allowClear
 			{...props}
 			style={stylesTextArea.textArea}
 			ref={ref}
@@ -340,7 +340,6 @@ const UsernameInputInternalMemoized = forwardRef<
 >((props, ref) => {
 	return (
 		<TextInputInternal
-			allowClear
 			{...props}
 			ref={ref}
 			label="Seu username"
@@ -352,6 +351,14 @@ const UsernameInputInternalMemoized = forwardRef<
 
 const UsernameInputInternal = memo(UsernameInputInternalMemoized)
 
+const NameInputInternalMemoized = forwardRef<RNTextInput, NameInputProps>(
+	(props, ref) => {
+		return <TextInputInternal {...props} ref={ref} autoCapitalize="words" />
+	}
+)
+
+const NameInputInternal = memo(NameInputInternalMemoized)
+
 type TextInputComponent = typeof TextInputInternal
 type EmailInputComponent = typeof EmailInputInternal
 type PasswordInputComponent = typeof PasswordInputInternal
@@ -359,6 +366,7 @@ type SendInputComponent = typeof SendInputInternal
 type SearchInputComponent = typeof SearchInputInternal
 type TextAreaInputComponent = typeof TextAreaInputInternal
 type UsernameInputComponent = typeof UsernameInputInternal
+type NameInputComponent = typeof NameInputInternal
 type CompoundTextInput = TextInputComponent & {
 	Email: EmailInputComponent
 	Password: PasswordInputComponent
@@ -366,6 +374,7 @@ type CompoundTextInput = TextInputComponent & {
 	Search: SearchInputComponent
 	TextArea: TextAreaInputComponent
 	Username: UsernameInputComponent
+	Name: NameInputComponent
 }
 
 export const TextInput = TextInputInternal as CompoundTextInput
@@ -375,3 +384,4 @@ TextInput.Send = SendInputInternal
 TextInput.Search = SearchInputInternal
 TextInput.TextArea = TextAreaInputInternal
 TextInput.Username = UsernameInputInternal
+TextInput.Name = NameInputInternal

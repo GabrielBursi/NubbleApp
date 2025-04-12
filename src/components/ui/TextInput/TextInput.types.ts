@@ -61,3 +61,5 @@ export type UsernameInputProps = StrictOmit<
 	TextInputProps,
 	'placeholder' | 'label' | 'autoCapitalize'
 >
+
+export type NameInputProps = StrictOmit<TextInputProps, 'autoCapitalize'>

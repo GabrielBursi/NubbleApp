@@ -259,4 +259,14 @@ describe('TextInput Compound', () => {
 			).toBeOnTheScreen()
 		})
 	})
+
+	describe('<TextInput.Name />', () => {
+		it('should render the text area input correctly', () => {
+			customRender(<TextInput.Name ref={inputRef} placeholder="nome" />)
+
+			expect(
+				screen.getByPlaceholderText('nome', { exact: true })
+			).toBeOnTheScreen()
+		})
+	})
 })
