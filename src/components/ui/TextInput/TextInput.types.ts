@@ -56,3 +56,8 @@ export type TextAreaInputProps = StrictOmit<
 	TextInputProps,
 	'multiline' | 'textAlignVertical' | 'style'
 >
+
+export type UsernameInputProps = StrictOmit<
+	TextInputProps,
+	'placeholder' | 'label' | 'autoCapitalize'
+>

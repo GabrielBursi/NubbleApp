@@ -246,4 +246,17 @@ describe('TextInput Compound', () => {
 			).toBeOnTheScreen()
 		})
 	})
+
+	describe('<TextInput.Username />', () => {
+		it('should render the text area input correctly', () => {
+			customRender(<TextInput.Username ref={inputRef} />)
+
+			expect(
+				screen.getByLabelText('Seu username', { exact: true })
+			).toBeOnTheScreen()
+			expect(
+				screen.getByPlaceholderText('@', { exact: true })
+			).toBeOnTheScreen()
+		})
+	})
 })

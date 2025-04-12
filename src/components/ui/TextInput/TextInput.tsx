@@ -31,6 +31,7 @@ import {
 	SendInputProps,
 	TextAreaInputProps,
 	TextInputProps,
+	UsernameInputProps,
 } from './TextInput.types'
 
 const TextInputInternalMemoized = forwardRef<
@@ -333,18 +334,38 @@ const stylesTextArea = StyleSheet.create({
 
 const TextAreaInputInternal = memo(TextAreaInputInternalMemoized)
 
+const UsernameInputInternalMemoized = forwardRef<
+	RNTextInput,
+	UsernameInputProps
+>((props, ref) => {
+	return (
+		<TextInputInternal
+			allowClear
+			{...props}
+			ref={ref}
+			label="Seu username"
+			placeholder="@"
+			autoCapitalize="none"
+		/>
+	)
+})
+
+const UsernameInputInternal = memo(UsernameInputInternalMemoized)
+
 type TextInputComponent = typeof TextInputInternal
 type EmailInputComponent = typeof EmailInputInternal
 type PasswordInputComponent = typeof PasswordInputInternal
 type SendInputComponent = typeof SendInputInternal
 type SearchInputComponent = typeof SearchInputInternal
 type TextAreaInputComponent = typeof TextAreaInputInternal
+type UsernameInputComponent = typeof UsernameInputInternal
 type CompoundTextInput = TextInputComponent & {
 	Email: EmailInputComponent
 	Password: PasswordInputComponent
 	Send: SendInputComponent
 	Search: SearchInputComponent
 	TextArea: TextAreaInputComponent
+	Username: UsernameInputComponent
 }
 
 export const TextInput = TextInputInternal as CompoundTextInput
@@ -353,3 +374,4 @@ TextInput.Password = PasswordInputInternal
 TextInput.Send = SendInputInternal
 TextInput.Search = SearchInputInternal
 TextInput.TextArea = TextAreaInputInternal
+TextInput.Username = UsernameInputInternal
