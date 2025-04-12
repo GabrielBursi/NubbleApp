@@ -44,6 +44,28 @@ describe('<ControlledFormInput/>', () => {
 		expect(screen.getByLabelText('Jest')).toBeOnTheScreen()
 	})
 
+	it('should render the username input correctly', () => {
+		const { result } = renderHook(() => useForm())
+		customRender(
+			<FormProvider {...result.current}>
+				<ControlledFormInput.Username ref={inputRef} name="username" />
+			</FormProvider>
+		)
+
+		expect(screen.getByLabelText('Seu username')).toBeOnTheScreen()
+	})
+
+	it('should render the name input correctly', () => {
+		const { result } = renderHook(() => useForm())
+		customRender(
+			<FormProvider {...result.current}>
+				<ControlledFormInput.Name ref={inputRef} name="name" label="Nome" />
+			</FormProvider>
+		)
+
+		expect(screen.getByLabelText('Nome')).toBeOnTheScreen()
+	})
+
 	it('should render with rules correctly', () => {
 		const { result } = renderHook(() => useForm())
 		customRender(

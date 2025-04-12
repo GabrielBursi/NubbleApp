@@ -4,6 +4,8 @@ import {
 	TextInputProps,
 	EmailInputProps,
 	PasswordInputProps,
+	UsernameInputProps,
+	NameInputProps,
 } from '@/components/ui/TextInput/TextInput.types'
 
 type ControlledInputProps<
@@ -19,3 +21,9 @@ export type ControlledPasswordInputProps<TField extends FieldValues> =
 
 export type ControlledEmailInputProps<TField extends FieldValues> =
 	ControlledInputProps<EmailInputProps, TField>
+
+export type ControlledUsernameInputProps<TField extends FieldValues> =
+	ControlledInputProps<UsernameInputProps, TField>
+
+export type ControlledNameInputProps<TField extends FieldValues> =
+	ControlledInputProps<NameInputProps, TField>

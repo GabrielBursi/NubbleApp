@@ -40,6 +40,10 @@ type ControlledFormEmailInputStory = StoryObj<typeof ControlledFormInput.Email>
 type ControlledFormPasswordInputStory = StoryObj<
 	typeof ControlledFormInput.Password
 >
+type ControlledFormUsernameInputStory = StoryObj<
+	typeof ControlledFormInput.Username
+>
+type ControlledFormNameInputStory = StoryObj<typeof ControlledFormInput.Name>
 
 export const Text: ControlledFormInputStory = {
 	name: 'Text Input',
@@ -60,4 +64,18 @@ export const Email: ControlledFormEmailInputStory = {
 		label: 'Email',
 	},
 	render: (args) => <ControlledFormInput.Email {...args} />,
+}
+
+export const Username: ControlledFormUsernameInputStory = {
+	name: 'Username Input',
+	args: {},
+	render: (args) => <ControlledFormInput.Username {...args} />,
+}
+
+export const Name: ControlledFormNameInputStory = {
+	name: 'Name Input',
+	args: {
+		label: 'Name',
+	},
+	render: (args) => <ControlledFormInput.Name {...args} />,
 }

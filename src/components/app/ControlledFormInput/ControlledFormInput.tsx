@@ -8,8 +8,10 @@ import { useControlledInput } from '@/hooks'
 
 import {
 	ControlledEmailInputProps,
+	ControlledNameInputProps,
 	ControlledPasswordInputProps,
 	ControlledTextInputProps,
+	ControlledUsernameInputProps,
 } from './ControlledFormInput.types'
 
 const ControlledTextInputInternal = <TField extends FieldValues>(
@@ -30,6 +32,78 @@ const ControlledTextInputInternal = <TField extends FieldValues>(
 			rules={rules}
 			render={({ field, fieldState }) => (
 				<TextInput
+					value={field.value}
+					ref={ref}
+					onChangeText={field.onChange}
+					errorMessage={fieldState.error?.message}
+					aria-valuemax={maxValue}
+					aria-valuemin={minValue}
+					boxProps={{ mb: 's20' }}
+					accessibilityValue={{
+						max: maxValue,
+						min: minValue,
+					}}
+					{...textInputProps}
+				/>
+			)}
+		/>
+	)
+}
+
+const ControlledUsernameInputInternal = <TField extends FieldValues>(
+	{
+		control,
+		name,
+		rules,
+		...textInputProps
+	}: Readonly<ControlledUsernameInputProps<TField>>,
+	ref: ForwardedRef<RNTextInput>
+) => {
+	const { maxValue, minValue } = useControlledInput(rules)
+
+	return (
+		<Controller
+			control={control}
+			name={name}
+			rules={rules}
+			render={({ field, fieldState }) => (
+				<TextInput.Username
+					value={field.value}
+					ref={ref}
+					onChangeText={field.onChange}
+					errorMessage={fieldState.error?.message}
+					aria-valuemax={maxValue}
+					aria-valuemin={minValue}
+					boxProps={{ mb: 's20' }}
+					accessibilityValue={{
+						max: maxValue,
+						min: minValue,
+					}}
+					{...textInputProps}
+				/>
+			)}
+		/>
+	)
+}
+
+const ControlledNameInputInternal = <TField extends FieldValues>(
+	{
+		control,
+		name,
+		rules,
+		...textInputProps
+	}: Readonly<ControlledNameInputProps<TField>>,
+	ref: ForwardedRef<RNTextInput>
+) => {
+	const { maxValue, minValue } = useControlledInput(rules)
+
+	return (
+		<Controller
+			control={control}
+			name={name}
+			rules={rules}
+			render={({ field, fieldState }) => (
+				<TextInput.Name
 					value={field.value}
 					ref={ref}
 					onChangeText={field.onChange}
@@ -130,6 +204,22 @@ const ControlledTextInputInternalWithRef = forwardRef(
 	}
 ) => ReturnType<typeof ControlledTextInputInternal>
 
+const ControlledUsernameInputInternalWithRef = forwardRef(
+	ControlledUsernameInputInternal
+) as <TField extends FieldValues>(
+	props: ControlledUsernameInputProps<TField> & {
+		ref?: React.ForwardedRef<RNTextInput>
+	}
+) => ReturnType<typeof ControlledUsernameInputInternal>
+
+const ControlledNameInputInternalWithRef = forwardRef(
+	ControlledNameInputInternal
+) as <TField extends FieldValues>(
+	props: ControlledNameInputProps<TField> & {
+		ref?: React.ForwardedRef<RNTextInput>
+	}
+) => ReturnType<typeof ControlledNameInputInternal>
+
 const ControlledPasswordInputInternalWithRef = forwardRef(
 	ControlledPasswordInputInternal
 ) as <TField extends FieldValues>(
@@ -150,12 +240,19 @@ type ControlledTextInputInternal = typeof ControlledTextInputInternalWithRef
 type ControlledPasswordInputInternal =
 	typeof ControlledPasswordInputInternalWithRef
 type ControlledEmailInputInternal = typeof ControlledEmailInputInternalWithRef
+type ControlledUsernameInputInternal =
+	typeof ControlledUsernameInputInternalWithRef
+type ControlledNameInputInternal = typeof ControlledNameInputInternalWithRef
 type CompoundControlledFormInput = ControlledTextInputInternal & {
 	Password: ControlledPasswordInputInternal
 	Email: ControlledEmailInputInternal
+	Username: ControlledUsernameInputInternal
+	Name: ControlledNameInputInternal
 }
 
 export const ControlledFormInput =
 	ControlledTextInputInternalWithRef as CompoundControlledFormInput
 ControlledFormInput.Password = ControlledPasswordInputInternalWithRef
 ControlledFormInput.Email = ControlledEmailInputInternalWithRef
+ControlledFormInput.Username = ControlledUsernameInputInternalWithRef
+ControlledFormInput.Name = ControlledNameInputInternalWithRef
