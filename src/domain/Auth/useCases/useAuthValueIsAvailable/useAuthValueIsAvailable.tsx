@@ -76,7 +76,7 @@ export const useAuthValueIsAvailable = (
 
 	return {
 		isAvailable: !!data,
-		isUnvailable: data === false,
+		isUnavailable: data === false,
 		isFetching: isFetching || isDebouncing,
 	} as const
 }

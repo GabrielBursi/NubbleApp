@@ -161,7 +161,7 @@ describe('useAuthValueIsAvailable', () => {
 		)
 
 		await waitFor(() => {
-			expect(result.current.isUnvailable).toBe(true)
+			expect(result.current.isUnavailable).toBe(true)
 			expect(result.current.isAvailable).toBe(false)
 		})
 	})
