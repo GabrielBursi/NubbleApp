@@ -1,8 +1,20 @@
 import React, { memo } from 'react'
 
-import { Loading, Text, TouchableOpacityBox } from '@/components/ui'
+import {
+	Box,
+	Icon,
+	Loading,
+	PressableBox,
+	Text,
+	TouchableOpacityBox,
+} from '@/components/ui'
 
-import { ButtonPreset, ButtonProps, ButtonState } from './Button.types'
+import {
+	ButtonPreset,
+	ButtonProps,
+	ButtonState,
+	InputButtonProps,
+} from './Button.types'
 
 const buttonPresets: Record<ButtonPreset, ButtonState> = {
 	primary: {
@@ -110,4 +122,46 @@ const ButtonMemoized = ({
 	)
 }
 
-export const Button = memo(ButtonMemoized)
+const InputButtonMemoized = ({
+	label,
+	value,
+	...pressableBoxProps
+}: InputButtonProps) => {
+	return (
+		<PressableBox
+			{...pressableBoxProps}
+			borderBottomColor="gray4"
+			borderBottomWidth={1}
+			paddingBottom="s8"
+			role="button"
+			accessibilityRole="button"
+			accessible
+			accessibilityLabel={label}
+			aria-label={label}
+		>
+			<Text preset="paragraphMedium" mb="s8">
+				{label}
+			</Text>
+			<Box
+				flexDirection="row"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Text color="gray2">{value}</Text>
+				<Icon name="chevronRight" color="backgroundContrast" />
+			</Box>
+		</PressableBox>
+	)
+}
+
+const InputButtonInternal = memo(InputButtonMemoized)
+const ButtonInternal = memo(ButtonMemoized)
+
+type ButtonComponent = typeof ButtonInternal
+type InputButtonComponent = typeof InputButtonInternal
+type CompoundButton = ButtonComponent & {
+	Input: InputButtonComponent
+}
+
+export const Button = ButtonInternal as CompoundButton
+Button.Input = InputButtonInternal

@@ -1,4 +1,9 @@
-import { fireEvent, screen, userEvent } from '@testing-library/react-native'
+import {
+	fireEvent,
+	screen,
+	userEvent,
+	waitFor,
+} from '@testing-library/react-native'
 
 import { useAuthValueIsAvailable } from '@/domain/Auth/useCases/useAuthValueIsAvailable/useAuthValueIsAvailable'
 import { generateUser } from '@/tests/mocks'
@@ -105,7 +110,9 @@ describe('<EditProfileForm/>', () => {
 			'native'
 		)
 
-		expect(mockOnChangeValid).toHaveBeenCalledWith(true)
+		await waitFor(() => {
+			expect(mockOnChangeValid).toHaveBeenCalledWith(true)
+		})
 	})
 
 	it('should focus on fields correctly', async () => {

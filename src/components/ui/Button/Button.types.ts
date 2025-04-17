@@ -1,6 +1,7 @@
 import { ThemeColors } from '@/types/theme'
 import { StrictOmit } from '@/types/utils'
 
+import { PressableBoxProps } from '../PressableBox/PressableBox.types'
 import { TextProps } from '../Text/Text.types'
 import { TouchableOpacityBoxProps } from '../TouchableOpacityBox/TouchableOpacityBox.types'
 
@@ -19,3 +20,18 @@ export type ButtonProps = TouchableOpacityBoxProps & {
 	preset?: ButtonPreset
 	disabled?: boolean
 }
+
+export type InputButtonProps = {
+	label: string
+	value: string
+} & StrictOmit<
+	PressableBoxProps,
+	| 'borderBottomColor'
+	| 'borderBottomWidth'
+	| 'paddingBottom'
+	| 'role'
+	| 'accessibilityRole'
+	| 'accessible'
+	| 'accessibilityLabel'
+	| 'aria-label'
+>

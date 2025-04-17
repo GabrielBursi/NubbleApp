@@ -18,9 +18,10 @@ const meta: Meta<typeof Button> = {
 }
 export default meta
 
-type Story = StoryObj<typeof Button>
+type ButtonStory = StoryObj<typeof Button>
+type InputButtonStory = StoryObj<typeof Button.Input>
 
-export const Basic: Story = {
+export const Basic: ButtonStory = {
 	args: {},
 	render: (args) => (
 		<Box gap="s40">
@@ -46,4 +47,12 @@ export const Basic: Story = {
 			</Box>
 		</Box>
 	),
+}
+
+export const Input: InputButtonStory = {
+	args: {
+		label: 'Storybook',
+		value: 'sbsbsbsb',
+	},
+	render: (args) => <Button.Input {...args} />,
 }
