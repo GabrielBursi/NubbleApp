@@ -33,19 +33,22 @@ export const SignUpScreen = () => {
 		mode: 'onChange',
 	})
 
+	// TODO:REFACTOR
 	const userNameValue = watch('username')
 	const userNameState = getFieldState('username')
 	const emailValue = watch('email')
 	const emailState = getFieldState('email')
 
-	const { isUnvailable: userNameIsUnvailable, isFetching: userNameIsFetching } =
-		useAuthValueIsAvailable({
-			queryKey: AppQueryKeys.USERNAME_AVAILABLE,
-			value: userNameValue,
-			enabled: !userNameState.invalid,
-		})
+	const {
+		isUnavailable: userNameIsUnvailable,
+		isFetching: userNameIsFetching,
+	} = useAuthValueIsAvailable({
+		queryKey: AppQueryKeys.USERNAME_AVAILABLE,
+		value: userNameValue,
+		enabled: !userNameState.invalid,
+	})
 
-	const { isUnvailable: emailIsUnvailable, isFetching: emailIsFetching } =
+	const { isUnavailable: emailIsUnvailable, isFetching: emailIsFetching } =
 		useAuthValueIsAvailable({
 			queryKey: AppQueryKeys.EMAIL_AVAILABLE,
 			value: emailValue,
@@ -76,6 +79,7 @@ export const SignUpScreen = () => {
 		[signUp]
 	)
 
+	// TODO:REFACTOR
 	const handleSubmitField = useCallback((refField: RefObject<RNTextInput>) => {
 		refField.current?.focus()
 	}, [])
@@ -100,6 +104,7 @@ export const SignUpScreen = () => {
 		[handleSubmitField]
 	)
 
+	// TODO:REFACTOR
 	const handleSubmitErrors: SubmitErrorHandler<SignUpSchema> = useCallback(
 		(fieldErrors) => {
 			const fields = [
@@ -121,21 +126,18 @@ export const SignUpScreen = () => {
 			<Text preset="headingLarge" mb="s32">
 				Criar uma conta
 			</Text>
-			<ControlledFormInput
+			<ControlledFormInput.Username
 				control={control}
 				name="username"
-				label="Seu username"
-				placeholder="@"
 				errorMessage={userNameIsUnvailable ? 'usuário indisponível' : undefined}
 				loading={userNameIsFetching}
 				ref={userNameRef}
 				returnKeyType="next"
 				onSubmitEditing={handleNameFocusSubmitEditing}
 			/>
-			<ControlledFormInput
+			<ControlledFormInput.Name
 				control={control}
 				name="firstName"
-				autoCapitalize="words"
 				label="Nome"
 				placeholder="Digite seu nome"
 				boxProps={{ mb: 's20' }}
@@ -143,10 +145,9 @@ export const SignUpScreen = () => {
 				returnKeyType="next"
 				onSubmitEditing={handleLastNameFocusSubmitEditing}
 			/>
-			<ControlledFormInput
+			<ControlledFormInput.Name
 				control={control}
 				name="lastName"
-				autoCapitalize="words"
 				label="Sobrenome"
 				placeholder="Digite seu sobrenome"
 				boxProps={{ mb: 's20' }}

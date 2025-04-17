@@ -25,6 +25,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		},
 		mode: 'onChange',
 	})
+
 	const { showToast } = useToastService()
 	const { isLoading, login } = useAuthLogin({
 		onError: (message) => showToast({ message, type: 'error' }),
@@ -47,6 +48,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		navigation.navigate('ForgotPasswordScreen')
 	}
 
+	// TODO:REFACTOR
 	const handleSubmitErrors: SubmitErrorHandler<LoginSchema> = useCallback(
 		(fieldErrors) => {
 			const fields = [
