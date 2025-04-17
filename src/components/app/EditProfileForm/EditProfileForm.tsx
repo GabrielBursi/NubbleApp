@@ -99,6 +99,7 @@ export const EditProfileForm = forwardRef<
 	return (
 		<Box role="form" gap="s16" accessible>
 			<ControlledFormInput.Username
+				boxProps={{ mb: undefined }}
 				name="username"
 				control={control}
 				ref={userNameRef}
@@ -111,6 +112,7 @@ export const EditProfileForm = forwardRef<
 				loading={userNameIsFetching}
 			/>
 			<ControlledFormInput.Name
+				boxProps={{ mb: undefined }}
 				name="firstName"
 				control={control}
 				ref={nameRef}
@@ -121,6 +123,7 @@ export const EditProfileForm = forwardRef<
 				disabled={!user}
 			/>
 			<ControlledFormInput.Name
+				boxProps={{ mb: undefined }}
 				name="lastName"
 				control={control}
 				ref={lastNameRef}

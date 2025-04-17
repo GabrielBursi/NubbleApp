@@ -60,10 +60,39 @@ describe('<EditProfileScreen/>', () => {
 		expect(
 			screen.getByRole('text', { name: 'Editar Perfil' })
 		).toBeOnTheScreen()
+		expect(screen.getByRole('button', { name: /email/i })).toBeOnTheScreen()
+		expect(screen.getByText(mockUser.email, { exact: true })).toBeOnTheScreen()
+		expect(screen.getByRole('button', { name: /senha/i })).toBeOnTheScreen()
+		expect(
+			screen.getByRole('button', { name: /salvar alterações/i })
+		).toBeDisabled()
 		expect(
 			screen.getByRole('button', { name: /salvar alterações/i })
 		).toBeDisabled()
 		expect(screen.getByRole('form')).toBeOnTheScreen()
+	})
+
+	it('should navigate to edit email and edit password screen', async () => {
+		;(useUserGetById as MockUseUseUserGetById).mockReturnValue({
+			...mockReturnUseUseUserGetById,
+			user: null,
+		})
+
+		customRender(editProfileScreen)
+
+		await userEvent.press(screen.getByRole('button', { name: /email/i }))
+		await userEvent.press(screen.getByRole('button', { name: /senha/i }))
+
+		expect(mockUseNavigation.navigate).toHaveBeenCalledTimes(2)
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith('EditEmailScreen', {
+			userId: mockUser.id,
+		})
+		expect(mockUseNavigation.navigate).toHaveBeenCalledWith(
+			'EditPasswordScreen',
+			{
+				userId: mockUser.id,
+			}
+		)
 	})
 
 	it('should submit the form', async () => {

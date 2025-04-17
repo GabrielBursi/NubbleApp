@@ -7,6 +7,7 @@ import { ScreenTemplate } from '@/templates'
 import { EditProfileScreenProps } from '@/types/screens'
 
 export const EditProfileScreen = ({
+	navigation,
 	route: {
 		params: { userId },
 	},
@@ -28,6 +29,27 @@ export const EditProfileScreen = ({
 					ref={formRef}
 					onChangeIsValid={setFormIsValid}
 					user={user}
+				/>
+			</Box>
+			<Box gap="s10">
+				<Button.Input
+					label="Email"
+					value={user?.email ?? ''}
+					mb="s16"
+					onPress={() =>
+						navigation.navigate('EditEmailScreen', {
+							userId: userId,
+						})
+					}
+				/>
+				<Button.Input
+					label="Senha"
+					value="•••••••"
+					onPress={() =>
+						navigation.navigate('EditPasswordScreen', {
+							userId: userId,
+						})
+					}
 				/>
 			</Box>
 			<Button
