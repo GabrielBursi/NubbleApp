@@ -1,5 +1,4 @@
 import React, {
-	ComponentProps,
 	forwardRef,
 	memo,
 	useCallback,
@@ -17,7 +16,7 @@ import {
 	StyleSheet,
 } from 'react-native'
 
-import { Box } from '@/components/ui/Box/Box'
+import { Box, BoxProps } from '@/components/ui/Box/Box'
 import { Icon } from '@/components/ui/Icon/Icon'
 import { RightIconTextInput } from '@/components/ui/RightIconTextInput/RightIconTextInput'
 import { Text } from '@/components/ui/Text/Text'
@@ -76,8 +75,8 @@ const TextInputInternalMemoized = forwardRef<
 			}
 		}, [isFocused, internalRef])
 
-		const $textInputContainer: ComponentProps<typeof Box> = useMemo(() => {
-			let styleContainer: ComponentProps<typeof Box> = {
+		const $textInputContainer: BoxProps = useMemo(() => {
+			let styleContainer: BoxProps = {
 				flexDirection: 'row',
 				borderWidth: 1,
 				borderColor: 'gray4',

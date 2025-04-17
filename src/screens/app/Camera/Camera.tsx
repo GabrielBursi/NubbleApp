@@ -1,4 +1,4 @@
-import React, { ComponentProps, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
 import { useIsFocused } from '@react-navigation/native'
@@ -9,7 +9,13 @@ import {
 	useCameraFormat,
 } from 'react-native-vision-camera'
 
-import { ActionIcon, Box, Icon, PermissionManager } from '@/components'
+import {
+	ActionIcon,
+	Box,
+	BoxProps,
+	Icon,
+	PermissionManager,
+} from '@/components'
 import { useAppSafeArea, useAppState } from '@/hooks'
 import { MultimediaService } from '@/services/multimedia'
 import { CameraScreenProps } from '@/types/screens'
@@ -106,14 +112,14 @@ export const CameraScreen = ({ navigation }: Readonly<CameraScreenProps>) => {
 	)
 }
 
-const $controlAreaTop: ComponentProps<typeof Box> = {
+const $controlAreaTop: BoxProps = {
 	backgroundColor: 'black60',
 	height: CONTROL_HEIGHT - CONTROL_DIFF,
 	justifyContent: 'space-between',
 	flexDirection: 'row',
 	paddingHorizontal: 's24',
 }
-const $controlAreaBottom: ComponentProps<typeof Box> = {
+const $controlAreaBottom: BoxProps = {
 	backgroundColor: 'black60',
 	height: CONTROL_HEIGHT + CONTROL_DIFF,
 	justifyContent: 'center',

@@ -1,14 +1,13 @@
-import { ComponentProps } from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 
-import { Box } from '@/components'
+import { BoxProps } from '@/components'
 
 export type ScreenTemplateProps = {
 	canGoBack?: boolean
 	scrollable?: boolean
 	title?: string
 	HeaderComponent?: React.ReactNode
-} & ComponentProps<typeof Box>
+} & BoxProps
 
 export type ContainerScreenProps = {
 	children: React.ReactNode

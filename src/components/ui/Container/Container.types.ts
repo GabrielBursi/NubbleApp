@@ -1,5 +1,3 @@
-import { ComponentProps } from 'react'
+import { BoxProps } from '@/components'
 
-import { Box } from '../Box/Box'
-
-export type ContainerProps = ComponentProps<typeof Box>
+export type ContainerProps = BoxProps

@@ -1,10 +1,9 @@
-import { ComponentProps } from 'react'
 import {
 	PressableProps,
 	TextInputProps as RNTextInputProps,
 } from 'react-native'
 
-import { Box } from '@/components/ui'
+import { BoxProps } from '@/components/ui'
 import { NonUndefined, OptionalProps, StrictOmit } from '@/types/utils'
 
 export type TextInputProps = StrictOmit<
@@ -20,7 +19,7 @@ export type TextInputProps = StrictOmit<
 	errorMessage?: string
 	RightComponent?: React.ReactElement
 	LeftComponent?: React.ReactElement
-	boxProps?: ComponentProps<typeof Box>
+	boxProps?: BoxProps
 	/** @default false */
 	disabled?: boolean
 	/** @default false */
