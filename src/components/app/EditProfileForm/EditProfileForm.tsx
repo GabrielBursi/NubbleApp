@@ -4,6 +4,7 @@ import React, {
 	useCallback,
 	useEffect,
 	useImperativeHandle,
+	useMemo,
 	useRef,
 } from 'react'
 import { TextInput as RNTextInput } from 'react-native'
@@ -30,7 +31,8 @@ export const EditProfileForm = forwardRef<
 		watch,
 		getFieldState,
 		handleSubmit,
-		formState: { isValid },
+		setValue,
+		formState: { isValid, dirtyFields },
 	} = useForm<EditProfileSchema>({
 		resolver: zodResolver(editProfileSchema),
 		defaultValues: {
@@ -39,6 +41,7 @@ export const EditProfileForm = forwardRef<
 			lastName: user?.lastName ?? '',
 		},
 		mode: 'onChange',
+		shouldUnregister: true,
 	})
 
 	const userNameRef = useRef<RNTextInput>(null)
@@ -48,6 +51,15 @@ export const EditProfileForm = forwardRef<
 	const userNameValue = watch('username')
 	const userNameState = getFieldState('username')
 
+	const usernameVerificationEnabled = useMemo(
+		() =>
+			!userNameState.invalid &&
+			!!user &&
+			userNameValue !== user.username &&
+			!!dirtyFields.username,
+		[dirtyFields.username, user, userNameState.invalid, userNameValue]
+	)
+
 	// TODO: REFACTOR
 	const {
 		isUnavailable: userNameIsUnavailable,
@@ -55,7 +67,7 @@ export const EditProfileForm = forwardRef<
 	} = useAuthValueIsAvailable({
 		queryKey: AppQueryKeys.USERNAME_AVAILABLE,
 		value: userNameValue,
-		enabled: !userNameState.invalid,
+		enabled: usernameVerificationEnabled,
 	})
 
 	const onSubmit = useCallback(console.log, [])
@@ -93,8 +105,27 @@ export const EditProfileForm = forwardRef<
 	}))
 
 	useEffect(() => {
-		onChangeIsValid?.(isValid && !userNameIsFetching)
-	}, [isValid, onChangeIsValid, userNameIsFetching])
+		const isUsernameValid =
+			(!!user && userNameValue === user.username) ||
+			(!userNameIsFetching && !userNameIsUnavailable)
+
+		onChangeIsValid?.(isValid && isUsernameValid)
+	}, [
+		isValid,
+		onChangeIsValid,
+		userNameIsFetching,
+		userNameIsUnavailable,
+		user,
+		userNameValue,
+	])
+
+	useEffect(() => {
+		if (user) {
+			setValue('firstName', user.firstName)
+			setValue('lastName', user.lastName)
+			setValue('username', user.username)
+		}
+	}, [setValue, user])
 
 	return (
 		<Box role="form" gap="s16" accessible>
@@ -107,9 +138,11 @@ export const EditProfileForm = forwardRef<
 				onSubmitEditing={handleNameFocusSubmitEditing}
 				disabled={!user}
 				errorMessage={
-					userNameIsUnavailable ? 'Usuário não está indisponível' : undefined
+					userNameIsUnavailable && usernameVerificationEnabled
+						? 'Usuário não está indisponível'
+						: undefined
 				}
-				loading={userNameIsFetching}
+				loading={userNameIsFetching && usernameVerificationEnabled}
 			/>
 			<ControlledFormInput.Name
 				boxProps={{ mb: undefined }}

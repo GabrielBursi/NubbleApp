@@ -63,7 +63,7 @@ describe('<EditProfileForm/>', () => {
 		).toHaveDisplayValue(mockUser.lastName)
 	})
 
-	it('should render the username field loading when user name is fetching', () => {
+	it('should render the username field loading when user name is fetching', async () => {
 		;(useAuthValueIsAvailable as MockUseAuthValueIsAvailable).mockReturnValue({
 			...mockReturnUseAuthValueIsAvailable,
 			isFetching: true,
@@ -71,10 +71,16 @@ describe('<EditProfileForm/>', () => {
 
 		customRender(<EditProfileForm user={mockUser} />)
 
+		await userEvent.clear(screen.getByPlaceholderText('@', { exact: true }))
+		await userEvent.type(
+			screen.getByPlaceholderText('@', { exact: true }),
+			'user.name_123'
+		)
+
 		expect(screen.getByTestId('spin-indicator')).toBeOnTheScreen()
 	})
 
-	it('should render the error on username field when user name is not available', () => {
+	it('should render the error on username field when user name is not available', async () => {
 		;(useAuthValueIsAvailable as MockUseAuthValueIsAvailable).mockReturnValue({
 			...mockReturnUseAuthValueIsAvailable,
 			isUnavailable: true,
@@ -82,24 +88,20 @@ describe('<EditProfileForm/>', () => {
 
 		customRender(<EditProfileForm user={mockUser} />)
 
+		await userEvent.clear(screen.getByPlaceholderText('@', { exact: true }))
+		await userEvent.type(
+			screen.getByPlaceholderText('@', { exact: true }),
+			'user.name_123'
+		)
+
 		expect(
 			screen.getByText('Usuário não está indisponível', { exact: true })
 		).toBeOnTheScreen()
 	})
 
 	it('should call onChangeIsValid', async () => {
-		;(useAuthValueIsAvailable as MockUseAuthValueIsAvailable).mockReturnValue({
-			...mockReturnUseAuthValueIsAvailable,
-			isFetching: false,
-		})
-
 		customRender(
 			<EditProfileForm user={mockUser} onChangeIsValid={mockOnChangeValid} />
-		)
-
-		await userEvent.type(
-			screen.getByPlaceholderText('@', { exact: true }),
-			'user.name_123'
 		)
 		await userEvent.type(
 			screen.getByPlaceholderText('Digite seu nome', { exact: true }),
