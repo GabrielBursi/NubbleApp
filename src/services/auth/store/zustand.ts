@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react'
 import { create } from 'zustand'
 
 import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
+import { UserModel } from '@/domain/User'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
@@ -12,13 +13,21 @@ import { useAuthCredentialsStorage } from './useAuthCredentialsStorage'
 
 type AuthCredentials = AuthCredentialsService['authCredentials']
 
-const useAuthCredentialsStore = create<AuthCredentialsService>()((set) => ({
-	authCredentials: null,
-	isLoading: true,
-	saveCredentials: async (ac) => set({ authCredentials: ac }),
-	removeCredentials: async () => set({ authCredentials: null }),
-	setIsLoading: (isLoading) => set({ isLoading }),
-}))
+const useAuthCredentialsStore = create<AuthCredentialsService>()(
+	(set, get) => ({
+		authCredentials: null,
+		isLoading: true,
+		saveCredentials: async (ac) => set({ authCredentials: ac }),
+		removeCredentials: async () => set({ authCredentials: null }),
+		setIsLoading: (isLoading) => set({ isLoading }),
+		updateUser: async (user) => {
+			const currentAc = get().authCredentials
+			return currentAc
+				? set({ authCredentials: { ...currentAc, user } })
+				: set({ authCredentials: null })
+		},
+	})
+)
 
 export const useAuthCredentialsZustand = (): AuthCredentials => {
 	return useAuthCredentialsStore((state) => state.authCredentials)
@@ -53,6 +62,13 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 		[setAuth, saveCredentialsStore, setIsLoading, updateToken]
 	)
 
+	const updateUser = useCallback(
+		async (user: UserModel) => {
+			if (authCredentials) await saveCredentials({ ...authCredentials, user })
+		},
+		[authCredentials, saveCredentials]
+	)
+
 	const removeCredentials = useCallback(async () => {
 		removeToken()
 		setIsLoading(true)
@@ -84,5 +100,6 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 		removeCredentials,
 		isLoading,
 		setIsLoading,
+		updateUser,
 	}
 }

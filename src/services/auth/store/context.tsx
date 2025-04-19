@@ -11,6 +11,7 @@ import {
 
 //? import assim para teste não se perder
 import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
+import { UserModel } from '@/domain/User'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
@@ -52,6 +53,13 @@ export const AuthCredentialsProvider = ({
 		[setAuth, updateToken]
 	)
 
+	const updateUser = useCallback(
+		async (user: UserModel) => {
+			if (authCredentials) await saveCredentials({ ...authCredentials, user })
+		},
+		[authCredentials, saveCredentials]
+	)
+
 	useEffect(() => {
 		getAuth()
 			.then(async (auth) => {
@@ -78,8 +86,9 @@ export const AuthCredentialsProvider = ({
 			removeCredentials,
 			saveCredentials,
 			setIsLoading,
+			updateUser,
 		}),
-		[authCredentials, removeCredentials, saveCredentials, isLoading]
+		[authCredentials, removeCredentials, saveCredentials, isLoading, updateUser]
 	)
 
 	return (
@@ -112,8 +121,13 @@ export const useAuthCredentialsServiceContext = (): StrictOmit<
 		throw new Error(
 			'useAuthCredentialsServiceContext  must be used inside a provider!'
 		)
-	const { removeCredentials, saveCredentials, isLoading, setIsLoading } =
-		context
+	const {
+		removeCredentials,
+		saveCredentials,
+		isLoading,
+		setIsLoading,
+		updateUser,
+	} = context
 
 	const authCredServices: StrictOmit<
 		AuthCredentialsService,
@@ -124,8 +138,9 @@ export const useAuthCredentialsServiceContext = (): StrictOmit<
 			saveCredentials,
 			isLoading,
 			setIsLoading,
+			updateUser,
 		}),
-		[isLoading, removeCredentials, saveCredentials, setIsLoading]
+		[isLoading, removeCredentials, saveCredentials, setIsLoading, updateUser]
 	)
 
 	return authCredServices

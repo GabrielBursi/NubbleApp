@@ -3,19 +3,39 @@ import { http, HttpResponse } from 'msw'
 import Config from 'react-native-config'
 
 import { TestProvider } from '@/providers'
+import { useAuthCredentialsService } from '@/services/auth/useAuthCredentials'
 import { serverTest } from '@/tests/server'
 import { customFaker } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
+import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { UserApi } from '../../api'
 import { UpdateUserParams } from '../../models'
 
 import { useUpdateUser } from './useUpdateUser'
 
+type UseAuthCredentialsService = typeof useAuthCredentialsService
+type ReturnUseAuthCredentialsService =
+	ReturnHookMocked<UseAuthCredentialsService>
+type MockUseAuthCredentialsService = HookMocked<UseAuthCredentialsService>
+
+jest.mock('@/services/auth/useAuthCredentials')
+
 describe('useUpdateUser', () => {
 	const spyUpdateUser = jest.spyOn(UserApi, 'Update')
 	const mockOnSuccess = jest.fn()
 	const mockOnError = jest.fn()
+	const mockUpdateUser = jest.fn()
+
+	const mockUseAuthCredentialsService: ReturnUseAuthCredentialsService = {
+		updateUser: mockUpdateUser,
+	}
+
+	beforeEach(() => {
+		;(
+			useAuthCredentialsService as MockUseAuthCredentialsService
+		).mockReturnValue(mockUseAuthCredentialsService)
+	})
 
 	const mockParams: UpdateUserParams = {
 		firstName: customFaker.person.firstName(),
@@ -36,6 +56,7 @@ describe('useUpdateUser', () => {
 		await waitFor(() => {
 			expect(spyUpdateUser).toHaveBeenCalledWith(mockParams)
 			expect(mockOnSuccess).toHaveBeenCalled()
+			expect(mockUpdateUser).toHaveBeenCalled()
 		})
 	})
 
