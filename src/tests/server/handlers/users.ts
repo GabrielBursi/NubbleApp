@@ -57,4 +57,11 @@ export const usersHandlers: HttpHandler[] = [
 			})
 		}
 	),
+	http.put(`${Config.API_URL}${END_POINTS_API.USERS}`, ({ request }) => {
+		console.log('Handler', request.method, request.url)
+
+		if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+		return HttpResponse.json<UserAPIModel>(generateUserApi(), { status: 200 })
+	}),
 ]

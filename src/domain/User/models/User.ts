@@ -16,3 +16,7 @@ export interface UserModel {
 export interface UserDetailsModel extends UserModel {
 	isFollowing: boolean
 }
+
+export type UpdateUserParams = Partial<
+	Pick<UserModel, 'firstName' | 'lastName' | 'username'>
+>
