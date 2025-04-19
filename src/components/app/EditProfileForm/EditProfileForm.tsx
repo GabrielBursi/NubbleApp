@@ -10,10 +10,12 @@ import React, {
 import { TextInput as RNTextInput } from 'react-native'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitErrorHandler, useForm } from 'react-hook-form'
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 
 import { Box, ControlledFormInput } from '@/components'
 import { useAuthValueIsAvailable } from '@/domain/Auth'
+import { useUpdateUser } from '@/domain/User'
+import { useAppNavigation } from '@/hooks'
 import { AppQueryKeys } from '@/types/api'
 import { editProfileSchema, EditProfileSchema } from '@/types/form'
 
@@ -25,7 +27,7 @@ import {
 export const EditProfileForm = forwardRef<
 	EditProfileFormRef,
 	Readonly<EditProfileFormProps>
->(({ user = null, onChangeIsValid }, ref) => {
+>(({ user = null, onChangeIsValid, onChangeIsLoading }, ref) => {
 	const {
 		control,
 		watch,
@@ -42,6 +44,12 @@ export const EditProfileForm = forwardRef<
 		},
 		mode: 'onChange',
 		shouldUnregister: true,
+	})
+
+	const { navigationAppStack } = useAppNavigation()
+
+	const { isPending, update } = useUpdateUser({
+		onSuccess: navigationAppStack.goBack,
 	})
 
 	const userNameRef = useRef<RNTextInput>(null)
@@ -70,7 +78,10 @@ export const EditProfileForm = forwardRef<
 		enabled: usernameVerificationEnabled,
 	})
 
-	const onSubmit = useCallback(console.log, [])
+	const onSubmit: SubmitHandler<EditProfileSchema> = useCallback(
+		(formData) => update(formData),
+		[update]
+	)
 
 	const handleSubmitField = useCallback((refField: RefObject<RNTextInput>) => {
 		refField.current?.focus()
@@ -118,6 +129,10 @@ export const EditProfileForm = forwardRef<
 		user,
 		userNameValue,
 	])
+
+	useEffect(() => {
+		onChangeIsLoading?.(isPending)
+	}, [isPending, onChangeIsLoading])
 
 	useEffect(() => {
 		if (user) {

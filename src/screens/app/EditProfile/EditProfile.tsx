@@ -15,6 +15,7 @@ export const EditProfileScreen = ({
 	const { user } = useUserGetById(userId)
 
 	const [formIsValid, setFormIsValid] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const formRef = useRef<EditProfileFormRef>(null)
 
 	const submitForm = useCallback(() => {
@@ -27,8 +28,9 @@ export const EditProfileScreen = ({
 				<EditProfileHeader user={user} />
 				<EditProfileForm
 					ref={formRef}
-					onChangeIsValid={setFormIsValid}
 					user={user}
+					onChangeIsValid={setFormIsValid}
+					onChangeIsLoading={setIsLoading}
 				/>
 				<Box gap="s10" mt="s20">
 					<Button.Input
@@ -56,6 +58,7 @@ export const EditProfileScreen = ({
 					mt="s20"
 					onPress={submitForm}
 					disabled={!formIsValid}
+					loading={isLoading}
 				/>
 			</Box>
 		</ScreenTemplate>

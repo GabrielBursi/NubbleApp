@@ -1,4 +1,5 @@
 import {
+	act,
 	fireEvent,
 	screen,
 	userEvent,
@@ -6,7 +7,8 @@ import {
 } from '@testing-library/react-native'
 
 import { useAuthValueIsAvailable } from '@/domain/Auth/useCases/useAuthValueIsAvailable/useAuthValueIsAvailable'
-import { generateUser } from '@/tests/mocks'
+import { useUpdateUser } from '@/domain/User/useCases/useUpdateUser/useUpdateUser'
+import { generateUser, mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -16,13 +18,20 @@ type UseAuthValueIsAvailable = typeof useAuthValueIsAvailable
 type ReturnUseAuthValueIsAvailable = ReturnHookMocked<UseAuthValueIsAvailable>
 type MockUseAuthValueIsAvailable = HookMocked<UseAuthValueIsAvailable>
 
+type UseUpdateUser = typeof useUpdateUser
+type ReturnUseUpdateUser = ReturnHookMocked<UseUpdateUser>
+type MockUseUpdateUser = HookMocked<UseUpdateUser>
+
 jest.mock(
 	'@/domain/Auth/useCases/useAuthValueIsAvailable/useAuthValueIsAvailable'
 )
+jest.mock('@/domain/User/useCases/useUpdateUser/useUpdateUser')
 
 describe('<EditProfileForm/>', () => {
 	const mockUser = generateUser()
 	const mockOnChangeValid = jest.fn()
+	const mockOnChangeLoading = jest.fn()
+	const mockUpdateUser = jest.fn()
 	const mockRef = { current: { onSubmit: jest.fn() } }
 
 	const mockReturnUseAuthValueIsAvailable: ReturnUseAuthValueIsAvailable = {
@@ -31,9 +40,29 @@ describe('<EditProfileForm/>', () => {
 		isUnavailable: false,
 	}
 
+	const mockReturnUseUpdateUser: ReturnUseUpdateUser = {
+		isPending: false,
+		isSuccess: false,
+		user: null,
+		update: mockUpdateUser,
+	}
+
 	beforeEach(() => {
 		;(useAuthValueIsAvailable as MockUseAuthValueIsAvailable).mockReturnValue(
 			mockReturnUseAuthValueIsAvailable
+		)
+		;(useUpdateUser as MockUseUpdateUser).mockReturnValue(
+			mockReturnUseUpdateUser
+		)
+		;(useUpdateUser as MockUseUpdateUser).mockImplementation(
+			({ onSuccess }: { onSuccess: () => void }) => {
+				return {
+					...mockReturnUseUpdateUser,
+					update: mockUpdateUser.mockImplementation(() => {
+						onSuccess()
+					}),
+				}
+			}
 		)
 	})
 
@@ -117,6 +146,22 @@ describe('<EditProfileForm/>', () => {
 		})
 	})
 
+	it('should call onChangeIsLoading', () => {
+		;(useUpdateUser as MockUseUpdateUser).mockReturnValue({
+			...mockReturnUseUpdateUser,
+			isPending: true,
+		})
+
+		customRender(
+			<EditProfileForm
+				user={mockUser}
+				onChangeIsLoading={mockOnChangeLoading}
+			/>
+		)
+
+		expect(mockOnChangeLoading).toHaveBeenCalledWith(true)
+	})
+
 	it('should focus on fields correctly', async () => {
 		customRender(<EditProfileForm user={mockUser} />)
 
@@ -183,5 +228,43 @@ describe('<EditProfileForm/>', () => {
 		await userEvent.type(fieldLastName, 'native')
 
 		expect(mockOnChangeValid).toHaveBeenCalledWith(true)
+	})
+
+	it('should update user on submit', async () => {
+		customRender(
+			<EditProfileForm
+				user={mockUser}
+				ref={mockRef}
+				onChangeIsValid={mockOnChangeValid}
+				onChangeIsLoading={mockOnChangeLoading}
+			/>
+		)
+
+		const fieldUserName = screen.getByPlaceholderText('@', { exact: true })
+		const fieldName = screen.getByPlaceholderText('Digite seu nome', {
+			exact: true,
+		})
+		const fieldLastName = screen.getByPlaceholderText('Digite seu sobrenome', {
+			exact: true,
+		})
+
+		await userEvent.clear(fieldUserName)
+		await userEvent.clear(fieldName)
+		await userEvent.clear(fieldLastName)
+
+		await userEvent.type(fieldUserName, 'user.name_123')
+		await userEvent.type(fieldName, 'react')
+		await userEvent.type(fieldLastName, 'native')
+
+		await act(() => {
+			mockRef.current.onSubmit()
+		})
+
+		expect(mockUpdateUser).toHaveBeenCalledWith({
+			firstName: 'React',
+			lastName: 'Native',
+			username: 'user.name_123',
+		})
+		expect(mockUseNavigation.goBack).toHaveBeenCalled()
 	})
 })

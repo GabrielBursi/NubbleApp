@@ -8,4 +8,5 @@ export type EditProfileFormProps = {
 	/** @default null */
 	user?: UserModel | null
 	onChangeIsValid?: (isValid: boolean) => void
+	onChangeIsLoading?: (loading: boolean) => void
 }
