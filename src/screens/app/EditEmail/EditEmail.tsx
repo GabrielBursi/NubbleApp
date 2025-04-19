@@ -5,7 +5,7 @@ import { ScreenTemplate } from '@/templates'
 
 export const EditEmailScreen = () => {
 	return (
-		<ScreenTemplate>
+		<ScreenTemplate canGoBack>
 			<Text>EditEmail</Text>
 		</ScreenTemplate>
 	)

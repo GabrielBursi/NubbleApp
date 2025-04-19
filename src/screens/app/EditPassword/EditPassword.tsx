@@ -5,7 +5,7 @@ import { ScreenTemplate } from '@/templates'
 
 export const EditPasswordScreen = () => {
 	return (
-		<ScreenTemplate>
+		<ScreenTemplate canGoBack>
 			<Text>EditPassword</Text>
 		</ScreenTemplate>
 	)
