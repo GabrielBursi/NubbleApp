@@ -30,34 +30,34 @@ export const EditProfileScreen = ({
 					onChangeIsValid={setFormIsValid}
 					user={user}
 				/>
-			</Box>
-			<Box gap="s10">
-				<Button.Input
-					label="Email"
-					value={user?.email ?? ''}
-					mb="s16"
-					onPress={() =>
-						navigation.navigate('EditEmailScreen', {
-							userId: userId,
-						})
-					}
+				<Box gap="s10" mt="s20">
+					<Button.Input
+						label="Email"
+						value={user?.email ?? ''}
+						mb="s16"
+						onPress={() =>
+							navigation.navigate('EditEmailScreen', {
+								userId: userId,
+							})
+						}
+					/>
+					<Button.Input
+						label="Senha"
+						value="•••••••"
+						onPress={() =>
+							navigation.navigate('EditPasswordScreen', {
+								userId: userId,
+							})
+						}
+					/>
+				</Box>
+				<Button
+					title="Salvar alterações"
+					mt="s20"
+					onPress={submitForm}
+					disabled={!formIsValid}
 				/>
-				<Button.Input
-					label="Senha"
-					value="•••••••"
-					onPress={() =>
-						navigation.navigate('EditPasswordScreen', {
-							userId: userId,
-						})
-					}
-				/>
 			</Box>
-			<Button
-				title="Salvar alterações"
-				mt="s40"
-				onPress={submitForm}
-				disabled={!formIsValid}
-			/>
 		</ScreenTemplate>
 	)
 }
