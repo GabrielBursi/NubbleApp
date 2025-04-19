@@ -1,16 +1,26 @@
+import { useMemo } from 'react'
+
 import { useQuery } from '@tanstack/react-query'
 
+import { useAuthCredentials } from '@/services/auth'
 import { AppQueryKeys } from '@/types/api'
 
 import { UserApi } from '../../api'
 
 export const useUserGetById = (userId?: number) => {
+	const authCredentials = useAuthCredentials()
+
+	const isCurrentUser = useMemo(
+		() => authCredentials?.user.id === userId,
+		[authCredentials?.user.id, userId]
+	)
+
 	const { data, refetch, error, isFetching } = useQuery({
 		queryKey: [AppQueryKeys.USER_BY_ID, userId],
 		queryFn: () => UserApi.GetById(userId!),
-		staleTime: 1000 * 30,
+		staleTime: isCurrentUser ? Infinity : 1000 * 30,
 		gcTime: 1000 * 15,
-		enabled: !!userId,
+		enabled: !!userId && !!authCredentials,
 	})
 
 	return {
@@ -18,5 +28,6 @@ export const useUserGetById = (userId?: number) => {
 		isLoading: isFetching,
 		error,
 		refetch,
+		isCurrentUser,
 	} as const
 }
