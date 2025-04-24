@@ -62,6 +62,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
 		[]
 	)
 
+	// TODO:REFACTOR
 	const handleSubmitEditingEmailInput = useCallback(() => {
 		passwordRef.current?.focus()
 	}, [])

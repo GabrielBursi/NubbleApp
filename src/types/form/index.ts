@@ -1,4 +1,4 @@
 export * from './editProfile'
-export * from './forgotPassword'
+export * from './password'
 export * from './login'
 export * from './signup'
