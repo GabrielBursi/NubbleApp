@@ -3,6 +3,7 @@ import { RefreshToken } from './RefreshToken'
 import { SignIn } from './SignIn'
 import { SignOut } from './SignOut'
 import { SignUp } from './SignUp'
+import { UpdatePassword } from './UpdatePassword'
 import { VerifyEmail } from './VerifyEmail'
 import { VerifyUsername } from './VerifyUsername'
 
@@ -12,6 +13,7 @@ export const AuthServices = {
 	SignIn,
 	SignOut,
 	SignUp,
+	UpdatePassword,
 	VerifyEmail,
 	VerifyUsername,
 } as const

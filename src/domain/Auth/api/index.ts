@@ -1,3 +1,4 @@
+import { ChangePassword } from './ChangePassword'
 import { IsEmailAvailable } from './IsEmailAvailable'
 import { IsUserNameAvailable } from './IsUserNameAvailable'
 import { Login } from './Login'
@@ -7,6 +8,7 @@ import { RequestNewPassword } from './RequestNewPassword'
 import { SignUp } from './SignUp'
 
 export const AuthApi = {
+	ChangePassword,
 	IsEmailAvailable,
 	IsUserNameAvailable,
 	SignUp,

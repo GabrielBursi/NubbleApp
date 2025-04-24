@@ -10,4 +10,5 @@ export enum END_POINTS_API {
 	AUTH_FORGOT_PASSWORD = '/auth/forgot-password',
 	AUTH_REFRESH_TOKEN = '/auth/refresh-token',
 	POST_REACTION = '/user/reactions',
+	AUTH_UPDATE_PASSWORD = 'auth/profile/edit-password',
 }
