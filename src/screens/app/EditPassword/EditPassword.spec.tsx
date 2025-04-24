@@ -6,6 +6,8 @@ import {
 } from '@testing-library/react-native'
 
 import { useAuthUpdatePassword } from '@/domain/Auth/useCases/useAuthUpdatePassword/useAuthUpdatePassword'
+import { useToastService } from '@/services/toast'
+import { generateUser, mockUseNavigation } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -15,10 +17,17 @@ type UseAuthUpdatePassword = typeof useAuthUpdatePassword
 type ReturnUseAuthUpdatePassword = ReturnHookMocked<UseAuthUpdatePassword>
 type MockedUseAuthUpdatePassword = HookMocked<UseAuthUpdatePassword>
 
+type UseToastService = typeof useToastService
+type ReturnUseToastService = ReturnHookMocked<UseToastService>
+type MockedUseToastService = HookMocked<UseToastService>
+
 jest.mock('@/domain/Auth/useCases/useAuthUpdatePassword/useAuthUpdatePassword')
+jest.mock('@/services/toast')
 
 describe('<EditPasswordScreen/>', () => {
 	const mockUpdatePassword = jest.fn()
+	const mockShowToast = jest.fn()
+	const mockUser = generateUser()
 
 	const returnUseAuthUpdatePassword: ReturnUseAuthUpdatePassword = {
 		isLoading: false,
@@ -26,14 +35,41 @@ describe('<EditPasswordScreen/>', () => {
 		updatePassword: mockUpdatePassword,
 	}
 
+	const returnUseToastService: ReturnUseToastService = {
+		showToast: mockShowToast,
+	}
+
 	beforeEach(() => {
 		;(useAuthUpdatePassword as MockedUseAuthUpdatePassword).mockReturnValue(
 			returnUseAuthUpdatePassword
 		)
+		;(useAuthUpdatePassword as MockedUseAuthUpdatePassword).mockImplementation(
+			({ onSuccess }: { onSuccess: () => void }) => {
+				return {
+					...returnUseAuthUpdatePassword,
+					updatePassword: mockUpdatePassword.mockImplementation(() => {
+						onSuccess()
+					}),
+				}
+			}
+		)
+		;(useToastService as MockedUseToastService).mockReturnValue(
+			returnUseToastService
+		)
 	})
 
 	it('should render the screen correctly', () => {
-		customRender(<EditPasswordScreen />)
+		customRender(
+			<EditPasswordScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{
+					key: 'EditPasswordScreen',
+					name: 'EditPasswordScreen',
+					params: { userId: mockUser.id },
+				}}
+			/>
+		)
 
 		expect(screen.getByLabelText('Senha Atual', { exact: true })).toBeEnabled()
 		expect(screen.getByLabelText('Nova Senha', { exact: true })).toBeEnabled()
@@ -47,7 +83,17 @@ describe('<EditPasswordScreen/>', () => {
 	})
 
 	it('should update the password', async () => {
-		customRender(<EditPasswordScreen />)
+		customRender(
+			<EditPasswordScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{
+					key: 'EditPasswordScreen',
+					name: 'EditPasswordScreen',
+					params: { userId: mockUser.id },
+				}}
+			/>
+		)
 
 		await userEvent.type(
 			screen.getByPlaceholderText('Digite sua senha atual', { exact: true }),
@@ -72,10 +118,22 @@ describe('<EditPasswordScreen/>', () => {
 			currentPassword: '12345678',
 			newPassword: 'jest1234',
 		})
+		expect(mockShowToast).toHaveBeenCalled()
+		expect(mockUseNavigation.goBack).toHaveBeenCalled()
 	})
 
 	it('should validate the form', async () => {
-		customRender(<EditPasswordScreen />)
+		customRender(
+			<EditPasswordScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{
+					key: 'EditPasswordScreen',
+					name: 'EditPasswordScreen',
+					params: { userId: mockUser.id },
+				}}
+			/>
+		)
 
 		const confirmPassword = screen.getByPlaceholderText('Confirme sua senha', {
 			exact: true,
@@ -99,7 +157,17 @@ describe('<EditPasswordScreen/>', () => {
 	})
 
 	it('should focus on fields correctly', async () => {
-		customRender(<EditPasswordScreen />)
+		customRender(
+			<EditPasswordScreen
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+				navigation={mockUseNavigation as any}
+				route={{
+					key: 'EditPasswordScreen',
+					name: 'EditPasswordScreen',
+					params: { userId: mockUser.id },
+				}}
+			/>
+		)
 
 		const fieldCurrentPassword = screen.getByLabelText('Senha Atual', {
 			exact: true,

@@ -6,11 +6,20 @@ import { SubmitErrorHandler, useForm } from 'react-hook-form'
 
 import { Box, Button, ControlledFormInput } from '@/components'
 import { useAuthUpdatePassword } from '@/domain/Auth'
+import { useToastService } from '@/services/toast'
 import { ScreenTemplate } from '@/templates'
 import { EditPasswordSchema, editPasswordSchema } from '@/types/form'
+import { EditPasswordScreenProps } from '@/types/screens'
 
-export const EditPasswordScreen = () => {
-	const { isLoading, updatePassword } = useAuthUpdatePassword()
+export const EditPasswordScreen = ({ navigation }: EditPasswordScreenProps) => {
+	const { showToast } = useToastService()
+
+	const { isLoading, updatePassword } = useAuthUpdatePassword({
+		onSuccess: (message) => {
+			showToast({ message, type: 'success', position: 'bottom' })
+			navigation.goBack()
+		},
+	})
 
 	const {
 		control,
