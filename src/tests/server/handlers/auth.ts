@@ -8,6 +8,7 @@ import {
 import { UserAPIModel } from '@/domain/User'
 import { mockAuthApi, mockFieldIsAvailableApi } from '@/tests/mocks/mockAuth'
 import { mockUserApi } from '@/tests/mocks/mockUser'
+import { customFaker } from '@/tests/utils'
 import { END_POINTS_API } from '@/types/api'
 
 export const authHandlers: HttpHandler[] = [
@@ -85,6 +86,21 @@ export const authHandlers: HttpHandler[] = [
 			return HttpResponse.json<AuthCredentialsAPIModel>(mockAuthApi, {
 				status: 200,
 			})
+		}
+	),
+	http.post(
+		`${Config.API_URL}${END_POINTS_API.AUTH_UPDATE_PASSWORD}`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<{ message: string }>(
+				{ message: customFaker.lorem.sentence() },
+				{
+					status: 200,
+				}
+			)
 		}
 	),
 ]
