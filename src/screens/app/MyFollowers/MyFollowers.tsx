@@ -5,7 +5,7 @@ import { ScreenTemplate } from '@/templates'
 
 export const MyFollowersScreen = () => {
 	return (
-		<ScreenTemplate>
+		<ScreenTemplate canGoBack>
 			<Text>MyFollowers</Text>
 		</ScreenTemplate>
 	)

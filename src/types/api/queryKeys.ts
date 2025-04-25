@@ -8,4 +8,6 @@ export enum AppQueryKeys {
 	CAMERA_ROLL = 'CameraRollList',
 	FAVORITES = 'favorite',
 	USER_BY_ID = 'user_by_id',
+	MY_FOLLOWING_LIST = 'MyFollowingList',
+	MY_FOLLOWERS_LIST = 'MyFollowersList',
 }
