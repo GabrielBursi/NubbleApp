@@ -21,4 +21,6 @@ export type RootAppStackRouterParamList = {
 	EditProfileScreen: { userId: number }
 	EditEmailScreen: { userId: number }
 	EditPasswordScreen: { userId: number }
+	MyFollowingScreen: undefined
+	MyFollowersScreen: undefined
 }

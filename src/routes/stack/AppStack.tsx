@@ -13,6 +13,8 @@ import {
 	EditProfileScreen,
 	EditEmailScreen,
 	EditPasswordScreen,
+	MyFollowingScreen,
+	MyFollowersScreen,
 } from '@/screens'
 import { RootAppStackRouterParamList } from '@/types/routes'
 
@@ -45,6 +47,8 @@ export const AppStackRouter = ({
 			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
 			<Stack.Screen name="EditEmailScreen" component={EditEmailScreen} />
 			<Stack.Screen name="EditPasswordScreen" component={EditPasswordScreen} />
+			<Stack.Screen name="MyFollowingScreen" component={MyFollowingScreen} />
+			<Stack.Screen name="MyFollowersScreen" component={MyFollowersScreen} />
 		</Stack.Navigator>
 	)
 }
