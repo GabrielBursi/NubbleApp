@@ -11,6 +11,7 @@ const meta: Meta<typeof ProfileMetadata> = {
 		followersCount: customFaker.number.int({ min: 1 }),
 		followingCount: customFaker.number.int({ min: 1 }),
 		postsCount: customFaker.number.int({ min: 1 }),
+		isMyProfile: false,
 	},
 	argTypes: {
 		followersCount: {

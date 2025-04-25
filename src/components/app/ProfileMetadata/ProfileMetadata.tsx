@@ -1,20 +1,23 @@
 import React, { memo, useMemo } from 'react'
 
-import { Box, Text } from '@/components'
+import { Box, PressableBox, Text } from '@/components'
+import { useAppNavigation } from '@/hooks'
 
 import { ProfileMetadataProps } from './ProfileMetadata.types'
 
 type ItemType = {
 	value: number
 	label: string
+	onPress?: () => void
+	isMyProfile?: boolean
 }
 
-const Item = ({ value, label }: ItemType) => {
+const Item = ({ value, label, isMyProfile, onPress }: ItemType) => {
 	return (
-		<Box key={label} alignItems="center">
+		<PressableBox onPress={onPress} alignItems="center" disabled={!isMyProfile}>
 			<Text preset="headingSmall">{value.toString()}</Text>
 			<Text preset="paragraphSmall">{label}</Text>
-		</Box>
+		</PressableBox>
 	)
 }
 
@@ -22,14 +25,33 @@ const ProfileMetadataMemoized = ({
 	followersCount = 0,
 	followingCount = 0,
 	postsCount = 0,
+	isMyProfile = false,
 }: Readonly<ProfileMetadataProps>) => {
+	const { navigationAppStack } = useAppNavigation()
+
 	const items: ItemType[] = useMemo(
 		() => [
-			{ label: 'Publicações', value: postsCount },
-			{ label: 'Seguidores', value: followersCount },
-			{ label: 'Seguindo', value: followingCount },
+			{ label: 'Publicações', value: postsCount, isMyProfile },
+			{
+				label: 'Seguidores',
+				value: followersCount,
+				isMyProfile,
+				onPress: () => navigationAppStack.navigate('MyFollowersScreen'),
+			},
+			{
+				label: 'Seguindo',
+				value: followingCount,
+				isMyProfile,
+				onPress: () => navigationAppStack.navigate('MyFollowingScreen'),
+			},
 		],
-		[followersCount, followingCount, postsCount]
+		[
+			followersCount,
+			followingCount,
+			isMyProfile,
+			navigationAppStack,
+			postsCount,
+		]
 	)
 
 	return (

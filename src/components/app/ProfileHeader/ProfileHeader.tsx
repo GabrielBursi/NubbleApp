@@ -37,6 +37,7 @@ const ProfileHeaderMemoized = ({
 					followersCount={user.meta.followersCount}
 					followingCount={user.meta.followingCount}
 					postsCount={postsCount}
+					isMyProfile={isMyProfile}
 				/>
 				{isMyProfile && (
 					<Box position="absolute" alignSelf="flex-end">

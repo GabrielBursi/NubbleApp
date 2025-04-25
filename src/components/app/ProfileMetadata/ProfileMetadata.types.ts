@@ -5,4 +5,6 @@ export type ProfileMetadataProps = {
 	followingCount?: number
 	/** @default 0 */
 	postsCount?: number
+	/** @default false */
+	isMyProfile?: boolean
 }
