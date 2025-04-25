@@ -11,4 +11,5 @@ export enum END_POINTS_API {
 	AUTH_REFRESH_TOKEN = '/auth/refresh-token',
 	POST_REACTION = '/user/reactions',
 	AUTH_UPDATE_PASSWORD = '/auth/profile/edit-password',
+	FOLLOW = '/user/follow',
 }

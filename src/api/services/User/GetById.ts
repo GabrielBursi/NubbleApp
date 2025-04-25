@@ -1,8 +1,10 @@
 import { NubbleApi } from '@/api/config'
-import { UserAPIModel } from '@/domain/User'
+import { UserAPIModel, UserModel } from '@/domain/User'
 import { END_POINTS_API } from '@/types/api'
 
-export const GetById = async (userId: string): Promise<UserAPIModel> => {
+export const GetById = async (
+	userId: UserModel['id']
+): Promise<UserAPIModel> => {
 	const response = await NubbleApi<UserAPIModel>(
 		`${END_POINTS_API.USERS}/${userId}`
 	)

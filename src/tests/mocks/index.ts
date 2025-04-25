@@ -1,6 +1,7 @@
 export * from './mockAuth'
 export * from './mockCamera'
 export * from './mockComments'
+export * from './mockFollow'
 export * from './mockImages'
 export * from './mockMetaPagination'
 export * from './mockPostReaction'

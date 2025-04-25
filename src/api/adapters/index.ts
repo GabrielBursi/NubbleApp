@@ -1,5 +1,6 @@
 export * from './Auth'
 export * from './Comment'
+export * from './Follow'
 export * from './Pagination'
 export * from './Post'
 export * from './PostReaction'
