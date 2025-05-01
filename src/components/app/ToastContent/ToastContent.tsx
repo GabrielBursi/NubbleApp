@@ -35,6 +35,17 @@ export const ToastContent = (toast: Readonly<ToastContentProps>) => {
 			<Text style={{ flexShrink: 1 }} ml="s16" preset="paragraphMedium" bold>
 				{toast.message}
 			</Text>
+			{toast?.action?.onPress && (
+				<Text
+					ml="s8"
+					color="iconMarked"
+					preset="paragraphMedium"
+					bold
+					onPress={toast.action.onPress}
+				>
+					{toast.action.title}
+				</Text>
+			)}
 		</Box>
 	)
 }
