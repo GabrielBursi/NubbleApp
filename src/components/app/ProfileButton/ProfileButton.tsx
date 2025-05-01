@@ -2,6 +2,7 @@ import React, { memo, useCallback } from 'react'
 
 import { Button } from '@/components'
 import { ButtonProps } from '@/components/ui/Button/Button.types'
+import { useFollowUser } from '@/domain/Follow'
 import { useAppNavigation } from '@/hooks'
 
 import {
@@ -47,13 +48,16 @@ const ProfileButtonMemoized = ({
 	userId,
 }: Readonly<ProfileButtonProps>) => {
 	const { navigate } = useAppNavigation()
+	const { followUser, isLoading } = useFollowUser()
 
 	const variant = getVariant({ isFollowing, isMyProfile })
 	const buttonProps = buttonVariants[variant]
 
 	const handleOnPress = useCallback(() => {
+		if (isLoading) return
 		if (isMyProfile) navigate.toEditProfile(userId)
-	}, [isMyProfile, navigate, userId])
+		if (!isFollowing) followUser(userId)
+	}, [followUser, isFollowing, isLoading, isMyProfile, navigate, userId])
 
 	return (
 		<Button marginVertical="s24" onPress={handleOnPress} {...buttonProps} />
