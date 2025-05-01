@@ -14,6 +14,8 @@ export const MyFollowingScreen = () => {
 				accessibilityLabel="seguindo"
 				estimatedItemSize={80}
 				keyExtractor={({ id }, index) => `${id}-${index}`}
+				errorMessage="Ocorreu um erro ao listar os usuários"
+				emptyMessage="Você ainda não está seguindo ninguém"
 				renderItem={({ item: user }) => (
 					<ProfileUsername
 						{...user}
