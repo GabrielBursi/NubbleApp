@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react-native'
 
 import { useToast, useToastService } from '@/services/toast/useToast'
+import { generateToast } from '@/tests/mocks'
 import { customRender } from '@/tests/utils'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
@@ -19,7 +20,6 @@ jest.mock('@/services/toast/useToast')
 describe('<Toast/>', () => {
 	const mockHideToast = jest.fn()
 	const mockShowToast = jest.fn()
-	const mockActionToast = jest.fn()
 
 	const mockInicialUseToast: ReturnUseToast = null
 	const mockInicialUseToastService: ReturnUseToastService = {
@@ -42,30 +42,22 @@ describe('<Toast/>', () => {
 	})
 
 	it('should render the toast correctly', () => {
-		;(useToast as MockUseToast).mockReturnValue({
-			type: 'success',
-			message: 'jest',
-			action: {
-				title: 'jest',
-				onPress: mockActionToast,
-			},
-		})
+		const mockToast = generateToast()
+		;(useToast as MockUseToast).mockReturnValue(mockToast)
 
 		customRender(<Toast />)
 
-		expect(screen.getByRole('text', { name: /jest/i })).toBeOnTheScreen()
+		expect(
+			screen.getByRole('text', { name: mockToast.message })
+		).toBeOnTheScreen()
 		expect(screen.getByRole('img')).toBeOnTheScreen()
 	})
 
 	it('should hide the toast correctly', () => {
+		const mockToast = generateToast()
 		;(useToast as MockUseToast).mockReturnValue({
-			type: 'success',
-			message: 'jest',
+			...mockToast,
 			duration: 2000,
-			action: {
-				title: 'jest',
-				onPress: mockActionToast,
-			},
 		})
 
 		customRender(<Toast />)
