@@ -52,6 +52,7 @@ export const useFollowUser = (options?: MutationOptions<UserModel>) => {
 						if (!old) return old
 						return {
 							...old,
+							isFollowing: true,
 							meta: {
 								...old.meta,
 								followersCount: old.meta.followersCount + 1,
