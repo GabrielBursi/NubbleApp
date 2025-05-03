@@ -57,7 +57,7 @@ describe('<Toast/>', () => {
 		const mockToast = generateToast()
 		;(useToast as MockUseToast).mockReturnValue({
 			...mockToast,
-			duration: 2000,
+			duration: undefined,
 		})
 
 		customRender(<Toast />)
