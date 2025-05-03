@@ -48,16 +48,23 @@ const ProfileButtonMemoized = ({
 	userId,
 }: Readonly<ProfileButtonProps>) => {
 	const { navigate } = useAppNavigation()
-	const { followUser, isLoading } = useFollowUser()
+	const { followUser, isPendingFollowUser } = useFollowUser(userId)
 
 	const variant = getVariant({ isFollowing, isMyProfile })
 	const buttonProps = buttonVariants[variant]
 
 	const handleOnPress = useCallback(() => {
-		if (isLoading) return
+		if (isPendingFollowUser) return
 		if (isMyProfile) navigate.toEditProfile(userId)
-		if (!isFollowing) followUser(userId)
-	}, [followUser, isFollowing, isLoading, isMyProfile, navigate, userId])
+		if (!isFollowing) followUser()
+	}, [
+		followUser,
+		isFollowing,
+		isPendingFollowUser,
+		isMyProfile,
+		navigate,
+		userId,
+	])
 
 	return (
 		<Button marginVertical="s24" onPress={handleOnPress} {...buttonProps} />

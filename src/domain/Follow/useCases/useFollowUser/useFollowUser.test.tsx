@@ -1,11 +1,10 @@
-import { QueryKey } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react-native'
 
-import { UserDetailsModel } from '@/domain/User'
+import { UserDetailsModel, UserModel } from '@/domain/User'
+import { useFollowOptimisticUpdate } from '@/hooks'
 import { TestProvider } from '@/providers'
 import { useAuthCredentials } from '@/services/auth'
 import { generateUserDetails } from '@/tests/mocks'
-import { AppQueryKeys } from '@/types/api'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { FollowApi } from '../../api'
@@ -16,35 +15,13 @@ type UseAuthCredentials = typeof useAuthCredentials
 type ReturnUseAuthCredentials = ReturnHookMocked<UseAuthCredentials>
 type MockUseAuthCredentials = HookMocked<UseAuthCredentials>
 
-type MockSetQueryData = jest.MockedFunction<
-	(
-		key: QueryKey,
-		updater: (
-			oldData: UserDetailsModel | undefined
-		) => UserDetailsModel | undefined
-	) => void
->
+type UseFollowOptimisticUpdate = typeof useFollowOptimisticUpdate
+type ReturnUseFollowOptimisticUpdate =
+	ReturnHookMocked<UseFollowOptimisticUpdate>
+type MockUseFollowOptimisticUpdate = HookMocked<UseFollowOptimisticUpdate>
 
-const mockSetQueryData = jest.fn()
-const mockCancelQueries = jest.fn()
-const mockInvalidateQueries = jest.fn()
-const mockGetQueryData = jest.fn()
-
-const mockReturnUseQueryClient = {
-	setQueryData: mockSetQueryData,
-	invalidateQueries: mockInvalidateQueries,
-	cancelQueries: mockCancelQueries,
-	getQueryData: mockGetQueryData,
-}
-
+jest.mock('@/hooks')
 jest.mock('@/services/auth')
-jest.mock<{ useQueryClient: () => typeof mockReturnUseQueryClient }>(
-	'@tanstack/react-query',
-	() => ({
-		...jest.requireActual('@tanstack/react-query'),
-		useQueryClient: () => mockReturnUseQueryClient,
-	})
-)
 
 describe('useFollowUser', () => {
 	const mockUser = generateUserDetails()
@@ -55,228 +32,366 @@ describe('useFollowUser', () => {
 			followersCount: 5,
 			followingCount: 10,
 		},
-	}
-	const mockUserDetails: UserDetailsModel = {
-		...mockUser,
-		meta: {
-			followersCount: 3,
-			followingCount: 7,
-		},
+		isFollowing: false,
 	}
 
-	const mockOnSuccess = jest.fn()
-	const mockOnError = jest.fn()
-	const spyFollowUser = jest.spyOn(FollowApi, 'FollowUser')
+	const mockCancelFollowRequests = jest.fn()
+	const mockApplyFollowOptimisticUpdate = jest.fn()
+	const mockSnapshotFollowData = jest.fn()
+	const mockRestoreFollowData = jest.fn()
+	const mockRefreshFollowData = jest.fn()
+
+	const mockOnSuccessFollow = jest.fn()
+	const mockOnErrorFollow = jest.fn()
+	const mockOnSuccessRemove = jest.fn()
+	const mockOnErrorRemove = jest.fn()
 
 	const mockAuthCredentials: ReturnUseAuthCredentials = {
 		user: mockUser,
+	}
+
+	const mockOptimisticSnapshotReturn = {
+		previousFollowingUser: mockFollowingUserDetails,
+		previousFollowerUser: mockUser,
+	}
+
+	const mockFollowOptimisticUpdateReturn: ReturnUseFollowOptimisticUpdate = {
+		cancelFollowRequests: mockCancelFollowRequests,
+		applyFollowOptimisticUpdate: mockApplyFollowOptimisticUpdate,
+		snapshotFollowData: mockSnapshotFollowData,
+		restoreFollowData: mockRestoreFollowData,
+		refreshFollowData: mockRefreshFollowData,
 	}
 
 	beforeEach(() => {
 		;(useAuthCredentials as MockUseAuthCredentials).mockReturnValue(
 			mockAuthCredentials
 		)
-		mockGetQueryData.mockImplementation((key: QueryKey) => {
-			if (
-				key[0] === AppQueryKeys.USER_BY_ID &&
-				key[1] === mockFollowingUser.id
-			) {
-				return mockFollowingUserDetails
-			}
-			if (key[0] === AppQueryKeys.USER_BY_ID && key[1] === mockUser.id) {
-				return mockUserDetails
-			}
-			return undefined
-		})
-		spyFollowUser.mockResolvedValue(mockFollowingUser)
+		;(
+			useFollowOptimisticUpdate as MockUseFollowOptimisticUpdate
+		).mockReturnValue(mockFollowOptimisticUpdateReturn)
+		mockSnapshotFollowData.mockReturnValue(mockOptimisticSnapshotReturn)
+
+		jest.spyOn(FollowApi, 'FollowUser').mockResolvedValue(mockFollowingUser)
+		jest.spyOn(FollowApi, 'RemoveFollow').mockResolvedValue(undefined)
 	})
 
 	it('should follow user successfully', async () => {
 		const { result } = renderHook(
-			() => useFollowUser({ onSuccess: mockOnSuccess }),
-			{ wrapper: TestProvider }
-		)
-
-		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
-		})
-
-		await waitFor(() => {
-			expect(spyFollowUser).toHaveBeenCalledWith(mockFollowingUser.id)
-			expect(mockCancelQueries).toHaveBeenCalledTimes(2)
-			expect(mockSetQueryData).toHaveBeenCalledWith(
-				[AppQueryKeys.USER_BY_ID, mockFollowingUser.id],
-				expect.any(Function)
-			)
-			expect(mockSetQueryData).toHaveBeenCalledWith(
-				[AppQueryKeys.USER_BY_ID, mockUser.id],
-				expect.any(Function)
-			)
-			expect(mockOnSuccess).toHaveBeenCalled()
-			expect(mockInvalidateQueries).toHaveBeenCalledTimes(3)
-			expect(result.current.followingUser).toEqual(mockFollowingUser)
-		})
-	})
-
-	it('should update user counts optimistically', async () => {
-		const { result } = renderHook(() => useFollowUser(), {
-			wrapper: TestProvider,
-		})
-
-		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
-		})
-
-		const followingUserUpdater = (
-			mockSetQueryData as MockSetQueryData
-		).mock.calls.find(
-			(call) =>
-				call[0][0] === AppQueryKeys.USER_BY_ID &&
-				call[0][1] === mockFollowingUser.id
-		)?.[1]
-
-		const followerUserUpdater = (
-			mockSetQueryData as MockSetQueryData
-		).mock.calls.find(
-			(call) =>
-				call[0][0] === AppQueryKeys.USER_BY_ID && call[0][1] === mockUser.id
-		)?.[1]
-
-		expect(followingUserUpdater).toBeDefined()
-		expect(followerUserUpdater).toBeDefined()
-
-		const updatedFollowingUser = followingUserUpdater!(mockFollowingUserDetails)
-		const updatedFollowerUser = followerUserUpdater!(mockUserDetails)
-
-		expect(updatedFollowingUser?.meta.followersCount).toBe(
-			mockFollowingUserDetails.meta.followersCount + 1
-		)
-		expect(updatedFollowerUser?.meta.followingCount).toBe(
-			mockUserDetails.meta.followingCount + 1
-		)
-	})
-
-	it('should handle error and revert optimistic updates', async () => {
-		spyFollowUser.mockRejectedValue(new Error('Network error'))
-
-		const { result } = renderHook(
-			() => useFollowUser({ onError: mockOnError }),
-			{ wrapper: TestProvider }
-		)
-
-		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
-		})
-
-		await waitFor(() => {
-			expect(mockOnError).toHaveBeenCalledWith('erro ao seguir usuário')
-			expect(mockSetQueryData).toHaveBeenCalledWith(
-				[AppQueryKeys.USER_BY_ID, mockFollowingUser.id],
-				expect.any(Object)
-			)
-			expect(mockSetQueryData).toHaveBeenCalledWith(
-				[AppQueryKeys.USER_BY_ID, mockUser.id],
-				expect.any(Object)
-			)
-			expect(result.current.followingUser).toBeNull()
-		})
-	})
-
-	it('should handle error with custom error message', async () => {
-		spyFollowUser.mockRejectedValue(new Error('Network error'))
-
-		const { result } = renderHook(
 			() =>
-				useFollowUser({
-					onError: mockOnError,
-					errorMessage: 'custom error message',
+				useFollowUser(mockFollowingUser.id, {
+					followUserOptions: { onSuccess: mockOnSuccessFollow },
 				}),
 			{ wrapper: TestProvider }
 		)
 
 		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
+			result.current.followUser()
 		})
 
 		await waitFor(() => {
-			expect(mockOnError).toHaveBeenCalledWith('custom error message')
+			expect(FollowApi.FollowUser).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(mockCancelFollowRequests).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(mockSnapshotFollowData).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(mockApplyFollowOptimisticUpdate).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+				isFollowing: true,
+			})
+			expect(mockOnSuccessFollow).toHaveBeenCalled()
+			expect(mockRefreshFollowData).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(result.current.followingUser).toBeTruthy()
+			expect(result.current.isSuccessFollowUser).toBe(true)
 		})
 	})
 
-	it('should invalidate queries after successful follow', async () => {
-		const { result } = renderHook(() => useFollowUser(), {
-			wrapper: TestProvider,
-		})
+	it('should handle error when following user', async () => {
+		const error = new Error('Network error')
+		jest.spyOn(FollowApi, 'FollowUser').mockRejectedValueOnce(error)
+
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					followUserOptions: {
+						onError: mockOnErrorFollow,
+						errorMessage: 'custom follow error',
+					},
+				}),
+			{ wrapper: TestProvider }
+		)
 
 		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
+			result.current.followUser()
 		})
 
 		await waitFor(() => {
-			expect(mockInvalidateQueries).toHaveBeenCalledWith({
-				queryKey: [AppQueryKeys.MY_FOLLOWING_LIST],
+			expect(mockOnErrorFollow).toHaveBeenCalledWith('custom follow error')
+			expect(mockCancelFollowRequests).toHaveBeenCalledTimes(2)
+			expect(mockRestoreFollowData).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
 			})
-			expect(mockInvalidateQueries).toHaveBeenCalledWith({
-				queryKey: [AppQueryKeys.USER_BY_ID, mockFollowingUser.id],
-			})
-			expect(mockInvalidateQueries).toHaveBeenCalledWith({
-				queryKey: [AppQueryKeys.USER_BY_ID, mockUser.id],
-			})
+			expect(result.current.errorFollowUser).toBeDefined()
+			expect(result.current.followingUser).toBeNull()
 		})
 	})
 
-	it('should not update data if user is undefined', async () => {
-		mockGetQueryData.mockReturnValue(undefined)
+	it('should use default error message when not provided in follow user', async () => {
+		const error = new Error('Network error')
+		jest.spyOn(FollowApi, 'FollowUser').mockRejectedValueOnce(error)
 
-		const { result } = renderHook(() => useFollowUser(), {
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					followUserOptions: { onError: mockOnErrorFollow },
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		await act(() => {
+			result.current.followUser()
+		})
+
+		await waitFor(() => {
+			expect(mockOnErrorFollow).toHaveBeenCalledWith('erro ao seguir usuário')
+		})
+	})
+
+	it('should handle null user id success case follow user', async () => {
+		;(useAuthCredentials as MockUseAuthCredentials).mockReturnValue({
+			user: { ...mockUser, id: null } as unknown as UserModel,
+		})
+
+		const { result } = renderHook(() => useFollowUser(mockFollowingUser.id), {
 			wrapper: TestProvider,
 		})
 
 		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
+			result.current.followUser()
 		})
 
-		const followingUserUpdater = (
-			mockSetQueryData as MockSetQueryData
-		).mock.calls.find(
-			(call) =>
-				call[0][0] === AppQueryKeys.USER_BY_ID &&
-				call[0][1] === mockFollowingUser.id
-		)![1]
-		expect(followingUserUpdater(undefined)).toBeUndefined()
-
-		const followerUserUpdater = (
-			mockSetQueryData as MockSetQueryData
-		).mock.calls.find(
-			(call) =>
-				call[0][0] === AppQueryKeys.USER_BY_ID && call[0][1] === mockUser.id
-		)![1]
-		expect(followerUserUpdater(undefined)).toBeUndefined()
+		await waitFor(() => {
+			expect(FollowApi.FollowUser).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(mockCancelFollowRequests).not.toHaveBeenCalled()
+			expect(mockApplyFollowOptimisticUpdate).not.toHaveBeenCalled()
+			expect(mockRefreshFollowData).not.toHaveBeenCalled()
+		})
 	})
 
-	it('should expose correct loading state', async () => {
-		const { result } = renderHook(() => useFollowUser(), {
+	it('should handle null user id error case follow user', async () => {
+		const error = new Error('Network error')
+		jest.spyOn(FollowApi, 'FollowUser').mockRejectedValueOnce(error)
+		;(useAuthCredentials as MockUseAuthCredentials).mockReturnValue({
+			user: { ...mockUser, id: null } as unknown as UserModel,
+		})
+
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					followUserOptions: { onError: mockOnErrorFollow },
+				}),
+			{
+				wrapper: TestProvider,
+			}
+		)
+
+		await act(() => {
+			result.current.followUser()
+		})
+
+		await waitFor(() => {
+			expect(FollowApi.FollowUser).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(mockCancelFollowRequests).not.toHaveBeenCalled()
+			expect(mockApplyFollowOptimisticUpdate).not.toHaveBeenCalled()
+			expect(mockRefreshFollowData).not.toHaveBeenCalled()
+			expect(mockOnErrorFollow).not.toHaveBeenCalled()
+		})
+	})
+
+	it('should remove following successfully', async () => {
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					removeFollowingOptions: { onSuccess: mockOnSuccessRemove },
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		await act(() => {
+			result.current.removeFollowing()
+		})
+
+		await waitFor(() => {
+			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(mockCancelFollowRequests).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(mockSnapshotFollowData).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(mockApplyFollowOptimisticUpdate).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+				isFollowing: false,
+			})
+			expect(mockOnSuccessRemove).toHaveBeenCalled()
+			expect(mockRefreshFollowData).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(result.current.isSuccessRemoveFollowing).toBe(true)
+		})
+	})
+
+	it('should handle error when removing follow', async () => {
+		const error = new Error('Network error')
+		jest.spyOn(FollowApi, 'RemoveFollow').mockRejectedValueOnce(error)
+
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					removeFollowingOptions: {
+						onError: mockOnErrorRemove,
+						errorMessage: 'custom unfollow error',
+					},
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		await act(() => {
+			result.current.removeFollowing()
+		})
+
+		await waitFor(() => {
+			expect(mockOnErrorRemove).toHaveBeenCalledWith('custom unfollow error')
+			expect(mockCancelFollowRequests).toHaveBeenCalledTimes(2)
+			expect(mockRestoreFollowData).toHaveBeenCalledWith({
+				followerId: mockUser.id,
+				followingId: mockFollowingUser.id,
+			})
+			expect(result.current.errorRemoveFollowing).toBeDefined()
+		})
+	})
+
+	it('should use default error message when not provided in remove follow', async () => {
+		const error = new Error('Network error')
+		jest.spyOn(FollowApi, 'RemoveFollow').mockRejectedValueOnce(error)
+
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					removeFollowingOptions: { onError: mockOnErrorRemove },
+				}),
+			{ wrapper: TestProvider }
+		)
+
+		await act(() => {
+			result.current.removeFollowing()
+		})
+
+		await waitFor(() => {
+			expect(mockOnErrorRemove).toHaveBeenCalledWith(
+				'erro ao deixar de seguir o usuário'
+			)
+		})
+	})
+
+	it('should handle null user id success case remove follow', async () => {
+		;(useAuthCredentials as MockUseAuthCredentials).mockReturnValue({
+			user: { ...mockUser, id: null } as unknown as UserModel,
+		})
+
+		const { result } = renderHook(() => useFollowUser(mockFollowingUser.id), {
 			wrapper: TestProvider,
 		})
 
-		expect(result.current.isLoading).toBe(false)
-
 		await act(() => {
-			result.current.followUser(mockFollowingUser.id)
+			result.current.removeFollowing()
 		})
 
-		expect(result.current.isLoading).toBe(false)
+		await waitFor(() => {
+			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(mockCancelFollowRequests).not.toHaveBeenCalled()
+			expect(mockApplyFollowOptimisticUpdate).not.toHaveBeenCalled()
+			expect(mockRefreshFollowData).not.toHaveBeenCalled()
+		})
 	})
 
-	it('should expose reset function', async () => {
-		const { result } = renderHook(() => useFollowUser(), {
+	it('should handle null user id error case remove follow', async () => {
+		const error = new Error('Network error')
+		jest.spyOn(FollowApi, 'RemoveFollow').mockRejectedValueOnce(error)
+		;(useAuthCredentials as MockUseAuthCredentials).mockReturnValue({
+			user: { ...mockUser, id: null } as unknown as UserModel,
+		})
+
+		const { result } = renderHook(
+			() =>
+				useFollowUser(mockFollowingUser.id, {
+					removeFollowingOptions: { onError: mockOnErrorRemove },
+				}),
+			{
+				wrapper: TestProvider,
+			}
+		)
+
+		await act(() => {
+			result.current.removeFollowing()
+		})
+
+		await waitFor(() => {
+			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(mockCancelFollowRequests).not.toHaveBeenCalled()
+			expect(mockApplyFollowOptimisticUpdate).not.toHaveBeenCalled()
+			expect(mockRefreshFollowData).not.toHaveBeenCalled()
+			expect(mockOnErrorRemove).not.toHaveBeenCalled()
+		})
+	})
+
+	it('should call followUser function when undoRemoveFollow is called', async () => {
+		const { result } = renderHook(() => useFollowUser(mockFollowingUser.id), {
 			wrapper: TestProvider,
 		})
 
-		expect(typeof result.current.reset).toBe('function')
+		await act(() => {
+			result.current.undoRemoveFollow()
+		})
+
+		await waitFor(() => {
+			expect(FollowApi.FollowUser).toHaveBeenCalledWith(mockFollowingUser.id)
+		})
+	})
+
+	it('should expose reset functions', async () => {
+		const { result } = renderHook(() => useFollowUser(mockFollowingUser.id), {
+			wrapper: TestProvider,
+		})
+
+		expect(typeof result.current.resetFollowUser).toBe('function')
+		expect(typeof result.current.resetRemoveFollowing).toBe('function')
 
 		await act(() => {
-			result.current.reset()
+			result.current.resetFollowUser()
+			result.current.resetRemoveFollowing()
 		})
+	})
+
+	it('should expose loading states', () => {
+		const { result } = renderHook(() => useFollowUser(mockFollowingUser.id), {
+			wrapper: TestProvider,
+		})
+
+		expect(result.current.isPendingFollowUser).toBe(false)
+		expect(result.current.isPendingRemoveFollowing).toBe(false)
 	})
 })

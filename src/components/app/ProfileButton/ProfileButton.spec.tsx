@@ -29,11 +29,7 @@ describe('<ProfileButton/>', () => {
 
 	const mockReturnUseFollowUser: ReturnUseFollowUser = {
 		followUser: mockFollowUser,
-		isLoading: false,
-		error: null,
-		followContext: null,
-		followingUser: null,
-		isSuccess: false,
+		isPendingFollowUser: false,
 	}
 
 	beforeEach(() => {
@@ -49,6 +45,13 @@ describe('<ProfileButton/>', () => {
 		customRender(<ProfileButton userId={1} />)
 
 		expect(screen.getByRole('button', { name: /Seguir/i })).toBeOnTheScreen()
+		expect(useFollowUser).toHaveBeenCalledWith(1)
+	})
+
+	it('should call follow use case correctly', () => {
+		customRender(<ProfileButton userId={1} />)
+
+		expect(useFollowUser).toHaveBeenCalledWith(1)
 	})
 
 	it('should render following button', () => {
@@ -68,7 +71,7 @@ describe('<ProfileButton/>', () => {
 	it('should disable the button when is loading following user', async () => {
 		;(useFollowUser as MockUseFollowUser).mockReturnValue({
 			...mockReturnUseFollowUser,
-			isLoading: true,
+			isPendingFollowUser: true,
 		})
 
 		customRender(<ProfileButton userId={1} />)
@@ -89,7 +92,7 @@ describe('<ProfileButton/>', () => {
 		customRender(<ProfileButton userId={1} isFollowing={false} />)
 
 		await userEvent.press(screen.getByRole('button'))
-		expect(mockFollowUser).toHaveBeenCalledWith(1)
+		expect(mockFollowUser).toHaveBeenCalled()
 	})
 
 	it('should not when is already following', async () => {
