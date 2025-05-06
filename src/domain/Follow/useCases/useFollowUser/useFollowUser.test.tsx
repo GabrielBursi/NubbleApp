@@ -233,22 +233,22 @@ describe('useFollowUser', () => {
 		await waitFor(() => {
 			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
 			expect(mockCancelFollowRequests).toHaveBeenCalledWith({
-				followerId: mockUser.id,
-				followingId: mockFollowingUser.id,
+				followerId: mockFollowingUser.id,
+				followingId: mockUser.id,
 			})
 			expect(mockSnapshotFollowData).toHaveBeenCalledWith({
-				followerId: mockUser.id,
-				followingId: mockFollowingUser.id,
+				followerId: mockFollowingUser.id,
+				followingId: mockUser.id,
 			})
 			expect(mockApplyFollowOptimisticUpdate).toHaveBeenCalledWith({
-				followerId: mockUser.id,
-				followingId: mockFollowingUser.id,
+				followerId: mockFollowingUser.id,
+				followingId: mockUser.id,
 				isFollowing: false,
 			})
 			expect(mockOnSuccessRemove).toHaveBeenCalled()
 			expect(mockRefreshFollowData).toHaveBeenCalledWith({
-				followerId: mockUser.id,
-				followingId: mockFollowingUser.id,
+				followerId: mockFollowingUser.id,
+				followingId: mockUser.id,
 			})
 			expect(result.current.isSuccessRemoveFollowing).toBe(true)
 		})
@@ -277,8 +277,8 @@ describe('useFollowUser', () => {
 			expect(mockOnErrorRemove).toHaveBeenCalledWith('custom unfollow error')
 			expect(mockCancelFollowRequests).toHaveBeenCalledTimes(2)
 			expect(mockRestoreFollowData).toHaveBeenCalledWith({
-				followerId: mockUser.id,
-				followingId: mockFollowingUser.id,
+				followerId: mockFollowingUser.id,
+				followingId: mockUser.id,
 			})
 			expect(result.current.errorRemoveFollowing).toBeDefined()
 		})

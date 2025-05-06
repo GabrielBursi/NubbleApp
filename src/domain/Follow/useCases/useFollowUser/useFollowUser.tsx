@@ -10,7 +10,7 @@ import { MutationOptions } from '@/types/shared'
 import { FollowApi } from '../../api'
 
 export const useFollowUser = (
-	followingId: UserModel['id'],
+	targetUserId: UserModel['id'],
 	options?: {
 		followUserOptions?: MutationOptions<UserModel>
 		removeFollowingOptions?: MutationOptions<void>
@@ -25,7 +25,7 @@ export const useFollowUser = (
 		refreshFollowData,
 	} = useFollowOptimisticUpdate()
 
-	const followerId = useMemo(() => ac?.user.id ?? null, [ac])
+	const authUserId = useMemo(() => ac?.user.id ?? null, [ac])
 
 	const {
 		mutate: followUser,
@@ -36,32 +36,41 @@ export const useFollowUser = (
 		reset: resetFollowUser,
 		context: contextFollowUser,
 	} = useMutation({
-		mutationFn: () => FollowApi.FollowUser(followingId),
+		mutationFn: () => FollowApi.FollowUser(targetUserId),
 		onMutate: async () => {
-			if (followerId === null) return null
-			await cancelFollowRequests({ followerId, followingId })
+			if (authUserId === null) return null
+			await cancelFollowRequests({
+				followerId: authUserId,
+				followingId: targetUserId,
+			})
 			const { previousFollowerUser, previousFollowingUser } =
-				snapshotFollowData({ followerId, followingId })
+				snapshotFollowData({
+					followerId: authUserId,
+					followingId: targetUserId,
+				})
 			applyFollowOptimisticUpdate({
-				followerId,
-				followingId,
+				followerId: authUserId,
+				followingId: targetUserId,
 				isFollowing: true,
 			})
 			return { previousFollowingUser, previousFollowerUser }
 		},
 		onError: async () => {
-			if (followerId === null) return null
+			if (authUserId === null) return null
 			options?.followUserOptions?.onError?.(
 				options?.followUserOptions?.errorMessage ?? 'erro ao seguir usuário'
 			)
-			await cancelFollowRequests({ followerId, followingId })
-			restoreFollowData({ followerId, followingId })
+			await cancelFollowRequests({
+				followerId: authUserId,
+				followingId: targetUserId,
+			})
+			restoreFollowData({ followerId: authUserId, followingId: targetUserId })
 		},
 		onSuccess: options?.followUserOptions?.onSuccess,
 		onSettled: async (followingUser) => {
-			if (followerId === null || !followingUser) return null
+			if (authUserId === null || !followingUser) return null
 			await refreshFollowData({
-				followerId,
+				followerId: authUserId,
 				followingId: followingUser.id,
 			})
 		},
@@ -75,34 +84,43 @@ export const useFollowUser = (
 		reset: resetRemoveFollowing,
 		context: contextRemoveFollowing,
 	} = useMutation({
-		mutationFn: () => FollowApi.RemoveFollow(followingId),
+		mutationFn: () => FollowApi.RemoveFollow(targetUserId),
 		onMutate: async () => {
-			if (followerId === null) return null
-			await cancelFollowRequests({ followerId, followingId })
+			if (authUserId === null) return null
+			await cancelFollowRequests({
+				followerId: targetUserId,
+				followingId: authUserId,
+			})
 			const { previousFollowerUser, previousFollowingUser } =
-				snapshotFollowData({ followerId, followingId })
+				snapshotFollowData({
+					followerId: targetUserId,
+					followingId: authUserId,
+				})
 			applyFollowOptimisticUpdate({
-				followerId,
-				followingId,
+				followerId: targetUserId,
+				followingId: authUserId,
 				isFollowing: false,
 			})
 			return { previousFollowingUser, previousFollowerUser }
 		},
 		onError: async () => {
-			if (followerId === null) return null
+			if (authUserId === null) return null
 			options?.removeFollowingOptions?.onError?.(
 				options?.removeFollowingOptions?.errorMessage ??
 					'erro ao deixar de seguir o usuário'
 			)
-			await cancelFollowRequests({ followerId, followingId })
-			restoreFollowData({ followerId, followingId })
+			await cancelFollowRequests({
+				followerId: targetUserId,
+				followingId: authUserId,
+			})
+			restoreFollowData({ followerId: targetUserId, followingId: authUserId })
 		},
 		onSuccess: options?.removeFollowingOptions?.onSuccess,
 		onSettled: async () => {
-			if (followerId === null) return null
+			if (authUserId === null) return null
 			await refreshFollowData({
-				followerId,
-				followingId,
+				followerId: targetUserId,
+				followingId: authUserId,
 			})
 		},
 	})

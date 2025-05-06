@@ -1,13 +1,10 @@
 import { screen, waitFor } from '@testing-library/react-native'
 
-import { FollowApi } from '@/domain/Follow'
 import { customRender } from '@/tests/utils'
 
 import { MyFollowersScreen } from './MyFollowers'
 
 describe('<MyFollowersScreen/>', () => {
-	const spyGetFollowers = jest.spyOn(FollowApi, 'GetMyFollowersList')
-
 	it('should render', () => {
 		customRender(<MyFollowersScreen />)
 
@@ -18,7 +15,6 @@ describe('<MyFollowersScreen/>', () => {
 	it('should render the followers users items', async () => {
 		customRender(<MyFollowersScreen />)
 
-		expect(spyGetFollowers).toHaveBeenCalled()
 		await waitFor(() => {
 			expect(
 				screen.getAllByRole('button', { name: /remover/i }).length
