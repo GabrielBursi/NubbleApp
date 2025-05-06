@@ -4,7 +4,7 @@ import { UserDetailsModel, UserModel } from '@/domain/User'
 import { useFollowOptimisticUpdate } from '@/hooks'
 import { TestProvider } from '@/providers'
 import { useAuthCredentials } from '@/services/auth'
-import { generateUserDetails } from '@/tests/mocks'
+import { generateUserDetails, generateFollowUser } from '@/tests/mocks'
 import { HookMocked, ReturnHookMocked } from '@/types/tests'
 
 import { FollowApi } from '../../api'
@@ -25,7 +25,7 @@ jest.mock('@/services/auth')
 
 describe('useFollowUser', () => {
 	const mockUser = generateUserDetails()
-	const mockFollowingUser = generateUserDetails()
+	const mockFollowingUser = generateFollowUser()
 	const mockFollowingUserDetails: UserDetailsModel = {
 		...mockFollowingUser,
 		meta: {
@@ -227,11 +227,13 @@ describe('useFollowUser', () => {
 		)
 
 		await act(() => {
-			result.current.removeFollowing()
+			result.current.removeFollowing(mockFollowingUser.followId)
 		})
 
 		await waitFor(() => {
-			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(
+				mockFollowingUser.followId
+			)
 			expect(mockCancelFollowRequests).toHaveBeenCalledWith({
 				followerId: mockFollowingUser.id,
 				followingId: mockUser.id,
@@ -270,7 +272,7 @@ describe('useFollowUser', () => {
 		)
 
 		await act(() => {
-			result.current.removeFollowing()
+			result.current.removeFollowing(mockFollowingUser.followId)
 		})
 
 		await waitFor(() => {
@@ -297,7 +299,7 @@ describe('useFollowUser', () => {
 		)
 
 		await act(() => {
-			result.current.removeFollowing()
+			result.current.removeFollowing(mockFollowingUser.followId)
 		})
 
 		await waitFor(() => {
@@ -317,11 +319,13 @@ describe('useFollowUser', () => {
 		})
 
 		await act(() => {
-			result.current.removeFollowing()
+			result.current.removeFollowing(mockFollowingUser.followId)
 		})
 
 		await waitFor(() => {
-			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(
+				mockFollowingUser.followId
+			)
 			expect(mockCancelFollowRequests).not.toHaveBeenCalled()
 			expect(mockApplyFollowOptimisticUpdate).not.toHaveBeenCalled()
 			expect(mockRefreshFollowData).not.toHaveBeenCalled()
@@ -346,11 +350,13 @@ describe('useFollowUser', () => {
 		)
 
 		await act(() => {
-			result.current.removeFollowing()
+			result.current.removeFollowing(mockFollowingUser.followId)
 		})
 
 		await waitFor(() => {
-			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(mockFollowingUser.id)
+			expect(FollowApi.RemoveFollow).toHaveBeenCalledWith(
+				mockFollowingUser.followId
+			)
 			expect(mockCancelFollowRequests).not.toHaveBeenCalled()
 			expect(mockApplyFollowOptimisticUpdate).not.toHaveBeenCalled()
 			expect(mockRefreshFollowData).not.toHaveBeenCalled()

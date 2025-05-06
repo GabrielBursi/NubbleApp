@@ -38,7 +38,7 @@ const FollowListItemMemoized = ({
 				<Button
 					title={buttonTitle}
 					preset="gray"
-					onPress={() => removeFollowing()}
+					onPress={() => removeFollowing(user.followId)}
 				/>
 			}
 		/>

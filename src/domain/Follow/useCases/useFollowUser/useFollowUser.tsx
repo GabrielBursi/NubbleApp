@@ -8,6 +8,7 @@ import { useAuthCredentials } from '@/services/auth'
 import { MutationOptions } from '@/types/shared'
 
 import { FollowApi } from '../../api'
+import { FollowUserModel } from '../../models'
 
 export const useFollowUser = (
 	targetUserId: UserModel['id'],
@@ -84,7 +85,8 @@ export const useFollowUser = (
 		reset: resetRemoveFollowing,
 		context: contextRemoveFollowing,
 	} = useMutation({
-		mutationFn: () => FollowApi.RemoveFollow(targetUserId),
+		mutationFn: (followId: FollowUserModel['followId']) =>
+			FollowApi.RemoveFollow(followId),
 		onMutate: async () => {
 			if (authUserId === null) return null
 			await cancelFollowRequests({

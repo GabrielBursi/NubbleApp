@@ -47,7 +47,9 @@ describe('<FollowListItem/>', () => {
 					...mockReturnUseFollowUser,
 					removeFollowing: () => {
 						options.removeFollowingOptions?.onSuccess?.()
-						mockRemoveFollowing()
+						mockReturnUseFollowUser?.removeFollowing?.(
+							mockBasicProps.user.followId
+						)
 					},
 				}
 			}
@@ -87,7 +89,9 @@ describe('<FollowListItem/>', () => {
 		await userEvent.press(
 			screen.getAllByRole('button', { name: mockBasicProps.buttonTitle })[1]!
 		)
-		expect(mockRemoveFollowing).toHaveBeenCalled()
+		expect(mockRemoveFollowing).toHaveBeenCalledWith(
+			mockBasicProps.user.followId
+		)
 	})
 
 	it('shows toast without undo when canUndoRemoveFollow is false', async () => {
