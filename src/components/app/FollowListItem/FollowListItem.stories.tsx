@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { generateFollowUser } from '@/tests/mocks'
+import { generateFollowUser } from '@/tests/mocks/mockFollow'
 
 import { FollowListItem } from './FollowListItem'
 
