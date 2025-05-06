@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useQueryClient } from '@tanstack/react-query'
 
 import {
 	LoginScreen,
@@ -19,6 +20,12 @@ type AuthStackRouterProps = {
 export const AuthStackRouter = ({
 	initialRouteName = 'LoginScreen',
 }: AuthStackRouterProps) => {
+	const queryClient = useQueryClient()
+
+	useEffect(() => {
+		queryClient.clear()
+	}, [queryClient])
+
 	return (
 		<AuthStack.Navigator
 			initialRouteName={initialRouteName}

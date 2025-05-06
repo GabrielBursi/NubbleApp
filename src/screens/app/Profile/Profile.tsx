@@ -5,8 +5,6 @@ import { ScreenTemplate } from '@/templates'
 import { ProfileScreenProps } from '@/types/screens'
 
 export const ProfileScreen = ({ route: { params } }: ProfileScreenProps) => {
-	console.log({ params })
-
 	return (
 		<ScreenTemplate
 			canGoBack
