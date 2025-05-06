@@ -15,7 +15,7 @@ export const useUserGetById = (userId?: number) => {
 		[authCredentials?.user.id, userId]
 	)
 
-	const { data, refetch, error, isFetching } = useQuery({
+	const { data, refetch, error, isFetching, isLoading } = useQuery({
 		queryKey: [AppQueryKeys.USER_BY_ID, userId],
 		queryFn: () => UserApi.GetById(userId!),
 		staleTime: isCurrentUser ? Infinity : 1000 * 30,
@@ -26,6 +26,7 @@ export const useUserGetById = (userId?: number) => {
 	return {
 		user: data ?? null,
 		isLoading: isFetching,
+		isFirstLoading: isLoading,
 		error,
 		refetch,
 		isCurrentUser,

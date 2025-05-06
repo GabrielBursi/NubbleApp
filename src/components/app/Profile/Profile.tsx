@@ -22,7 +22,7 @@ export const Profile = ({
 	userId,
 	isMyProfile = false,
 }: Readonly<ProfileProps>) => {
-	const { user, isLoading } = useUserGetById(userId)
+	const { user, isFirstLoading } = useUserGetById(userId)
 	const { navigate } = useAppNavigation()
 
 	const [postsCount, setPostsCount] = useState(0)
@@ -36,7 +36,7 @@ export const Profile = ({
 		[userId]
 	)
 
-	if (isLoading || !user) return <Loading color="primaryContrast" />
+	if (isFirstLoading || !user) return <Loading color="primaryContrast" />
 
 	return (
 		<InfinityScrollList

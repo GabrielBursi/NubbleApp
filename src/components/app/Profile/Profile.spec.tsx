@@ -39,6 +39,7 @@ describe('<Profile/>', () => {
 		user: mockUser,
 		error: null,
 		isLoading: false,
+		isFirstLoading: false,
 		refetch: mockRefetch,
 	}
 
@@ -62,10 +63,10 @@ describe('<Profile/>', () => {
 		expect(useUserGetById).toHaveBeenCalledWith(mockUser.id)
 	})
 
-	it('should render loading', () => {
+	it('should render on first loading', () => {
 		;(useUserGetById as MockUseUseUserGetById).mockReturnValue({
 			...mockReturnUseUseUserGetById,
-			isLoading: true,
+			isFirstLoading: true,
 		})
 		customRender(<Profile userId={mockUser.id} />)
 		expect(screen.getByTestId('loading-indicator')).toBeOnTheScreen()
