@@ -12,6 +12,7 @@ import {
 	mockStorage,
 	mockUseNavigation,
 	mockCamera,
+	mockMessaging,
 } from '@/tests/mocks'
 import { userEvent } from '@testing-library/react-native'
 import { testQueryClient } from '@/providers'
@@ -90,6 +91,10 @@ jest.mock('@/services/auth/store/useAuthCredentialsStorage')
 jest.mock('@/assets/images', () => ({
 	AppImages: mockAppImages,
 }))
+
+jest.mock('@react-native-firebase/messaging', () => {
+	return () => mockMessaging
+})
 
 type UseAuthCredentialsStorage = typeof useAuthCredentialsStorage
 type MockUseAuthCredentialsStorage = HookMocked<UseAuthCredentialsStorage>
