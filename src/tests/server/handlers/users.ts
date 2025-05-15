@@ -8,6 +8,7 @@ import {
 	generateUserDetails,
 	mockUsersApi,
 } from '@/tests/mocks/mockUser'
+import { customFaker } from '@/tests/utils'
 import { END_POINTS_API, PageAPI } from '@/types/api'
 
 export const usersHandlers: HttpHandler[] = [
@@ -64,4 +65,30 @@ export const usersHandlers: HttpHandler[] = [
 
 		return HttpResponse.json<UserAPIModel>(generateUserApi(), { status: 200 })
 	}),
+
+	http.post(
+		`${Config.API_URL}${END_POINTS_API.USERS}/notification-token`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<string>(customFaker.string.uuid(), {
+				status: 200,
+			})
+		}
+	),
+
+	http.delete(
+		`${Config.API_URL}${END_POINTS_API.USERS}/notification-token`,
+		({ request }) => {
+			console.log('Handler', request.method, request.url)
+
+			if (Number(Config.MOCK_ERROR)) return HttpResponse.error()
+
+			return HttpResponse.json<string>(customFaker.string.uuid(), {
+				status: 200,
+			})
+		}
+	),
 ]
