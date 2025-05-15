@@ -1,1 +1,1 @@
-export type AppPermissionName = 'photoLibrary' | 'camera'
+export type AppPermissionName = 'photoLibrary' | 'camera' | 'notification'

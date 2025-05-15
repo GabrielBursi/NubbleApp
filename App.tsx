@@ -12,6 +12,7 @@ import 'react-native-gesture-handler'
 
 import { Toast } from '@/components'
 import { AppProvider } from '@/providers'
+import { usePermission } from '@/services/permission'
 import { storage } from '@/services/storage'
 
 import StorybookUIRoot from './.storybook'
@@ -52,6 +53,10 @@ function useMocking() {
 }
 
 function App() {
+	const [
+		{ status: notificationPermissionStatus },
+		checkNotificationPermission,
+	] = usePermission('notification')
 	const mockReady = useMocking()
 	useEffect(() => {
 		if (isToClearStorage && __DEV__)
@@ -60,6 +65,11 @@ function App() {
 				.then(() => console.log('Storage Clear!'))
 				.catch((err) => console.log(err))
 	}, [])
+
+	useEffect(() => {
+		checkNotificationPermission().catch(console.log)
+		console.log({ status: notificationPermissionStatus })
+	}, [checkNotificationPermission, notificationPermissionStatus])
 
 	if (isMockEnabled && !mockReady) return null
 

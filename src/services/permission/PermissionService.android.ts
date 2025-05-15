@@ -1,4 +1,8 @@
-import { Platform } from 'react-native'
+import {
+	Platform,
+	PermissionsAndroid as RNPermissionsAndroid,
+	Permission as RNPermissionAndroid,
+} from 'react-native'
 
 import {
 	AndroidPermission as RNPAndroidPermission,
@@ -9,8 +13,12 @@ import {
 import { AppPermissionName, IPermissionService } from './models'
 import { AppPermissionStatus } from './models/AppPermissionStatus'
 
+type AndroidPermissions =
+	| RNPAndroidPermission
+	| Extract<RNPermissionAndroid, 'android.permission.POST_NOTIFICATIONS'>
+
 class AndroidPermissionService implements IPermissionService {
-	private mapNameToPermission(name: AppPermissionName): RNPAndroidPermission {
+	private mapNameToPermission(name: AppPermissionName): AndroidPermissions {
 		switch (name) {
 			case 'photoLibrary':
 				if (Number(Platform.Version) >= 33) {
@@ -20,6 +28,9 @@ class AndroidPermissionService implements IPermissionService {
 				}
 			case 'camera':
 				return 'android.permission.CAMERA'
+
+			case 'notification':
+				return 'android.permission.POST_NOTIFICATIONS'
 
 			default: {
 				const permissionNotTreated: never = name
@@ -33,6 +44,14 @@ class AndroidPermissionService implements IPermissionService {
 	async check(name: AppPermissionName): Promise<AppPermissionStatus> {
 		try {
 			const permission = this.mapNameToPermission(name)
+
+			if (permission === 'android.permission.POST_NOTIFICATIONS') {
+				const result = await RNPermissionsAndroid.check(
+					'android.permission.POST_NOTIFICATIONS'
+				)
+				return result ? 'granted' : 'denied'
+			}
+
 			const result = await RNPcheck(permission)
 			return result === 'granted' ? 'granted' : 'denied'
 		} catch {
@@ -43,6 +62,13 @@ class AndroidPermissionService implements IPermissionService {
 	async request(name: AppPermissionName): Promise<AppPermissionStatus> {
 		try {
 			const permission = this.mapNameToPermission(name)
+			if (permission === 'android.permission.POST_NOTIFICATIONS') {
+				const result = await RNPermissionsAndroid.request(
+					'android.permission.POST_NOTIFICATIONS'
+				)
+				return result
+			}
+
 			const result = await RNPrequest(permission)
 			return result === 'granted' ? 'granted' : 'denied'
 		} catch {

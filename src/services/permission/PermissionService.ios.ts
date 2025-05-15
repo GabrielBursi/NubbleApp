@@ -9,8 +9,10 @@ import {
 import { AppPermissionName, IPermissionService } from './models'
 import { AppPermissionStatus } from './models/AppPermissionStatus'
 
+type IOSPermissionName = Exclude<AppPermissionName, 'notification'>
+
 class IOSPermissionService implements IPermissionService {
-	private readonly mapName: Record<AppPermissionName, RNPPermission> = {
+	private readonly mapName: Record<IOSPermissionName, RNPPermission> = {
 		photoLibrary: RNP_PERMISSIONS.IOS.PHOTO_LIBRARY,
 		camera: RNP_PERMISSIONS.IOS.CAMERA,
 	}
@@ -25,11 +27,13 @@ class IOSPermissionService implements IPermissionService {
 		}
 
 	async check(name: AppPermissionName): Promise<AppPermissionStatus> {
+		if (name === 'notification') return 'unavailable'
 		const status = await RNPcheck(this.mapName[name])
 		return this.mapStatus[status]
 	}
 
 	async request(name: AppPermissionName): Promise<AppPermissionStatus> {
+		if (name === 'notification') return 'unavailable'
 		const status = await RNPrequest(this.mapName[name])
 		return this.mapStatus[status]
 	}
