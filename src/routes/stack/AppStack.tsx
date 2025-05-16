@@ -2,6 +2,7 @@ import React from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
+import { useSaveNotificationToken } from '@/domain/User'
 import {
 	PostCommentsScreen,
 	SettingsScreen,
@@ -29,6 +30,8 @@ type AppStackRouterProps = {
 export const AppStackRouter = ({
 	initialRouteName = 'AppTabNavigator',
 }: AppStackRouterProps) => {
+	useSaveNotificationToken()
+
 	return (
 		<Stack.Navigator
 			initialRouteName={initialRouteName}

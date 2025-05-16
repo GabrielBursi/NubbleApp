@@ -11,7 +11,8 @@ import {
 
 //? import assim para teste não se perder
 import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
-import { UserModel } from '@/domain/User'
+import { UserApi } from '@/domain/User/api'
+import { UserModel } from '@/domain/User/models/User'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
@@ -35,6 +36,7 @@ export const AuthCredentialsProvider = ({
 	const [isLoading, setIsLoading] = useState(true)
 
 	const removeCredentials = useCallback(async () => {
+		await UserApi.DeleteNotificationToken()
 		setAuthCredentials(null)
 		removeToken()
 		setIsLoading(true)

@@ -4,7 +4,8 @@ import { useCallback, useEffect } from 'react'
 import { create } from 'zustand'
 
 import { useAuthToken } from '@/domain/Auth/useCases/useAuthToken/useAuthToken'
-import { UserModel } from '@/domain/User'
+import { UserApi } from '@/domain/User/api'
+import { UserModel } from '@/domain/User/models/User'
 import { StrictOmit } from '@/types/utils'
 
 import { AuthCredentialsService } from '../models'
@@ -70,6 +71,7 @@ export const useAuthCredentialsServiceZustand = (): StrictOmit<
 	)
 
 	const removeCredentials = useCallback(async () => {
+		await UserApi.DeleteNotificationToken()
 		removeToken()
 		setIsLoading(true)
 		await Promise.all([removeCredentialsStore(), removeAuth()])
