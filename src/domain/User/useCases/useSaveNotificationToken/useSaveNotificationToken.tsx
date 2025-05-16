@@ -1,11 +1,14 @@
 import { useCallback, useEffect } from 'react'
 
-import messaging from '@react-native-firebase/messaging'
 import { useMutation } from '@tanstack/react-query'
+
+import { useNotificationService } from '@/services/notification'
 
 import { UserApi } from '../../api'
 
 export const useSaveNotificationToken = () => {
+	const notificationService = useNotificationService()
+
 	const { data, mutate, isPending, isSuccess } = useMutation({
 		mutationFn: UserApi.SaveNotificationToken,
 		retry: false,
@@ -14,12 +17,12 @@ export const useSaveNotificationToken = () => {
 
 	const saveNotificationToken = useCallback(async () => {
 		try {
-			const token = await messaging().getToken() //TODO: move to a service
+			const token = await notificationService.getToken()
 			mutate(token)
 		} catch (error) {
 			console.log({ error })
 		}
-	}, [mutate])
+	}, [mutate, notificationService])
 
 	useEffect(() => {
 		saveNotificationToken().catch(console.log)
