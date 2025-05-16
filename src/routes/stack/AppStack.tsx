@@ -17,6 +17,7 @@ import {
 	MyFollowingScreen,
 	MyFollowersScreen,
 } from '@/screens'
+import { useNotificationAction } from '@/services/notification'
 import { RootAppStackRouterParamList } from '@/types/routes'
 
 import { AppBottomTabRouter } from '../tab/AppTabBottom'
@@ -31,6 +32,7 @@ export const AppStackRouter = ({
 	initialRouteName = 'AppTabNavigator',
 }: AppStackRouterProps) => {
 	useSaveNotificationToken()
+	useNotificationAction()
 
 	return (
 		<Stack.Navigator
