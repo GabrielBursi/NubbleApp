@@ -6,7 +6,7 @@ export const ToUser = (userAPI: UserAPIModel): UserModel => ({
 	lastName: userAPI.last_name,
 	username: userAPI.username,
 	email: userAPI.email,
-	profileUrl: userAPI.profile_url,
+	profileUrl: userAPI.profile_url ?? null,
 	isOnline: userAPI.is_online,
 	fullName: userAPI.full_name,
 	meta: {

@@ -4,7 +4,7 @@ export interface UserAPIModel {
 	last_name: string
 	username: string
 	email: string
-	profile_url: string
+	profile_url?: string | null
 	is_online: boolean
 	full_name: string
 	meta: {

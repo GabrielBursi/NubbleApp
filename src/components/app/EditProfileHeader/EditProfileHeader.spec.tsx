@@ -12,7 +12,7 @@ describe('<EditProfileHeader/>', () => {
 		customRender(<EditProfileHeader user={mockUser} />)
 
 		expect(
-			screen.getByRole('img', { name: mockUser.profileUrl })
+			screen.getByRole('img', { name: mockUser.profileUrl! })
 		).toBeOnTheScreen()
 		expect(
 			screen.getByRole('text', { name: /alterar foto/i })

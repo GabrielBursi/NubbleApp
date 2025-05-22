@@ -28,7 +28,7 @@ export const generateFollowUser = (): FollowUserModel => {
 		lastName: user.last_name,
 		username: user.username,
 		email: user.email,
-		profileUrl: user.profile_url,
+		profileUrl: user.profile_url ?? null,
 		isOnline: user.is_online,
 		fullName: user.full_name,
 		followId: Number(uniqueId()),

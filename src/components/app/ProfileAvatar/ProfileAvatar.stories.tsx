@@ -29,3 +29,9 @@ type Story = StoryObj<typeof ProfileAvatar>
 export const Basic: Story = {
 	args: {},
 }
+
+export const Placeholder: Story = {
+	args: {
+		imageURL: null,
+	},
+}

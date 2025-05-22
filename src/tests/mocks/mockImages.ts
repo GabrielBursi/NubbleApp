@@ -7,6 +7,7 @@ type MockImages = Record<Images, string>
 
 export const mockAppImages: MockImages = {
 	ImagePlaceholder: customFaker.image.url(),
+	UserProfilePlaceholder: customFaker.image.url(),
 	OnboardingDark1: customFaker.image.url(),
 	OnboardingDark2: customFaker.image.url(),
 	OnboardingDark3: customFaker.image.url(),

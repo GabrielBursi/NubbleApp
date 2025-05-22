@@ -55,7 +55,7 @@ describe('<EditProfileScreen/>', () => {
 	it('should edit profile screen correctly', () => {
 		customRender(editProfileScreen)
 		expect(
-			screen.getByRole('img', { name: mockUser.profileUrl })
+			screen.getByRole('img', { name: mockUser.profileUrl! })
 		).toBeOnTheScreen()
 		expect(
 			screen.getByRole('text', { name: 'Editar Perfil' })

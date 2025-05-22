@@ -1,6 +1,7 @@
 import React, { memo, useCallback } from 'react'
 import { Image, Pressable } from 'react-native'
 
+import { AppImages } from '@/assets/images'
 import { useAppNavigation } from '@/hooks'
 
 import { ProfileAvatarProps } from './ProfileAvatar.types'
@@ -30,8 +31,9 @@ const ProfileAvatarMemoized = ({
 				accessible
 				role="img"
 				accessibilityRole="image"
-				accessibilityLabel={imageURL}
-				source={{ uri: imageURL }}
+				accessibilityLabel={imageURL ?? 'user-placeholder'}
+				source={imageURL ? { uri: imageURL } : AppImages.UserProfilePlaceholder}
+				defaultSource={AppImages.UserProfilePlaceholder}
 				style={{ width: size, height: size, borderRadius }}
 				{...propsImg}
 			/>

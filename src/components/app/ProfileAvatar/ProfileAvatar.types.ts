@@ -3,7 +3,8 @@ import { ImageProps } from 'react-native'
 import { StrictOmit } from '@/types/utils'
 
 export type ProfileAvatarProps = {
-	imageURL: string
+	/** @default null */
+	imageURL?: string | null
 	/** @default 32 */
 	size?: number
 	/** @default 14 */

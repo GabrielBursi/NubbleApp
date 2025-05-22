@@ -4,7 +4,7 @@ export interface UserModel {
 	lastName: string
 	username: string
 	email: string
-	profileUrl: string
+	profileUrl: string | null
 	isOnline: boolean
 	fullName: string
 	meta: {

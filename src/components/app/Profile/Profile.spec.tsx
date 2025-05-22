@@ -95,7 +95,7 @@ describe('<Profile/>', () => {
 		})
 		await waitFor(() => {
 			expect(
-				screen.getByRole('img', { name: mockUser.profileUrl })
+				screen.getByRole('img', { name: mockUser.profileUrl! })
 			).toBeOnTheScreen()
 		})
 		await waitFor(() => {

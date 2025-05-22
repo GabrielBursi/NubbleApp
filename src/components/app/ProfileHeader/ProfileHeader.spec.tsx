@@ -12,7 +12,7 @@ describe('<ProfileHeader/>', () => {
 		customRender(<ProfileHeader user={mockUser} />)
 
 		expect(
-			screen.getByRole('img', { name: mockUser.profileUrl })
+			screen.getByRole('img', { name: mockUser.profileUrl! })
 		).toBeOnTheScreen()
 		expect(screen.getByRole('button')).toBeOnTheScreen()
 		expect(screen.getByText(mockUser.fullName)).toBeOnTheScreen()
